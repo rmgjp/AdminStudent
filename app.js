@@ -1,8 +1,7 @@
 /**
  * Archivo para configuración del servidor ExpressJS
- * @type {e | (() => Express)}
+ * @type {e | () => Express)}
  */
-
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
@@ -10,6 +9,7 @@ const index = require('./routes/index');
 const methodOverride = require('method-override');
 const flash = require('connect-flash');
 const exphbs = require('express-handlebars');
+const dbcreator = require('./helpers/db');
 
 //Inicialización de Express
 var app = express();
@@ -28,6 +28,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 //Configuración de rutas estaticas
 app.use(express.static(path.join(__dirname, 'public')));
+
+
 app.use('/css', express.static(path.join(__dirname, 'node_modules/bootstrap/dist/css')))
 app.use('/js', express.static(path.join(__dirname, 'node_modules/bootstrap/dist/js')))
 app.use('/js', express.static(path.join(__dirname, 'node_modules/jquery/dist')))
@@ -74,6 +76,7 @@ app.use(function(err, req, res, next) {
         error: {}
     });
 });
+
 
 //Inicializacion del servidor para su posterior presentación por medio de Electron.
 const server = app.listen(5000, () => console.log(`Express server listening on port 5000`));
