@@ -14,4 +14,5 @@ router.get('/about', (req, res) => {
     res.render('About')
 });
 
+router.get('/:estado', controladorGrupo.getAllGruposByState);
 module.exports = router;
