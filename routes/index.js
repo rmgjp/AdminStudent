@@ -1,9 +1,14 @@
 const express = require('express');
 const router = express.Router();
 
-router.get('/', async (req, res) => {
-    res.render('Index')
+const controladorGrupo = require('../controllers/grupo');
+
+router.use(function(req, res, next) {
+    next();
 });
+
+router.get('/', controladorGrupo.getAllGrupos);
+
 
 router.get('/about', (req, res) => {
     res.render('About')

@@ -5,14 +5,18 @@
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
-const index = require('./routes/index');
 const methodOverride = require('method-override');
 const flash = require('connect-flash');
 const exphbs = require('express-handlebars');
 const dbcreator = require('./helpers/db');
+const firstRun = require('electron-first-run');
+
+
+
 
 //Inicialización de Express
 var app = express();
+
 
 //Configuración del motor de vista
 app.set('views', path.join(__dirname, 'views'));
@@ -31,8 +35,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 app.use('/css', express.static(path.join(__dirname, 'node_modules/bootstrap/dist/css')))
+app.use('/icons', express.static(path.join(__dirname, 'node_modules/bootstrap-icons/icons')))
 app.use('/js', express.static(path.join(__dirname, 'node_modules/bootstrap/dist/js')))
 app.use('/js', express.static(path.join(__dirname, 'node_modules/jquery/dist')))
+
+
 
 //Inicialización de Express Handlebars
 app.engine('.hbs', exphbs({
@@ -43,8 +50,16 @@ app.engine('.hbs', exphbs({
     extname: '.hbs'
 }));
 
+//Requerimos los archivos de las rutas.
+app.use(require('./routes/index'));
+app.use(require('./routes/asistencia'));
+app.use(require('./routes/alumnos'));
+app.use(require('./routes/actividades'));
+app.use(require('./routes/grupos'));
+app.use(require('./routes/calificaciones'));
+app.use(require('./routes/tema'));
+app.use(require('./routes/tarea'));
 
-app.use('/', index);
 
 //Creación de una función para notificar que no se encuentra un directorio.
 app.use(function(req, res, next) {
@@ -52,6 +67,11 @@ app.use(function(req, res, next) {
     err.status = 404;
     next(err);
 });
+
+dbcreator.initialize();
+
+const isFirstRun = firstRun()
+console.log(isFirstRun);
 
 // Manejadores de erores
 

@@ -1,10 +1,8 @@
 //Requerimos los objetos individuales de Model y DataTypes provenientes de Sequelize
-const {Model, DataTypes, Deferrable} = require("sequelize");
-//Declaramos que la clase alumnogrupo se deriva de Model
-class alumnogrupo extends Model{}
+const {Deferrable} = require("sequelize");
 
 //Exportamos el modelo de datos
-module.exports = (sequelize) => {
+module.exports = (sequelize, DataTypes) => {
   //Como es una tabla derivada se declara en una constante el modelo de datos
   //de esta manera no solo retornamos el modelo de datos, sino tambien
   //las referencias.
@@ -39,8 +37,8 @@ module.exports = (sequelize) => {
         //Declaramos que el nombre de la tabla será el mismo que el modelo de datos
         //de lo contrario se agregará una s al final
         freezeTableName: true,
-        modelName: 'alumnogrupo'
-      });
+      }
+      );
 
   //Las siguientes sentencias declaran a nivel modelo las asociaciones entre las tablas
   alumnogrupo.associate = function (models){

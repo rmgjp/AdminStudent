@@ -14,6 +14,10 @@ module.exports = {
       asignatura: {
         type: Sequelize.STRING
       },
+
+      estado: {
+        type: Sequelize.INTEGER
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

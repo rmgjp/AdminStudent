@@ -2,8 +2,9 @@
   "development": {
     "user": "root",
     "password": "vsvsrmg",
+    "port": "3306",
     "database": "registro",
-    "host": "localhost:3306",
+    "host": "127.0.0.1",
     "dialect": "mariadb"
   },
   "registrobd": {
@@ -17,6 +18,7 @@
   "production": {
     "user": "root",
     "password": "vsvsrmg",
+    "port": "3306",
     "database": "registro",
     "host": "127.0.0.1",
     "dialect": "mariadb"

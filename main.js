@@ -23,6 +23,8 @@ function createWindow () {
     mainWindow.on('closed', function () {
         mainWindow = null
     })
+
+    mainWindow.maximize();
 }
 
 app.on('ready', createWindow)
@@ -40,5 +42,6 @@ app.on('window-all-closed', function () {
 app.on('activate', function () {
     if (mainWindow === null) {
         createWindow()
+        m
     }
 })

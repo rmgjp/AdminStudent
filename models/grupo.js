@@ -1,13 +1,13 @@
 'use strict';
-const {Model, DataTypes } = require("sequelize");
-class grupo extends Model{}
-module.exports = (sequelize) => {
+
+module.exports = (sequelize, DataTypes) => {
   return sequelize.define('grupo',{
     clave: DataTypes.STRING,
-    asignatura: DataTypes.STRING
+    asignatura: DataTypes.STRING,
+          estado: DataTypes.INTEGER,
   },
       {
         freezeTableName: true,
-        modelName: 'grupo'
+          sequelize,
       });
 };
