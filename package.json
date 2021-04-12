@@ -16,10 +16,12 @@
     "body-parser": "^1.19.0",
     "bootstrap": "^4.6.0",
     "bootstrap-icons": "^1.4.1",
+    "canvas-datagrid": "^0.3.4",
     "connect-flash": "^0.1.1",
     "electron-first-run": "^3.0.0",
     "express": "^4.17.1",
     "express-handlebars": "^5.3.0",
+    "jplist": "^0.0.3",
     "jquery": "^3.6.0",
     "mariadb": "^2.5.3",
     "method": "^2.0.0",
@@ -28,6 +30,7 @@
     "multer": "^1.4.2",
     "mysql": "^2.18.1",
     "mysql2": "^2.2.5",
+    "react-engine": "^4.5.1",
     "sequelize": "^6.6.2"
   }
 }
