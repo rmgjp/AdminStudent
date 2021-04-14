@@ -19,7 +19,7 @@ var app = express();
 
 
 //Configuración del motor de vista
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname , 'views'));
 //Se declara que se utilizará archivos hbs para su compatibilidad con Handlebars Express
 app.set('view engine', '.hbs');
 
@@ -31,15 +31,17 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 //Configuración de rutas estaticas
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname + 'public')));
 
 
-app.use('/css', express.static(path.join(__dirname, 'node_modules/bootstrap/dist/css')));
-app.use('/icons', express.static(path.join(__dirname, 'node_modules/bootstrap-icons/icons')));
-app.use('/js', express.static(path.join(__dirname, 'node_modules/bootstrap/dist/js')));
-app.use('/js', express.static(path.join(__dirname, 'node_modules/jquery/dist')));
-app.use('/js', express.static(path.join(__dirname, 'node_modules/canvas-datagrid/dist')))
-
+app.use('/css', express.static(path.join(__dirname , 'node_modules/bootstrap/dist/css')));
+app.use('/css', express.static(path.join(__dirname , 'node_modules/font-awesome/css')));
+app.use('/css', express.static(path.join(__dirname , 'node_modules/bootstrap-icons/font')));
+app.use('/icons', express.static(path.join(__dirname ,'node_modules/bootstrap-icons/icons')));
+app.use('/js', express.static(path.join(__dirname , 'node_modules/jquery/dist')));
+app.use('/js', express.static(path.join(__dirname , 'node_modules/bootstrap-table/dist')));
+app.use('/js', express.static(path.join(__dirname , 'node_modules/popper.js/dist')))
+app.use('/js', express.static(path.join(__dirname , 'node_modules/bootstrap/dist/js')));
 
 
 //Inicialización de Express Handlebars

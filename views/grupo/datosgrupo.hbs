@@ -1,61 +1,49 @@
-<!-- Vista para la creación de un grupo ingresando los datos manualmente. -->
+<div class="container p-5 bg-light">
+    <h1 class="display-6">Datos del grupo</h1>
+    <form class="needs-validation" action="/grupo/wizard-crear-grupo-manual" method="POST" novalidate>
 
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>Nuevo Grupo</title>
-        <link href="../css/bootstrap.css" rel="stylesheet" type="text/css">
-        <script src="../js/bootstrap.js"></script>
-    </head>
-
-    <body>
-        <div class="container p-5 bg-light">
-            <h1 class="display-6">Datos del grupo</h1>
-            <form class="needs-validation" action="/grupo/wizard-crear-grupo-manual" method="POST" novalidate>
-
-                <div class="row">
-                    <div class="col">
-                        <label for="asignatura" class="form-label">Asignatura</label>
-                        <input type="text" class="form-control" name="asignatura" id="asignatura" required>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class= "col">
-                        <label for="clave" class="form-label">Clave</label>
-                        <input type="text" class="form-control" name="clave" id="clave" required>
-                    </div>
-                    <div class= "col">
-                        <label for="estado" class="form-label">Estado</label>
-                        <select class="form-select custom-select" id="estado" name="estado" required>
-                            <option value = 0>Inactivo</option>
-                            <option value = 1>Activo</option>
-                        </select>
-                    </div>
-                    <div class= "col">
-                        <label for="estado" class="form-label">Imagen</label>
-                        <select class="form-select custom-select" id="imagen" name="imagen" required>
-                            <option value = 0>Calculadora</option>
-                            <option value = 1>Código</option>
-                            <option value = 2>Laboratorio</option>
-                            <option value = 3>Herramienta</option>
-                            <option value = 4>Avión</option>
-                            <option value = 5>Robot</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="row ">
-                    <div class = "col d-flex flex-row-reverse p-2 m-2">
-
-                        <button class="btn btn-primary " type="submit">Siguiente</button>
-
-                        <a class="btn btn-outline-primary" href="/grupo/wizard-crear-grupo-manual">
-                            Limpiar
-                        </a>
-                    </div>
-                </div>
-            </form>
+        <div class="row">
+            <div class="col">
+                <label for="asignatura" class="form-label">Asignatura</label>
+                <input type="text" class="form-control" name="asignatura" id="asignatura" required>
+            </div>
         </div>
-    </body>
-</html>
+
+        <div class="row">
+            <div class="col">
+                <label for="clave" class="form-label">Clave</label>
+                <input type="text" class="form-control" name="clave" id="clave" required>
+            </div>
+            <div class="col">
+                <label for="estado" class="form-label">Estado</label>
+                <select class="form-select custom-select" id="estado" name="estado" required>
+                    <option value=0>Inactivo</option>
+                    <option value=1>Activo</option>
+                </select>
+            </div>
+            <div class="col">
+                <label for="estado" class="form-label">Imagen</label>
+                <select class="form-select custom-select" id="imagen" name="imagen" required>
+                    <option value=0>Calculadora</option>
+                    <option value=1>Código</option>
+                    <option value=2>Laboratorio</option>
+                    <option value=3>Herramienta</option>
+                    <option value=4>Avión</option>
+                    <option value=5>Robot</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row ">
+            <div class="col d-flex flex-row-reverse p-2 m-2">
+
+                <button class="btn btn-primary " type="submit">Siguiente</button>
+
+                <a class="btn btn-outline-primary" href="/grupo/wizard-crear-grupo-manual">
+                    Limpiar
+                </a>
+            </div>
+        </div>
+    </form>
+</div>
+

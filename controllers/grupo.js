@@ -4,7 +4,7 @@ const Models = require('../models');
 const getAllGrupos = async (req, res, next) => {
     const grupos =  await Models.grupo.findAll({});
     console.log({grupos})
-    res.render('Index', {grupos})
+    res.render('index', {grupos})
 }
 
 const getAllGruposByState = async(req, res, next)=>{
@@ -14,7 +14,7 @@ const getAllGruposByState = async(req, res, next)=>{
         }
     })
     console.log({grupos})
-    res.render('Index', {grupos})
+    res.render('index', {grupos})
 }
 
 const createGrupoManual = async (req,res)=>{
