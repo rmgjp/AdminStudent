@@ -27,12 +27,11 @@
 
     </div>
     <form class="needs-validation" action="/alumno/wizard-agregar-alumnos-manual" method="POST" novalidate>
-
-
+        <input type="hidden" id="valorTabla" name="valorTabla">
         <div class="row-cols-1 ">
             <div class="col-auto">
                 <table id="table" data-toggle="table" data-toolbar="#toolbar"  data-click-to-select="true" data-search="true"
-                data-advanced-search="true" data-filter-control="true">
+                data-advanced-search="true" data-filter-control="true" name="table">
                     <thead>
                         <tr>
                             <th data-field="estado" data-sorteable="false" data-checkbox="true"></th>
@@ -48,14 +47,17 @@
             </div>
         </div>
         <div class="row p-3 m-0 d-flex flex-row-reverse">
-            <button class="btn btn-info" type="submit"> Finalizar</button>
+            <button class="btn btn-info" type="submit" id="finalizar"> Finalizar</button>
         </div>
     </form>
 </div>
 
 <script>
     var table = $('#table')
+    var hola = 'hola';
+    var tablaDatos;
     var i = 1;
+
     $('#add').on('click', function () {
         table.bootstrapTable('insertRow',{
             index: i,
@@ -65,6 +67,11 @@
                 apellidos: document.getElementById("ApellidoBox").value,
             }
         })
+        document.getElementById("ClaveBox").value = "";
+        document.getElementById("NombreBox").value = "";
+        document.getElementById("ApellidoBox").value = "";
+        tablaDatos = table.bootstrapTable('getData');
+        document.getElementById("valorTabla").value = JSON.stringify(tablaDatos);
         i = i + 1
     })
 
@@ -78,9 +85,6 @@
         })
     })
 
-    // Get the input field
-    var input = document.getElementById("ApellidoBox");
-
     // Execute a function when the user releases a key on the keyboard
     input.addEventListener("keyup", function(event) {
         // Number 13 is the "Enter" key on the keyboard
@@ -93,6 +97,9 @@
                     apellidos: document.getElementById("ApellidoBox").value,
                 }
             })
+            document.getElementById("ClaveBox").value = "";
+            document.getElementById("NombreBox").value = "";
+            document.getElementById("ApellidoBox").value = "";
         }
         i = i + 1
     });

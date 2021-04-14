@@ -20,13 +20,18 @@ const getAllGruposByState = async(req, res, next)=>{
 const createGrupoManual = async (req,res)=>{
     const {clave,asignatura,estado} = req.body;
     console.log({clave,asignatura,estado});
-    await Models.grupo.create({
-        clave: req.body.clave,
-        asignatura: req.body.asignatura,
-        estado: parseInt(estado,10)
-    })
-    console.log('Guardado');
-    res.redirect('/');
+    try {
+        await Models.grupo.create({
+            clave: req.body.clave,
+            asignatura: req.body.asignatura,
+            estado: parseInt(estado,10)
+        })
+        console.log('Guardado');
+    }
+    catch (err){
+        console.log(err)
+    }
+    res.redirect('/alumno/wizard-agregar-alumnos-manual');
 }
 
 module.exports = {
