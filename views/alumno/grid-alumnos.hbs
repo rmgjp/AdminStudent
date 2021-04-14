@@ -3,7 +3,6 @@
     <div class="row m-2 p-3">
         <h1 class="display-4">Agregar alumnos</h1>
     </div>
-
     <div class="row m-3">
         <div class="colinput-group">
             <input class="form-control" type="text" placeholder="No. Control" id="ClaveBox" name="ClaveBox" aria-label="Clave">
@@ -73,6 +72,7 @@
         tablaDatos = table.bootstrapTable('getData');
         document.getElementById("valorTabla").value = JSON.stringify(tablaDatos);
         i = i + 1
+        console.log(tablaDatos);
     })
 
     $('#remove').on('click', function () {
@@ -103,7 +103,6 @@
         }
         i = i + 1
     });
-
 
     </script>
 </body>
