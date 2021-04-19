@@ -1,8 +1,6 @@
 const Sequelize = require('sequelize');
 const Models = require('../models');
-
-
-
+//Metodo para guardar los alumnos dentro de la tabla/Grid
 const guardarDesdeGrid = async (req,res)=>{
     //Se obtiene el arreglo alojado en objeto invisible del body correspondiente a la tabla
     const tabla = JSON.parse(req.body.valorTabla);
@@ -36,8 +34,9 @@ const guardarDesdeGrid = async (req,res)=>{
     await agregaraGrupo(req.params.idGrupo, tabla);
     res.redirect('/');
 }
-
+//Metodo para consultar los registros de la tabla alumno
 const getAllAlumnos = async (req, res, next) => {
+    //Objeto que alojara el arreglo de alumnos recueprado de la base de datos atravez del modelo de datos
     const alumnos =  await Models.alumno.findAll({});
     console.log(alumnos)
     //res.render('index', {alumnos})

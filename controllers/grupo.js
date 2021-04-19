@@ -8,14 +8,16 @@ const getAllGrupos = async (req, res, next) => {
     console.log({grupos})
     res.render('index', {grupos})
 }
-
+//Método para consultar los grupos dependiendo del estado
 const getAllGruposByState = async(req, res, next)=>{
+    //Busqueda de los grupos que coinciden con el estado especificado
     const grupos = await Models.grupo.findAll({
         where:{
             estado: req.params.estado
         }
     })
-    console.log({grupos})
+    //console.log({grupos})
+    //Renderiza la vista index, sobrecargando el objeto grupos
     res.render('index', {grupos})
 }
 
