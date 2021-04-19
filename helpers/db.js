@@ -22,7 +22,7 @@ module.exports = {
         // Llamada a Sequelize para la creación de las tablas.
         const sequelize = new Sequelize(database, user, password, { dialect: 'mariadb' });
 
-        //TODO: definir los modelos de las tablas y aplicarlos para su creación
+
         db.alumno = require('../models/alumno')(sequelize, Sequelize);
         db.grupo = require('../models/grupo')(sequelize, Sequelize);
         db.alumnogrupo = require('../models/alumnogrupo')(sequelize, Sequelize);
