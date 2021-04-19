@@ -4,7 +4,7 @@
         <h1 class="display-4">Agregar alumnos</h1>
     </div>
     <div class="row m-3">
-        <div class="colinput-group">
+        <div class="col input-group">
             <input class="form-control" type="text" placeholder="No. Control" id="ClaveBox" name="ClaveBox" aria-label="Clave">
         </div>
         <div class="col input-group">
@@ -25,7 +25,7 @@
         </div>
 
     </div>
-    <form class="needs-validation" action="/alumno/wizard-agregar-alumnos-manual" method="POST" novalidate>
+    <form class="needs-validation" action="/alumno/wizard-agregar-alumnos-manual/{{grupo.dataValues.id}}" method="POST" novalidate>
         <input type="hidden" id="valorTabla" name="valorTabla">
         <div class="row-cols-1 ">
             <div class="col-auto">

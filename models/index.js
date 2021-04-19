@@ -1,3 +1,7 @@
+/**
+ * Archivo generado automaticamente por Sequelize.
+ */
+
 'use strict';
 
 const fs = require('fs');
