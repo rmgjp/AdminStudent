@@ -1,3 +1,5 @@
+<title>Mis Grupos - Seguimiento de Estudiantes</title>
+
 <ul class="nav nav-tabs">
     <li class="nav-item">
         <a class="nav-link active" aria-current="page" href="/">Todos</a>
@@ -15,11 +17,16 @@
         {{#each grupos}}
             <div class="col-md-3 m-2">
                 <div class="card" style="width: 18rem;">
+                    <div class="d-flex flex-row-reverse">
+                        <a class="bi bi-trash-fill " align="right" href="/abortar-grupo/{{dataValues.id}}"></a>
+                        <a class="bi bi-pencil-square " align="right" href="#"></a>
+                    </div>
+
                     <img src="#" class="card-img-top" alt="...">
                     <div class="card-body">
                         <h5 class="card-title">{{dataValues.asignatura}}</h5>
                         <p class="card-text">{{dataValues.clave}}</p>
-                        <a href="#" class="btn btn-primary">Ver</a>
+                        <a href="/grupo-inicio/{{dataValues.id}}" class="btn btn-primary">Ver</a>
                     </div>
                 </div>
             </div>
@@ -42,7 +49,7 @@
                         <h5 class="card-title">Agregar nuevo grupo</h5>
                     </div>
                     <div class="row justify-content-md-center">
-                        <a class="btn btn-success rounded-circle" href="/grupo/wizard-crear-grupo">+</a>
+                        <a class="btn btn-success rounded-circle " href="/grupo/wizard-crear-grupo">+</a>
                     </div>
                 </div>
             </div>

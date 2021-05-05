@@ -22,12 +22,13 @@ module.exports = (sequelize, DataTypes) => {
     freezeTableName: true,
     sequelize,
   });
+  /*
   asistencia.associate = function(models){
     asistencia.belongsTo(models.alumnogrupo,{
       as: 'alumnogrupo',
       foreignKey:'idalumnogrupo',
       targetKey:'id'
     });
-  };
+  };*/
   return asistencia;
 };

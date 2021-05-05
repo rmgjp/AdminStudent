@@ -1,5 +1,16 @@
+<title>Agregar alumnos a nuevo grupo - Seguimiento de Estudiantes</title>
 <body>
 <div class="container bg-light m-100">
+    <!-- Sección de declaración de errores. -->
+    {{#each errors}}
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            {{text}}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    {{/each}}
+    <!-- Cuerpo del archivo -->
     <div class="row m-2 p-3">
         <h1 class="display-4">Agregar alumnos</h1>
     </div>

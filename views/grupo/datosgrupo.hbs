@@ -1,7 +1,20 @@
+<title>Datos del nuevo grupo - Seguimiento de Estudiantes</title>
+
 <div class="container p-5 bg-light">
+    <!-- Sección de declaración de errores. -->
+    {{#each errors}}
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            {{text}}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    {{/each}}
+
+
+    <!-- Cuerpo del archivo -->
     <h1 class="display-6">Datos del grupo</h1>
     <form class="needs-validation" action="/grupo/wizard-crear-grupo-manual/" method="POST" novalidate>
-
         <div class="row">
             <div class="col">
                 <label for="asignatura" class="form-label">Asignatura</label>

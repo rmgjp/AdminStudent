@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const controladorGrupo = require('../controllers/grupo');
+const controladorGrupo = require('../controllers/grupo-controller');
 
 router.use(function(req, res, next) {
     next();

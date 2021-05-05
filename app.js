@@ -53,15 +53,25 @@ app.engine('.hbs', exphbs({
     extname: '.hbs'
 }));
 
+
 //Requerimos los archivos de las rutas.
 app.use(require('./routes/index'));
-app.use(require('./routes/asistencia'));
-app.use(require('./routes/alumnos'));
-app.use(require('./routes/actividades'));
-app.use(require('./routes/grupos'));
-app.use(require('./routes/calificaciones'));
-app.use(require('./routes/tema'));
-app.use(require('./routes/tarea'));
+app.use(require('./routes/asistencia-rutas'));
+app.use(require('./routes/alumno-rutas'));
+app.use(require('./routes/actividad-rutas'));
+app.use(require('./routes/grupos-rutas'));
+app.use(require('./routes/calificaciones-rutas'));
+app.use(require('./routes/tema-rutas'));
+app.use(require('./routes/tarea-rutas'));
+
+
+
+app.use((req, res, next) => {
+    res.locals.success_msg = req.flash('success_msg');
+    res.locals.error_msg = req.flash('error_msg');
+    res.locals.error = req.flash('error');
+    next();
+})
 
 
 //Creación de una función para notificar que no se encuentra un directorio.
