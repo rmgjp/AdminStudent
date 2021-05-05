@@ -33,7 +33,28 @@ const getAllGruposByState = async(req, res, next)=>{
     }
 
 }
+const getDatosGrupo = async (req, res) =>{
+    try{
 
+        const grupo = await Models.grupo.findOne({
+            where: {
+                id:  req.params.idgrupo
+            }
+        })
+
+        res.render('grupo/vista-inicio-grupo', {grupo});
+    }catch (err){
+            console.log(err)
+    }
+}
+const abortarGrupo = async (req, res) =>{
+    await Models.grupo.destroy({
+        where:{
+            id: req.params.idgrupo
+        }
+    })
+    res.redirect('/')
+}
 //Método para crear un grupo mediante el modo manual de la aplicación.
 const createGrupoManual = async (req,res)=>{
     const {clave,asignatura,estado} = req.body;
@@ -70,7 +91,9 @@ const createGrupoManual = async (req,res)=>{
 }
 //Exportación de los métodos para su uso interno en aplicación.
 module.exports = {
+    abortarGrupo,
     getAllGrupos,
+    getDatosGrupo,
     getAllGruposByState,
     createGrupoManual
 }
