@@ -1,31 +1,39 @@
 <title>Mis Grupos - Seguimiento de Estudiantes</title>
 
-<ul class="nav nav-tabs">
-    <li class="nav-item">
-        <a class="nav-link active" aria-current="page" href="/">Todos</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="/filtro/1">Activos</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="/filtro/0">Completados</a>
-    </li>
-</ul>
 
-<div class="container p-2" bg-light h-100>
+
+<div class="container p-2 bg-light h-100" style="height: max-content">
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/">Todos</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/filtro/1">Activos</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/filtro/0">Completados</a>
+        </li>
+    </ul>
+
+    <div class="row m-2 p-2">
+        <h2>Mis Grupos</h2>
+    </div>
     <div class="row">
+
         {{#each grupos}}
-            <div class="col-md-3 m-2">
-                <div class="card" style="width: 18rem;">
-                    <div class="d-flex flex-row-reverse">
+            <div class="col-md-3">
+                <div class="card " style="height:24rem">
+                    <div class="card-header d-flex flex-row-reverse">
                         <a class="bi bi-trash-fill " align="right" href="/abortar-grupo/{{dataValues.id}}"></a>
                         <a class="bi bi-pencil-square " align="right" href="#"></a>
                     </div>
 
-                    <img src="#" class="card-img-top" alt="...">
+                    <img src="/img/{{dataValues.img}}.jpeg" class="card-img-top" alt="...">
                     <div class="card-body">
-                        <h5 class="card-title">{{dataValues.asignatura}}</h5>
-                        <p class="card-text">{{dataValues.clave}}</p>
+                        <h5 class="card-title">{{dataValues.asignatura}} - <strong>{{dataValues.clave}}</strong></h5>
+
+                    </div>
+                    <div class="card-footer">
                         <a href="/grupo-inicio/{{dataValues.id}}" class="btn btn-primary">Ver</a>
                     </div>
                 </div>
@@ -33,7 +41,7 @@
 
         {{else}}
             <div class="col-md-3 m-2">
-                <div class="card" style="width: 18rem; height:14rem ">
+                <div class="card" style="height:24rem">
                     <div class="card-body">
                         <h5 class="card-title">No hay grupos existentes.</h5>
                         <p class="card-text">Agregue un grupo.</p>
@@ -43,12 +51,12 @@
         {{/each}}
 
         <div class="col-md-3 m-2">
-            <div class="card" style="width: 18rem;height:14rem">
-                <div class="card-body">
-                    <div class="row justify-content-md-center">
+            <div class="card" style="height:24rem">
+                <div class="card-body justify-content-center align-center">
+                    <div class="row justify-content-center align-items-center">
                         <h5 class="card-title">Agregar nuevo grupo</h5>
                     </div>
-                    <div class="row justify-content-md-center">
+                    <div class="row justify-content-md-center align-items-center">
                         <a class="btn btn-success rounded-circle " href="/grupo/wizard-crear-grupo">+</a>
                     </div>
                 </div>

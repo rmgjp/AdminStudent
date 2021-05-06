@@ -57,8 +57,7 @@ const abortarGrupo = async (req, res) =>{
 }
 //Método para crear un grupo mediante el modo manual de la aplicación.
 const createGrupoManual = async (req,res)=>{
-    const {clave,asignatura,estado} = req.body;
-    console.log({clave,asignatura,estado});
+    const {clave,asignatura,estado,imagen} = req.body;
     const errors = [];
     //Validación de datos de la vista
     if(!clave || !asignatura){
@@ -68,10 +67,14 @@ const createGrupoManual = async (req,res)=>{
     //Si los datos son valido
     else {
         try {
+            console.log(imagen)
+            let picture;
+            console.log()
             await Models.grupo.create({
                 clave: req.body.clave.toUpperCase(),
                 asignatura: req.body.asignatura,
-                estado: parseInt(estado,10)
+                estado: parseInt(estado,10),
+                img: req.body.imagen,
             })
 
             const grupo = await Models.grupo.findOne({

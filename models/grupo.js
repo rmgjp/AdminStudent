@@ -7,6 +7,8 @@ module.exports = (sequelize, DataTypes) => {
             clave: DataTypes.STRING,
             asignatura: DataTypes.STRING,
             estado: DataTypes.INTEGER,
+            img: DataTypes.INTEGER,
+            periodo: DataTypes.STRING,
         },
         {
             //Declaramos que el nombre de la tabla será el mismo que el modelo de datos

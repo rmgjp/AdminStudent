@@ -1,29 +1,31 @@
 <title>{{grupo.dataValues.asignatura}} {{grupo.dataValues.clave}} - Inicio - Seguimiento de Estudiantes</title>
-<div class="container bg-light">
-    <div class="row">
-        <ul class="nav nav-tabs">
-            <li class="nav-item">
-                <a class="nav-link bi bi-house-fill" aria-current="page" href="/"></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="/grupo/inicio/{{grupo.dataValues.id}}">Inicio</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link " href="/grupo/alumnos/{{grupo.dataValues.id}}">Alumnos</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/grupo/temas/{{grupo.dataValues.id}}">Temas</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/grupo/actividades/{{grupo.dataValues.id}}">Actividades</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/grupo/calificaciones/{{grupo.dataValues.id}}">Calificaciones</a>
-            </li>
-        </ul>
-    </div>
+<div class="container bg-light p-2" style="height: content-box">
 
-    <div class="row m-2 p-3">
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link bi bi-house-fill" aria-current="page" href="/"></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/grupo/inicio/{{grupo.dataValues.id}}"> Inicio</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link " href="/grupo/alumnos/{{grupo.dataValues.id}}"><i class="bi bi-people-fill"></i> Alumnos</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/grupo/temas/{{grupo.dataValues.id}}"><i class="bi bi-book-fill"></i> Temas</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/grupo/actividades/{{grupo.dataValues.id}}"><i
+                    class="bi bi-bookmark-check-fill"></i> Actividades</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/grupo/calificaciones/{{grupo.dataValues.id}}"><i
+                    class="bi bi-file-spreadsheet-fill"></i> Calificaciones</a>
+        </li>
+    </ul>
+
+
+    <div class="row m-2 ">
         <h2 class="">{{grupo.dataValues.clave}} - {{grupo.dataValues.asignatura}}</h2>
     </div>
 
