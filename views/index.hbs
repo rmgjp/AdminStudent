@@ -2,8 +2,8 @@
 
 
 
-<div class="container p-2 bg-light h-100" style="height: max-content">
-    <ul class="nav nav-tabs">
+<div class="container p-2  h-100" style="height: max-content">
+    <ul class="nav nav-tabs ">
         <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="/">Todos</a>
         </li>
@@ -19,9 +19,8 @@
         <h2>Mis Grupos</h2>
     </div>
     <div class="row">
-
         {{#each grupos}}
-            <div class="col-md-3">
+            <div class="col m-1">
                 <div class="card " style="height:24rem">
                     <div class="card-header d-flex flex-row-reverse">
                         <a class="bi bi-trash-fill " align="right" href="/abortar-grupo/{{dataValues.id}}"></a>
@@ -40,7 +39,7 @@
             </div>
 
         {{else}}
-            <div class="col-md-3 m-2">
+            <div class="col m-1">
                 <div class="card" style="height:24rem">
                     <div class="card-body">
                         <h5 class="card-title">No hay grupos existentes.</h5>
@@ -50,9 +49,10 @@
             </div>
         {{/each}}
 
-        <div class="col-md-3 m-2">
+        <div class="col m-1">
             <div class="card" style="height:24rem">
                 <div class="card-body justify-content-center align-center">
+
                     <div class="row justify-content-center align-items-center">
                         <h5 class="card-title">Agregar nuevo grupo</h5>
                     </div>
