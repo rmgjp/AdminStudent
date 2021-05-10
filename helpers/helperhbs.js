@@ -1,5 +1,5 @@
 /**
- * Helper para Handlebars, expande las posibilidades de comparación
+ * Helper para Handlebars, expande las posibilidades de comparación,
  * permite a Handlebars comparar las variables de los datos.
  */
 

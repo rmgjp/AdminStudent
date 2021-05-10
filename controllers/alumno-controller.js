@@ -4,13 +4,11 @@ const Models = require('../models');
 //Metodo para guardar los alumnos dentro de la tabla/Grid
 const guardarDesdeGrid = async (req, res) => {
     //Se obtiene el arreglo alojado en objeto invisible del body correspondiente a la tabla
-    var tabla;
-
     try {
-        tabla = JSON.parse(req.body.valorTabla);
-        //console.log(tabla);
+        alumnos = JSON.parse(req.body.valorTabla);
+
         //Ciclo para iterar entre los datos del arreglo Tabla
-        for (let i = 0; i < tabla.length; i++) {
+        for (let alumno in alumnos) {
             try {
                 //Llamado del modelo para buscar el registro
                 //si existe el registro no se guarda
@@ -19,30 +17,30 @@ const guardarDesdeGrid = async (req, res) => {
                 await Models.alumno.findOrCreate(
                     {
                         where: {
-                            clave: tabla[i].clave.toUpperCase()
+                            clave: alumnos[alumno].clave.toUpperCase()
                         },
                         defaults: {
-                            clave: tabla[i].clave.toUpperCase(),
-                            nombre: tabla[i].nombre.toUpperCase(),
-                            apellidos: tabla[i].apellidos.toUpperCase()
+                            clave: alumnos[alumno].clave.toUpperCase(),
+                            nombre: alumnos[alumno].nombre.toUpperCase(),
+                            apellidos: alumnos[alumno].apellidos.toUpperCase()
                         }
                     });
             } catch (err) {
                 console.log(err)
             }
+
         }
+        await agregaraGrupo(req.params.idGrupo, alumnos);
     } catch (error) {
         const errors = []
         errors.push({text: 'No ha registrado ningún alumno, registre al menos uno'})
         res.render('alumno/grid-alumnos', {errors})
     }
 
-
-
     //Llamada del método para asociar la tabla alumno y grupo
     //con la tabla alumnogrupo resultado de una relación muchos a
     //muchos.
-    await agregaraGrupo(req.params.idGrupo, tabla);
+
     res.redirect('/');
 }
 //Metodo para consultar los registros de la tabla alumno
@@ -56,56 +54,63 @@ const getAllAlumnos = async (req, res, next) => {
  * Sección para metodos de la relación Alumno-Grupo
  */
 //Metodo para agregar el id del grupo y id del alumno y relacionar ambas tablas.
-const agregaraGrupo = async (idgrupo, tabla) => {
-    let i = 0;
-    while (i < tabla.length) {
+const agregaraGrupo = async (idgrupo, alumnos) => {
+
+    for (let alumno in alumnos) {
         try {
-            console.log(tabla[i].clave.toUpperCase());
+            console.log(alumnos[alumno].clave.toUpperCase());
             //Busqueda del alumno para obtener el id interno de la base de datos.
-            const alumno = await Models.alumno.findOne({
+            const findAlumno = await Models.alumno.findOne({
                 where: {
-                    clave: tabla[i].clave.toUpperCase()
+                    clave: alumnos[alumno].clave.toUpperCase()
                 }
             });
             await Models.alumnogrupo.findOrCreate({
                 where: {
-                    idalumno: alumno.dataValues.id,
+                    idalumno: findAlumno.dataValues.id,
                     idgrupo: idgrupo
                 },
                 defaults: {
-                    idalumno: alumno.dataValues.id,
+                    idalumno: findAlumno.dataValues.id,
                     idgrupo: idgrupo
                 }
             });
         } catch (err) {
             console.log(err);
         }
-        i++;
     }
+
 }
+//Método para obtener los alumnos relacionados con X grupo.
 const getListAlumnosByGroup = async (req, res) => {
     try {
+        //Obtención del id
         const idgrupo = req.params.idgrupo;
 
+        //Se obtienen todos los datos del grupo mediante el id
         const grupo = await Models.grupo.findOne({
             where: {
                 id: req.params.idgrupo
             }
         });
 
+        //Se separan los datos del grupo
         const {asignatura, clave} = grupo;
 
+        //Se busca la relación de los alumnos.
         const alumnogrupos = await Models.alumnogrupo.findAll({
             where: {
                 idgrupo: req.params.idgrupo
             }
         });
+
+        //Se genera un arreglo donde se guardan los alumnos relacionados con el grupo
         let alumnos = [];
 
-        for (let i = 0; i < alumnogrupos.length; i++) {
+        for (punteroAlumno in alumnogrupos){
             const alumno = await Models.alumno.findAll({
                 where: {
-                    id: alumnogrupos[i].dataValues.idalumno
+                    id: alumnogrupos[punteroAlumno].dataValues.idalumno
                 }
             });
             alumnos.push(alumno[0]);

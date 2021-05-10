@@ -33,20 +33,20 @@ const getAllGruposByState = async(req, res, next)=>{
     }
 
 }
+//Metodo para obtener todos los datos del grupo.
 const getDatosGrupo = async (req, res) =>{
     try{
-
         const grupo = await Models.grupo.findOne({
             where: {
                 id:  req.params.idgrupo
             }
         })
-
         res.render('grupo/vista-inicio-grupo', {grupo});
     }catch (err){
             console.log(err)
     }
 }
+//Metodo para eliminar un grupo si se da click en cancelar.
 const abortarGrupo = async (req, res) =>{
     await Models.grupo.destroy({
         where:{
