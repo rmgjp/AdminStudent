@@ -1,4 +1,4 @@
-<h3> Herramienta para la administración y gestión del rendiento del estudiante </h3>
+<h2> Herramienta para la administración y gestión del rendiento del estudiante </h2>
 Proyecto para obtener el grado de Ingeniero en Sistemas Computacionales
 <p>
 desarrollado por:
