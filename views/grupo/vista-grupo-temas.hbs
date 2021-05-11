@@ -1,3 +1,5 @@
+<title>{{asignatura}} {{clave}} - Temas - Seguimiento de Estudiantes</title>
+
 <div class="container p-2 bg-light">
     <!-- Barra de navegación -->
     <ul class="nav nav-tabs">
@@ -27,4 +29,45 @@
         <h2>Temas</h2>
     </div>
     <!-- Contenido de la vista -->
+    <div class="row m-2 p-2">
+        <!-- Generación de un card por tema -->
+        {{#each tema}}
+            <div class="col m-1">
+                <div class="card">
+                    <div class="card-header d-flex flex-row-reverse">
+                        <a class="bi bi-trash-fill " align="right" href="#"></a>
+                        <a class="bi bi-pencil-square " align="right" href="#"></a>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">{{dataValues.nombre}}</h5>
+                        <a href="#" class="btn btn-primary">Actividades</a>
+                    </div>
+                </div>
+            </div>
+        <!-- En caso de que no existan temas se despliega un card con un mensaje -->
+        {{else}}
+            <div class="col m-1">
+                <div class="card" style="height:12rem">
+                    <div class="card-body">
+                        <h5 class="card-title">No hay temas existentes en este grupo.</h5>
+                        <p class="card-text">Agregue un tema.</p>
+                    </div>
+                </div>
+            </div>
+        {{/each}}
+
+        <!-- Card fija para la creación de un grupo -->
+        <div class="col m-1">
+            <div class="card" >
+                <div class="card-body justify-content-center align-center">
+                    <div class="row justify-content-center align-items-center">
+                        <h5 class="card-title">Agregar nuevo tema</h5>
+                    </div>
+                    <div class="row justify-content-md-center align-items-center">
+                        <a class="btn btn-success rounded-circle" href="/tema/nuevo-tema/{{idgrupo}}">+</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
