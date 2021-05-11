@@ -118,7 +118,7 @@ const getListAlumnosByGroup = async (req, res) => {
         console.log({alumnos});
         res.render('grupo/vista-grupo-alumnos', {alumnos, idgrupo, asignatura, clave});
     } catch (err) {
-        console.log(err)
+        console.log(err);
     }
 
 }
