@@ -1,0 +1,19 @@
+<title>Nuevo tema - Seguimiento de Estudiantes</title>
+
+<div class="container p-2 bg-light align-content-center">
+    <div class="card">
+        <h4 class="card-header">Nuevo Tema</h4>
+        <div class="card-body">
+            <form class="needs-validation" action="/tema/nuevo-tema/{{idgrupo}}" method="POST" novalidate>
+                <div class="row">
+                    <label for="nombre" class="form-label">Nombre</label>
+                    <input type="tt" class="form-control" name="nombre" id="nombre" required>
+                </div>
+                <div class="row">
+                    <button class="btn btn-primary" type="submit">Guardar</button>
+                    <a class="btn btn-danger align-right" href="/grupo/temas/{{idgrupo}}" role="button">Cancelar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
