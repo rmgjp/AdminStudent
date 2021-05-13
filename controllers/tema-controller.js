@@ -29,19 +29,20 @@ const getTemasByGrupo = async (req,res) =>{
 }
 const guardarTema = async (req,res) =>{
     //Obtenemos los valores del formulario para crear un nuevo tema
-    const {nombre} = req.body;
+    const {nombre, numerotema} = req.body;
     const idgrupo = req.params.idgrupo;
     const errors = [];
     //Verificamos que el atributo no este vacío
-    if(!nombre){
-        erros.push({text: "El campo está vacío"});
+    if(!nombre || !numerotema){
+        errors.push({text: "El campo está vacío"});
         res.render('tema/tema-nuevo', {errors});
     }
     else{
         try{
             await Models.tema.create({
                 idgrupo: idgrupo,
-                nombre: req.body.nombre
+                nombre: req.body.nombre,
+                numerotema: req.body.numerotema
             })
             res.redirect('/grupo/temas/' + idgrupo);
         }

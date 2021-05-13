@@ -1,5 +1,4 @@
 var table = $('#table')
-var hola = 'hola';
 var tablaDatos;
 var i = 1;
 
@@ -30,8 +29,6 @@ $('#remove').on('click', function () {
         values: claves
     })
 })
-
-// Execute a function when the user releases a key on the keyboard
 input.addEventListener("keyup", function(event) {
     // Number 13 is the "Enter" key on the keyboard
     if (event.keyCode === 13) {
