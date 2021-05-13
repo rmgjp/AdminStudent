@@ -16,6 +16,11 @@ module.exports = (sequelize, DataTypes) => {
         deferrable: Deferrable.INITIALLY_IMMEDIATE
       }
     },
+    numerotema:{
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+
     nombre:{
       type: DataTypes.STRING,
       allowNull: false

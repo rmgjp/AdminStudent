@@ -7,6 +7,7 @@ const guardarDesdeGrid = async (req, res) => {
     try {
         alumnos = JSON.parse(req.body.valorTabla);
 
+
         //Ciclo para iterar entre los datos del arreglo Tabla
         for (let alumno in alumnos) {
             try {
@@ -28,7 +29,6 @@ const guardarDesdeGrid = async (req, res) => {
             } catch (err) {
                 console.log(err)
             }
-
         }
         await agregaraGrupo(req.params.idGrupo, alumnos);
     } catch (error) {
@@ -47,7 +47,7 @@ const guardarDesdeGrid = async (req, res) => {
 const getAllAlumnos = async (req, res, next) => {
     //Objeto que alojara el arreglo de alumnos recueprado de la base de datos atravez del modelo de datos
     const alumnos = await Models.alumno.findAll({});
-    console.log(alumnos)
+    console.log(alumnos);
     //res.render('index', {alumnos})
 }
 /**
