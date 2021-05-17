@@ -18,10 +18,10 @@
     <div class="row m-2 p-2">
         <h2>Mis Grupos</h2>
     </div>
-    <div class="row">
+    <div class="row m-2 p-2">
         {{#each grupos}}
-            <div class="col m-1">
-                <div class="card " style="height:24rem">
+            <div class="col-md-4 col-4 col-xl-4 col-lg-4 col-sm-4 p-1" >
+                <div class="card " style="height:28rem; ">
                     <div class="card-header d-flex flex-row-reverse">
                         <a class="bi bi-trash-fill " align="right" href="/abortar-grupo/{{dataValues.id}}"></a>
                         <a class="bi bi-pencil-square " align="right" href="#"></a>
@@ -39,8 +39,8 @@
             </div>
 
         {{else}}
-            <div class="col m-1">
-                <div class="card" style="height:24rem">
+            <div class="col-md-4 col-4 col-xl-4 col-lg-4 col-sm-4 p-1">
+                <div class="card" style="height:28rem ">
                     <div class="card-body">
                         <h5 class="card-title">No hay grupos existentes.</h5>
                         <p class="card-text">Agregue un grupo.</p>
@@ -49,8 +49,8 @@
             </div>
         {{/each}}
 
-        <div class="col m-1">
-            <div class="card" style="height:24rem">
+        <div class="col-md-4 col-4 col-xl-4 col-lg-4 col-sm-4 p-1">
+            <div class="card" style="height:28rem; ">
                 <div class="card-body justify-content-center align-center">
 
                     <div class="row justify-content-center align-items-center">

@@ -4,6 +4,11 @@ const router = express.Router();
 /**
  * Rutas para añadir alumnos a un grupo manualmente
 **/
+
+router.get('/alumno/wizard-agregar-alumnos-manual/:idGrupo', (req,res)=>(
+    res.render('alumno/grid-alumnos', {idgrupo: req.params.idGrupo})
+));
+
 router.post('/alumno/wizard-agregar-alumnos-manual/:idGrupo', controladorAlumno.guardarDesdeGrid);
 
 

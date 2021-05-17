@@ -1,6 +1,6 @@
 var table = $('#table')
 var tablaDatos;
-var i = 1;
+var i = 0;
 
 //Método para añadir datos a la tabla.
 $('#add').on('click', function () {

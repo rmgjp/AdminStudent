@@ -28,17 +28,17 @@
             <input class="form-control" type="text" placeholder="Nombre(s)" id="NombreBox" name="NombreBox" aria-label="Nombre(s)">
         </div>
     </div>
-
     <div class="row-cols-1  d-flex flex-row-reverse ">
         <div class="col-auto d-flex flex-row-reverse p-3" >
             <div id="toolbar">
-                <button id="remove" class="btn btn-danger">Eliminar</button>
-                <button id="add" class="btn btn-primary">Añadir nuevo</button>
+                <a id="remove" class="btn btn-danger">Eliminar</a>
+                <a id="add" class="btn btn-primary">Añadir nuevo</a>
             </div>
         </div>
     </div>
+
     <!-- Tabla -->
-    <form class="needs-validation" action="/alumno/wizard-agregar-alumnos-manual/{{grupo.dataValues.id}}" method="POST" novalidate>
+    <form class="needs-validation" action="/alumno/wizard-agregar-alumnos-manual/{{idgrupo}}" method="POST" novalidate>
         <input type="hidden" id="valorTabla" name="valorTabla">
         <div class="row-cols-1 ">
             <div class="col-auto">
@@ -60,7 +60,7 @@
         </div>
         <div class="row p-3 d-flex flex-row-reverse">
             <button class="btn btn-primary" type="submit" id="finalizar">Finalizar</button>
-            <a class="btn btn-danger" href="/abortar-grupo/{{grupo.dataValues.id}}" role="button">Cancelar</a>
+            <a class="btn btn-danger" href="/abortar-grupo/{{idgrupo}}">Cancelar</a>
         </div>
     </form>
 </div>

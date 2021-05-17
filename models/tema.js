@@ -33,6 +33,7 @@ module.exports = (sequelize, DataTypes) => {
 
   tema.associate= function(models){
     tema.belongsTo(models.grupo,{
+      onDelete: 'CASCADE',
       as: 'grupo',
       foreignKey:'idgrupo',
       targetKey:'id'

@@ -1,6 +1,6 @@
 var table = $('#table')
 var tablaDatos;
-var i = 1;
+var i = 0;
 
 $('#add').on('click', function () {
     table.bootstrapTable('insertRow',{
@@ -28,7 +28,12 @@ $('#remove').on('click', function () {
         field: 'clave',
         values: claves
     })
+    tablaDatos = table.bootstrapTable('getData');
+    document.getElementById("valorTabla").value = JSON.stringify(tablaDatos);
+    i = i - 1
 })
+
+// Execute a function when the user releases a key on the keyboard
 input.addEventListener("keyup", function(event) {
     // Number 13 is the "Enter" key on the keyboard
     if (event.keyCode === 13) {

@@ -71,15 +71,12 @@ const createGrupoManual = async (req,res)=>{
     //Si los datos son valido
     else {
         try {
-            console.log(imagen)
-            let picture;
-            console.log()
             await Models.grupo.create({
                 clave: req.body.clave.toUpperCase(),
                 asignatura: req.body.asignatura,
                 estado: parseInt(estado,10),
                 img: req.body.imagen,
-            })
+            });
 
             const grupo = await Models.grupo.findOne({
                 where:{
@@ -91,7 +88,7 @@ const createGrupoManual = async (req,res)=>{
             console.log("Id" + id);
             //Renderizado de la vista para agregar alumnos y posteriormente
             //relacionarlos.
-            res.render('alumno/grid-alumnos', {grupo});
+            res.redirect('/alumno/wizard-agregar-alumnos-manual/' + id);
         }
         catch (err){
             console.log(err)

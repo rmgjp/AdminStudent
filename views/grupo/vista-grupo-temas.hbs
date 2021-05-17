@@ -29,8 +29,8 @@
     <div class="row m-2 p-2">
         <!-- Generación de un card por tema -->
         {{#each tema}}
-            <div class="col m-1">
-                <div class="card">
+            <div class="col-md-3 col-3 col-xl-3 col-lg-3 col-sm-3 p-1" >
+                <div class="card" style="height:14rem;">
                     <div class="card-header d-flex flex-row-reverse">
                         <a class="bi bi-trash-fill " align="right" href="#"></a>
                         <a class="bi bi-pencil-square " align="right" href="#"></a>
@@ -45,8 +45,8 @@
             </div>
         <!-- En caso de que no existan temas se despliega un card con un mensaje -->
         {{else}}
-            <div class="col m-1">
-                <div class="card" style="height:12rem">
+            <div class="col-md-3 col-3 col-xl-3 col-lg-3 col-sm-3 p-1" >
+                <div class="card" style="height:14rem;">
                     <div class="card-body">
                         <h5 class="card-title">No hay temas existentes en este grupo.</h5>
                         <p class="card-text">Agregue un tema.</p>
@@ -56,8 +56,8 @@
         {{/each}}
 
         <!-- Card fija para la creación de un grupo -->
-        <div class="col m-1">
-            <div class="card" >
+        <div class="col-md-3 col-3 col-xl-3 col-lg-3 col-sm-3 p-1">
+            <div class="card" style="height:14rem;">
                 <div class="card-body justify-content-center align-center">
                     <div class="row justify-content-center align-items-center">
                         <h5 class="card-title">Agregar nuevo tema</h5>
