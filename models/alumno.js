@@ -23,6 +23,5 @@ module.exports = (sequelize, DataTypes) => {
   alumno.associate = function (models){
       alumno.belongsToMany(models.grupo, {through: models.alumnogrupo, foreignKey:'idalumno',otherKey:'idgrupo'});
   }
-
   return alumno;
 };

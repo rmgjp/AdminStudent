@@ -48,12 +48,16 @@ const getDatosGrupo = async (req, res) =>{
 }
 //Metodo para eliminar un grupo si se da click en cancelar.
 const abortarGrupo = async (req, res) =>{
-    await Models.grupo.destroy({
-        where:{
-            id: req.params.idgrupo
-        }
-    })
-    res.redirect('/')
+    try{
+        await Models.grupo.destroy({
+            where:{
+                id: req.params.idgrupo
+            }
+        })
+        res.redirect('/')
+    }catch (err){
+        console.log(err);
+    }
 }
 //Método para crear un grupo mediante el modo manual de la aplicación.
 const createGrupoManual = async (req,res)=>{
@@ -81,8 +85,10 @@ const createGrupoManual = async (req,res)=>{
                 where:{
                     clave: req.body.clave.toUpperCase()
                 }
-            })
-            console.log({grupo})
+            });
+            const {id} = grupo;
+            //console.log({grupo})
+            console.log("Id" + id);
             //Renderizado de la vista para agregar alumnos y posteriormente
             //relacionarlos.
             res.render('alumno/grid-alumnos', {grupo});

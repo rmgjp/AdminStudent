@@ -37,6 +37,9 @@ $('#remove').on('click', function () {
         //Se leen valores seleccionados
         values: claves
     })
+    tablaDatos = table.bootstrapTable('getData');
+    document.getElementById("valorTabla").value = JSON.stringify(tablaDatos);
+    i = i - 1
 })
 
 input.addEventListener("keyup", function(event) {

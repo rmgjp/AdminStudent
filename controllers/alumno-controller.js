@@ -4,44 +4,41 @@ const Models = require('../models');
 //Metodo para guardar los alumnos dentro de la tabla/Grid
 const guardarDesdeGrid = async (req, res) => {
     //Se obtiene el arreglo alojado en objeto invisible del body correspondiente a la tabla
-    try {
-        alumnos = JSON.parse(req.body.valorTabla);
-
-
-        //Ciclo para iterar entre los datos del arreglo Tabla
-        for (let alumno in alumnos) {
-            try {
-                //Llamado del modelo para buscar el registro
-                //si existe el registro no se guarda
-                //si no existe el registro se guarda
-                //evita duplicados.
-                await Models.alumno.findOrCreate(
-                    {
-                        where: {
-                            clave: alumnos[alumno].clave.toUpperCase()
-                        },
-                        defaults: {
-                            clave: alumnos[alumno].clave.toUpperCase(),
-                            nombre: alumnos[alumno].nombre.toUpperCase(),
-                            apellidos: alumnos[alumno].apellidos.toUpperCase()
-                        }
-                    });
-            } catch (err) {
-                console.log(err)
-            }
-        }
-        await agregaraGrupo(req.params.idGrupo, alumnos);
-    } catch (error) {
-        const errors = []
+    if(tryParseJSON(req.body.valorTabla) == false){
+        console.log('Alumnos Vacios');
+        let errors = []
         errors.push({text: 'No ha registrado ningún alumno, registre al menos uno'})
-        res.render('alumno/grid-alumnos', {errors})
+        res.render('alumno/grid-alumnos', {errors,idgrupo})
     }
-
-    //Llamada del método para asociar la tabla alumno y grupo
-    //con la tabla alumnogrupo resultado de una relación muchos a
-    //muchos.
-
-    res.redirect('/');
+    else{
+        alumnos = tryParseJSON(req.body.valorTabla)
+        console.log("Alumnos leidos: " + alumnos);
+        //Ciclo para iterar entre los datos del arreglo Tabla
+        console.log('Alumnos con datos');
+        for (let alumno in alumnos) {
+            //Llamado del modelo para buscar el registro
+            //si existe el registro no se guarda
+            //si no existe el registro se guarda
+            //evita duplicados.
+            await Models.alumno.findOrCreate(
+                {
+                    where: {
+                        clave: alumnos[alumno].clave.toUpperCase()
+                    },
+                    defaults: {
+                        clave: alumnos[alumno].clave.toUpperCase(),
+                        nombre: alumnos[alumno].nombre.toUpperCase(),
+                        apellidos: alumnos[alumno].apellidos.toUpperCase()
+                    }
+                });
+        }
+        console.log(idgrupo)
+        await agregaraGrupo(idgrupo, alumnos);
+        //Llamada del método para asociar la tabla alumno y grupo
+        //con la tabla alumnogrupo resultado de una relación muchos a
+        //muchos.
+        res.redirect('/');
+    }
 }
 //Metodo para consultar los registros de la tabla alumno
 const getAllAlumnos = async (req, res, next) => {
