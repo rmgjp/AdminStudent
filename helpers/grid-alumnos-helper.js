@@ -3,21 +3,23 @@ var tablaDatos;
 var i = 0;
 
 $('#add').on('click', function () {
-    table.bootstrapTable('insertRow',{
-        index: i,
-        row:{
-            clave:  document.getElementById("ClaveBox").value,
-            nombre: document.getElementById('NombreBox').value,
-            apellidos: document.getElementById("ApellidoBox").value,
-        }
-    })
-    document.getElementById("ClaveBox").value = "";
-    document.getElementById("NombreBox").value = "";
-    document.getElementById("ApellidoBox").value = "";
-    tablaDatos = table.bootstrapTable('getData');
-    document.getElementById("valorTabla").value = JSON.stringify(tablaDatos);
-    i = i + 1
-    console.log(tablaDatos);
+    if(document.getElementById("ClaveBox").value && document.getElementById('NombreBox').value && document.getElementById("ApellidoBox").value){
+        table.bootstrapTable('insertRow',{
+            index: i,
+            row:{
+                clave:  document.getElementById("ClaveBox").value,
+                nombre: document.getElementById('NombreBox').value,
+                apellidos: document.getElementById("ApellidoBox").value,
+            }
+        })
+        document.getElementById("ClaveBox").value = "";
+        document.getElementById("NombreBox").value = "";
+        document.getElementById("ApellidoBox").value = "";
+        tablaDatos = table.bootstrapTable('getData');
+        document.getElementById("valorTabla").value = JSON.stringify(tablaDatos);
+        i = i + 1
+        console.log(tablaDatos);
+    }
 })
 
 $('#remove').on('click', function () {
