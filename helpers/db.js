@@ -28,7 +28,7 @@ module.exports = {
         db.grupo = require('../models/grupo')(sequelize, Sequelize);
         db.alumnogrupo = require('../models/alumnogrupo')(sequelize, Sequelize);
         db.tema = require('../models/tema')(sequelize, Sequelize);
-        db.tarea = require('../models/tarea')(sequelize, Sequelize);
+        db.tarea = require('../models/actividad')(sequelize, Sequelize);
         db.calificacion = require('../models/calificacion')(sequelize, Sequelize);
         db.asistencia = require('../models/asistencia')(sequelize, Sequelize);
 

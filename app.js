@@ -64,7 +64,7 @@ app.use(require('./routes/actividad-rutas'));
 app.use(require('./routes/grupos-rutas'));
 app.use(require('./routes/calificaciones-rutas'));
 app.use(require('./routes/tema-rutas'));
-app.use(require('./routes/tarea-rutas'));
+
 
 
 
