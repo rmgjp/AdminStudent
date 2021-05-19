@@ -32,7 +32,11 @@
         <!--Entrada de datos para agregar actividades al tema.-->
         <div class="row m-2 p-2">
             <div class="card w-100" style="height: max-content">
-                <h5 class="card-header">Actividades del nuevo tema</h5>
+                <div class="card-header">
+
+                    <h5>Actividades del nuevo tema <a  class="bi bi-info-circle-fill" data-toggle="popover" title="Opcional" data-content="Puede añadir o no actividades al crear un nuevo tema. Las actividades también pueden ser añadidas en la vista de actividades, correspondiente al tema."></a></h5>
+
+                </div>
                 <div class="card-body">
                     <div class="row">
                         <div class="col-6">
@@ -45,7 +49,7 @@
                         </div>
                         <div class="col">
                             <label for="tipoBox" class="form-label">Categoría</label>
-                            <select class="form-select" name="tipoBox" id="tipoBox" value=1>
+                            <select class="custom-select" name="tipoBox" id="tipoBox" value=1>
                                 <option value="1">Investigación</option>
                                 <option value="2">Presentación</option>
                                 <option value="3">Proyecto</option>

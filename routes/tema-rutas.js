@@ -10,6 +10,6 @@ router.get('/tema/nuevo-tema/:idgrupo', (req,res) =>{
     res.render('tema/tema-nuevo', {idgrupo: req.params.idgrupo});
 });
 
-router.post('/tema/nuevo-tema/:idgrupo', controladorTema.guardarTema);
+router.post('/tema/nuevo-tema/:idgrupo', controladorTema.guardarTemaActividades);
 
 module.exports = router;

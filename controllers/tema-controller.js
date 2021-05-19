@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize');
 const Models = require('../models');
+const actividadControler = require('../controllers/actividad-controller');
 /**
  * Método para obtener los temas por grupo
  * **/
@@ -27,6 +28,46 @@ const getTemasByGrupo = async (req,res) =>{
         console.log(err);
     }
 }
+
+const getTemasByGrupoEtiquetas = async (idGrupo) =>{
+    try{
+        const tema = await Models.tema.findAll({
+            where: {
+                idgrupo: idGrupo
+            }
+        });
+        console.log(tema);
+        return tema;
+    }
+    catch(err){
+        console.log(err);
+    }
+}
+
+const getTemaData = async (idGrupo, Nombre) =>{
+    const tema = await Models.tema.findOne({
+        where: {
+            idgrupo: idGrupo,
+            nombre: Nombre
+        }
+    });
+    return tema;
+}
+
+const guardarTemaActividades = async (req, res) =>{
+
+    await guardarTema(req,res);
+
+    if(tryParseJSON(req.body.valorTabla) != false){
+        tema = await getTemaData(req.params.idgrupo, req.body.nombre);
+        const {id} = tema;
+        console.log("idtema: " + id);
+        await actividadControler.guardarDesdeGrid(req,res,id);
+        console.log('Tema con actividades Guardado');
+    }
+    res.redirect('/grupo/temas/' + req.params.idgrupo)
+}
+
 const guardarTema = async (req,res) =>{
     //Obtenemos los valores del formulario para crear un nuevo tema
     const {nombre, numerotema} = req.body;
@@ -51,7 +92,26 @@ const guardarTema = async (req,res) =>{
         }
     }
 }
+
 module.exports = {
     getTemasByGrupo,
-    guardarTema
+    guardarTema,
+    guardarTemaActividades,
+    getTemasByGrupoEtiquetas
 }
+
+function tryParseJSON (jsonString){
+    try {
+        var o = JSON.parse(jsonString);
+
+        // Handle non-exception-throwing cases:
+        // Neither JSON.parse(false) or JSON.parse(1234) throw errors, hence the type-checking,
+        // but... JSON.parse(null) returns null, and typeof null === "object",
+        // so we must check for that, too. Thankfully, null is falsey, so this suffices:
+        if (o && typeof o === "object") {
+            return o;
+        }
+    }
+    catch (e) { }
+    return false;
+};
