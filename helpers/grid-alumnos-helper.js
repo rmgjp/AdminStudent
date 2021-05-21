@@ -4,6 +4,7 @@ var i = 0;
 
 $('#add').on('click', function () {
     if(document.getElementById("ClaveBox").value && document.getElementById('NombreBox').value && document.getElementById("ApellidoBox").value){
+
         table.bootstrapTable('insertRow',{
             index: i,
             row:{
