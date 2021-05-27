@@ -75,6 +75,7 @@ const createGrupoManual = async (req,res)=>{
                 clave: req.body.clave.toUpperCase(),
                 asignatura: req.body.asignatura,
                 estado: parseInt(estado,10),
+                periodo: req.body.periodo.toUpperCase(),
                 img: req.body.imagen,
             });
 
@@ -88,7 +89,7 @@ const createGrupoManual = async (req,res)=>{
             console.log("Id" + id);
             //Renderizado de la vista para agregar alumnos y posteriormente
             //relacionarlos.
-            res.redirect('/alumno/wizard-agregar-alumnos-manual/' + id);
+            res.redirect('/alumno/wizard-agregar-alumnos-manual/' + id +'/0');
         }
         catch (err){
             console.log(err)

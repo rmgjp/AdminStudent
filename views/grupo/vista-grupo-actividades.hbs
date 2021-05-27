@@ -1,4 +1,4 @@
-<div class="container p-2 bg-light">
+<div class="container-fluid p-2 bg-light">
     <!-- Barra de navegación -->
     <ul class="nav nav-tabs">
         <li class="nav-item">
@@ -31,14 +31,42 @@
     </div>
 
     <div class="row m-2 p-2">
-        <div class="list-group">
-            {{#each actividades}}
-                <a class="list-group-item list-group-item-action" href="#"><i class="bi bi-bookmark-fill"></i> {{dataValues.nombre}}</a>
-            {{else}}
-                <a class="list-group-item list-group-item-action disabled">El tema no tiene actividades asignadas</a>
-            {{/each}}
-            <a class="list-group-item list-group-item-action" href="#"><i class="bi bi-bookmark-plus-fill"></i> Nueva Actividad</a>
+        <div class="col-5">
+            <div class="list-group">
+                {{#each actividades}}
+                    <a class="list-group-item list-group-item-action" href="/grupo/actividades/{{../idgrupo}}/{{../idtema}}/{{dataValues.id}}"><i class="bi bi-bookmark-fill"></i> {{dataValues.nombre}}</a>
+                {{else}}
+                    <a class="list-group-item list-group-item-action disabled">El tema no tiene actividades asignadas</a>
+                {{/each}}
+                {{#iflogico idtema '!=' ''}}
+                    <a class="list-group-item list-group-item-action" href="/actividad/nueva-actividad/{{idgrupo}}/{{idtema}}"><i class="bi bi-bookmark-plus-fill"></i> Nueva Actividad</a>
+                {{else}}
+                    <a class="list-group-item " data-toggle="popover" title="Información" data-content="Seleccione un tema para agregar actividades."><i class="bi bi-bookmark-plus-fill"></i> Nueva Actividad</a>
+                {{/iflogico}}
+            </div>
         </div>
+        <div class="col">
+            <div class="container bg-white">
+                {{#if actividad}}
+                    <form>
+                        <div class="card">
+                            <div class="card-header">
+                                <h4>Datos de la actividad</h4>
+                            </div>
+                            <div class="card-body">
+
+                            </div>
+                        </div>
+                    </form>
+                {{else}}
+                    <h2>Seleccione una actividad para mostrar más información.</h2>
+                {{/if}}
+            </div>
+        </div>
+
+    </div>
+    <div class="row">
+        <h3>{{idtema}}</h3>
     </div>
 
     <!-- Contenido de la vista -->

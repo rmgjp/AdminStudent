@@ -1,4 +1,8 @@
-<title>Agregar alumnos a nuevo grupo - Seguimiento de Estudiantes</title>
+{{#ifeq adds '0'}}
+    <title>Agregar alumnos a nuevo grupo - Seguimiento de Estudiantes</title>
+{{else}}
+    <title>Agregar alumnos a grupo - Seguimiento de Estudiantes</title>
+{{/ifeq}}
 <body>
 <div class="container bg-light m-100">
     <!-- Sección de declaración de errores. -->
@@ -17,19 +21,22 @@
     <!-- Datos del alumno -->
     <div class="row m-3">
         <div class="col input-group">
-            <input class="form-control" type="text" placeholder="No. Control" id="ClaveBox" name="ClaveBox" aria-label="Clave">
+            <input class="form-control" type="text" placeholder="No. Control" id="ClaveBox" name="ClaveBox"
+                   aria-label="Clave">
         </div>
 
         <div class="col input-group">
-            <input class="form-control" type="text" placeholder="Apellidos" id="ApellidoBox" name="ApellidoBox" aria-label="Apellidos">
+            <input class="form-control" type="text" placeholder="Apellidos" id="ApellidoBox" name="ApellidoBox"
+                   aria-label="Apellidos">
         </div>
 
         <div class="col input-group">
-            <input class="form-control" type="text" placeholder="Nombre(s)" id="NombreBox" name="NombreBox" aria-label="Nombre(s)">
+            <input class="form-control" type="text" placeholder="Nombre(s)" id="NombreBox" name="NombreBox"
+                   aria-label="Nombre(s)">
         </div>
     </div>
     <div class="row-cols-1  d-flex flex-row-reverse ">
-        <div class="col-auto d-flex flex-row-reverse p-3" >
+        <div class="col-auto d-flex flex-row-reverse p-3">
             <div id="toolbar">
                 <a id="remove" class="btn btn-danger">Eliminar</a>
                 <a id="add" class="btn btn-primary">Añadir nuevo</a>
@@ -38,31 +45,63 @@
     </div>
 
     <!-- Tabla -->
-    <form class="needs-validation" action="/alumno/wizard-agregar-alumnos-manual/{{idgrupo}}" method="POST" novalidate>
-        <input type="hidden" id="valorTabla" name="valorTabla">
-        <div class="row-cols-1 ">
-            <div class="col-auto">
-                <table id="table" data-toggle="table" data-toolbar="#toolbar"  data-click-to-select="true" data-search="true"
-                data-advanced-search="true" data-filter-control="true" name="table">
-                    <thead>
+    {{#ifeq adds '0'}}
+        <form class="needs-validation" action="/alumno/wizard-agregar-alumnos-manual/{{idgrupo}}/0" method="POST"
+              novalidate>
+            <input type="hidden" id="valorTabla" name="valorTabla">
+            <div class="row-cols-1 ">
+                <div class="col-auto">
+                    <table id="table" data-toggle="table" data-toolbar="#toolbar" data-click-to-select="true"
+                           data-search="true"
+                           data-advanced-search="true" data-filter-control="true" name="table">
+                        <thead>
                         <tr>
                             <th data-field="estado" data-sorteable="false" data-checkbox="true"></th>
                             <th data-field="clave" data-sorteable="false">No. Control</th>
                             <th data-field="nombre" data-sorteable="true">Nombre</th>
                             <th data-field="apellidos" data-sorteable="true">Apellidos</th>
                         </tr>
-                    </thead>
-                    <tbody>
+                        </thead>
+                        <tbody>
 
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </div>
-        <div class="row p-3 d-flex flex-row-reverse">
-            <button class="btn btn-primary" type="submit" id="finalizar">Finalizar</button>
-            <a class="btn btn-danger" href="/abortar-grupo/{{idgrupo}}">Cancelar</a>
-        </div>
-    </form>
+            <div class="row p-3 d-flex flex-row-reverse">
+                <button class="btn btn-primary" type="submit" id="finalizar">Finalizar</button>
+                <a class="btn btn-danger" href="/abortar-grupo/{{idgrupo}}">Cancelar</a>
+            </div>
+        </form>
+    {{else}}
+        <form class="needs-validation" action="/alumno/wizard-agregar-alumnos-manual/{{idgrupo}}/1" method="POST"
+              novalidate>
+            <input type="hidden" id="valorTabla" name="valorTabla">
+            <div class="row-cols-1 ">
+                <div class="col-auto">
+                    <table id="table" data-toggle="table" data-toolbar="#toolbar" data-click-to-select="true"
+                           data-search="true"
+                           data-advanced-search="true" data-filter-control="true" name="table">
+                        <thead>
+                        <tr>
+                            <th data-field="estado" data-sorteable="false" data-checkbox="true"></th>
+                            <th data-field="clave" data-sorteable="false">No. Control</th>
+                            <th data-field="nombre" data-sorteable="true">Nombre</th>
+                            <th data-field="apellidos" data-sorteable="true">Apellidos</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="row p-3 d-flex flex-row-reverse">
+                <button class="btn btn-primary" type="submit" id="finalizar">Finalizar</button>
+                <a class="btn btn-danger" href="/grupo/alumnos/{{idgrupo}}">Cancelar</a>
+            </div>
+        </form>
+    {{/ifeq}}
 </div>
 
 <script src="/js/grid-alumnos-helper.js"></script>

@@ -36,13 +36,15 @@ $('#add').on('click', function () {
             row:{
                 nombreCol:  document.getElementById("nombreBox").value,
                 valorCol:  document.getElementById('valorBox').value,
-                tipoCol:  String(tipoActividad)
+                tipoCol:  String(tipoActividad),
+                descripcionCol: document.getElementById('descripcionBox').value,
             }
         })
         //Se limpian las cajas de texto
         document.getElementById("nombreBox").value = "";
-        document.getElementById("valorBox").value = "";
-        document.getElementById("tipoBox").value = "";
+        document.getElementById("valorBox").value = 1;
+        document.getElementById("tipoBox").value = 1;
+        document.getElementById('descripcionBox').value ="";
         //Se obtienen los datos de la tabla.
         tablaDatos = table.bootstrapTable('getData');
         //Se convierten los datos de la tabla a JSON.

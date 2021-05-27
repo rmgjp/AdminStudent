@@ -57,6 +57,7 @@ const guardarDesdeGrid = async (req, res, idtema) => {
                 nombre: tareas[tarea].nombreCol,
                 valor: tareas[tarea].valorCol,
                 tipo: tareas[tarea].tipoCol,
+                descripcion: tareas[tarea].descripcionCol,
             });
     }
 };

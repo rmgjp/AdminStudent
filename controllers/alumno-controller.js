@@ -139,15 +139,18 @@ const getListAlumnosByGroup = async (req, res) => {
         let alumnos = [];
 
         for (punteroAlumno in alumnogrupos){
-            const alumno = await Models.alumno.findAll({
+            let alumno = await Models.alumno.findAll({
                 where: {
                     id: alumnogrupos[punteroAlumno].dataValues.idalumno
                 }
             });
             alumnos.push(alumno[0]);
         }
+
+
         console.log({alumnos});
         res.render('grupo/vista-grupo-alumnos', {alumnos, idgrupo, asignatura, clave});
+
     } catch (err) {
         console.log(err);
     }

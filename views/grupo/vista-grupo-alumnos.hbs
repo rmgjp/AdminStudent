@@ -21,7 +21,7 @@
                 Calificaciones</a>
         </li>
     </ul>
-   <!-- Titulo de la vista -->
+    <!-- Titulo de la vista -->
     <div class="row m-2 p-2">
         <h2 class="">Lista de Alumnos</h2>
     </div>
@@ -44,11 +44,52 @@
                 </div>
             </div>
         </div>
-        <div class="col-auto">
+        <div class="col">
+            <div class="container bg-white">
+                {{#if alumno}}
+                    <form>
+                        <div class="card">
+                            <div class="card-header">
+                                <h4>Datos del Alumno</h4>
+                            </div>
+                            <div class="text-center">
+                                <img src="/img/perfil.png" class="card-img-top rounded-circle" aling="center" style="height:10rem;width:10rem;" >
+                            </div>
 
+                            <div class="card-body">
+                                <div class="row p-2 m-2">
+                                        <div class="col">
+                                            <label for="apellidos" class="form-label">Apellidos</label>
+                                            <input type="text" class="form-control" name=apellidos" value="{{alumno.dataValues.apellidos}}">
+                                        </div>
+                                        <div class="col">
+                                            <label for="nombre" class="form-label">Nombre</label>
+                                            <input  type="text" class="form-control" name="nombre" id="nombre" value="{{alumno.dataValues.nombre}}">
+                                        </div>
+                                </div>
+                                <div class="row p-2 m-2">
+                                    <div class="col">
+                                        <label for="clave" class="form-label">Clave</label>
+                                        <input type="text" class="form-control" id="clave" name="clave" value="{{alumno.dataValues.clave}}">
+                                    </div>
+                                </div>
+                                <div class="row p-2 m-2">
+                                    <div class="col">
+                                        <label for="correo" class="form-label">Correo</label>
+                                        <input type="email" id="correo" name="correo" class="form-control"value="{{alumno.dataValues.correo}}">
+                                    </div>
+                                </div>
+                                <div class="row p-2 m-2">
+                                    <button class="btn badge-primary" type="submit" id="guardar">Guardar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                {{else}}
+                    <h2>Seleccione un alumno para mostrar más información.</h2>
+                {{/if}}
+            </div>
         </div>
-
-
     </div>
     <script type="javascript">
         function goBack() {
