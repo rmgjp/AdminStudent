@@ -28,7 +28,7 @@
     <!-- Contenido de la vista -->
     <div class="row m-2 p-0">
         <div class="col-5">
-            <div class="container">
+            <div class="container overflow-auto">
                 <div class="list-group">
                     {{#each alumnos}}
                         <a type="button" class="list-group-item list-group-item-action" aria-current="true"
@@ -45,7 +45,7 @@
             </div>
         </div>
         <div class="col">
-            <div class="container bg-white">
+            <div class="container overflow-auto bg-white">
                 {{#if alumno}}
                     <form>
                         <div class="card">
@@ -142,9 +142,4 @@
             </div>
         </div>
     </div>
-    <script type="javascript">
-        function goBack() {
-            window.history.back();
-        }
-    </script>
 </div>

@@ -25,23 +25,31 @@
     </div>
     <div class="row m-2 p-2">
         <a class="btn btn-info m-1" href="/grupo/actividades/{{idgrupo}}"><i class="bi bi-book-half"></i> Todas</a>
-    {{#each temas}}
-        <a class="btn btn-info m-1" href="/grupo/actividades/{{../idgrupo}}/{{dataValues.id}}"><i class="bi bi-book-half"></i> {{dataValues.nombre}}</a>
-    {{/each}}
+        {{#each temas}}
+            <a class="btn btn-info m-1" href="/grupo/actividades/{{../idgrupo}}/{{dataValues.id}}"><i
+                    class="bi bi-book-half"></i> {{dataValues.nombre}}</a>
+        {{/each}}
     </div>
 
     <div class="row m-2 p-2">
         <div class="col-5">
             <div class="list-group">
                 {{#each actividades}}
-                    <a class="list-group-item list-group-item-action" href="/grupo/actividades/{{../idgrupo}}/{{../idtema}}/{{dataValues.id}}"><i class="bi bi-bookmark-fill"></i> {{dataValues.nombre}}</a>
+                    <a class="list-group-item list-group-item-action"
+                       href="/grupo/actividades/{{../idgrupo}}/{{../idtema}}/{{dataValues.id}}"><i
+                            class="bi bi-bookmark-fill"></i> {{dataValues.nombre}}</a>
                 {{else}}
-                    <a class="list-group-item list-group-item-action disabled">El tema no tiene actividades asignadas</a>
+                    <a class="list-group-item list-group-item-action disabled">El tema no tiene actividades
+                        asignadas</a>
                 {{/each}}
                 {{#iflogico idtema '!=' ''}}
-                    <a class="list-group-item list-group-item-action" href="/actividad/nueva-actividad/{{idgrupo}}/{{idtema}}"><i class="bi bi-bookmark-plus-fill"></i> Nueva Actividad</a>
+                    <a class="list-group-item list-group-item-action"
+                       href="/actividad/nueva-actividad/{{idgrupo}}/{{idtema}}"><i class="bi bi-bookmark-plus-fill"></i>
+                        Nueva Actividad</a>
                 {{else}}
-                    <a class="list-group-item " data-toggle="popover" title="Información" data-content="Seleccione un tema para agregar actividades."><i class="bi bi-bookmark-plus-fill"></i> Nueva Actividad</a>
+                    <a class="list-group-item" data-toggle="popover" title="Información"
+                       data-content="Seleccione un tema para agregar actividades."><i
+                            class="bi bi-bookmark-plus-fill"></i> Nueva Actividad</a>
                 {{/iflogico}}
             </div>
         </div>
@@ -52,9 +60,57 @@
                         <div class="card">
                             <div class="card-header">
                                 <h4>Datos de la actividad</h4>
+                                <div class="-align-right">
+                                    <a class="bi bi-trash-fill" align="right" data-toggle="modal"
+                                       data-target="#eliminarActividadModal"></a>
+                                </div>
                             </div>
                             <div class="card-body">
-
+                                <div class="row">
+                                    <div class="col">
+                                        <label for="nombre" class="form-label">Nombre</label>
+                                        <input type="text" class="form-control" name="nombre"
+                                               value="{{actividad.dataValues.nombre}}">
+                                    </div>
+                                    <div class="col">
+                                        <label for="valor">Valor</label>
+                                        <input type="number" min="1" max="100" class="form-control" name="valor"
+                                               value="{{actividad.dataValues.valor}}">
+                                    </div>
+                                </div>
+                                <div class="row m-0 p-0">
+                                    <label for="descripcion">Descripción</label>
+                                    <textarea type="text" class="form-control"
+                                              name="descripcion">{{actividad.dataValues.descripcion}}</textarea>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <div class="align-content-md-end">
+                                    <a class="btn btn-outline-primary" type="button" name="calificar" id="calificar"
+                                       data-toggle="modal" data-target="#calificarModal">Calificar</a>
+                                    <a class="btn btn-primary" type="submit" name="guardar" id="guardar" data-toggle="modal" data-target="#editarActividadModal">Guardar</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Modal para verificar la edición-->
+                        <div class="modal fade" id="editarActividadModal" tabindex="-1"
+                             aria-labelledby="editarActividadModal" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="editarActividadModalLabel">Editar actividad</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        ¿Está seguro que desea editar la actividad?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <a class="btn btn-secondary" data-dismiss="modal">No</a>
+                                        <button type="submit" class="btn btn-primary">Sí</button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </form>
