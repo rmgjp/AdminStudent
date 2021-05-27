@@ -46,6 +46,18 @@ const getDatosGrupo = async (req, res) =>{
             console.log(err)
     }
 }
+const getDatosGrupoEditar = async (req, res) => {
+    try {
+        const grupo = await Models.grupo.findOne({
+            where: {
+                id: req.params.idgrupo
+            }
+        })
+        res.render('grupo/datos-grupo-editar', {idgrupo: req.params.idgrupo, grupo});
+    } catch (err) {
+        console.log(err)
+    }
+}
 //Metodo para eliminar un grupo si se da click en cancelar.
 const abortarGrupo = async (req, res) =>{
     try{
@@ -98,6 +110,8 @@ const createGrupoManual = async (req,res)=>{
 }
 //Exportación de los métodos para su uso interno en aplicación.
 module.exports = {
+    getDatosGrupoEditar,
+    updateGrupo,
     abortarGrupo,
     getAllGrupos,
     getDatosGrupo,

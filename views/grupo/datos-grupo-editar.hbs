@@ -1,0 +1,64 @@
+<title>Datos del nuevo grupo - Seguimiento de Estudiantes</title>
+
+<div class="container p-5 bg-light">
+    <!-- Sección de declaración de errores. -->
+    {{#each errors}}
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            {{text}}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    {{/each}}
+
+
+    <!-- Cuerpo del archivo -->
+
+    <h1 class="display-6">Datos del grupo</h1>
+    <form class="needs-validation" action="/grupo/editar/{{idgrupo}}?_method=PUT" method="POST" novalidate>
+        <input type = "hidden" name = "_method" value="PUT">
+        <div class="row">
+            <div class="col">
+                <label for="asignatura" class="form-label">Asignatura</label>
+                <input type="text" class="form-control" name="asignatura" id="asignatura" value="{{grupo.dataValues.asignatura}}" required>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <label for="clave" class="form-label">Clave</label>
+                <input type="text" class="form-control" name="clave" id="clave" value="{{grupo.dataValues.clave}}" required>
+            </div>
+            <div class="col">
+                <label for="periodo" class="form-label">Periodo</label>
+                <input type="text" class="form-control" name="periodo" id="periodo" placeholder="Ej. ENE-JUN-2021" value="{{grupo.dataValues.periodo}}" required>
+            </div>
+            <div class="col">
+                <label for="estado" class="form-label">Estado</label>
+                <select class="form-select custom-select" id="estado" name="estado" value="{{grupo.dataValues.estado}}" required>
+                    <option value=0>Inactivo</option>
+                    <option value=1>Activo</option>
+                </select>
+            </div>
+            <div class="col">
+                <label for="estado" class="form-label">Imagen</label>
+                <select class="form-select custom-select" id="imagen" name="imagen" value="{{grupo.dataValues.img}}" required>
+                    <option value=0>Calculadora</option>
+                    <option value=1>Código</option>
+                    <option value=2>Laboratorio</option>
+                    <option value=3>Herramienta</option>
+                    <option value=4>Avión</option>
+                    <option value=5>Robot</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row ">
+            <div class="col d-flex flex-row-reverse p-2 m-2">
+                <button class="btn btn-primary" type="submit">Guardar</button>
+                <a class="btn btn-danger align-right" href="/" role="button">Cancelar</a>
+            </div>
+        </div>
+    </form>
+</div>
+

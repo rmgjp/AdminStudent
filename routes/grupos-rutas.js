@@ -26,9 +26,7 @@ router.get('/grupo/wizard-crear-grupo-importado', ((req,res)=>
         res.render('grupo/datosgrupo')
 ));
 
-/**
- *
- */
+
 router.get('/grupo-inicio/:idgrupo', controladorGrupo.getDatosGrupo)
 
 router.get('/abortar-grupo/:idgrupo', controladorGrupo.abortarGrupo)
