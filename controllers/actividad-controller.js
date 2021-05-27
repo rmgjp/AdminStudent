@@ -12,6 +12,20 @@ const getAllTareas = async (idGrupo)=>{
     }
 }
 
+const getActividadById = async (idactividad)=>{
+    try{
+        const tarea = await Models.tarea.findOne({
+            where:{
+                id: idactividad
+            }
+        })
+        return tarea;
+    }
+    catch (e){
+        console.log(e)
+    }
+}
+
 const getAllTareasByTema = async (idTema)=>{
     try{
         const tareas = await Models.tarea.findAll({
@@ -54,6 +68,7 @@ const guardarTarea = async (req, res) => {
 
 module.exports = {
     guardarTarea,
+    getActividadById,
     guardarDesdeGrid,
     getAllTareasByTema,
     getAllTareas

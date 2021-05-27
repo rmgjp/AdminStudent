@@ -1,0 +1,77 @@
+<title>Agregar actividad a tema- Seguimiento de Estudiantes</title>
+
+<div class="container bg-light">
+    <div class="row m-2 p-2">
+        <h3>Agregar actividades</h3>
+    </div>
+    <div class="row m-0 p-0">
+        <div class="col-6">
+            <label for="nombreBox" class="form-label">Nombre</label>
+            <input type="text" class="form-control" name="nombreBox" id="nombreBox" required>
+        </div>
+        <div class="col">
+            <label for="valorBox" class="form-label">Valor</label>
+            <input type="number" min="1" step="1" class="form-control" value="1" name="valorBox" id="valorBox"
+                   required>
+        </div>
+        <div class="col">
+            <label for="tipoBox" class="form-label">Categoría</label>
+            <select class="custom-select" name="tipoBox" id="tipoBox" value=1>
+                <option value="1">Investigación</option>
+                <option value="2">Presentación</option>
+                <option value="3">Proyecto</option>
+                <option value="4">Reporte / Práctica</option>
+                <option value="5">Resumen</option>
+                <option value="6">Mapa Conceptual</option>
+                <option value="7">Cuadro Sinoptico</option>
+                <option value="8">Mapa Mental</option>
+                <option value="9">Ejercicios</option>
+                <option value="10">Otros</option>
+            </select>
+        </div>
+    </div>
+    <div class="row m-2 p-2">
+        <label for="descripcionBox" class="form-label">Descripción</label>
+        <textarea class="form-control" id="descripcionBox" name="descripcionBox"></textarea>
+    </div>
+
+
+    <div class="row-cols-1  d-flex flex-row-reverse">
+        <div class="col-auto d-flex flex-row-reverse p-3">
+            <div id="toolbar">
+                <a id="remove" class="btn btn-danger" type="none">Eliminar</a>
+                <a id="add" class="btn btn-primary" type="none">Añadir nuevo</a>
+            </div>
+        </div>
+    </div>
+
+    <form class="needs-validation" action="/actividad/nueva-actividad/{{idgrupo}}/{{idtema}}" method="POST" novalidate>
+        <input type="hidden" id="valorTabla" name="valorTabla">
+        <!-- Grid para actividades -->
+        <div class="row-cols-1 ">
+            <div class="col-auto">
+                <table id="table" data-toggle="table" data-toolbar="#toolbar" data-click-to-select="true"
+                       data-search="true"
+                       data-advanced-search="true" data-filter-control="true" name="table">
+                    <thead>
+                    <tr>
+                        <th data-field="estado" data-sorteable="false" data-checkbox="true"></th>
+                        <th data-field="nombreCol" data-sorteable="false">Nombre</th>
+                        <th data-field="valorCol" data-sorteable="false">Valor</th>
+                        <th data-field="tipoCol" data-sorteable="true">Tipo</th>
+                        <th data-field="descripcionCol" data-sorteable="false">Descripción</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row d-flex flex-row-reverse p-2 m-2">
+            <button class="btn btn-primary" button-align="right" type="submit">Guardar</button>
+            <a class="btn btn-danger" a-align="right" href="/grupo/actividades/{{idgrupo}}/{{idtema}}" role="button">Cancelar</a>
+        </div>
+    </form>
+</div>
+<script src="/js/grid-actividades-helper.js"></script>
