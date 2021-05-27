@@ -68,6 +68,8 @@ const guardarTemaActividades = async (req, res) =>{
     res.redirect('/grupo/temas/' + req.params.idgrupo)
 }
 
+
+
 const guardarTema = async (req,res) =>{
     //Obtenemos los valores del formulario para crear un nuevo tema
     const {nombre, numerotema} = req.body;

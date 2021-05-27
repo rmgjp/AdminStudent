@@ -1,6 +1,6 @@
 <title>{{asignatura}} {{clave}} - Temas - Seguimiento de Estudiantes</title>
 
-<div class="container p-2 bg-light">
+<div class="container-fluid p-2 bg-light">
     <!-- Barra de navegación -->
     <ul class="nav nav-tabs">
         <li class="nav-item">
@@ -39,7 +39,7 @@
                         <h5 class="card-title">{{dataValues.numerotema}}. {{dataValues.nombre}}</h5>
                     </div>
                     <div class="card-footer">
-                        <a href="#" class="btn btn-primary">Actividades</a>
+                        <a href="/grupo/actividades/{{dataValues.idgrupo}}/{{dataValues.id}}" class="btn btn-primary">Actividades</a>
                     </div>
                 </div>
             </div>
