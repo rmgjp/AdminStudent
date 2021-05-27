@@ -1,6 +1,6 @@
 <title>{{asignatura}} {{clave}} - Alumnos - Seguimiento de Estudiantes</title>
 
-<div class="container p-2 bg-light">
+<div class="container-fluid p-2 bg-light h-100">
     <!-- Barra de navegación -->
     <ul class="nav nav-tabs">
         <li class="nav-item">
@@ -27,17 +27,21 @@
     </div>
     <!-- Contenido de la vista -->
     <div class="row m-2 p-0">
-        <div class="col-auto">
-            <div class="list-group">
-                {{#each alumnos}}
-                    <a type="button" class="list-group-item list-group-item-action" aria-current="true" href="#">
-                        <i class="bi-person-badge-fill"></i><strong>{{dataValues.clave}}</strong>
-                        - {{dataValues.apellidos}} {{dataValues.nombre}}
+        <div class="col-5">
+            <div class="container">
+                <div class="list-group">
+                    {{#each alumnos}}
+                        <a type="button" class="list-group-item list-group-item-action" aria-current="true"
+                           href="/grupo/alumnos/{{../idgrupo}}/{{dataValues.clave}}">
+                            <i class="bi-person-badge-fill"></i><strong>{{dataValues.clave}}</strong>
+                            - {{dataValues.apellidos}} {{dataValues.nombre}}
+                        </a>
+                    {{/each}}
+                    <a type="button" class="list-group-item list-group-item-action align-items-center"
+                       aria-current="true" href="/alumno/wizard-agregar-alumnos-manual/{{idgrupo}}/1">
+                        <i class="bi bi-plus-circle-fill"></i> Nuevo Alumno
                     </a>
-                {{/each}}
-                <a type="button" class="list-group-item list-group-item-action align-items-center" aria-current="true" href="#">
-                    <i class="bi bi-plus-circle-fill"></i> Nuevo Alumno
-                </a>
+                </div>
             </div>
         </div>
         <div class="col-auto">

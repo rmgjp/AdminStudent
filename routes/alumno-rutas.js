@@ -12,5 +12,8 @@ router.get('/alumno/wizard-agregar-alumnos-manual/:idGrupo', (req,res)=>(
 router.post('/alumno/wizard-agregar-alumnos-manual/:idGrupo', controladorAlumno.guardarDesdeGrid);
 
 
-router.get('/grupo/alumnos/:idgrupo', controladorAlumno.getListAlumnosByGroup)
+router.get('/grupo/alumnos/:idgrupo', controladorAlumno.getListAlumnosByGroup);
+
+router.get('/grupo/alumnos/:idgrupo/:clave', controladorAlumno.getAlumnoAndAlumnosByGroup);
+
 module.exports = router;

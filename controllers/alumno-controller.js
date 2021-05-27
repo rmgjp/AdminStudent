@@ -3,7 +3,8 @@ const Models = require('../models');
 
 //Metodo para guardar los alumnos dentro de la tabla/Grid
 const guardarDesdeGrid = async (req, res) => {
-    idgrupo = req.params.idGrupo;
+    var idgrupo = req.params.idGrupo;
+    var add = req.params.add;
     //Se obtiene el arreglo alojado en objeto invisible del body correspondiente a la tabla
     if(tryParseJSON(req.body.valorTabla) == false){
         console.log('Alumnos Vacios');
@@ -38,7 +39,12 @@ const guardarDesdeGrid = async (req, res) => {
         //Llamada del método para asociar la tabla alumno y grupo
         //con la tabla alumnogrupo resultado de una relación muchos a
         //muchos.
-        res.redirect('/');
+        if(add == 0){
+            res.redirect('/');
+        }
+        else{
+            res.redirect('/grupo/alumnos/'+idgrupo);
+        }
     }
 }
 
@@ -57,6 +63,18 @@ function tryParseJSON (jsonString){
     catch (e) { }
     return false;
 };
+//Metodo para buscar a un alumno mediante la clave de este
+const getAlumnoByClave = async (claveAlumno) =>{
+    //Objeto que recibe el resultado de la consulta select, es decir el alumno buscado
+    console.log(claveAlumno);
+    const alumno = await Models.alumno.findOne({
+        where: {
+            clave: claveAlumno,
+        }
+    })
+    console.log({alumno});
+    return alumno;
+}
 
 //Metodo para consultar los registros de la tabla alumno
 const getAllAlumnos = async (req, res, next) => {
@@ -94,7 +112,6 @@ const agregaraGrupo = async (idgrupo, alumnos) => {
             console.log(err);
         }
     }
-
 }
 //Método para obtener los alumnos relacionados con X grupo.
 const getListAlumnosByGroup = async (req, res) => {
@@ -108,7 +125,6 @@ const getListAlumnosByGroup = async (req, res) => {
                 id: req.params.idgrupo
             }
         });
-
         //Se separan los datos del grupo
         const {asignatura, clave} = grupo;
 
@@ -135,10 +151,55 @@ const getListAlumnosByGroup = async (req, res) => {
     } catch (err) {
         console.log(err);
     }
+}
+//Método para obtener los alumnos relacionados con X grupo.
+const getAlumnoAndAlumnosByGroup = async (req, res) => {
+    try {
+        //Obtención del id
+        const idgrupo = req.params.idgrupo;
+        const claveAlumno = req.params.clave;
+        console.log("clave leida: " + claveAlumno)
 
+        //Se obtienen todos los datos del grupo mediante el id
+        const grupo = await Models.grupo.findOne({
+            where: {
+                id: req.params.idgrupo
+            }
+        });
+        //Se separan los datos del grupo
+        const {asignatura, clave} = grupo;
+
+        //Se busca la relación de los alumnos.
+        const alumnogrupos = await Models.alumnogrupo.findAll({
+            where: {
+                idgrupo: req.params.idgrupo
+            }
+        });
+
+        //Se genera un arreglo donde se guardan los alumnos relacionados con el grupo
+        let alumnos = [];
+
+        for (punteroAlumno in alumnogrupos){
+            let alumnoTemp = await Models.alumno.findAll({
+                where: {
+                    id: alumnogrupos[punteroAlumno].dataValues.idalumno
+                }
+            });
+            alumnos.push(alumnoTemp[0]);
+        }
+
+        const alumno = await getAlumnoByClave(claveAlumno);
+        console.log("Alumno seleccinado: " + alumno.nombre);
+        res.render('grupo/vista-grupo-alumnos', {alumnos, idgrupo, asignatura, clave, alumno});
+
+    } catch (err) {
+        console.log(err);
+    }
 }
 //Exportación de los métodos para su posterior uso dentro del programa
 module.exports = {
+    getAlumnoAndAlumnosByGroup,
+    getAlumnoByClave,
     guardarDesdeGrid,
     getAllAlumnos,
     getListAlumnosByGroup
