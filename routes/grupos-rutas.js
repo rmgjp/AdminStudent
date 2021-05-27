@@ -26,10 +26,16 @@ router.get('/grupo/wizard-crear-grupo-importado', ((req,res)=>
         res.render('grupo/datosgrupo')
 ));
 
+router.get('/grupo/editar/:idgrupo',  controladorGrupo.getDatosGrupoEditar);
+
+router.put('/grupo/editar/:idgrupo', controladorGrupo.updateGrupo);
+
 
 router.get('/grupo-inicio/:idgrupo', controladorGrupo.getDatosGrupo)
 
 router.get('/abortar-grupo/:idgrupo', controladorGrupo.abortarGrupo)
+
+
 
 //router.post('/crearusuario/manual', controladorGrupo.create);
 module.exports = router;
