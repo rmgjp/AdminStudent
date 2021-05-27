@@ -50,37 +50,69 @@
                     <form>
                         <div class="card">
                             <div class="card-header">
-                                <h4>Datos del Alumno</h4>
+                                <div class="row">
+                                    <div class="col">
+                                        <h4>Datos del Alumno</h4>
+                                    </div>
+                                    <div class="col" align="right">
+                                        <a class="bi bi-trash-fill" href="#" data-toggle="modal"
+                                           data-target="#eliminarAlumno"></a>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="text-center">
-                                <img src="/img/perfil.png" class="card-img-top rounded-circle" aling="center" style="height:10rem;width:10rem;" >
-                            </div>
-
                             <div class="card-body">
-                                <div class="row p-2 m-2">
-                                        <div class="col">
-                                            <label for="apellidos" class="form-label">Apellidos</label>
-                                            <input type="text" class="form-control" name=apellidos" value="{{alumno.dataValues.apellidos}}">
-                                        </div>
-                                        <div class="col">
-                                            <label for="nombre" class="form-label">Nombre</label>
-                                            <input  type="text" class="form-control" name="nombre" id="nombre" value="{{alumno.dataValues.nombre}}">
-                                        </div>
-                                </div>
-                                <div class="row p-2 m-2">
+                                <div class="row p-0 m-0">
+                                    <div class="col-3">
+                                        <img src="/img/perfil.png" class="card-img-top rounded-circle" aling="center"
+                                             style="height:8rem;width:8rem;">
+                                    </div>
                                     <div class="col">
-                                        <label for="clave" class="form-label">Clave</label>
-                                        <input type="text" class="form-control" id="clave" name="clave" value="{{alumno.dataValues.clave}}">
+                                        <div class="row">
+                                            <label for="apellidos"
+                                                   class="form-label col-form-label-sm">Apellidos</label>
+                                            <input type="text" class="form-control form-control-sm" name=apellidos"
+                                                   value="{{alumno.dataValues.apellidos}}">
+                                        </div>
+                                        <div class="row">
+                                            <label for="nombre" class="form-label col-form-label-sm">Nombre</label>
+                                            <input type="text" class="form-control form-control-sm" name="nombre"
+                                                   id="nombre" value="{{alumno.dataValues.nombre}}">
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="row p-2 m-2">
-                                    <div class="col">
-                                        <label for="correo" class="form-label">Correo</label>
-                                        <input type="email" id="correo" name="correo" class="form-control"value="{{alumno.dataValues.correo}}">
-                                    </div>
+                            </div>
+                            <div class="row p-0 m-0">
+                                <div class="col">
+                                    <label for="clave" class="form-label col-form-label-sm">Clave</label>
+                                    <input type="text" class="form-control form-control-sm" id="clave" name="clave"
+                                           value="{{alumno.dataValues.clave}}">
                                 </div>
-                                <div class="row p-2 m-2">
-                                    <button class="btn badge-primary" type="submit" id="guardar">Guardar</button>
+                                <div class="col">
+                                    <label for="correo" class="form-label col-form-label-sm">Correo</label>
+                                    <input type="email" id="correo" name="correo" class="form-control form-control-sm" value="{{alumno.dataValues.correo}}">
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <a class="btn badge-primary" type="submit" id="guardar" data-toggle="modal" data-target="#editarAlumno">Guardar</a>
+                            </div>
+                        </div>
+                        <div class="modal fade" id="editarAlumno" tabindex="-1" aria-labelledby="editarAlumno"
+                             aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="editarAlumnoLabel">Editar Alumno</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        ¿Está seguro que desea editar el alumno?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <a type="button" class="btn btn-secondary" data-dismiss="modal">No</a>
+                                        <button type="submit" class="btn btn-primary">Sí</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -88,6 +120,25 @@
                 {{else}}
                     <h2>Seleccione un alumno para mostrar más información.</h2>
                 {{/if}}
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="eliminarAlumno" tabindex="-1" aria-labelledby="eliminarAlumno" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="eliminarAlumnoLabel">Eliminar Alumno</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    ¿Está seguro que desea eliminar el alumno? Se eliminara permanentemente.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-danger">Eliminar</button>
+                </div>
             </div>
         </div>
     </div>
