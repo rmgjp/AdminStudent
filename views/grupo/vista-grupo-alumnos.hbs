@@ -47,19 +47,26 @@
         <div class="col">
             <div class="container overflow-auto bg-white">
                 {{#if alumno}}
-                    <form>
-                        <div class="card">
-                            <div class="card-header">
-                                <div class="row">
-                                    <div class="col">
-                                        <h4>Datos del Alumno</h4>
-                                    </div>
-                                    <div class="col" align="right">
-                                        <a class="bi bi-trash-fill" href="#" data-toggle="modal"
-                                           data-target="#eliminarAlumno"></a>
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col">
+                                    <h4>Datos del Alumno</h4>
+                                </div>
+                                <div class="col-11" align="right">
+                                    <div class="custom-control custom-switch">
+                                        <input type="checkbox" class="custom-control-input" id="switchEditar">
+                                        <label class="custom-control-label" for="switchEditar">Editar</label>
                                     </div>
                                 </div>
+                                <div class="col" align="right">
+                                    <a class="bi bi-trash-fill" href="#" data-toggle="modal"
+                                       data-target="#eliminarAlumno"></a>
+                                </div>
                             </div>
+                        </div>
+                        <form action="/grupo/alumnos/{{idgrupo}}/{{alumno.dataValues.id}}?_method=PUT" method="POST" novalidate>
+                            <input type="hidden" name="_method" value="PUT">
                             <div class="card-body">
                                 <div class="row p-0 m-0">
                                     <div class="col-3">
@@ -70,12 +77,14 @@
                                         <div class="row">
                                             <label for="apellidos"
                                                    class="form-label col-form-label-sm">Apellidos</label>
-                                            <input type="text" class="form-control form-control-sm" name=apellidos"
+                                            <input type="text" class="form-control form-control-sm " disabled
+                                                   name="apellidos" id="apellidos"
                                                    value="{{alumno.dataValues.apellidos}}">
                                         </div>
                                         <div class="row">
                                             <label for="nombre" class="form-label col-form-label-sm">Nombre</label>
-                                            <input type="text" class="form-control form-control-sm" name="nombre"
+                                            <input type="text" class="form-control form-control-sm" disabled id="nombre"
+                                                   name="nombre"
                                                    id="nombre" value="{{alumno.dataValues.nombre}}">
                                         </div>
                                     </div>
@@ -84,39 +93,48 @@
                             <div class="row p-0 m-0">
                                 <div class="col">
                                     <label for="clave" class="form-label col-form-label-sm">Clave</label>
-                                    <input type="text" class="form-control form-control-sm" id="clave" name="clave"
+                                    <input type="text" class="form-control form-control-sm" disabled id="clave"
+                                           name="clave" id="clave"
                                            value="{{alumno.dataValues.clave}}">
                                 </div>
                                 <div class="col">
-                                    <label for="correo" class="form-label col-form-label-sm">Correo</label>
-                                    <input type="email" id="correo" name="correo" class="form-control form-control-sm" value="{{alumno.dataValues.correo}}">
+                                    <label for="correo" class="form-label col-form-label-sm disabled">Correo</label>
+                                    <input type="email" id="correo" name="correo" id="correo"
+                                           class="form-control form-control-sm" disabled
+                                           value="{{alumno.dataValues.correo}}">
                                 </div>
                             </div>
-                            <div class="card-footer">
-                                <a class="btn badge-primary" type="submit" id="guardar" data-toggle="modal" data-target="#editarAlumno">Guardar</a>
-                            </div>
-                        </div>
-                        <div class="modal fade" id="editarAlumno" tabindex="-1" aria-labelledby="editarAlumno"
-                             aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="editarAlumnoLabel">Editar Alumno</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        ¿Está seguro que desea editar el alumno?
-                                    </div>
-                                    <div class="modal-footer">
-                                        <a type="button" class="btn btn-secondary" data-dismiss="modal">No</a>
-                                        <button type="submit" class="btn btn-primary">Sí</button>
+
+                            <div class="modal fade" id="editarAlumno" tabindex="-1" aria-labelledby="editarAlumno"
+                                 aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="editarAlumnoLabel">Editar Alumno</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            ¿Está seguro que desea editar el alumno?
+                                        </div>
+                                        <div class="modal-footer">
+                                            <a type="button" class="btn btn-secondary" data-dismiss="modal">No</a>
+                                            <button type="submit" class="btn btn-primary">Sí</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+
+                        </form>
+                        <div class="card-footer">
+                            <button class="btn badge-primary" id="guardar" name="guardar" data-toggle="modal" disabled
+                                    data-target="#editarAlumno">Guardar
+                            </button>
                         </div>
-                    </form>
+                    </div>
+
+
                 {{else}}
                     <h2>Seleccione un alumno para mostrar más información.</h2>
                 {{/if}}
@@ -143,3 +161,22 @@
         </div>
     </div>
 </div>
+
+<script>
+    document.getElementById('switchEditar').onclick = function () {
+        if ($(this).is(':checked')) {
+            document.getElementById('apellidos').disabled = false;
+            document.getElementById('nombre').disabled = false;
+            document.getElementById('correo').disabled = false;
+            document.getElementById('clave').disabled = false;
+            document.getElementById('guardar').disabled = false;
+        } else {
+            document.getElementById('apellidos').disabled = true;
+            document.getElementById('nombre').disabled = true;
+            document.getElementById('correo').disabled = true;
+            document.getElementById('clave').disabled = true;
+            document.getElementById('guardar').disabled = true;
+        }
+    }
+
+</script>

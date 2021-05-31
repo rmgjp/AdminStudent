@@ -62,13 +62,24 @@ const guardarDesdeGrid = async (req, res, idtema) => {
     }
 };
 
-const guardarTarea = async (req, res) => {
-
+const editarActividad = async (req,res)=>{
+    var {nombre, descripcion, valor, tipoBox} = req.body;
+    const idtarea = req.params.idactividad;
+    const idgrupo = req.params.idgrupo;
+    const idtema =  req.params.idtema;
+    var actividad = await Models.tarea.findOne({where:{id: idtarea}});
+    await actividad.update({
+        nombre: nombre,
+        descripcion: descripcion,
+        valor: parseInt(valor),
+        tipo: tipoBox
+    });
+    res.redirect('/grupo/actividades/'+idgrupo+'/'+idtema+'/'+idtarea);
 };
 
 
 module.exports = {
-    guardarTarea,
+    editarActividad,
     getActividadById,
     guardarDesdeGrid,
     getAllTareasByTema,

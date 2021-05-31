@@ -31,10 +31,15 @@ router.get('/grupo/actividades/:idgrupo/:idtema/:idactividad', async (req,res)=>
     const actividades = await actividadController.getAllTareasByTema(req.params.idtema);
     //Método para buscar una sola actividad
     const actividad = await actividadController.getActividadById(req.params.idactividad);
+
+    var tipoActividad = actividad.tipo;
+
+
     //Renderización de la vista.
-    res.render('grupo/vista-grupo-actividades', {idgrupo:req.params.idgrupo, temas, actividades, idtema:req.params.idtema, actividad});
+    res.render('grupo/vista-grupo-actividades', {idgrupo:req.params.idgrupo, temas, actividades, idtema:req.params.idtema, actividad, tipoActividad});
 });
 
+router.put('/grupo/actividades/:idgrupo/:idtema/:idactividad', actividadController.editarActividad);
 
 
 router.get('/actividad/nueva-actividad/:idgrupo/:idtema', (req,res)=>{

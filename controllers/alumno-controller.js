@@ -72,7 +72,7 @@ const getAlumnoByClave = async (claveAlumno) =>{
             clave: claveAlumno,
         }
     })
-    console.log({alumno});
+
     return alumno;
 }
 
@@ -80,7 +80,6 @@ const getAlumnoByClave = async (claveAlumno) =>{
 const getAllAlumnos = async (req, res, next) => {
     //Objeto que alojara el arreglo de alumnos recueprado de la base de datos atravez del modelo de datos
     const alumnos = await Models.alumno.findAll({});
-    console.log(alumnos);
     //res.render('index', {alumnos})
 }
 /**
@@ -146,9 +145,6 @@ const getListAlumnosByGroup = async (req, res) => {
             });
             alumnos.push(alumno[0]);
         }
-
-
-        console.log({alumnos});
         res.render('grupo/vista-grupo-alumnos', {alumnos, idgrupo, asignatura, clave});
 
     } catch (err) {
@@ -192,7 +188,6 @@ const getAlumnoAndAlumnosByGroup = async (req, res) => {
         }
 
         const alumno = await getAlumnoByClave(claveAlumno);
-        console.log("Alumno seleccinado: " + alumno.nombre);
         res.render('grupo/vista-grupo-alumnos', {alumnos, idgrupo, asignatura, clave, alumno});
 
     } catch (err) {

@@ -16,5 +16,9 @@ router.get('/grupo/alumnos/:idgrupo', controladorAlumno.getListAlumnosByGroup);
 
 router.get('/grupo/alumnos/:idgrupo/:clave', controladorAlumno.getAlumnoAndAlumnosByGroup);
 
+router.put('/grupo/alumnos/:idgrupo/:idalumno', controladorAlumno.editarAlumno);
+
+
+
 module.exports = router;
 
