@@ -112,6 +112,23 @@ const agregaraGrupo = async (idgrupo, alumnos) => {
         }
     }
 }
+//metodo para actualizar el registro de alumno
+const editarAlumno = async (req,res)=>{
+    const {clave, apellidos, nombre, correo} = req.body;
+    try{
+        var alumno = await Models.alumno.findOne({where: {id: req.params.idalumno}})
+        await alumno.update({
+            clave: clave.toUpperCase(),
+            apellidos: apellidos.toUpperCase(),
+            nombre: nombre.toUpperCase(),
+            correo: correo
+        });
+        res.redirect('/grupo/alumnos/'+req.params.idgrupo+'/'+ alumno.clave);
+    }catch(err){
+        console.log(err);
+    }
+}
+
 //Método para obtener los alumnos relacionados con X grupo.
 const getListAlumnosByGroup = async (req, res) => {
     try {
@@ -157,7 +174,6 @@ const getAlumnoAndAlumnosByGroup = async (req, res) => {
         //Obtención del id
         const idgrupo = req.params.idgrupo;
         const claveAlumno = req.params.clave;
-        console.log("clave leida: " + claveAlumno)
 
         //Se obtienen todos los datos del grupo mediante el id
         const grupo = await Models.grupo.findOne({
@@ -196,6 +212,7 @@ const getAlumnoAndAlumnosByGroup = async (req, res) => {
 }
 //Exportación de los métodos para su posterior uso dentro del programa
 module.exports = {
+    editarAlumno,
     getAlumnoAndAlumnosByGroup,
     getAlumnoByClave,
     guardarDesdeGrid,

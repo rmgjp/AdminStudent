@@ -28,7 +28,7 @@ router.get('/grupo/wizard-crear-grupo-importado', ((req,res)=>
 
 router.get('/grupo/editar/:idgrupo',  controladorGrupo.getDatosGrupoEditar);
 
-router.put('/grupo/editar/:idgrupo', controladorGrupo.updateGrupo);
+router.put('/grupo/editar/:idgrupo', controladorGrupo.editarGrupo);
 
 
 router.get('/grupo-inicio/:idgrupo', controladorGrupo.getDatosGrupo)

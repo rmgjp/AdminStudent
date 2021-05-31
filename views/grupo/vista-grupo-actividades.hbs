@@ -56,26 +56,40 @@
         <div class="col">
             <div class="container bg-white">
                 {{#if actividad}}
-                    <form>
-                        <div class="card">
-                            <div class="card-header">
-                                <h4>Datos de la actividad</h4>
-                                <div class="-align-right">
-                                    <a class="bi bi-trash-fill" align="right" data-toggle="modal"
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col">
+                                    <h4>Datos de la actividad</h4>
+                                </div>
+                                <div class="col-11" align="right">
+                                    <div class="custom-control custom-switch">
+                                        <input type="checkbox" class="custom-control-input" id="switchEditar">
+                                        <label class="custom-control-label" for="switchEditar">Editar</label>
+                                    </div>
+                                </div>
+                                <div class="col" align="right">
+                                    <a class="bi bi-trash-fill" data-toggle="modal"
                                        data-target="#eliminarActividadModal"></a>
                                 </div>
                             </div>
+
+                        </div>
+                        <!--Inicio Form -->
+                        <form action="/grupo/actividades/{{idgrupo}}/{{idtema}}/{{actividad.dataValues.id}}?_method=PUT" method="POST" novalidate>
+                            <input type="hidden" name="_method" value="PUT">
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col">
                                         <label for="nombre" class="form-label">Nombre</label>
-                                        <input type="text" class="form-control" name="nombre"
-                                               value="{{actividad.dataValues.nombre}}">
+                                        <input type="text" class="form-control" id="nombre" name="nombre"
+                                               disabled value="{{actividad.dataValues.nombre}}">
                                     </div>
                                     <div class="col">
                                         <label for="valor">Valor</label>
-                                        <input type="number" min="1" max="100" class="form-control" name="valor"
-                                               value="{{actividad.dataValues.valor}}">
+                                        <input type="number" min="1" max="100" class="form-control" id="valor"
+                                               name="valor"
+                                               disabled value="{{actividad.dataValues.valor}}">
                                     </div>
                                     <div class="col">
                                         <div class="col">
@@ -100,6 +114,7 @@
                                 <div class="row m-0 p-0">
                                     <label for="descripcion">Descripción</label>
                                     <textarea type="text" class="form-control"
+                                              disabled id="descripcion"
                                               name="descripcion">{{actividad.dataValues.descripcion}}</textarea>
                                 </div>
                             </div>
@@ -142,10 +157,6 @@
             </div>
         </div>
     </div>
-    <div class="row">
-        <h3>{{idtema}}</h3>
-    </div>
-
     <!-- Modal -->
     <div class="modal fade" id="calificarModal" tabindex="-1" aria-labelledby="calificarModal" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
@@ -188,6 +199,22 @@
             </div>
         </div>
     </div>
-
-
 </div>
+<script>
+    document.getElementById('switchEditar').onclick = function () {
+        if ($(this).is(':checked')) {
+            document.getElementById('nombre').disabled = false;
+            document.getElementById('valor').disabled = false;
+            document.getElementById('descripcion').disabled = false;
+            document.getElementById('tipoBox').disabled = false;
+            document.getElementById('guardar').disabled = false;
+        } else {
+            document.getElementById('nombre').disabled = true;
+            document.getElementById('valor').disabled = true;
+            document.getElementById('descripcion').disabled = true;
+            document.getElementById('tipoBox').disabled = true;
+            document.getElementById('guardar').disabled = true;
+        }
+    }
+
+</script>

@@ -77,7 +77,6 @@ const editarActividad = async (req,res)=>{
     res.redirect('/grupo/actividades/'+idgrupo+'/'+idtema+'/'+idtarea);
 };
 
-
 module.exports = {
     editarActividad,
     getActividadById,

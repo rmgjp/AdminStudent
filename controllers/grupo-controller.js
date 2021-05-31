@@ -107,12 +107,12 @@ const createGrupoManual = async (req, res) => {
     }
 }
 
-const updateGrupo = async (req, res) => {
+const editarGrupo = async (req, res) => {
     const {clave, asignatura, estado, imagen} = req.body;
     try {
         var grupo = await Models.grupo.findOne({where: {id: req.params.idgrupo}});
 
-        grupo.update({
+        await grupo.update({
             clave: req.body.clave.toUpperCase(),
             asignatura: req.body.asignatura,
             estado: parseInt(estado, 10),
@@ -127,7 +127,7 @@ const updateGrupo = async (req, res) => {
 //Exportación de los métodos para su uso interno en aplicación.
 module.exports = {
     getDatosGrupoEditar,
-    updateGrupo,
+    editarGrupo,
     abortarGrupo,
     getAllGrupos,
     getDatosGrupo,
