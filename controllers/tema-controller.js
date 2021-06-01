@@ -68,7 +68,18 @@ const guardarTemaActividades = async (req, res) =>{
     res.redirect('/grupo/temas/' + req.params.idgrupo)
 }
 
-
+const editarTema = async (req,res)=>{
+    var {unidad, nombre} = req.body;
+    //Buscar el registro a actualizar
+    var tema = await Models.tema.findOne({
+        where: {id: req.params.idtema}
+    })
+    await tema.update({
+        numerotema: parseInt(unidad),
+        nombre: nombre
+    });
+    res.redirect('/grupo/temas/' + req.params.idgrupo);
+}
 
 const guardarTema = async (req,res) =>{
     //Obtenemos los valores del formulario para crear un nuevo tema
@@ -99,6 +110,7 @@ module.exports = {
     getTemasByGrupo,
     guardarTema,
     guardarTemaActividades,
+    editarTema,
     getTemasByGrupoEtiquetas
 }
 
