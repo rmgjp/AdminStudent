@@ -39,7 +39,7 @@ router.get('/grupo/actividades/:idgrupo/:idtema/:idactividad', async (req,res)=>
     res.render('grupo/vista-grupo-actividades', {idgrupo:req.params.idgrupo, temas, actividades, idtema:req.params.idtema, actividad, tipoActividad});
 });
 
-router.put('/grupo/actividades/:idgrupo/:idtema/:idactividad', actividadController.editarActividad);
+router.put('/actividad/editar-actividad/:idgrupo/:idtema/:idactividad', actividadController.editarActividad);
 
 
 router.get('/actividad/nueva-actividad/:idgrupo/:idtema', (req,res)=>{

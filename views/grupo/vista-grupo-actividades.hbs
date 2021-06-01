@@ -76,7 +76,7 @@
 
                         </div>
                         <!--Inicio Form -->
-                        <form action="/grupo/actividades/{{idgrupo}}/{{idtema}}/{{actividad.dataValues.id}}?_method=PUT" method="POST" novalidate>
+                        <form action="/actividad/editar-actividad/{{idgrupo}}/{{idtema}}/{{actividad.dataValues.id}}?_method=PUT" method="POST" novalidate>
                             <input type="hidden" name="_method" value="PUT">
                             <div class="card-body">
                                 <div class="row">
@@ -150,6 +150,31 @@
                                    data-target="#editarActividadModal">Guardar</button>
                             </div>
                         </div>
+                        <form action="/actividad/eliminar-actividad/{{idgrupo}}/{{actividad.dataValues.idtema}}/{{actividad.dataValues.id}}?_method=DELETE" method='POST'>
+                            <input type = "hidden" name = "_method" value = "DELETE">
+                            <div class="modal fade" id="eliminarActividadModal" tabindex="-1" aria-labelledby="eliminarActividadModal"
+                                 aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="eliminarActividadModalLabel">Eliminar actividad</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            ¿Está seguro que desea eliminar la actividad? Se eliminará permanentemente.
+                                        </div>
+                                        <div class="modal-footer">
+                                            <a type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</a>
+                                            <button type="submit" class="btn btn-danger">Eliminar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+
                     </div>
                 {{else}}
                     <h2>Seleccione una actividad para mostrar más información.</h2>
@@ -179,26 +204,7 @@
         </div>
     </div>
 
-    <div class="modal fade" id="eliminarActividadModal" tabindex="-1" aria-labelledby="eliminarActividadModal"
-         aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="eliminarActividadModalLabel">Eliminar actividad</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    ¿Está seguro que desea eliminar la actividad? Se eliminará permanentemente.
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-danger">Eliminar</button>
-                </div>
-            </div>
-        </div>
-    </div>
+
 </div>
 <script>
     document.getElementById('switchEditar').onclick = function () {

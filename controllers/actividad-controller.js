@@ -77,6 +77,23 @@ const editarActividad = async (req,res)=>{
     res.redirect('/grupo/actividades/'+idgrupo+'/'+idtema+'/'+idtarea);
 };
 
+const eliminarActividad = async (req,res)=>{
+    try{
+        //Se hace una busqueda de las calificaciones asociadas a esa actividad
+        var calificaciones = await Models.calificacion.findAll({where:{idtarea:req.params.idactividad}})
+        //Ciclo para eliminar todas las calificaciones asociadas a la actividad
+        for(calificacion in calificaciones){
+            await calificaciones[calificacion].destroy();
+        }
+        var actividad = await Models.tarea.findOne({where:{id:req.params.idactividad}});
+        await actividad.destroy();
+        res.redirect('/grupo/actividades/'+ req.params.idgrupo +'/' + req.params.idtema);
+    }
+    catch(err){
+        console.log(err);
+    }
+};
+
 module.exports = {
     editarActividad,
     getActividadById,
