@@ -1,7 +1,6 @@
 'use strict';
 const {Deferrable} = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
-
   const tarea = sequelize.define('tarea',{
     idtema: {
       type: DataTypes.INTEGER,
@@ -14,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
         key: 'id',
         //Declaramos que el chequeo de las foreign keys debe ser inmediato
         deferrable: Deferrable.INITIALLY_IMMEDIATE
-      }
+      },
     },
     nombre: DataTypes.STRING,
     descripcion: DataTypes.STRING,
@@ -29,9 +28,15 @@ module.exports = (sequelize, DataTypes) => {
     tarea.belongsTo(models.tema,{
       onDelete: 'CASCADE',
       as: 'tema',
-      foreignKey:'idtema',
-      targetKey:'id'
+      foreignKey:'idtema'
+    });
+
+    tarea.hasMany(models.calificacion,{
+      onDelete: 'CASCADE',
+      foreignKey:'idtarea'
     })
   };
+
+
   return tarea;
 };

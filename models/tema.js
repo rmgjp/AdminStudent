@@ -1,6 +1,4 @@
-'use strict';
 const {Deferrable} = require("sequelize");
-
 module.exports = (sequelize, DataTypes) => {
   const tema = sequelize.define('tema',{
     idgrupo: {
@@ -31,12 +29,13 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
   });
 
+
   tema.associate= function(models){
-    tema.belongsTo(models.grupo,{
+    //Añadimos atributo idtema en la tabla de tarea
+    tema.hasMany(models.tarea,{
       onDelete: 'CASCADE',
-      as: 'grupo',
-      foreignKey:'idgrupo',
-      targetKey:'id'
+      as: 'tema',
+      foreignKey:'idtema',
     })
   };
   return tema;
