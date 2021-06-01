@@ -17,10 +17,10 @@ module.exports = (sequelize, DataTypes) => {
             sequelize,
         });
         grupo.asociate = function(models){
-            grupo.belongsToMany(models.alumno, {
+            grupo.hasMany(models.alumnogrupo, {
                 onDelete: 'CASCADE',
                 foreignKey:'idgrupo',
-                otherKey: 'idalumno'
+
             });
         }
     return grupo;

@@ -39,7 +39,7 @@ module.exports = (sequelize, DataTypes) => {
         freezeTableName: true,
       }
   );
-/*
+
   //Las siguientes sentencias declaran a nivel modelo las asociaciones entre las tablas
   alumnogrupo.associate = function (models){
     //Se declara que pertenece al modelo alumno
@@ -55,7 +55,7 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'idgrupo',
       targetKey: 'id'
     })
-  };*/
+  };
 
   //Finalmente retornamos el conjunto de instrucciones completo.
   return alumnogrupo;

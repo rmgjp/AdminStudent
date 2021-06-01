@@ -16,14 +16,15 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
     nombre: DataTypes.STRING,
-    descripcion: DataTypes.STRING,
-    valor: DataTypes.INTEGER,
-    tipo: DataTypes.STRING
+      descripcion: DataTypes.STRING,
+      valor: DataTypes.INTEGER,
+      tipo: DataTypes.STRING
   },
       {
         freezeTableName: true,
         sequelize,
       });
+
   tarea.associate = function (models){
     tarea.belongsTo(models.tema,{
       onDelete: 'CASCADE',
