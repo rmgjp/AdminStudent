@@ -33,9 +33,9 @@
                 <div class="card" style="height:14rem;">
                     <div class="card-header d-flex flex-row-reverse">
                         <a class="bi bi-trash-fill " align="right" href="#" data-toggle="modal"
-                           data-target="#eliminarTema"></a>
+                           data-target="#eliminarTemaModal"></a>
                         <a class="bi bi-pencil-square " align="right" href="#" data-toggle="modal"
-                           data-target="#editarTema"></a>
+                           data-target="#editarTemaModal"></a>
                     </div>
                     <div class="card-body">
                         <h5 class="card-title">{{dataValues.numerotema}}. {{dataValues.nombre}}</h5>
@@ -45,6 +45,61 @@
                     </div>
                 </div>
             </div>
+        <!--Modal de edición -->
+        <form action="/tema/editar-tema/{{dataValues.idgrupo}}/{{dataValues.id}}?_method=PUT" method="POST" novalidate>
+            <input type="hidden" name="_method" value="PUT">
+            <div class="modal fade" id="editarTemaModal" tabindex="-1" aria-labelledby="editarTemaModal" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="editarTemaModalLabel">Editar Tema</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form>
+                                <div class="form-group">
+                                    <label for="recipient-name" class="col-form-label">Unidad:</label>
+                                    <input type="number" min="1" class="form-control" id="unidad" name="unidad" value="{{dataValues.numerotema}}">
+                                </div>
+                                <div class="form-group">
+                                    <label for="message-text" class="col-form-label">Nombre:</label>
+                                    <input class="form-control" id="nombre" name="nombre" value="{{dataValues.nombre}}"></input>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <a type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</a>
+                            <button type="submit" class="btn btn-primary" >Guardar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+            <!--Modal de eliminación -->
+            <div class="modal fade" id="eliminarTemaModal" tabindex="-1" aria-labelledby="eliminarTemaModal" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="eliminarTemaLabel">Eliminar tema</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            ¿Está seguro que desea eliminar el tema? Se eliminará permanentemente junto con las actividades
+                            relacionadas a él.
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <button type="button" class="btn btn-danger">Eliminar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- En caso de que no existan temas se despliega un card con un mensaje -->
         {{else}}
             <div class="col-md-3 col-3 col-xl-3 col-lg-3 col-sm-3 p-1">
