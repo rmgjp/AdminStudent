@@ -61,7 +61,6 @@ const guardarDesdeGrid = async (req, res, idtema) => {
             });
     }
 };
-
 const editarActividad = async (req,res)=>{
     var {nombre, descripcion, valor, tipoBox} = req.body;
     const idtarea = req.params.idactividad;
@@ -95,6 +94,7 @@ const eliminarActividad = async (req,res)=>{
 };
 
 module.exports = {
+    eliminarActividad,
     editarActividad,
     getActividadById,
     guardarDesdeGrid,
