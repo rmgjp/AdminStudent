@@ -5,7 +5,12 @@ const Models = require('../models');
 //Utilizado principalmente en la pagina de inicio.
 const getAllGrupos = async (req, res, next) => {
     try {
-        const grupos = await Models.grupo.findAll({});
+        const grupos = await Models.grupo.findAll({
+            where: {
+                estado: 0,
+                estado: 1
+            }
+        });
         console.log({grupos})
 
         res.render('index', {grupos});
@@ -25,7 +30,7 @@ const getAllGruposByState = async (req, res, next) => {
         })
         //console.log({grupos})
         //Renderiza la vista index, sobrecargando el objeto grupos
-        res.render('index', {grupos})
+        res.render('index', {grupos, estado:req.params.estado})
     } catch (err) {
         console.log(err)
     }

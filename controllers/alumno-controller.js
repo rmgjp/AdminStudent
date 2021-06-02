@@ -212,6 +212,7 @@ const getAlumnoAndAlumnosByGroup = async (req, res) => {
 }
 //Exportación de los métodos para su posterior uso dentro del programa
 module.exports = {
+    desasociarAlumno,
     editarAlumno,
     getAlumnoAndAlumnosByGroup,
     getAlumnoByClave,
