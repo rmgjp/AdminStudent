@@ -10,6 +10,9 @@
         <li class="nav-item">
             <a class="nav-link" href="/filtro/0" title="Muestra únicamente los grupos con estado inactivo.">Completados</a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/filtro/2"  title="Muestra los grupos enviados a la papelera de reciclaje."><i class="bi bi-trash2-fill"></i></a>
+        </li>
     </ul>
 
     <div class="row m-2 p-2">
@@ -36,33 +39,100 @@
 
                     </div>
                     <div class="card-footer">
-                        <a href="/grupo-inicio/{{dataValues.id}}" class="btn btn-primary">Ver</a>
-                    </div>
-                </div>
-            </div>
+                        <div class="col" align="right">
+                            {{#iflogico dataValues.estado '!=' "2"}}
+                                <a href="/grupo-inicio/{{dataValues.id}}" class="btn btn-primary"  title="Mostrar la información relacionada con el grupo.">Ver</a>
+                            {{/iflogico}}
+                            {{#iflogico dataValues.estado '==' "2"}}
 
+                                <a type="button" data-toggle="modal" data-target="#restaurarGrupo{{dataValues.id}}"
+                                   class="btn btn-info"  title="Restaura el grupo enviándolo fuera de la papelera.">Restaurar</a>
+                                <a type="button" data-toggle="modal" data-target="#eliminarGrupoPerm{{dataValues.id}}"
+                                   class="btn btn-danger"  title="Eliminar permanentemente el grupo junto con los datos relacionados del mismo.">Eliminar</a>
 
-            <div class="modal fade" id="eliminarGrupo{{dataValues.id}}" tabindex="-1" aria-labelledby="eliminarGrupo{{dataValues.id}}" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="eliminarGrupoLabel">Eliminar Grupo</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            ¿Está seguro que desea eliminar el grupo? Se moverá a la papelera de reciclaje.
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                            <button type="button" class="btn btn-danger">Eliminar</button>
+                            {{/iflogico}}
                         </div>
                     </div>
                 </div>
             </div>
+            <!--Mover a papelera de reciclaje -->
+            <form action="/moverapapelera/{{dataValues.id}}?_method=PUT" method="POST">
+                <input type="hidden" name="_method" value="PUT">
+                <div class="modal fade" id="eliminarGrupo{{dataValues.id}}" tabindex="-1"
+                     aria-labelledby="eliminarGrupo{{dataValues.id}}" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="eliminarGrupoLabel">Eliminar Grupo</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                ¿Está seguro que desea eliminar el grupo? Se moverá a la papelera de reciclaje.
+                            </div>
+                            <div class="modal-footer">
+                                <a class="btn btn-secondary" data-dismiss="modal">Cancelar</a>
+                                <button type="submit" class="btn btn-danger">Eliminar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <!--Eliminar permanentemente-->
+            <form action="/eliminargrupo/{{dataValues.id}}?_method=DELETE" method="POST">
+                <input type="hidden" name="_method" value="DELETE">
+                <div class="modal fade" id="eliminarGrupoPerm{{dataValues.id}}" tabindex="-1"
+                     aria-labelledby="eliminarGrupoPerm{{dataValues.id}}" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="eliminarGrupoPermLabel">Eliminar Grupo</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                ¿Está seguro que desea eliminar el grupo? <strong>Se eliminará permanentemente, puede
+                                tardar un tiempo dependiendo de la cantidad de
+                                datos relacionados.</strong>
+                            </div>
+                            <div class="modal-footer">
+                                <a class="btn btn-secondary" data-dismiss="modal">Cancelar</a>
+                                <button type="submit" class="btn btn-danger">Eliminar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <!--Restaurar de la papelera de reciclaje -->
+            <form action="/restaurargrupo/{{dataValues.id}}?_method=PUT" method="POST">
+                <input type="hidden" name="_method" value="PUT">
+                <div class="modal fade" id="restaurarGrupo{{dataValues.id}}" tabindex="-1"
+                     aria-labelledby="restaurarGrupo{{dataValues.id}}" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="restaurarGrupoLabel">Eliminar Grupo</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                ¿Está seguro que desea restaurar el grupo? <strong>Se restaurará como grupo
+                                Activo.</strong>
+                            </div>
+                            <div class="modal-footer">
+                                <a class="btn btn-secondary" data-dismiss="modal">Cancelar</a>
+                                <button type="submit" class="btn btn-info">Restaurar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
 
-            <div class="modal fade" id="editarGrupo{{dataValues.id}}" tabindex="-1" aria-labelledby="editarGrupo{{dataValues.id}}"
+            <div class="modal fade" id="editarGrupo{{dataValues.id}}" tabindex="-1"
+                 aria-labelledby="editarGrupo{{dataValues.id}}"
                  aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
