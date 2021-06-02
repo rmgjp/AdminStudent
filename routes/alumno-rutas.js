@@ -18,6 +18,8 @@ router.get('/grupo/alumnos/:idgrupo/:clave', controladorAlumno.getAlumnoAndAlumn
 
 router.put('/grupo/alumnos/:idgrupo/:idalumno', controladorAlumno.editarAlumno);
 
+router.delete('/alumnos/eliminar-alumno/:idgrupo/:idalumno', controladorAlumno.desasociarAlumno);
+
 
 
 module.exports = router;

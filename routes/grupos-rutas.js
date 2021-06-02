@@ -31,9 +31,15 @@ router.get('/grupo/editar/:idgrupo',  controladorGrupo.getDatosGrupoEditar);
 router.put('/grupo/editar/:idgrupo', controladorGrupo.editarGrupo);
 
 
-router.get('/grupo-inicio/:idgrupo', controladorGrupo.getDatosGrupo)
+router.get('/grupo-inicio/:idgrupo', controladorGrupo.getDatosGrupo);
 
-router.get('/abortar-grupo/:idgrupo', controladorGrupo.abortarGrupo)
+router.get('/abortar-grupo/:idgrupo', controladorGrupo.abortarGrupo);
+
+router.put('/moverapapelera/:idgrupo', controladorGrupo.moveraPapelera);
+
+router.put('/restaurargrupo/:idgrupo',controladorGrupo.restaurarGrupo);
+
+router.delete('/eliminargrupo/:idgrupo',controladorGrupo.eliminarGrupo);
 
 
 

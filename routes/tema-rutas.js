@@ -14,4 +14,6 @@ router.post('/tema/nuevo-tema/:idgrupo', controladorTema.guardarTemaActividades)
 
 router.put('/tema/editar-tema/:idgrupo/:idtema', controladorTema.editarTema);
 
+router.delete('/tema/eliminar-tema/:idgrupo/:idtema', controladorTema.eliminarTema);
+
 module.exports = router;
