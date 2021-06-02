@@ -112,6 +112,24 @@ const agregaraGrupo = async (idgrupo, alumnos) => {
         }
     }
 }
+//metodo para desasociar alumno y borrar calificaciones correspondientes
+const desasociarAlumno = async (req,res)=>{
+    //Buscar las calificaciones relacionadas al alumno
+    var calificaciones = await Models.calificacion.findAll({
+        where:{idalumno: req.params.idalumno}
+    })
+    //Eliminar calificaciones
+    for(var calificacion in calificaciones){
+        await calificaciones[calificacion].destroy();
+    }
+    //Busqueda de la asociación de alumno con grupo por medio de la tabla alumnogrupo
+    var alumnogrupo = await Models.alumnogrupo.findOne({
+        where:{idalumno: req.params.idalumno}
+    });
+    //Eliminación de la asociación
+    await alumnogrupo.destroy();
+    res.redirect('/grupo/alumnos/'+req.params.idgrupo);
+}
 //metodo para actualizar el registro de alumno
 const editarAlumno = async (req,res)=>{
     const {clave, apellidos, nombre, correo} = req.body;
@@ -162,6 +180,9 @@ const getListAlumnosByGroup = async (req, res) => {
             });
             alumnos.push(alumno[0]);
         }
+        alumnos.sort(function (a, b) {
+            return a.dataValues.apellidos.localeCompare(b.dataValues.apellidos);
+        });
         res.render('grupo/vista-grupo-alumnos', {alumnos, idgrupo, asignatura, clave});
 
     } catch (err) {

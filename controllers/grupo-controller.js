@@ -19,6 +19,60 @@ const getAllGrupos = async (req, res, next) => {
     }
 
 }
+//Metodo para actualizar grupo a estado 2 (papelera)
+const moveraPapelera = async (req,res)=>{
+    var grupo = await Models.grupo.findOne({
+        where:{id: req.params.idgrupo}
+    });
+    await grupo.update({estado:2});
+    res.redirect('/');
+}
+//Metodo para restaurar grupo, pasa de estado 1
+const restaurarGrupo = async (req,res)=>{
+    var grupo = await Models.grupo.findOne({where:{id:req.params.idgrupo}})
+    await grupo.update({estado:1});
+    res.redirect('/');
+};
+
+const eliminarGrupo = async (req,res)=>{
+    //Busqueda del grupo.
+    var grupo = await Models.grupo.findOne({where:{id:req.params.idgrupo}});
+    //Busqueda relacion alumnogrupo
+    var alumnos = await Models.alumnogrupo.findAll({where:{idgrupo:req.params.idgrupo}});
+    //Busqueda de los temas que contiene  ese grupo
+    var temas = await Models.tema.findAll({
+        where:{idgrupo: req.params.idgrupo}
+    });
+    for(tema in temas){
+        //Busqueda de las actividades que corresponden a ese tema/unidad.
+        var actividades = await Models.tarea.findAll({
+            where:{idtema: temas[tema].id}
+        });
+        for(actividad in actividades){
+            //Busqueda de calificaciones correspondientes a esas actividades
+            var calificaciones = await Models.calificacion.findAll({
+                where:{
+                    idtarea:parseInt(actividades[actividad].id)
+                }
+            });
+            //Eliminamos las calificaciones
+            for(calificacion in calificaciones){
+                await calificaciones[calificacion].destroy();
+            }
+            //Eliminamos las actividades
+            await actividades[actividad].destroy();
+        }
+        //Eliminamos el tema
+        await temas[tema].destroy();
+    }
+    //Eliminamos los alumnos del grupo mediante la relacion alumnogrupo
+    for(alumno in alumnos){
+        await alumnos[alumno].destroy();
+    }
+    await grupo.destroy();
+    res.redirect('/')
+
+};
 //Método para consultar los grupos dependiendo del estado
 const getAllGruposByState = async (req, res, next) => {
     try {
@@ -131,6 +185,9 @@ const editarGrupo = async (req, res) => {
 }
 //Exportación de los métodos para su uso interno en aplicación.
 module.exports = {
+    restaurarGrupo,
+    eliminarGrupo,
+    moveraPapelera,
     getDatosGrupoEditar,
     editarGrupo,
     abortarGrupo,
