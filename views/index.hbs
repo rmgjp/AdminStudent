@@ -2,13 +2,13 @@
 <div class="container-fluid p-2  h-100" style="height: max-content">
     <ul class="nav nav-tabs ">
         <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="/">Todos</a>
+            <a class="nav-link active" aria-current="page" title="Muestra todos los grupos independientemente del estado." href="/">Todos</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="/filtro/1">Activos</a>
+            <a class="nav-link" href="/filtro/1" title="Muestra únicamente los grupos con estado activo.">Activos</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="/filtro/0">Completados</a>
+            <a class="nav-link" href="/filtro/0" title="Muestra únicamente los grupos con estado inactivo.">Completados</a>
         </li>
     </ul>
 
@@ -17,12 +17,16 @@
     </div>
     <div class="row m-2 p-2">
         {{#each grupos}}
-            <div class="col-md-3 col-3 col-xl-3 col-lg-3 col-sm-3 p-1" >
+            <div class="col-md-3 col-3 col-xl-3 col-lg-3 col-sm-3 p-1">
                 <div class="card " style="height:28rem; ">
-                    <div class="card-header d-flex flex-row-reverse">
-                        <a class="bi bi-trash-fill " align="right" data-toggle="modal" data-target="#eliminarGrupo{{dataValues.id}}"></a>
-                        <a class="bi bi-pencil-square " align="right" href="#" data-toggle="modal" data-target="#editarGrupo{{dataValues.id}}"></a>
-                    </div>
+                    {{#iflogico dataValues.estado '!=' "2"}}
+                        <div class="card-header d-flex flex-row-reverse">
+                            <a class="bi bi-trash-fill " align="right" data-toggle="modal"
+                               data-target="#eliminarGrupo{{dataValues.id}}"  title="Mover grupo a la papelera de reciclaje."></a>
+                            <a class="bi bi-pencil-square " align="right" data-toggle="modal"
+                               data-target="#editarGrupo{{dataValues.id}}"  title="Editar los atributos del grupo."></a>
+                        </div>
+                    {{/iflogico}}
 
                     <img src="/img/{{dataValues.img}}.jpeg" class="card-img-top">
                     <div class="card-body">
@@ -80,30 +84,37 @@
             </div>
 
         {{else}}
+
             <div class="col-md-3 col-3 col-xl-3 col-lg-3 col-sm-3 p-1">
                 <div class="card" style="height:28rem ">
                     <div class="card-body">
-                        <h5 class="card-title">No hay grupos existentes.</h5>
-                        <p class="card-text">Agregue un grupo.</p>
+                        {{#iflogico estado '!=' 2}}
+                            <h5 class="card-title">No hay grupos existentes.</h5>
+                            <p class="card-text">Agregue un grupo.</p>
+                        {{else}}
+                            <h5 class="card-title">No hay grupos en la papelera de reciclaje.</h5>
+                            <i class="bi bi-emoji-smile-fill"></i>
+                        {{/iflogico}}
                     </div>
                 </div>
             </div>
         {{/each}}
-        <div class="col-md-3 col-3 col-xl-3 col-lg-3 col-sm-3 p-1">
-            <div class="card" style="height:28rem; ">
-                <div class="card-body justify-content-center align-center">
+        {{#iflogico estado '!=' 2}}
+            <div class="col-md-3 col-3 col-xl-3 col-lg-3 col-sm-3 p-1">
+                <div class="card" style="height:28rem; ">
+                    <div class="card-body justify-content-center align-center">
 
-                    <div class="row justify-content-center align-items-center">
-                        <h5 class="card-title">Agregar nuevo grupo</h5>
-                    </div>
-                    <div class="row justify-content-md-center align-items-center">
-                        <a class="btn btn-success rounded-circle " href="/grupo/wizard-crear-grupo">+</a>
+                        <div class="row justify-content-center align-items-center">
+                            <h5 class="card-title">Agregar nuevo grupo</h5>
+                        </div>
+                        <div class="row justify-content-md-center align-items-center">
+                            <a class="btn btn-success rounded-circle " href="/grupo/wizard-crear-grupo" title="Agregar un nuevo grupo.">+</a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        {{/iflogico}}
     </div>
-
 
 
 </div>
