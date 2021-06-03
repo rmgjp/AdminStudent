@@ -3,7 +3,7 @@ const router = express.Router();
 const temaController = require('../controllers/tema-controller');
 const actividadController = require('../controllers/actividad-controller');
 
-
+//
 router.get('/grupo/actividades/:idgrupo', async (req,res)=>{
     //Metodo para buscar Temas
     const temas = await temaController.getTemasByGrupoEtiquetas(req.params.idgrupo);
