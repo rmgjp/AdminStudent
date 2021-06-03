@@ -2,8 +2,7 @@ const express = require('express');
 const controladorTema = require('../controllers/tema-controller');
 const router = express.Router();
 
-
-
+//Ruta para visualizar
 router.get('/grupo/temas/:idgrupo', controladorTema.getTemasByGrupo);
 
 router.get('/tema/nuevo-tema/:idgrupo', (req,res) =>{

@@ -19,21 +19,59 @@
             </p>
 
             <p>
-                Crear Manualmente: El asistente lo guiará en el proceso donde tendra que ingresar los datos manualmente,
-                para la creacion exitosa del grupo.
+                Crear Manualmente: El asistente lo guiará en el proceso donde tendrá que ingresar los datos manualmente,
+                para la creación exitosa del grupo.
             <ul>
                 <li>Forma mas lenta pero en todo momento usted verificará que los datos ingresados sean correctos.</li>
             </ul>
             </p>
-
-
             <p class="lead">
-                <a class="btn btn-primary btn-lg" href="#" role="button">Importar Excel</a>
-                <a class="btn btn-primary btn-lg" href="/grupo/wizard-crear-grupo-manual" role="button">Crear Manualmente</a>
+                <button class="btn badge-primary btn-lg" id="guardar" name="guardar" data-toggle="modal"
+                        data-target="#cargarExcel">Importar Excel
+                </button>
+                <a class="btn btn-primary btn-lg" href="/grupo/wizard-crear-grupo-manual" role="button">Crear
+                    Manualmente</a>
                 <a class="btn btn-danger btn-lg align-right" href="/" role="button">Cancelar</a>
             </p>
         </div>
-
+        <!-- Modal para cargar archivo-->
     </div>
 </div>
 
+<form action="/grupo/importar-archivo" method="POST" enctype="multipart/form-data" novalidate>
+    <div class="modal fade" id="cargarExcel" tabindex="-1" aria-labelledby="cargarExcel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="cargarExcelLabel">Importar lista</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroupFileAddon">Selección</span>
+                        </div>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" name="archivo" id="archivo" aria-describedby="inputGroupFileAddon">
+                            <label class="custom-file-label" for="inputGroupFile" data-browse="Buscar">Archivo</label>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <a type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</a>
+                    <button type="submit" class="btn btn-primary">Siguiente</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<script>
+    $(document).ready(function () {
+        bsCustomFileInput.init()
+    })
+</script>
