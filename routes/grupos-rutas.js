@@ -1,11 +1,23 @@
 const express = require('express');
 const router = express.Router();
-
+const multer = require('multer');
+const path = require('path');
 const controladorGrupo = require('../controllers/grupo-controller')
 
 router.use(function(req, res, next) {
     next();
 });
+/**
+ * se define la constante storage pare definir los terminos al leer/cargar un archivo**/
+const storage = multer.diskStorage({
+    destination: path.join(__dirname, '../public/doc'),
+    filename : (req,file,cb)=>{
+        cb(null,file.originalname);
+    }
+});
+const load = (multer({
+    storage : storage
+}));
 
 /**
  * Rutas para CRUD de la tabla grupo
