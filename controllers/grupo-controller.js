@@ -1,14 +1,13 @@
 const Sequelize = require('sequelize');
 const Models = require('../models');
-
+const { Op } = require("sequelize");
 //Método para obtener todos los grupos sin importar otros campos.
 //Utilizado principalmente en la pagina de inicio.
 const getAllGrupos = async (req, res) => {
     try {
         const grupos = await Models.grupo.findAll({
             where: {
-                estado: 0,
-                estado: 1
+                estado:[0,1]
             }
         });
         return grupos;

@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 const Models = require('../models');
-const temaController = require('../controllers/tema-controller');
+
 
 const getAllTareas = async (idGrupo)=>{
     try{
@@ -26,22 +26,6 @@ const getActividadById = async (idactividad)=>{
         console.log(e)
     }
 }
-
-const getAllActivitiesByGroup = async (req,res) =>
-{
-    //Metodo para buscar Temas
-    const temas = await temaController.getTemasByGrupoEtiquetas(req.params.idgrupo);
-    //Datos grupo
-    const grupo = await Models.grupo.findOne({
-        where:{id: req.params.idgrupo}
-    })
-    const {asignatura, clave} = grupo;
-    //Metodo para buscar todas las Actividades
-
-    //Renderización de la vista.
-    res.render('grupo/vista-grupo-actividades', {idgrupo:req.params.idgrupo, temas , idtema:'', asignatura, clave});
-}
-
 
 const getAllTareasByTema = async (idTema)=>{
     try{
@@ -111,7 +95,6 @@ const eliminarActividad = async (req,res)=>{
 };
 
 module.exports = {
-    getAllActivitiesByGroup,
     eliminarActividad,
     editarActividad,
     getActividadById,

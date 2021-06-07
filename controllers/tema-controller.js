@@ -31,13 +31,8 @@ const getTemasByGrupo = async (req,res) =>{
 
 const getTemasByGrupoEtiquetas = async (idGrupo) =>{
     try{
-        const tema = await Models.tema.findAll({
-            where: {
-                idgrupo: idGrupo
-            }
-        });
-        console.log(tema);
-        return tema;
+        const temas = await Models.tema.findAll({where:{idgrupo: idGrupo}});
+        return temas;
     }
     catch(err){
         console.log(err);
