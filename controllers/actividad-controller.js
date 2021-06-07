@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize');
 const Models = require('../models');
+const temaController = require('../controllers/tema-controller');
 
 const getAllTareas = async (idGrupo)=>{
     try{
@@ -94,6 +95,7 @@ const eliminarActividad = async (req,res)=>{
 };
 
 module.exports = {
+    getAllActivitiesByGroup,
     eliminarActividad,
     editarActividad,
     getActividadById,

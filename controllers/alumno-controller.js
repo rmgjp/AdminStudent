@@ -225,6 +225,9 @@ const getAlumnoAndAlumnosByGroup = async (req, res) => {
         }
 
         const alumno = await getAlumnoByClave(claveAlumno);
+        alumnos.sort(function (a, b) {
+            return a.dataValues.apellidos.localeCompare(b.dataValues.apellidos);
+        });
         res.render('grupo/vista-grupo-alumnos', {alumnos, idgrupo, asignatura, clave, alumno});
 
     } catch (err) {

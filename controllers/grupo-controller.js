@@ -88,7 +88,6 @@ const getAllGruposByState = async (req, res, next) => {
     } catch (err) {
         console.log(err)
     }
-
 }
 //Metodo para obtener todos los datos del grupo.
 const getDatosGrupo = async (req, res) => {

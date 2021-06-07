@@ -4,14 +4,7 @@ const temaController = require('../controllers/tema-controller');
 const actividadController = require('../controllers/actividad-controller');
 
 //
-router.get('/grupo/actividades/:idgrupo', async (req,res)=>{
-    //Metodo para buscar Temas
-    const temas = await temaController.getTemasByGrupoEtiquetas(req.params.idgrupo);
-    //Metodo para buscar todas las Actividades
-
-    //Renderización de la vista.
-    res.render('grupo/vista-grupo-actividades', {idgrupo:req.params.idgrupo, temas , idtema:''});
-});
+router.get('/grupo/actividades/:idgrupo', actividadController.getAllActivitiesByGroup);
 
 //Visualización de Actividades por tema
 router.get('/grupo/actividades/:idgrupo/:idtema', async (req,res)=>{
