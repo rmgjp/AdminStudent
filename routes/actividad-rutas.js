@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const temaController = require('../controllers/tema-controller');
 const actividadController = require('../controllers/actividad-controller');
+const grupoController = require('../controllers/grupo-controller');
 
 //
 router.get('/grupo/actividades/:idgrupo', actividadController.getAllActivitiesByGroup);
