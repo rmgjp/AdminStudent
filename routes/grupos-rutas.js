@@ -49,7 +49,7 @@ router.get('/grupo/editar/:idgrupo',  controladorGrupo.getDatosGrupoEditar);
 router.put('/grupo/editar/:idgrupo', controladorGrupo.editarGrupo);
 
 //Ruta para vista inicial del grupo.
-router.get('/grupo-inicio/:idgrupo', controladorGrupo.getDatosGrupo);
+router.get('/grupo-inicio/:idgrupo', controladorGrupo.renderDatosGrupo);
 
 //Ruta para eliminar el grupo cuando se cancela el Wizard.
 router.get('/abortar-grupo/:idgrupo', controladorGrupo.abortarGrupo);

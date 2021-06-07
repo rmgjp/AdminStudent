@@ -3,7 +3,7 @@ const Models = require('../models');
 
 //Método para obtener todos los grupos sin importar otros campos.
 //Utilizado principalmente en la pagina de inicio.
-const getAllGrupos = async (req, res, next) => {
+const getAllGrupos = async (req, res) => {
     try {
         const grupos = await Models.grupo.findAll({
             where: {
@@ -11,32 +11,34 @@ const getAllGrupos = async (req, res, next) => {
                 estado: 1
             }
         });
-        console.log({grupos})
-
-        res.render('index', {grupos});
+        return grupos;
     } catch (err) {
         console.log(err)
     }
-
 }
+
+//Metodo para renderizar todos los grupos
+const renderAllGrupos = async (req, res) =>{
+    const grupos = await getAllGrupos(req,res);
+    res.render('index', {grupos});
+}
+
 //Metodo para actualizar grupo a estado 2 (papelera)
 const moveraPapelera = async (req,res)=>{
-    var grupo = await Models.grupo.findOne({
-        where:{id: req.params.idgrupo}
-    });
+    const grupo = await getDatosGrupo(req,res);
     await grupo.update({estado:2});
     res.redirect('/');
 }
 //Metodo para restaurar grupo, pasa de estado 1
 const restaurarGrupo = async (req,res)=>{
-    var grupo = await Models.grupo.findOne({where:{id:req.params.idgrupo}})
+    var grupo = await getDatosGrupo(req,res);
     await grupo.update({estado:1});
     res.redirect('/');
 };
 
 const eliminarGrupo = async (req,res)=>{
     //Busqueda del grupo.
-    var grupo = await Models.grupo.findOne({where:{id:req.params.idgrupo}});
+    var grupo = await getDatosGrupo(req,res);
     //Busqueda relacion alumnogrupo
     var alumnos = await Models.alumnogrupo.findAll({where:{idgrupo:req.params.idgrupo}});
     //Busqueda de los temas que contiene  ese grupo
@@ -97,19 +99,21 @@ const getDatosGrupo = async (req, res) => {
                 id: req.params.idgrupo
             }
         })
-        res.render('grupo/vista-inicio-grupo', {grupo});
+
         return grupo;
     } catch (err) {
         console.log(err)
     }
 }
+
+const renderDatosGrupo = async (req,res) =>{
+    const grupo = await getDatosGrupo(req,res);
+    res.render('grupo/vista-inicio-grupo', {grupo});
+}
+
 const getDatosGrupoEditar = async (req, res) => {
     try {
-        const grupo = await Models.grupo.findOne({
-            where: {
-                id: req.params.idgrupo
-            }
-        })
+        const grupo = await getDatosGrupo(req,res);
         res.render('grupo/datos-grupo-editar', {idgrupo: req.params.idgrupo, grupo});
     } catch (err) {
         console.log(err)
@@ -168,7 +172,7 @@ const createGrupoManual = async (req, res) => {
 const editarGrupo = async (req, res) => {
     const {clave, asignatura, estado, imagen} = req.body;
     try {
-        var grupo = await Models.grupo.findOne({where: {id: req.params.idgrupo}});
+        var grupo = await getDatosGrupo(req,res);
 
         await grupo.update({
             clave: req.body.clave.toUpperCase(),
@@ -184,6 +188,8 @@ const editarGrupo = async (req, res) => {
 }
 //Exportación de los métodos para su uso interno en aplicación.
 module.exports = {
+    renderDatosGrupo,
+    renderAllGrupos,
     restaurarGrupo,
     eliminarGrupo,
     moveraPapelera,
