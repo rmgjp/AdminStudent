@@ -3,6 +3,7 @@ const router = express.Router();
 const multer = require('multer');
 const path = require('path');
 const controladorGrupo = require('../controllers/grupo-controller')
+const fileReader = require('../helpers/lector-archivos-helper')
 
 router.use(function(req, res, next) {
     next();
@@ -36,6 +37,8 @@ router.post('/grupo/wizard-crear-grupo-manual', controladorGrupo.createGrupoManu
 //Rutas para importar archivo excel
 
 router.post('/grupo/importar-archivo', load.single('archivo'), async (req,res) =>{
+    let file = req.file;
+    await fileReader.leerArchivo(file.originalname.toString().replace(' ', ''));
     res.redirect('/');
 });
 
