@@ -12,7 +12,7 @@ router.use(function(req, res, next) {
 const storage = multer.diskStorage({
     destination: path.join(__dirname, '../public/doc'),
     filename : (req,file,cb)=>{
-        cb(null,file.originalname);
+        cb(null,file.originalname.toString().replace(' ', ''));
     }
 });
 const load = (multer({
