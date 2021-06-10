@@ -7,16 +7,11 @@ function leerArchivo(file) {
     fs.readFile(txtFile, "utf-8", (err, data) => {
         if (err) {
             throw err;
+            return;
         } else {
-            var palabras = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'No', 'CF', 'ST'];
-            var jsonTables = ConversorToJSON.parse(data);
-            var table = jsonTables.results;
-
-            for(dato in table){
-
-                console.log("Dato: \n" + {dato});
-            }
-            //console.log(table);
+            var json = tableToJSON.convert(data,{onlyColumns:[1,2]});
+            console.log(json);
+            return json;
         }
     })
 }
