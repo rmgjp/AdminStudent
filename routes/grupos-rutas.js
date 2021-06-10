@@ -38,7 +38,7 @@ router.post('/grupo/wizard-crear-grupo-manual', controladorGrupo.createGrupoManu
 
 router.post('/grupo/importar-archivo', load.single('archivo'), async (req,res) =>{
     let file = req.file;
-    await fileReader.leerArchivo(file.originalname.toString().replace(' ', ''));
+    await fileReader.obtenerListaAlumnos(file.originalname.toString().replace(' ', ''));
     res.redirect('/');
 });
 
