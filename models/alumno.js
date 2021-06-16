@@ -6,7 +6,6 @@ module.exports = (sequelize, DataTypes) => {
   //Retornamos el modelo de datos
   const alumno = sequelize.define('alumno',{
         nombre: DataTypes.STRING,
-        apellidos: DataTypes.STRING,
         clave: DataTypes.STRING,
         correo: DataTypes.STRING
       },

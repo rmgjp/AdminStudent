@@ -1,6 +1,10 @@
 const Sequelize = require('sequelize');
 const Models = require('../models');
 const { Op } = require("sequelize");
+const fs = require('fs');
+const path = require('path');
+
+
 //Método para obtener todos los grupos sin importar otros campos.
 //Utilizado principalmente en la pagina de inicio.
 const getAllGrupos = async (req, res) => {
@@ -133,6 +137,7 @@ const abortarGrupo = async (req, res) => {
 }
 //Método para crear un grupo mediante el modo manual de la aplicación.
 const createGrupoManual = async (req, res) => {
+    const file = req.params.archivo;
     const {clave, asignatura, estado, imagen} = req.body;
     const errors = [];
     //Validación de datos de la vista
@@ -157,11 +162,16 @@ const createGrupoManual = async (req, res) => {
                 }
             });
             const {id} = grupo;
-            //console.log({grupo})
-            console.log("Id" + id);
+
             //Renderizado de la vista para agregar alumnos y posteriormente
             //relacionarlos.
-            res.redirect('/alumno/wizard-agregar-alumnos-manual/' + id + '/0');
+            if(!file){
+                res.redirect('/alumno/wizard-agregar-alumnos-manual/' + id + '/0');
+            }
+            else {
+                res.redirect('/alumno/wizard-agregar-alumnos-manual/' + id + '/0/'+ file);
+            }
+
         } catch (err) {
             console.log(err)
         }
@@ -187,6 +197,7 @@ const editarGrupo = async (req, res) => {
 }
 //Exportación de los métodos para su uso interno en aplicación.
 module.exports = {
+    obtenerDatosGrupo,
     renderDatosGrupo,
     renderAllGrupos,
     restaurarGrupo,

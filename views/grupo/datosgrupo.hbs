@@ -14,22 +14,22 @@
 
     <!-- Cuerpo del archivo -->
     <h1 class="display-6">Datos del grupo</h1>
-    <form class="needs-validation" action="/grupo/wizard-crear-grupo-manual/" method="POST" novalidate>
+    <form class="needs-validation" action="/grupo/wizard-crear-grupo-manual/{{archivo}}" method="POST" novalidate>
         <div class="row">
             <div class="col">
                 <label for="asignatura" class="form-label">Asignatura</label>
-                <input type="text" class="form-control" name="asignatura" id="asignatura" required>
+                <input type="text" class="form-control" name="asignatura" id="asignatura" required value="{{datos.materia}}">
             </div>
         </div>
 
         <div class="row">
             <div class="col">
                 <label for="clave" class="form-label">Clave</label>
-                <input type="text" class="form-control" name="clave" id="clave" required>
+                <input type="text" class="form-control" name="clave" id="clave" required value="{{datos.grupo}}">
             </div>
             <div class="col">
                 <label for="periodo" class="form-label">Periodo</label>
-                <input type="text" class="form-control" name="periodo" id="periodo" placeholder="Ej. ENE-JUN-2021" required>
+                <input type="text" class="form-control" name="periodo" id="periodo" placeholder="Ej. ENE-JUN-2021" required value="{{datos.periodo}}">
             </div>
             <div class="col">
                 <label for="estado" class="form-label">Estado</label>

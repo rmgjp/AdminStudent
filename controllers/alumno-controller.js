@@ -1,5 +1,8 @@
 const Sequelize = require('sequelize');
 const Models = require('../models');
+const fs = require('fs');
+const path = require('path');
+const tableToJSON = require('tabletojson').Tabletojson;
 
 //Metodo para guardar los alumnos dentro de la tabla/Grid
 const guardarDesdeGrid = async (req, res) => {
@@ -30,7 +33,6 @@ const guardarDesdeGrid = async (req, res) => {
                     defaults: {
                         clave: alumnos[alumno].clave.toUpperCase(),
                         nombre: alumnos[alumno].nombre.toUpperCase(),
-                        apellidos: alumnos[alumno].apellidos.toUpperCase()
                     }
                 });
         }
@@ -137,7 +139,6 @@ const editarAlumno = async (req,res)=>{
         var alumno = await Models.alumno.findOne({where: {id: req.params.idalumno}})
         await alumno.update({
             clave: clave.toUpperCase(),
-            apellidos: apellidos.toUpperCase(),
             nombre: nombre.toUpperCase(),
             correo: correo
         });
@@ -181,7 +182,7 @@ const getListAlumnosByGroup = async (req, res) => {
             alumnos.push(alumno[0]);
         }
         alumnos.sort(function (a, b) {
-            return a.dataValues.apellidos.localeCompare(b.dataValues.apellidos);
+            return a.dataValues.nombre.localeCompare(b.dataValues.nombre);
         });
         res.render('grupo/vista-grupo-alumnos', {alumnos, idgrupo, asignatura, clave});
 
@@ -236,6 +237,7 @@ const getAlumnoAndAlumnosByGroup = async (req, res) => {
 }
 //Exportación de los métodos para su posterior uso dentro del programa
 module.exports = {
+    obtenerListaAlumnos,
     desasociarAlumno,
     editarAlumno,
     getAlumnoAndAlumnosByGroup,

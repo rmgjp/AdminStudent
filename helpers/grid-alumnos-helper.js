@@ -2,8 +2,25 @@ var table = $('#table')
 var tablaDatos;
 var i = 0;
 
+
+$(function cargarDatos(){
+    var lista = document.getElementById("valorTabla").value;
+    lista = JSON.parse(lista);
+
+    if(lista){
+        console.log("Lista encontrada.")
+        var rows= [];
+        for(let alumno= 0; alumno < lista.length; alumno++){
+            rows.push(lista[alumno]);
+        }
+        console.log(rows);
+        table.bootstrapTable('load', rows);
+        i = lista.length;
+    }
+})
+
 $('#add').on('click', function () {
-    if(document.getElementById("ClaveBox").value && document.getElementById('NombreBox').value && document.getElementById("ApellidoBox").value){
+    if(document.getElementById("ClaveBox").value && document.getElementById('NombreBox').value){
 
         table.bootstrapTable('insertRow',{
             index: i,
@@ -12,7 +29,7 @@ $('#add').on('click', function () {
                 nombre: document.getElementById('NombreBox').value,
                 apellidos: document.getElementById("ApellidoBox").value,
             }
-        })
+        });
         document.getElementById("ClaveBox").value = "";
         document.getElementById("NombreBox").value = "";
         document.getElementById("ApellidoBox").value = "";
@@ -45,12 +62,13 @@ input.addEventListener("keyup", function(event) {
             row:{
                 clave:  document.getElementById("ClaveBox").value,
                 nombre: document.getElementById('NombreBox').value,
-                apellidos: document.getElementById("ApellidoBox").value,
+
             }
         })
         document.getElementById("ClaveBox").value = "";
         document.getElementById("NombreBox").value = "";
-        document.getElementById("ApellidoBox").value = "";
     }
     i = i + 1
 });
+
+cargarDatos();

@@ -9,6 +9,9 @@ router.get('/alumno/wizard-agregar-alumnos-manual/:idGrupo/:add', (req,res)=>(
     res.render('alumno/grid-alumnos', {idgrupo: req.params.idGrupo, adds:req.params.add})
 ));
 
+router.get('/alumno/wizard-agregar-alumnos-manual/:idGrupo/:add/:archivo', controladorAlumno.obtenerListaAlumnos);
+
+
 //Ruta para guardar un conjunto de alumnos y asociarlos a un grupo.
 router.post('/alumno/wizard-agregar-alumnos-manual/:idGrupo/:add', controladorAlumno.guardarDesdeGrid);
 

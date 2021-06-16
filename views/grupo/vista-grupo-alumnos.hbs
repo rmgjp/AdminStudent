@@ -166,13 +166,11 @@
 <script>
     document.getElementById('switchEditar').onclick = function () {
         if ($(this).is(':checked')) {
-            document.getElementById('apellidos').disabled = false;
             document.getElementById('nombre').disabled = false;
             document.getElementById('correo').disabled = false;
             document.getElementById('clave').disabled = false;
             document.getElementById('guardar').disabled = false;
         } else {
-            document.getElementById('apellidos').disabled = true;
             document.getElementById('nombre').disabled = true;
             document.getElementById('correo').disabled = true;
             document.getElementById('clave').disabled = true;
