@@ -48,5 +48,6 @@ async function obtenerDatosGrupo(file){
 }
 
 module.exports = {
-    obtenerListaAlumnos
+    obtenerListaAlumnos,
+    obtenerDatosGrupo
 }

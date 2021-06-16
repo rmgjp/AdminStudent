@@ -27,12 +27,10 @@ $('#add').on('click', function () {
             row:{
                 clave:  document.getElementById("ClaveBox").value,
                 nombre: document.getElementById('NombreBox').value,
-                apellidos: document.getElementById("ApellidoBox").value,
             }
         });
         document.getElementById("ClaveBox").value = "";
         document.getElementById("NombreBox").value = "";
-        document.getElementById("ApellidoBox").value = "";
         tablaDatos = table.bootstrapTable('getData');
         document.getElementById("valorTabla").value = JSON.stringify(tablaDatos);
         i = i + 1

@@ -49,7 +49,32 @@ const guardarDesdeGrid = async (req, res) => {
         }
     }
 }
-
+const obtenerListaAlumnos = async (req,res) =>{
+    var file = req.params.archivo;
+    var txtFile = path.join(__dirname, '../public/doc/' + file);
+    await fs.readFile(txtFile, "utf-8", (err, data) => {
+        if (err) {
+            throw err;
+            return;
+        } else {
+            var listaAlumnos = tableToJSON.convert(data,{onlyColumns:[1,2]});
+            listaAlumnos = JSON.stringify(listaAlumnos[0]);
+            var listaFormateada = JSON.parse(listaAlumnos, function (k,v){
+                if(k.match(/^Nombre\s+Temas->/gm)){
+                    this.nombre = v;
+                    return;
+                }
+                else if(k.match("Num Ctrol")){
+                    this.clave = v;
+                    return;
+                }
+                return v;
+            })
+            listaFormateada = JSON.stringify(listaFormateada);
+            res.render('alumno/grid-alumnos', {idgrupo: req.params.idGrupo, adds:req.params.add, listaFormateada});
+        }
+    });
+}
 function tryParseJSON (jsonString){
     try {
         var o = JSON.parse(jsonString);
@@ -227,7 +252,7 @@ const getAlumnoAndAlumnosByGroup = async (req, res) => {
 
         const alumno = await getAlumnoByClave(claveAlumno);
         alumnos.sort(function (a, b) {
-            return a.dataValues.apellidos.localeCompare(b.dataValues.apellidos);
+            return a.dataValues.nombre.localeCompare(b.dataValues.nombre);
         });
         res.render('grupo/vista-grupo-alumnos', {alumnos, idgrupo, asignatura, clave, alumno});
 

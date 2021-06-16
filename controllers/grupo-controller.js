@@ -177,7 +177,46 @@ const createGrupoManual = async (req, res) => {
         }
     }
 }
+const obtenerDatosGrupo = async (req,res)=>{
+    var archivo = req.params.archivo;
+    var txtFile = path.join(__dirname, '../public/doc/' + archivo);
+    await fs.readFile(txtFile, "utf-8", (err, data) => {
+        if(err){
+            throw err;
+            res.redirect('/');
+        }
+        else{
+            //Se busca el inicio el cierre de la etiqueta <PRE> para obtener los indices del contenido.
+            var inicioPRE = data.indexOf('PRE')
+            var finPRE = data.indexOf("/PRE");
+            var contenidoPRE = data.substring(inicioPRE, finPRE);
+            //Se busca el inicio y el final del contendio de MATERIA haciendo uso de una expresion regular
+            var materiaIndex = data.search(/^(MATERIA)\s*:\s?(\w+)\s*((\w+)\s?(\w+)\s?)*/mg, data);
+            var materiaLastIndex = data.search("MAESTRO", data)-1;
+            //Se obtiene un subString con los indices encontrados
+            var materiaContenido = data.substring(materiaIndex,materiaLastIndex).trim();
+            //Se busca el inicio y el final del contendio de GRUPO haciendo uso de una expresion regular
+            var grupoIndex = data.search(/\s+(GRUPO)\s*:\s?(\w+)/mg, data);
+            var grupoLastIndex = data.search("EXTEN", data)-1;
+            //Se obtiene un subString con los indices encontrados
+            var grupoContenido = data.substring(grupoIndex, grupoLastIndex).trim();
 
+            //Se busca el inicio y el final del contendio de PERIODO haciendo uso de una expresion regular
+            var periodoIndex = data.search(/\s+(PERIODO)\s*:\s?(\w+)/mg, data);
+            var periodoLastIndex = data.search("MATERIA", data)-1;
+            //Se obtiene un subString con los indices encontrados
+            var periodoContenido = data.substring(periodoIndex,periodoLastIndex).trim();
+
+            var grupo = grupoContenido.split(":");
+            var materia = materiaContenido.split(":");
+            var periodo = periodoContenido.split(":");
+
+            var datos = {grupo: grupo[1].trim(), materia:materia[1].trim(), periodo: periodo[1].trim()};
+
+            res.render('grupo/datosgrupo', {datos, archivo});
+        }
+    });
+}
 const editarGrupo = async (req, res) => {
     const {clave, asignatura, estado, imagen} = req.body;
     try {

@@ -34,6 +34,7 @@ router.get('/grupo/wizard-crear-grupo-manual', ((req, res) =>
 ));
 router.post('/grupo/wizard-crear-grupo-manual', controladorGrupo.createGrupoManual);
 
+router.post('/grupo/wizard-crear-grupo-manual/:archivo', controladorGrupo.createGrupoManual);
 //Rutas para importar archivo excel
 
 router.post('/grupo/importar-archivo', load.single('archivo'), async (req, res) => {
