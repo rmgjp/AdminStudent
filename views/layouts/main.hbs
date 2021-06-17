@@ -1,32 +1,39 @@
 <!DOCTYPE html>
 <html lang="es">
 
-    <head>
-        <meta charset="UTF-8">
-        <script src="/js/jquery.js"></script>
-        <script src="/js/popper.min.js"></script>
-        <script src="/js/popper-utils.min.js"></script>
-        <link href="/css/bootstrap.css" rel="stylesheet" type="text/css">
-        <link href="/css/bootstrap-icons.css" rel="stylesheet" type="text/css">
-        <link href="/css/font-awesome.css" rel="stylesheet" type="text/css">
-        <link href="/js/bootstrap-table.css" rel="stylesheet" type="text/css">
-        <script src="/js/bootstrap-table.js"></script>
-        <script src="/js/bootstrap.bundle.js"></script>
-        <script src="/js/popover-helper.js"></script>
-        <script src="/js/bs-custom-file-input.js"></script>
+<head>
+    <meta charset="UTF-8">
+    <script src="/js/jquery.js"></script>
+    <script src="/js/popper.min.js"></script>
+    <script src="/js/popper-utils.min.js"></script>
+    <link href="/css/bootstrap.css" rel="stylesheet" type="text/css">
+    <link href="/css/bootstrap-icons.css" rel="stylesheet" type="text/css">
+    <link href="/css/font-awesome.css" rel="stylesheet" type="text/css">
+    <link href="/js/bootstrap-table.css" rel="stylesheet" type="text/css">
+    <script src="/js/bootstrap-table.js"></script>
+    <script src="/js/bootstrap.bundle.js"></script>
+    <script src="/js/popover-helper.js"></script>
+    <script src="/js/bs-custom-file-input.js"></script>
 
-        <nav class="navbar navbar-light bg-light">
-            <div class="container-fluid">
-                <a class="bi bi-house-fill"  href="/" title="Inicio"></a>
+    <nav class="navbar navbar-light bg-light">
+        <div class="container-fluid">
+            <div class="col">
+                <a class="bi bi-house-fill" href="/" title="Inicio"></a>
             </div>
-        </nav>
+            <div class="col" align="right">
+                <a type="button" class="bi bi-gear-fill" data-toggle="modal" data-target="#configuracionModal"
+                   title="Configuración"></a>
+            </div>
 
-    </head>
+        </div>
+    </nav>
+
+</head>
 
 <body>
-        <!--Muestreo del contenido de la aplicación -->
-        {{{ body }}}
-        <!--Fin de muestreo del contenido de la aplicación -->
+<!--Muestreo del contenido de la aplicación -->
+{{{ body }}}
+<!--Fin de muestreo del contenido de la aplicación -->
 </body>
 
 
