@@ -180,7 +180,7 @@ const createGrupoManual = async (req, res) => {
 const obtenerDatosGrupo = async (req,res)=>{
     var archivo = req.params.archivo;
     var txtFile = path.join(__dirname, '../public/doc/' + archivo);
-    await fs.readFile(txtFile, "utf-8", (err, data) => {
+    await fs.readFile(txtFile, "binary", (err, data) => {
         if(err){
             throw err;
             res.redirect('/');
