@@ -20,7 +20,7 @@
     </div>
     <div class="row m-2 p-2">
         {{#each grupos}}
-            <div class="col-md-3 col-3 col-xl-3 col-lg-3 col-sm-3 p-1">
+            <div class="col-md-3 col-3 col-xl-2 col-lg-2 col-sm-3 p-1">
                 <div class="card " style="height:28rem; ">
                     {{#iflogico dataValues.estado '!=' "2"}}
                         <div class="card-header d-flex flex-row-reverse">
@@ -155,7 +155,7 @@
 
         {{else}}
 
-            <div class="col-md-3 col-3 col-xl-3 col-lg-3 col-sm-3 p-1">
+            <div class="col-md-3 col-3 col-xl-2 col-lg-2 col-sm-3 p-1">
                 <div class="card" style="height:28rem ">
                     <div class="card-body">
                         {{#iflogico estado '!=' 2}}
@@ -170,7 +170,7 @@
             </div>
         {{/each}}
         {{#iflogico estado '!=' 2}}
-            <div class="col-md-3 col-3 col-xl-3 col-lg-3 col-sm-3 p-1">
+            <div class="col-md-3 col-3 col-xl-2 col-lg-2 col-sm-3 p-1">
                 <div class="card" style="height:28rem; ">
                     <div class="card-body justify-content-center align-center">
 
