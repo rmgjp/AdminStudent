@@ -148,7 +148,7 @@ const createGrupoManual = async (req, res) => {
     //Si los datos son valido
     else {
         try {
-            await Models.grupo.create({
+            var grupodata = await Models.grupo.create({
                 clave: req.body.clave.toUpperCase(),
                 asignatura: req.body.asignatura,
                 estado: parseInt(estado, 10),
@@ -161,7 +161,7 @@ const createGrupoManual = async (req, res) => {
                     clave: req.body.clave.toUpperCase()
                 }
             });
-            const {id} = grupo;
+            const {id} = grupodata;
 
             //Renderizado de la vista para agregar alumnos y posteriormente
             //relacionarlos.
@@ -186,6 +186,7 @@ const obtenerDatosGrupo = async (req,res)=>{
             res.redirect('/');
         }
         else{
+            //data = Buffer.from(data, 'utf-8');
             //Se busca el inicio el cierre de la etiqueta <PRE> para obtener los indices del contenido.
             var inicioPRE = data.indexOf('PRE')
             var finPRE = data.indexOf("/PRE");

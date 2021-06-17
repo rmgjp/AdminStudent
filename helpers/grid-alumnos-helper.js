@@ -16,6 +16,8 @@ $(function cargarDatos(){
         console.log(rows);
         table.bootstrapTable('load', rows);
         i = lista.length;
+        tablaDatos = table.bootstrapTable('getData');
+        document.getElementById("valorTabla").value = JSON.stringify(tablaDatos);
     }
 })
 

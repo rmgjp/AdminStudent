@@ -52,7 +52,7 @@ const guardarDesdeGrid = async (req, res) => {
 const obtenerListaAlumnos = async (req,res) =>{
     var file = req.params.archivo;
     var txtFile = path.join(__dirname, '../public/doc/' + file);
-    await fs.readFile(txtFile, "utf-8", (err, data) => {
+    await fs.readFile(txtFile, "binary", (err, data) => {
         if (err) {
             throw err;
             return;
