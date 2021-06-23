@@ -186,5 +186,99 @@
         {{/iflogico}}
     </div>
 
+    <form action="/set-config?_method=PUT" method="POST">
+        <input type="hidden" name="_method" value="PUT">
+        <div class="modal fade" id="configuracionModal" tabindex="-1" aria-labelledby="configuracionModal"
+             aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="configuracionModalLabel">Configuración</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container-fluid">
+                            <div class="row p-2">
+                                <h4>Mis datos personales</h4>
+
+                            </div>
+                            <div class="row">
+                                <div class="dropdown-divider"></div>
+                            </div>
+                            <div class="row m-1">
+                                <label class="form-label" id="etiquetaNombre" for="nombre">Nombre</label>
+                                <input type="text" class="form-control" aria-describedby="etiquetaNombre" id="nombre" name="nombre"
+                                       value="{{config.nombre}}">
+                            </div>
+                            <div class="row m-1">
+                                <label class="form-label" id="etiquetaClave" for="clave">Clave</label>
+                                <input type="text" class="form-control" aria-describedby="etiquetaClave" id="clave" name="clave"
+                                       value="{{config.clave}}">
+                            </div>
+                            <div class="row m-1">
+                                <label class="form-label" id="etiquetaCorreo" for="correo">Correo</label>
+                                <input type="email" class="form-control" aria-describedby="etiquetaCorreo" id="correo" name="correo"
+                                       value="{{config.correo}}">
+                            </div>
+
+                            <div class="row p-2">
+                                <h4>Cálculo de calificaciones</h4>
+                            </div>
+                            <div class="row">
+                                <div class="dropdown-divider"></div>
+                            </div>
+                            <h5>Calificación individual</h5>
+                            <div class="input-group" name="calfi" value="{{config.califi}}">
+                                <div class="row m-1">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" value=0 id="calfi1"
+                                               name="calfi" {{#iflogico config.califi "===" "0"}} checked {{/iflogico}}>
+                                        <label class="form-check-label" for="calfi1">Todas las actividades deben estar aprobadas para
+                                            promediarse.</label>
+                                    </div>
+                                </div>
+                                <div class="row m-1">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" value=1 id="calfi2"
+                                               name="calfi" {{#iflogico config.califi '===' "1"}} checked {{/iflogico}}>
+                                        <label class="form-check-label" for="calfi2">Promediar todas las actividades sin
+                                            importar si
+                                            una o
+                                            más no están aprobadas.</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <h5>Calificación por equipo</h5>
+                            <div class="row m-1">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" value=0 id="calfe1"
+                                           name="calfe" {{#iflogico config.calife "===" "0"}} checked {{/iflogico}}>
+                                    <label class="form-check-label" for="calfe1">Todos obtienen la misma
+                                        calificación.</label>
+                                </div>
+                            </div>
+                            <div class="row m-1">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" value=1 id="calfe2"
+                                           name="calfe" {{#iflogico config.calife '===' "1"}} checked {{/iflogico}}>
+                                    <label class="form-check-label" for="calfe2">La calificación del equipo se promedia con un rubro individual.</label>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <a type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</a>
+                        <button type="submit" class="btn btn-success">Aplicar</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </form>
+
 
 </div>

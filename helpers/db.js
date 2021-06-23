@@ -1,6 +1,6 @@
 /**
  * Archivo de configuración encargado de crear la base de datos en caso de que no exista.
- * depende de /config/config.json para obtener las credenciales.
+ * depende de /config/userconfig.json para obtener las credenciales.
  *
  * Se ejecuta al inicio de la aplicación.
  */
