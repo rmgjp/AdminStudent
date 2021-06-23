@@ -1,0 +1,37 @@
+<title>Calificar</title>
+
+<div class="container bg-light m-100">
+    <div class="row m-2 p-3">
+        <h1 class="display-4">Calificar Actividad</h1>
+    </div>
+
+    <div class="row">
+        <form>
+            <input type="hidden" id="valorTabla" name="valorTabla" value="{{listaFormateada}}">
+            <div class="row-cols-1 ">
+                <div class="col-auto">
+                    <table id="table" data-toggle="table" data-toolbar="#toolbar" data-click-to-select="false"
+                           data-search="true"
+                           data-advanced-search="true" data-filter-control="true" name="table" data-editable="true">
+                        <thead>
+                        <tr>
+                            <th data-field="estado" data-sorteable="false" data-checkbox="true"></th>
+                            <th data-field="clave" data-sorteable="false" data-editable="true">No. Control</th>
+                            <th data-field="nombre" data-sorteable="true" data-editable="true">Nombre</th>
+                            <th data-field="calificacion" data-sorteable="true" data-editable="true">Calificación</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="row p-3 d-flex flex-row-reverse">
+                <button class="btn btn-primary" type="submit" id="finalizar">Finalizar</button>
+                <a class="btn btn-danger" href="">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>
+<script src="/js/grid-calificacion-individual-helper.js"></script>
