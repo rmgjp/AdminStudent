@@ -43,6 +43,7 @@ app.use('/js', express.static(path.join(__dirname , 'node_modules/bootstrap-tabl
 app.use('/js', express.static(path.join(__dirname , 'node_modules/popper.js/dist')))
 app.use('/js', express.static(path.join(__dirname , 'node_modules/bootstrap/dist/js')));
 app.use('/js', express.static(path.join(__dirname , 'helpers')));
+app.use('/js', express.static(path.join(__dirname, 'node_modules/x-editable-bs4/dist')));
 app.use('/js',express.static(path.join(__dirname, 'node_modules/bs-custom-file-input/dist')));
 app.use('/img', express.static(path.join(__dirname , 'public/img')));
 
