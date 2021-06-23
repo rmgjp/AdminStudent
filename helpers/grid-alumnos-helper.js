@@ -40,6 +40,12 @@ $('#add').on('click', function () {
     }
 })
 
+$('#table').on('editable-save.bs.table', function(e, field, row, oldValue, $el){
+    tablaDatos = table.bootstrapTable('getData');
+    document.getElementById("valorTabla").value = JSON.stringify(tablaDatos);
+    console.log(tablaDatos);
+})
+
 $('#remove').on('click', function () {
     var claves = $.map(table.bootstrapTable('getSelections'), function (row){
         return row.clave
