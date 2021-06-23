@@ -4,7 +4,7 @@ const Models = require('../models');
 
 const getAllTareas = async (idGrupo)=>{
     try{
-        const tareas = Models.tareas.findAll({
+        const tareas = Models.tarea.findAll({
 
         })
     }

@@ -1,6 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const controladorGrupo = require('../controllers/grupo-controller');
+var configFile = require('../config/userconfig.json')
+const fs = require('fs');
+const path = require('path');
 
 router.use(function(req, res, next) {
     next();

@@ -3,6 +3,7 @@ const Models = require('../models');
 const { Op } = require("sequelize");
 const fs = require('fs');
 const path = require('path');
+const config = require('../config/userconfig.json');
 
 
 //Método para obtener todos los grupos sin importar otros campos.
@@ -23,7 +24,8 @@ const getAllGrupos = async (req, res) => {
 //Metodo para renderizar todos los grupos
 const renderAllGrupos = async (req, res) =>{
     const grupos = await getAllGrupos(req,res);
-    res.render('index', {grupos});
+    console.log(config);
+    res.render('index', {grupos, config});
 }
 
 //Metodo para actualizar grupo a estado 2 (papelera)
@@ -89,7 +91,7 @@ const getAllGruposByState = async (req, res, next) => {
         })
         //console.log({grupos})
         //Renderiza la vista index, sobrecargando el objeto grupos
-        res.render('index', {grupos, estado:req.params.estado})
+        res.render('index', {grupos, estado:req.params.estado, config})
     } catch (err) {
         console.log(err)
     }
