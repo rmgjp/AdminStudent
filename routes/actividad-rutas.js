@@ -61,5 +61,8 @@ router.post('/actividad/nueva-actividad/:idgrupo/:idtema', async(req,res)=>{
     res.redirect('/grupo/actividades/'+req.params.idgrupo+'/'+req.params.idtema);
 });
 
+router.get('/actividad/calificar-individual/:idgrupo/:idtema/:idactividad', (req,res)=>{
+    res.render('actividad/actividad-calificar-individual', {idgrupo:req.params.idgrupo, idtema:req.params.idtema, idactividad:req.params.idactividad});
+})
 
 module.exports = router;
