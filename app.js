@@ -38,6 +38,7 @@ app.use('/css', express.static(path.join(__dirname , 'node_modules/bootstrap/dis
 app.use('/css', express.static(path.join(__dirname , 'node_modules/font-awesome/css')));
 app.use('/css', express.static(path.join(__dirname , 'node_modules/bootstrap-icons/font')));
 app.use('/icons', express.static(path.join(__dirname ,'node_modules/bootstrap-icons/icons')));
+app.use('/fonts', express.static(path.join(__dirname , 'node_modules/font-awesome/fonts')));
 app.use('/js', express.static(path.join(__dirname , 'node_modules/jquery/dist')));
 app.use('/js', express.static(path.join(__dirname , 'node_modules/bootstrap-table/dist')));
 app.use('/js', express.static(path.join(__dirname , 'node_modules/popper.js/dist')))
