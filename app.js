@@ -10,7 +10,8 @@ const flash = require('connect-flash');
 const exphbs = require('express-handlebars');
 const dbcreator = require('./helpers/db');
 const firstRun = require('electron-first-run');
-
+const ipfilter= require('express-ipfilter').IpFilter;
+const ips = ['127.0.0.1'];
 
 
 
