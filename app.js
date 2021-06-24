@@ -17,13 +17,14 @@ const firstRun = require('electron-first-run');
 //Inicialización de Express
 var app = express();
 
+//app.use(ipfilter(ips, {mode: "allow"}));
 
 //Configuración del motor de vista
 app.set('views', path.join(__dirname , 'views'));
 //Se declara que se utilizará archivos hbs para su compatibilidad con Handlebars Express
 app.set('view engine', '.hbs');
 
-//
+
 app.use(express.urlencoded({extended : false}));
 app.use(methodOverride('_method'));
 
@@ -117,7 +118,7 @@ app.use(function(err, req, res, next) {
 
 
 //Inicializacion del servidor para su posterior presentación por medio de Electron.
-const server = app.listen(5000, () => console.log(`Express server listening on port 5000`));
+const server = app.listen(5000);
 
 
 module.exports = app;
