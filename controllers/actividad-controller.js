@@ -94,7 +94,12 @@ const eliminarActividad = async (req,res)=>{
     }
 };
 
+const renderVistaCalifI = async (req,res)=>{
+
+    res.render('actividad/actividad-calificar-individual', {idgrupo:req.params.idgrupo, idtema:req.params.idtema, idactividad:req.params.idactividad});
+};
 module.exports = {
+    renderVistaCalifI,
     eliminarActividad,
     editarActividad,
     getActividadById,
