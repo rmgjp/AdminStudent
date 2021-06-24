@@ -13,7 +13,6 @@ $(function cargarDatos(){
         for(let alumno= 0; alumno < lista.length; alumno++){
             rows.push(lista[alumno]);
         }
-        console.log(rows);
         table.bootstrapTable('load', rows);
         i = lista.length;
         tablaDatos = table.bootstrapTable('getData');

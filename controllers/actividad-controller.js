@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize');
 const Models = require('../models');
+const alumnoController = require('./alumno-controller');
 
 
 const getAllTareas = async (idGrupo)=>{
