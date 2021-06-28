@@ -22,7 +22,7 @@ const getTemasByGrupo = async (req,res) =>{
             }
         });
         console.log(tema);
-        res.render('grupo/vista-grupo-temas', {tema, idgrupo, asignatura, clave});
+        res.render('tema/vista-grupo-temas', {tema, idgrupo, asignatura, clave});
     }
     catch(err){
         console.log(err);

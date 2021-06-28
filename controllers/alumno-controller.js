@@ -209,7 +209,7 @@ const getListAlumnosByGroup = async (req, res) => {
         alumnos.sort(function (a, b) {
             return a.dataValues.nombre.localeCompare(b.dataValues.nombre);
         });
-        res.render('grupo/vista-grupo-alumnos', {alumnos, idgrupo, asignatura, clave});
+        res.render('alumno/vista-grupo-alumnos', {alumnos, idgrupo, asignatura, clave});
 
     } catch (err) {
         console.log(err);
@@ -254,7 +254,7 @@ const getAlumnoAndAlumnosByGroup = async (req, res) => {
         alumnos.sort(function (a, b) {
             return a.dataValues.nombre.localeCompare(b.dataValues.nombre);
         });
-        res.render('grupo/vista-grupo-alumnos', {alumnos, idgrupo, asignatura, clave, alumno});
+        res.render('alumno/vista-grupo-alumnos', {alumnos, idgrupo, asignatura, clave, alumno});
 
     } catch (err) {
         console.log(err);
