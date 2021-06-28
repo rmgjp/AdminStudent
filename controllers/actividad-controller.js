@@ -63,42 +63,6 @@ const guardarDesdeGrid = async (req, res, idtema) => {
             });
     }
 };
-/*
-* Guardar calificación individualmente**/
-const calificarIndividual = async (req,res)=>{
-    calificaciones = JSON.parse(req.body.valorTabla);
-
-    //Datos alumno
-    var alumnos = [];
-    for(alumnopuntero in calificaciones){
-        const alumno = await Models.alumno.findOne({
-            where:{clave: calificaciones[alumnopuntero].clave}
-        })
-        //Buscar la calificación
-        var calificacion = await Models.calificacion.findOne({
-            where:{
-                idalumno: alumno.dataValues.id,
-                idtarea: req.params.idactividad
-            }
-        })
-        //Si la calificacion == null
-            //Agregar calificación
-        if(!calificacion){
-            await Models.calificacion.create({
-                idtarea: req.params.idactividad,
-                idalumno: alumno.dataValues.id,
-                valor: calificaciones[alumnopuntero].calificacion
-            })
-        }else{
-            //Si la calificación no es es null
-            // calificación.update();
-            calificacion.update({
-                valor:parseInt(calificaciones[alumnopuntero].calificacion)
-            })
-        }
-    }
-    res.redirect('/grupo/actividades/'+req.params.idgrupo+'/'+req.params.idtema+'/'+req.params.idactividad);
-}
 
 const editarActividad = async (req,res)=>{
     var {nombre, descripcion, valor, tipoBox} = req.body;
