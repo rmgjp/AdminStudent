@@ -14,7 +14,7 @@ router.get('/grupo/actividades/:idgrupo', async (req,res)=>{
     //Metodo para buscar todas las Actividades
 
     //Renderización de la vista.
-    res.render('grupo/vista-grupo-actividades', {idgrupo:req.params.idgrupo, temas , idtema:'',asignatura,clave});
+    res.render('actividad/vista-grupo-actividades', {idgrupo:req.params.idgrupo, temas , idtema:'',asignatura,clave});
 });
 
 //Visualización de Actividades por tema
@@ -27,7 +27,7 @@ router.get('/grupo/actividades/:idgrupo/:idtema', async (req,res)=>{
     const grupo = await grupoController.getDatosGrupo(req,res);
     const {asignatura,clave} = grupo;
     //Renderización de la vista.
-    res.render('grupo/vista-grupo-actividades', {idgrupo:req.params.idgrupo, temas, actividades, idtema:req.params.idtema, asignatura,clave});
+    res.render('actividad/vista-grupo-actividades', {idgrupo:req.params.idgrupo, temas, actividades, idtema:req.params.idtema, asignatura,clave});
 });
 //ruta para eliminar actividad
 router.delete('/actividad/eliminar-actividad/:idgrupo/:idtema/:idactividad', actividadController.eliminarActividad);
@@ -46,7 +46,7 @@ router.get('/grupo/actividades/:idgrupo/:idtema/:idactividad', async (req,res)=>
     const grupo = await grupoController.getDatosGrupo(req,res);
     const {asignatura,clave} = grupo;
     //Renderización de la vista.
-    res.render('grupo/vista-grupo-actividades', {idgrupo:req.params.idgrupo, temas, actividades, idtema:req.params.idtema, actividad, tipoActividad, asignatura,clave});
+    res.render('actividad/vista-grupo-actividades', {idgrupo:req.params.idgrupo, temas, actividades, idtema:req.params.idtema, actividad, tipoActividad, asignatura,clave});
 });
 
 router.put('/actividad/editar-actividad/:idgrupo/:idtema/:idactividad', actividadController.editarActividad);
