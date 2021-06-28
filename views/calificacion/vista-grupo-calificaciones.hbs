@@ -1,0 +1,71 @@
+<div class="container-fluid p-2 bg-light">
+    <!-- Barra de navegación -->
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link " aria-current="page" href="/grupo-inicio/{{idgrupo}}"
+               title="Muestra el progreso general del grupo.">Inicio</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" title="Muestra la lista de alumnos que contiene el grupo."
+               href="/grupo/alumnos/{{idgrupo}}"><i class="bi bi-people-fill"></i> Alumnos</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" title="Muestra la lista de temas/unidades que contiene el grupo."
+               href="/grupo/temas/{{idgrupo}}"><i class="bi bi-book-fill"></i> Temas</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link " title="Muestra la lista de actividades por grupo o por tema."
+               href="/grupo/actividades/{{idgrupo}}"><i class="bi bi-bookmark-check-fill"></i>
+                Actividades</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" title="Muestra las calificaciones almacenadas."
+               href="/grupo/calificaciones/{{idgrupo}}"><i class="bi bi-file-spreadsheet-fill"></i>
+                Calificaciones</a>
+        </li>
+    </ul>
+    <div class="row">
+        <nav id="sideBar" class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
+            <div class="sidebar-sticky pt-3">
+                <ul class="nav flex-column">
+                    <h4 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">Temas</h4>
+                    {{#each temas}}
+                        <li class="nav-item"><a class="nav-link" href="/grupo/calificaciones/{{../idgrupo}}/{{dataValues.id}}/0"><i class="bi-book-half"></i><strong> {{dataValues.nombre}}</strong></a></li>
+                    {{/each}}
+                </ul>
+            </div>
+        </nav>
+        <main class="col-md-9 ml-sm-auto col-lg-10 px-md-4" role="main">
+            <div class="row-cols-1">
+                <div class="col-auto d-flex flex-row-reverse p-3">
+                    <div id="toolbar">
+
+                    </div>
+                </div>
+            </div>
+            <!-- Contenido de la vista -->
+            <div class="row-cols-1" >
+                <input type="hidden" id="valorTabla" name="valorTabla" value="{{listaFormateada}}">
+                <table id="table" data-toggle="table" data-toolbar="#toolbar" data-click-to-select="true"
+                       data-search="true"
+                       data-advanced-search="true" data-filter-control="true" name="table">
+                    <thead>
+                    <tr>
+                        <th data-field="clave" data-sorteable="false">Clave</th>
+                        <th data-field="nombre" data-sorteable="false">Nombre</th>
+
+                        {{#each actividades}}
+                            <th data-field="calificaciones.{{@index}}">{{dataValues.nombre}}: {{dataValues.valor}}</th>
+                        {{/each}}
+                        <th data-field="califinal">Calif. Final</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+</div>
+<script src="/js/vista-calificaciones-individual-helper.js"></script>
