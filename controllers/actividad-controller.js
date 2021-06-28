@@ -96,69 +96,11 @@ const eliminarActividad = async (req,res)=>{
     }
 };
 
-const renderVistaCalifI = async (req,res)=>{
-    const alumnogrupos = await Models.alumnogrupo.findAll({
-        where: {
-            idgrupo: req.params.idgrupo
-        }
-    });
-
-    //Se genera un arreglo donde se guardan los alumnos relacionados con el grupo
-    let alumnos = [];
-
-    for (punteroAlumno in alumnogrupos){
-        let alumno = await Models.alumno.findAll({
-            where: {
-                id: alumnogrupos[punteroAlumno].dataValues.idalumno
-            }
-        });
-        alumnos.push(alumno[0]);
-    }
-    alumnos.sort(function (a, b) {
-        return a.dataValues.nombre.localeCompare(b.dataValues.nombre);
-    });
-
-    var calificacion = [];
-    for (let alumno in alumnos){
-        let valor = await Models.calificacion.findOne({
-            where:{
-                idtarea:req.params.idactividad,
-                idalumno: alumnos[alumno].dataValues.id,
-            }
-        });
-
-        if(!valor){
-            calificacion.push(0)
-        }
-        else {
-            calificacion.push(valor.dataValues.valor);
-        }
-    }
-
-    var listaFormateada = [];
-    for(let alumno = 0; alumno< alumnos.length; alumno++){
-        listaFormateada.push({
-            clave: alumnos[alumno].dataValues.clave,
-            nombre: alumnos[alumno].dataValues.nombre,
-            calificacion: calificacion[alumno]
-        })
-    }
-
-    listaFormateada = JSON.stringify(listaFormateada);
-
-    const actividad = await Models.tarea.findOne({
-        where:{id:req.params.idactividad}
-    })
-
-    res.render('actividad/actividad-calificar-individual', {idgrupo:req.params.idgrupo, idtema:req.params.idtema, actividad, listaFormateada});
-};
 module.exports = {
-    renderVistaCalifI,
     eliminarActividad,
     editarActividad,
     getActividadById,
     guardarDesdeGrid,
-    calificarIndividual,
     getAllTareasByTema,
     getAllTareas
 
