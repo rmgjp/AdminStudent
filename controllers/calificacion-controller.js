@@ -14,7 +14,7 @@ const vistaCalif = async(req,res)=>{
 
     //verificar si se selecciono un tema
     if(!req.params.idtema){
-        res.render('calificacion/vista-grupo-calificaciones', {temas, idgrupo:req.params.idgrupo});
+        res.render('calificacion/vista-grupo-calificaciones', {temas, idgrupo:req.params.idgrupo, asignatura, clave});
     }
     else {
         //Busqueda de las actividades por grupo
