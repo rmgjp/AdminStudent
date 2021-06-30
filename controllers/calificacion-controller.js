@@ -1,9 +1,12 @@
 const Sequelize = require('sequelize');
 const Models = require('../models');
+const configuracion = require('../config/userconfig.json');
 
 /**
  * Visualizacion de la vista de calificaciones*/
 const vistaCalif = async(req,res)=>{
+    const grupo = await Models.grupo.findOne({where: {id: req.params.idgrupo}});
+    const {asignatura, clave} = grupo;
     //Busqueda de temas por grupo.
     const temas = await Models.tema.findAll({
         where:{idgrupo:req.params.idgrupo}
@@ -42,6 +45,8 @@ const vistaCalif = async(req,res)=>{
         var listaFormateada = [];
         for(let alumno in alumnos){
             let calificaciones = [];
+            let acumulador = 0;
+            let calcCalificacion;
             for(actividad in actividades){
                 var calificacion = await Models.calificacion.findOne({where:{
                         idalumno: alumnos[alumno].dataValues.id,
@@ -51,21 +56,41 @@ const vistaCalif = async(req,res)=>{
                     calificaciones.push("No capturado.");
                 }
                 else {
+                    calcCalificacion = (calificacion.dataValues.valor* actividades[actividad].valor)/100;
+
+                    switch (parseInt(configuracion.califi)){
+                        case 0:
+                            if(calificacion.dataValues.valor < 70){
+                                acumulador = "NA"
+                            }
+                            else if (calificacion.dataValues.valor >= 70){
+                                if(acumulador != "NA"){
+                                    //Calculo de las calificaciones cuando se promedia.
+                                    acumulador += calcCalificacion;
+                                }
+                            }
+                            break;
+                        case 1:
+                            acumulador += calcCalificacion;
+                            break;
+                    }
                     calificaciones.push(calificacion.dataValues.valor);
                 }
 
             }
+
             listaFormateada.push({
                 clave: alumnos[alumno].dataValues.clave,
                 nombre: alumnos[alumno].dataValues.nombre,
-                calificaciones
-
+                calificaciones,
+                califinal: acumulador
             })
         }
 
         listaFormateada = JSON.stringify(listaFormateada);
 
-        res.render('calificacion/vista-grupo-calificaciones', {temas, idgrupo:req.params.idgrupo, actividades, listaFormateada});
+        res.render('calificacion/vista-grupo-calificaciones', {temas, idgrupo:req.params.idgrupo, actividades, listaFormateada,
+            asignatura, clave});
     }
 }
 
