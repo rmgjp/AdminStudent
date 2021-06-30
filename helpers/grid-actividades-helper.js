@@ -8,42 +8,20 @@ $('#add').on('click', function () {
     if(document.getElementById("nombreBox").value){
         var tipoActividad;
 
-        switch (parseInt(document.getElementById("tipoBox").value)){
-            case 1: tipoActividad = 'Investigación';
-            break;
-            case 2: tipoActividad = 'Presentación';
-                break;
-            case 3: tipoActividad = 'Proyecto';
-                break;
-            case 4: tipoActividad = 'Reporte/Practica';
-                break;
-            case 5: tipoActividad = 'Resumen';
-                break;
-            case 6: tipoActividad = 'Mapa Conceptual';
-                break;
-            case 7: tipoActividad = 'Cuadro Sinoptico';
-                break;
-            case 8: tipoActividad = 'Mapa Mental';
-                break;
-            case 9: tipoActividad = 'Ejercicios';
-                break;
-            case 10: tipoActividad = 'Otros';
-                break;
-        }
 
         table.bootstrapTable('insertRow',{
             index: i,
             row:{
                 nombreCol:  document.getElementById("nombreBox").value,
                 valorCol:  document.getElementById('valorBox').value,
-                tipoCol:  String(tipoActividad),
+                tipoCol: document.getElementById('tipoBox').value,
                 descripcionCol: document.getElementById('descripcionBox').value,
             }
         })
         //Se limpian las cajas de texto
         document.getElementById("nombreBox").value = "";
         document.getElementById("valorBox").value = 1;
-        document.getElementById("tipoBox").value = 1;
+        document.getElementById("tipoBox").value = 'Investigación';
         document.getElementById('descripcionBox').value ="";
         //Se obtienen los datos de la tabla.
         tablaDatos = table.bootstrapTable('getData');
