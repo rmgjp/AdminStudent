@@ -3,6 +3,8 @@ const Models = require('../models');
 const fs = require('fs');
 const path = require('path');
 const tableToJSON = require('tabletojson').Tabletojson;
+const configuracion = require('../config/userconfig.json');
+
 
 //Metodo para guardar los alumnos dentro de la tabla/Grid
 const guardarDesdeGrid = async (req, res) => {
