@@ -77,4 +77,3 @@ input.addEventListener("keyup", function(event) {
     i = i + 1
 });
 
-cargarDatos();

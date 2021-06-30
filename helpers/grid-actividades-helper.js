@@ -6,7 +6,6 @@ var i = 0;
 $('#add').on('click', function () {
     //Se obtienen los datos de las cajas de texto y se agregan a la tabla.
     if(document.getElementById("nombreBox").value){
-        var tipoActividad;
 
 
         table.bootstrapTable('insertRow',{
@@ -50,20 +49,8 @@ $('#remove').on('click', function () {
     console.log(tablaDatos);
 })
 
-input.addEventListener("keyup", function(event) {
-    // Number 13 is the "Enter" key on the keyboard
-    if (event.keyCode === 13) {
-        table.bootstrapTable('insertRow',{
-            index:i,
-            row:{
-                nombreCol:  document.getElementById("nombreBox").value,
-                valorCol: document.getElementById('valorBox').value,
-                tipoCol: document.getElementById("tipoBox").value,
-            }
-        })
-        document.getElementById("nombreBox").value = "";
-        document.getElementById("valorBox").value = "";
-        document.getElementById("tipoBox").value = "";
-    }
-    i = i + 1
-});
+$('#table').on('editable-save.bs.table', function(e, field, row, oldValue, $el){
+    tablaDatos = table.bootstrapTable('getData');
+    document.getElementById("valorTabla").value = JSON.stringify(tablaDatos);
+    console.log(tablaDatos);
+})
