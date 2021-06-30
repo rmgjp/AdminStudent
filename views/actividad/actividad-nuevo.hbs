@@ -11,25 +11,28 @@
         </div>
         <div class="col">
             <label for="valorBox" class="form-label">Valor</label>
-            <input type="number" min="1" step="1" class="form-control" value="1" name="valorBox" id="valorBox"
+            <input type="number" min="1" max="100" step="1" class="form-control" value="1" name="valorBox" id="valorBox"
                    required>
         </div>
         <div class="col">
             <label for="tipoBox" class="form-label">Categoría</label>
-            <select class="custom-select" name="tipoBox" id="tipoBox" value=1>
-                <option value="1">Investigación</option>
-                <option value="2">Presentación</option>
-                <option value="3">Proyecto</option>
-                <option value="4">Reporte / Práctica</option>
-                <option value="5">Resumen</option>
-                <option value="6">Mapa Conceptual</option>
-                <option value="7">Cuadro Sinoptico</option>
-                <option value="8">Mapa Mental</option>
-                <option value="9">Ejercicios</option>
-                <option value="10">Otros</option>
+            <select class="custom-select" name="tipoBox" id="tipoBox" value="Investigación">
+                <option value="Investigación">Investigación</option>
+                <option value="Presentación">Presentación</option>
+                <option value="Proyecto">Proyecto</option>
+                <option value="Reporte / Práctica">Reporte / Práctica</option>
+                <option value="Resumen">Resumen</option>
+                <option value="Mapa Conceptual">Mapa Conceptual</option>
+                <option value="Cuadro Sinoptico">Cuadro Sinoptico</option>
+                <option value="Mapa Mental">Mapa Mental</option>
+                <option value="Ejercicios">Ejercicios</option>
+                <option value="Ejercicios">Examen</option>
+                <option value="Otros">Otros</option>
             </select>
         </div>
+
     </div>
+
     <div class="row m-2 p-2">
         <label for="descripcionBox" class="form-label">Descripción</label>
         <textarea class="form-control" id="descripcionBox" name="descripcionBox"></textarea>
@@ -58,7 +61,8 @@
                         <th data-field="estado" data-sorteable="false" data-checkbox="true"></th>
                         <th data-field="nombreCol" data-sorteable="false" data-editable="true">Nombre</th>
                         <th data-field="valorCol" data-sorteable="false" data-editable="true">Valor</th>
-                        <th data-field="tipoCol" data-sorteable="true" >Tipo</th>
+                        <!--data-editable="true"  data-editable-type="select" id="categoria"-->
+                        <th data-field="tipoCol" data-sorteable="false" >Categoría</th>
                         <th data-field="descripcionCol" data-sorteable="false" data-editable="true">Descripción</th>
                     </tr>
                     </thead>
