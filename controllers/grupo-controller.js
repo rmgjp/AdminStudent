@@ -24,7 +24,6 @@ const getAllGrupos = async (req, res) => {
 //Metodo para renderizar todos los grupos
 const renderAllGrupos = async (req, res) =>{
     const grupos = await getAllGrupos(req,res);
-    console.log(config);
     res.render('index', {grupos, config});
 }
 
