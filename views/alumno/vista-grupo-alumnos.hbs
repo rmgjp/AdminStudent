@@ -4,131 +4,175 @@
     <!-- Barra de navegación -->
     <ul class="nav nav-tabs">
         <li class="nav-item">
-            <a class="nav-link " aria-current="page" href="/grupo-inicio/{{idgrupo}}"  title="Muestra el progreso general del grupo.">Inicio</a>
+            <a class="nav-link " aria-current="page" href="/grupo-inicio/{{idgrupo}}"
+               title="Muestra el progreso general del grupo.">Inicio</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link active" title="Muestra la lista de alumnos que contiene el grupo." href="/grupo/alumnos/{{idgrupo}}"><i class="bi bi-people-fill" ></i> Alumnos</a>
+            <a class="nav-link active" title="Muestra la lista de alumnos que contiene el grupo."
+               href="/grupo/alumnos/{{idgrupo}}"><i class="bi bi-people-fill"></i> Alumnos</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" title="Muestra la lista de temas/unidades que contiene el grupo." href="/grupo/temas/{{idgrupo}}"><i class="bi bi-book-fill"  ></i> Temas</a>
+            <a class="nav-link" title="Muestra la lista de temas/unidades que contiene el grupo."
+               href="/grupo/temas/{{idgrupo}}"><i class="bi bi-book-fill"></i> Temas</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link " title="Muestra la lista de actividades por grupo o por tema." href="/grupo/actividades/{{idgrupo}}"><i class="bi bi-bookmark-check-fill"></i>
+            <a class="nav-link " title="Muestra la lista de actividades por grupo o por tema."
+               href="/grupo/actividades/{{idgrupo}}"><i class="bi bi-bookmark-check-fill"></i>
                 Actividades</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link " title="Muestra las calificaciones almacenadas." href="/grupo/calificaciones/{{idgrupo}}"><i class="bi bi-file-spreadsheet-fill"  ></i>
+            <a class="nav-link " title="Muestra las calificaciones almacenadas."
+               href="/grupo/calificaciones/{{idgrupo}}"><i class="bi bi-file-spreadsheet-fill"></i>
                 Calificaciones</a>
         </li>
     </ul>
+</div>
+
+<div class="container-fluid">
     <!-- Titulo de la vista -->
     <div class="row m-2 p-2">
         <h2 class="">Lista de Alumnos</h2>
     </div>
     <!-- Contenido de la vista -->
-    <div class="row m-2 p-0">
-        <div class="col-5">
-            <div class="container">
-                <div class="list-group overflow-auto">
-                    {{#each alumnos}}
-                        <a type="button" class="list-group-item list-group-item-action" aria-current="true"
-                           href="/grupo/alumnos/{{../idgrupo}}/{{dataValues.clave}}">
-                            <i class="bi-person-badge-fill"></i><strong>{{dataValues.clave}}</strong>
-                            - {{dataValues.apellidos}} {{dataValues.nombre}}
-                        </a>
-                    {{/each}}
-                    <a type="button" class="list-group-item list-group-item-action align-items-center"
-                       aria-current="true" href="/alumno/wizard-agregar-alumnos-manual/{{idgrupo}}/1">
-                        <i class="bi bi-plus-circle-fill"></i> Nuevo Alumno
+    <div class="row m-2 p-0 flex-grow-1">
+        <div class="col-5 col-md-5 col-lg-5 col-sm-5 col-xl-5 pre-scrollable ">
+            <div class="list-group overflow-auto">
+                {{#each alumnos}}
+                    <a type="button" class="list-group-item list-group-item-action" aria-current="true"
+                       href="/grupo/alumnos/{{../idgrupo}}/{{dataValues.clave}}">
+                        <i class="bi-person-badge-fill"></i><strong>{{dataValues.clave}}</strong>
+                        - {{dataValues.apellidos}} {{dataValues.nombre}}
                     </a>
-                </div>
+                {{/each}}
+                <a type="button" class="list-group-item list-group-item-action align-items-center"
+                   aria-current="true" href="/alumno/wizard-agregar-alumnos-manual/{{idgrupo}}/1">
+                    <i class="bi bi-plus-circle-fill"></i> Nuevo Alumno
+                </a>
             </div>
+
         </div>
         <div class="col">
             <div class="container overflow-auto bg-white">
                 {{#if alumno}}
-                    <div class="card">
-                        <div class="card-header">
-                            <div class="row">
-                                <div class="col">
-                                    <h4>Datos del Alumno</h4>
-                                </div>
-                                <div class="col-11" align="right">
-                                    <div class="custom-control custom-switch" title="Habilitar edición del alumno.">
-                                        <input type="checkbox" class="custom-control-input" id="switchEditar" >
-                                        <label class="custom-control-label" for="switchEditar">Editar</label>
+                    <div class="row">
+                        <div class="col">
+
+
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="row">
+                                        <div class="col">
+                                            <h4><i class="bi bi-file-person-fill"></i> Datos del Alumno</h4>
+                                        </div>
+                                        <div class="col-11" align="right">
+                                            <div class="custom-control custom-switch"
+                                                 title="Habilitar edición del alumno.">
+                                                <input type="checkbox" class="custom-control-input" id="switchEditar">
+                                                <label class="custom-control-label" for="switchEditar">Editar</label>
+                                            </div>
+                                        </div>
+                                        <div class="col" align="right">
+                                            <a class="bi bi-trash-fill" href="#" data-toggle="modal"
+                                               data-target="#eliminarAlumno" title="Desasociar alumno del grupo."></a>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col" align="right">
-                                    <a class="bi bi-trash-fill" href="#" data-toggle="modal"
-                                       data-target="#eliminarAlumno" title="Desasociar alumno del grupo."></a>
-                                </div>
-                            </div>
-                        </div>
-                        <form action="/grupo/alumnos/{{idgrupo}}/{{alumno.dataValues.id}}?_method=PUT" method="POST" novalidate>
-                            <input type="hidden" name="_method" value="PUT">
-                            <div class="card-body">
-                                <div class="row p-0 m-0">
-                                    <div class="col-3">
-                                        <img src="/img/perfil.png" class="card-img-top rounded-circle" aling="center"
-                                             style="height:8rem;width:8rem;">
-                                    </div>
-                                    <div class="col">
+                                <form action="/grupo/alumnos/{{idgrupo}}/{{alumno.dataValues.id}}?_method=PUT"
+                                      method="POST"
+                                      novalidate>
+                                    <input type="hidden" name="_method" value="PUT">
+                                    <div class="card-body">
                                         <div class="row">
-                                            <label for="nombre" class="form-label col-form-label-sm">Apellidos y Nombre(s)</label>
-                                            <input type="text" class="form-control form-control-sm" disabled id="nombre"
-                                                   name="nombre"
-                                                   id="nombre" value="{{alumno.dataValues.nombre}}">
+                                            <div class="col">
+
+                                                <label for="nombre" class="form-label col-form-label-sm">Apellidos y
+                                                    Nombre(s)</label>
+                                                <input type="text" class="form-control form-control-sm" disabled
+                                                       id="nombre"
+                                                       name="nombre"
+                                                       id="nombre" value="{{alumno.dataValues.nombre}}">
+
+                                            </div>
+                                        </div>
+                                        <div class="row ">
+                                            <div class="col col-xl col-lg col-sm col-md">
+                                                <label for="clave" class="form-label col-form-label-sm">Clave</label>
+                                                <input type="text" class="form-control form-control-sm" disabled
+                                                       id="clave"
+                                                       name="clave" id="clave"
+                                                       value="{{alumno.dataValues.clave}}">
+                                            </div>
+                                            <div class="col col-xl col-lg col-sm col-md">
+                                                <label for="correo"
+                                                       class="form-label col-form-label-sm disabled">Correo</label>
+                                                <input type="email" id="correo" name="correo" id="correo"
+                                                       class="form-control form-control-sm" disabled
+                                                       value="{{alumno.dataValues.correo}}">
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="row p-0 m-0">
-                                <div class="col">
-                                    <label for="clave" class="form-label col-form-label-sm">Clave</label>
-                                    <input type="text" class="form-control form-control-sm" disabled id="clave"
-                                           name="clave" id="clave"
-                                           value="{{alumno.dataValues.clave}}">
-                                </div>
-                                <div class="col">
-                                    <label for="correo" class="form-label col-form-label-sm disabled">Correo</label>
-                                    <input type="email" id="correo" name="correo" id="correo"
-                                           class="form-control form-control-sm" disabled
-                                           value="{{alumno.dataValues.correo}}">
-                                </div>
-                            </div>
 
-                            <div class="modal fade" id="editarAlumno" tabindex="-1" aria-labelledby="editarAlumno"
-                                 aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="editarAlumnoLabel">Editar Alumno</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            ¿Está seguro que desea editar el alumno?
-                                        </div>
-                                        <div class="modal-footer">
-                                            <a type="button" class="btn btn-secondary" data-dismiss="modal">No</a>
-                                            <button type="submit" class="btn btn-primary">Sí</button>
+                                    <!--MODAL PARA EDITAR LOS DATOS DE UN ALUMNO-->
+                                    <div class="modal fade" id="editarAlumno" tabindex="-1"
+                                         aria-labelledby="editarAlumno"
+                                         aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="editarAlumnoLabel">Editar Alumno</h5>
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    ¿Está seguro que desea editar el alumno?
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <a type="button" class="btn btn-secondary"
+                                                       data-dismiss="modal">No</a>
+                                                    <button type="submit" class="btn btn-primary">Sí</button>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
+
+                                </form>
+                                <div class="card-footer">
+                                    <button class="btn badge-primary" id="guardar" name="guardar" data-toggle="modal"
+                                            disabled
+                                            data-target="#editarAlumno">Guardar
+                                    </button>
                                 </div>
                             </div>
-
-                        </form>
-                        <div class="card-footer">
-                            <button class="btn badge-primary" id="guardar" name="guardar" data-toggle="modal" disabled
-                                    data-target="#editarAlumno">Guardar
-                            </button>
                         </div>
                     </div>
-                    <form action="/alumnos/eliminar-alumno/{{idgrupo}}/{{alumno.dataValues.id}}?_method=DELETE" method="POST">
+
+                    <div class="row">
+                        <div class="col">
+                            <input type="hidden" id="valorTabla" name="valorTabla" value="{{listaFormateada}}">
+                            <table id="table" data-toggle="table" data-toolbar="#toolbar" data-click-to-select="true"
+                                   data-search="true"
+                                   data-advanced-search="true" data-filter-control="true" name="table">
+                                <thead>
+                                <tr>
+                                    <th data-field="no_unidad" data-sorteable="false" class="column">Clave</th>
+                                    <th data-field="nombre" data-sorteable="false" class="column">Nombre</th>
+                                    <th data-field="califinal" class="column">Calif. Final</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!--Modal para desasociar un alumno de un grupo-->
+                    <form action="/alumnos/eliminar-alumno/{{idgrupo}}/{{alumno.dataValues.id}}?_method=DELETE"
+                          method="POST">
                         <input type="hidden" name="_method" value="DELETE">
-                        <div class="modal fade" id="eliminarAlumno" tabindex="-1" aria-labelledby="eliminarAlumno" aria-hidden="true">
+                        <div class="modal fade" id="eliminarAlumno" tabindex="-1" aria-labelledby="eliminarAlumno"
+                             aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -172,3 +216,5 @@
     }
 
 </script>
+
+<script src="/js/vista-calificaciones-individual-helper.js"></script>

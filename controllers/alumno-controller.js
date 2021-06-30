@@ -254,7 +254,59 @@ const getAlumnoAndAlumnosByGroup = async (req, res) => {
         alumnos.sort(function (a, b) {
             return a.dataValues.nombre.localeCompare(b.dataValues.nombre);
         });
-        res.render('alumno/vista-grupo-alumnos', {alumnos, idgrupo, asignatura, clave, alumno});
+        //Calculo de calificaciones por unidad
+
+        const temas = await Models.tema.findAll({
+            where:{idgrupo:req.params.idgrupo}
+        });
+
+        var listaFormateada = [];
+
+        //Lista de las calificaciones de las unidad.
+        for(let tema in temas){
+            const actividades = await Models.tarea.findAll({where:{idtema : temas[tema].dataValues.id}});
+            let califinal = 0;
+            let calcCalificacion;
+
+            for(actividad in actividades){
+                var calificacion = await Models.calificacion.findOne({where:{
+                        idalumno: alumno.dataValues.id,
+                        idtarea: actividades[actividad].dataValues.id,}
+                });
+
+                if(calificacion != null){
+                    calcCalificacion = (calificacion.dataValues.valor* actividades[actividad].valor)/100;
+
+                    switch (parseInt(configuracion.califi)){
+                        case 0:
+                            if(calificacion.dataValues.valor < 70){
+                                califinal = "NA";
+                            }
+                            else if (calificacion.dataValues.valor >= 70){
+                                if(califinal != "NA"){
+                                    //Calculo de las calificaciones cuando se promedia.
+                                    califinal += calcCalificacion;
+                                }
+                            }
+                            break;
+                        case 1:
+                            califinal += calcCalificacion;
+                            break;
+                    }
+                }
+            }
+            listaFormateada.push({
+                no_unidad:temas[tema].dataValues.numerotema,
+                nombre:temas[tema].dataValues.nombre,
+                califinal: califinal
+            });
+        }
+
+        listaFormateada = JSON.stringify(listaFormateada);
+
+        res.render('alumno/vista-grupo-alumnos', {alumnos, idgrupo, asignatura, clave, alumno, listaFormateada});
+
+
 
     } catch (err) {
         console.log(err);
