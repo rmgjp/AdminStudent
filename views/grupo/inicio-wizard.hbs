@@ -27,7 +27,7 @@
             </p>
             <p class="lead">
                 <button class="btn badge-primary btn-lg" id="guardar" name="guardar" data-toggle="modal"
-                        data-target="#cargarExcel">Importar Excel
+                        data-target="#cargarExcel">Importar desde Archivo
                 </button>
                 <a class="btn btn-primary btn-lg" href="/grupo/wizard-crear-grupo-manual" role="button">Crear
                     Manualmente</a>
@@ -49,13 +49,16 @@
                     </button>
                 </div>
                 <div class="modal-body">
-
+                    <p style="text-align:justify;">
+                        Asegúrese de que el archivo a importar ha sido descargado directamente del sistema búho, este no debe contener
+                        ninguna modificación previa y debe contar con la extensión o terminación .asp
+                    </p>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="inputGroupFileAddon">Selección</span>
                         </div>
                         <div class="custom-file">
-                            <input type="file" class="custom-file-input" name="archivo" id="archivo" aria-describedby="inputGroupFileAddon">
+                            <input type="file" class="custom-file-input" name="archivo" id="archivo" aria-describedby="inputGroupFileAddon" accept=".asp, .html">
                             <label class="custom-file-label" for="inputGroupFile" data-browse="Buscar">Archivo</label>
                         </div>
                     </div>
