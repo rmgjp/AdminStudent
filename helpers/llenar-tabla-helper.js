@@ -20,3 +20,9 @@ $(function cargarDatos(){
         document.getElementById("valorTabla").value = JSON.stringify(tablaDatos);
     }
 })
+
+$('#table').on('editable-save.bs.table', function(e, field, row, oldValue, $el){
+    tablaDatos = table.bootstrapTable('getData');
+    document.getElementById("valorTabla").value = JSON.stringify(tablaDatos);
+    console.log(tablaDatos);
+})
