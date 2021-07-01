@@ -131,12 +131,14 @@ const eliminarTema = async (req,res)=>{
 };
 
 module.exports = {
+    guardarTemaGrid,
     eliminarTema,
     getTemasByGrupo,
     guardarTema,
     guardarTemaActividades,
     editarTema,
-    getTemasByGrupoEtiquetas
+    getTemasByGrupoEtiquetas,
+    obtenerTemasByFile
 }
 
 function tryParseJSON (jsonString){
