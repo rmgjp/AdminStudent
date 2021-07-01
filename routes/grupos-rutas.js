@@ -3,7 +3,7 @@ const router = express.Router();
 const multer = require('multer');
 const path = require('path');
 const controladorGrupo = require('../controllers/grupo-controller')
-const fileReader = require('../helpers/lector-archivos-helper')
+
 
 router.use(function (req, res, next) {
     next();
