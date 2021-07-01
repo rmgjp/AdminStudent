@@ -27,6 +27,7 @@ router.get('/tema/nuevo-tema/:idgrupo', (req,res) =>{
     res.render('tema/tema-nuevo', {idgrupo: req.params.idgrupo});
 });
 
+
 router.post('/tema/nuevo-tema/:idgrupo', controladorTema.guardarTemaActividades);
 
 router.put('/tema/editar-tema/:idgrupo/:idtema', controladorTema.editarTema);

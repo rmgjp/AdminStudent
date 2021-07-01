@@ -51,7 +51,7 @@
             <form action="/tema/editar-tema/{{dataValues.idgrupo}}/{{dataValues.id}}?_method=PUT" method="POST"
                   novalidate>
                 <input type="hidden" name="_method" value="PUT">
-                <div class="modal fade" id="editarTemaModal" tabindex="-1" aria-labelledby="editarTemaModal"
+                <div class="modal fade" id="editarTemaModal{{dataValues.id}}" tabindex="-1" aria-labelledby="editarTemaModal{{dataValues.id}}"
                      aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
@@ -128,10 +128,10 @@
             <div class="card" style="height:14rem;">
                 <div class="card-body justify-content-center align-center">
                     <div class="row justify-content-center align-items-center">
-                        <h5 class="card-title">Agregar nuevo tema</h5>
+                        <h5 class="card-title">Nuevo tema</h5>
                     </div>
                     <div class="row justify-content-md-center align-items-center">
-                        <a class="btn btn-success rounded-circle" href="/tema/nuevo-tema/{{idgrupo}}">+</a>
+                        <a class="btn btn-success" href="/tema/nuevo-tema/{{idgrupo}}" title="Agregar un tema de forma manual.">Agregar tema</a>
                     </div>
                     <div class="row justify-content-md-center align-items-center">
                         ó

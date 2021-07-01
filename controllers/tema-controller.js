@@ -1,6 +1,8 @@
 const Sequelize = require('sequelize');
 const Models = require('../models');
 const actividadControler = require('../controllers/actividad-controller');
+const path = require('path');
+const fs = require('fs');
 /**
  * Método para obtener los temas por grupo
  * **/
@@ -101,6 +103,20 @@ const guardarTema = async (req,res) =>{
     }
 }
 
+const guardarTemaGrid = async (req,res)=>{
+    var temas = req.body.valorTabla;
+    temas = JSON.parse(temas);
+
+    for(tema in temas){
+        await Models.tema.create({
+            idgrupo: req.params.idgrupo,
+            nombre: temas[tema].nombre,
+            numerotema: temas[tema].numerotema
+        })
+    }
+    res.redirect('/grupo/temas/' + req.params.idgrupo);
+}
+
 const eliminarTema = async (req,res)=>{
     //Busqueda de las actividades que corresponden a ese tema/unidad.
     var actividades = await Models.tarea.findAll({
@@ -129,6 +145,46 @@ const eliminarTema = async (req,res)=>{
     await tema.destroy();
     res.redirect('/grupo/temas/'+req.params.idgrupo);
 };
+
+const obtenerTemasByFile = async (req,res) =>{
+    var archivo = req.params.archivo;
+
+    var txtFile = path.join(__dirname, '../public/doc/' + archivo);
+    await fs.readFile(txtFile, "binary", (err, data) => {
+        if(err){
+            throw err;
+            res.redirect('/');
+        }
+        else{
+            //data = Buffer.from(data, 'utf-8');
+            //Se busca la etiqueta </BR> para obtener los indices del contenido.
+            var inicioBR = data.lastIndexOf('</BR>') + 5;
+            //Se busca la etiqueta </I> para obtener el ultimo indice del contenido.
+            var finI = data.lastIndexOf("</I>");
+            var contenidoBR = data.substring(inicioBR, finI);
+            var temas = contenidoBR.split(',');
+            var indice;
+            var numerotema = 1;
+
+            var listaFormateada = [];
+            for(tema in temas){
+                indice = temas[tema].indexOf('-');
+                listaFormateada.push(
+                    {
+                        numerotema : numerotema,
+                        nombre: temas[tema].substring(indice+1, temas[tema].length)
+                    }
+                );
+                numerotema +=1;
+            }
+
+
+            listaFormateada = JSON.stringify(listaFormateada);
+
+            res.render('tema/importar-tema', {idgrupo:req.params.idgrupo, listaFormateada});
+        }
+    });
+}
 
 module.exports = {
     guardarTemaGrid,
