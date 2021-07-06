@@ -19,21 +19,46 @@
     <script src="/js/popover-helper.js"></script>
     <script src="/js/bs-custom-file-input.js"></script>
 
+    <style>
+        /* width */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
 
-        <nav class="navbar navbar-light bg-light" id="navbar">
+        /* Track */
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        /* Handle */
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+        }
+
+        /* Handle on hover */
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+    </style>
+
+
+</head>
+
+<body>
+
+<div class="container-fluid mw-100 mh-100 vh-100 min-vh-100 vw-100 min-vw-100 d-flex flex-column">
+    <header class="navbar navbar-light bg-light sticky-top" id="navbar">
         <div class="container-fluid">
             <div class="col">
                 <a class="bi bi-house-fill" href="/" title="Inicio"></a>
             </div>
 
         </div>
-    </nav>
+    </header>
+    <!--Muestreo del contenido de la aplicación -->
+    {{{ body }}}
+    <!--Fin de muestreo del contenido de la aplicación -->
+</div>
 
-</head>
-
-<body>
-        <!--Muestreo del contenido de la aplicación -->
-        {{{ body }}}
-        <!--Fin de muestreo del contenido de la aplicación -->
 </body>
 </html>

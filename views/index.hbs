@@ -2,11 +2,11 @@
 <div class="container-fluid p-2  h-100" style="height: max-content">
     <ul class="nav nav-tabs ">
         <li class="nav-item">
-            <a class="nav-link active" aria-current="page"
+            <a class="nav-link {{#iflogico estado '===' "3"}} active {{/iflogico}}"
                title="Muestra todos los grupos independientemente del estado." href="/">Todos</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="/filtro/1" title="Muestra únicamente los grupos con estado activo.">Activos</a>
+            <a class="nav-link {{#iflogico estado '===' "1"}} active {{/iflogico}}" href="/filtro/1" title="Muestra únicamente los grupos con estado activo.">Activos</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="/filtro/0"
@@ -23,10 +23,12 @@
     </ul>
 
     <div class="row m-2 p-2">
-        <h2>Mis Grupos</h2>
+        <h3>Mis grupos {{#iflogico estado '===' "1"}}activos{{/iflogico}}
+            {{#iflogico estado '===' "2"}}en papelera{{/iflogico}}
+            {{#iflogico estado '===' "0"}}inactivos{{/iflogico}}</h3>
     </div>
     <div class="row m-2 p-2">
-        {{#each grupos}}
+    {{#each grupos}}
             <div class="col-md-3 col-3 col-xl-2 col-lg-2 col-sm-3 p-1">
                 <div class="card " style="height:28rem; ">
                     {{#iflogico dataValues.estado '!=' "2"}}
@@ -172,8 +174,8 @@
                             <h5 class="card-title">No hay grupos existentes.</h5>
                             <p class="card-text">Agregue un grupo.</p>
                         {{else}}
-                            <h5 class="card-title">No hay grupos en la papelera de reciclaje.</h5>
-                            <i class="bi bi-emoji-smile-fill"></i>
+                            <h5 class="card-title text-center">No hay grupos en la papelera de reciclaje.</h5>
+
                         {{/iflogico}}
                     </div>
                 </div>
