@@ -9,11 +9,11 @@
             <a class="nav-link {{#iflogico estado '===' "1"}} active {{/iflogico}}" href="/filtro/1" title="Muestra únicamente los grupos con estado activo.">Activos</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="/filtro/0"
+            <a class="nav-link {{#iflogico estado '===' "0"}} active {{/iflogico}}" href="/filtro/0"
                title="Muestra únicamente los grupos con estado inactivo.">Completados</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="/filtro/2" title="Muestra los grupos enviados a la papelera de reciclaje."><i
+            <a class="nav-link {{#iflogico estado '===' "2"}} active {{/iflogico}}" href="/filtro/2" title="Muestra los grupos enviados a la papelera de reciclaje."><i
                     class="bi bi-trash2-fill"></i></a>
         </li>
         <li class="nav-item">
