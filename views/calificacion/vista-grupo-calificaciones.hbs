@@ -1,6 +1,7 @@
 <title>{{asignatura}} {{clave}} - Calificación - Seguimiento de Estudiantes</title>
+<div class="row container-fluid">
     <!-- Barra de navegación -->
-    <ul class="nav nav-tabs">
+    <ul class="nav nav-tabs sticky-top">
         <li class="nav-item">
             <a class="nav-link " aria-current="page" href="/grupo-inicio/{{idgrupo}}"
                title="Muestra el progreso general del grupo.">Inicio</a>
@@ -24,36 +25,43 @@
                 Calificaciones</a>
         </li>
     </ul>
-<div class="container-fluid">
-    <div class="row vh-100">
-        <nav id="sideBar" class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
-            <div class="sidebar-sticky pt-3">
-                <ul class="nav flex-column">
-                    <h4 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">Temas</h4>
-                    {{#each temas}}
-                        <li class="nav-item"><a class="nav-link" href="/grupo/calificaciones/{{../idgrupo}}/{{dataValues.id}}/0"><i class="bi-book-half"></i><strong> {{dataValues.nombre}}</strong></a></li>
-                    {{/each}}
-                </ul>
-            </div>
-        </nav>
-        <main class="col-md-9 ml-sm-auto col-lg-10 px-md-4" role="main">
-            <div class="row-cols-1">
-                <div class="col-auto d-flex flex-row-reverse p-3">
-                    <div id="toolbar">
+</div>
 
-                    </div>
+
+<div class="row m-2 p-2 flex-grow-1 flex-shrink-0">
+    <nav id="sideBar" class="col-md-3 col-lg-2 d-md-block bg-light sidebar navbar-nav-scroll">
+        <div class="sidebar-sticky pt-3">
+            <ul class="nav flex-column">
+                <h4 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                    Temas</h4>
+                {{#each temas}}
+                    <li class="nav-item"><a class="nav-link"
+                                            href="/grupo/calificaciones/{{../idgrupo}}/{{dataValues.id}}/0"><i
+                            class="bi-book-half"></i><strong> {{dataValues.nombre}}</strong></a></li>
+                {{/each}}
+            </ul>
+        </div>
+    </nav>
+
+
+    <main class="col-md-9 ml-sm-auto col-lg-10 px-md-4" role="main">
+        <div class="row-cols-1">
+            <div class="col-auto d-flex flex-row-reverse p-3">
+                <div id="toolbar">
+
                 </div>
             </div>
-            <!-- Contenido de la vista -->
-            <div class="row-cols-1 pre-scrollable vh-100 min-vh-100" >
-                <input type="hidden" id="valorTabla" name="valorTabla" value="{{listaFormateada}}">
-                <table id="table" data-toggle="table" data-toolbar="#toolbar" data-click-to-select="true"
-                       data-search="true"
-                       data-advanced-search="true" data-filter-control="true" name="table" >
-                    <thead>
-                    <tr>
-                        <th data-field="clave" data-sorteable="false" class="column">Clave</th>
-                        <th data-field="nombre" data-sorteable="false" class="column">Nombre</th>
+        </div>
+        <!-- Contenido de la vista -->
+        <div class="row-cols-1 navbar-nav-scroll">
+            <input type="hidden" id="valorTabla" name="valorTabla" value="{{listaFormateada}}">
+            <table id="table" data-toggle="table" data-toolbar="#toolbar" data-click-to-select="true"
+                   data-search="true"
+                   data-advanced-search="true" data-filter-control="true" name="table">
+                <thead>
+                <tr>
+                    <th data-field="clave" data-sorteable="false" class="column">Clave</th>
+                    <th data-field="nombre" data-sorteable="false" class="column">Nombre</th>
 
                         {{#each actividades}}
                             <th data-field="calificaciones.{{@index}}" class="column">{{dataValues.nombre}}: {{dataValues.valor}}</th>
@@ -63,10 +71,9 @@
                     </thead>
                     <tbody>
 
-                    </tbody>
-                </table>
-            </div>
-        </main>
-    </div>
+                </tbody>
+            </table>
+        </div>
+    </main>
 </div>
 <script src="/js/llenar-tabla-helper.js"></script>

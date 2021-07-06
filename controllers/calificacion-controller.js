@@ -76,7 +76,6 @@ const vistaCalif = async(req,res)=>{
                     }
                     calificaciones.push(calificacion.dataValues.valor);
                 }
-
             }
 
             listaFormateada.push({

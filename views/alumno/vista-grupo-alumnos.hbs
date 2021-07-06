@@ -1,8 +1,7 @@
 <title>{{asignatura}} {{clave}} - Alumnos - Seguimiento de Estudiantes</title>
-
-<div class="container-fluid p-2 bg-light h-100">
-    <!-- Barra de navegación -->
-    <ul class="nav nav-tabs">
+<!-- Barra de navegación -->
+<div class="row container-fluid sticky-top">
+    <ul class=" nav nav-tabs">
         <li class="nav-item">
             <a class="nav-link " aria-current="page" href="/grupo-inicio/{{idgrupo}}"
                title="Muestra el progreso general del grupo.">Inicio</a>
@@ -27,16 +26,12 @@
         </li>
     </ul>
 </div>
-
-<div class="container-fluid">
-    <!-- Titulo de la vista -->
-    <div class="row m-2 p-2">
-        <h2 class="">Lista de Alumnos</h2>
-    </div>
-    <!-- Contenido de la vista -->
-    <div class="row m-2 p-0 flex-grow-1">
-        <div class="col-5 col-md-5 col-lg-5 col-sm-5 col-xl-5 pre-scrollable ">
-            <div class="list-group overflow-auto">
+<!-- Contenido de la vista -->
+<main class="row m-2 p-2 flex-grow-1 flex-shrink-0">
+    <nav id="sideBar" class="col-md-3 col-lg-3 d-md-block bg-light sidebar"
+         role="navigation">
+        <div class="sidebar-sticky pt-3 nav d-flex flex-column navbar-nav-scroll nav-fill">
+            <div class="list-group list-group-flush border-bottom h-auto">
                 {{#each alumnos}}
                     <a type="button" class="list-group-item list-group-item-action" aria-current="true"
                        href="/grupo/alumnos/{{../idgrupo}}/{{dataValues.clave}}">
@@ -49,41 +44,39 @@
                     <i class="bi bi-plus-circle-fill"></i> Nuevo Alumno
                 </a>
             </div>
-
         </div>
-        <div class="col col-lg col-md col-sm col-xl pre-scrollable">
-            <div class="container overflow-auto bg-white ">
-                {{#if alumno}}
-                    <div class="row">
-                        <div class="col">
+    </nav>
 
-
-                            <div class="card">
-                                <div class="card-header">
-                                    <div class="row">
-                                        <div class="col">
-                                            <h4><i class="bi bi-file-person-fill"></i> Datos del Alumno</h4>
-                                        </div>
-                                        <div class="col-11" align="right">
-                                            <div class="custom-control custom-switch"
-                                                 title="Habilitar edición del alumno.">
-                                                <input type="checkbox" class="custom-control-input" id="switchEditar">
-                                                <label class="custom-control-label" for="switchEditar">Editar</label>
-                                            </div>
-                                        </div>
-                                        <div class="col" align="right">
-                                            <a class="bi bi-trash-fill" href="#" data-toggle="modal"
-                                               data-target="#eliminarAlumno" title="Desasociar alumno del grupo."></a>
-                                        </div>
+    <div class="col col-lg col-md col-sm col-xl navbar-nav-scroll nav-fill">
+        {{#if alumno}}
+            <div class="row">
+                <div class="col">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col">
+                                    <h4><i class="bi bi-file-person-fill"></i> Datos del Alumno</h4>
+                                </div>
+                                <div class="col-11" align="right">
+                                    <div class="custom-control custom-switch"
+                                         title="Habilitar edición del alumno.">
+                                        <input type="checkbox" class="custom-control-input" id="switchEditar">
+                                        <label class="custom-control-label" for="switchEditar">Editar</label>
                                     </div>
                                 </div>
-                                <form action="/grupo/alumnos/{{idgrupo}}/{{alumno.dataValues.id}}?_method=PUT"
-                                      method="POST"
-                                      novalidate>
-                                    <input type="hidden" name="_method" value="PUT">
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="col">
+                                <div class="col" align="right">
+                                    <a class="bi bi-trash-fill" href="#" data-toggle="modal"
+                                       data-target="#eliminarAlumno" title="Desasociar alumno del grupo."></a>
+                                </div>
+                            </div>
+                        </div>
+                        <form action="/grupo/alumnos/{{idgrupo}}/{{alumno.dataValues.id}}?_method=PUT"
+                              method="POST"
+                              novalidate>
+                            <input type="hidden" name="_method" value="PUT">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col">
 
                                                 <label for="nombre" class="form-label col-form-label-sm">Apellidos y
                                                     Nombre(s)</label>
@@ -163,42 +156,47 @@
                                 </thead>
                                 <tbody>
 
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <!--Modal para desasociar un alumno de un grupo-->
-                    <form action="/alumnos/eliminar-alumno/{{idgrupo}}/{{alumno.dataValues.id}}?_method=DELETE"
-                          method="POST">
-                        <input type="hidden" name="_method" value="DELETE">
-                        <div class="modal fade" id="eliminarAlumno" tabindex="-1" aria-labelledby="eliminarAlumno"
-                             aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="eliminarAlumnoLabel">Eliminar Alumno</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        ¿Está seguro que desea eliminar el alumno? Se eliminara permanentemente.
-                                    </div>
-                                    <div class="modal-footer">
-                                        <a class="btn btn-secondary" data-dismiss="modal">Cancelar</a>
-                                        <button type=submit" class="btn btn-danger">Eliminar</button>
-                                    </div>
-                                </div>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!--Modal para desasociar un alumno de un grupo-->
+            <form action="/alumnos/eliminar-alumno/{{idgrupo}}/{{alumno.dataValues.id}}?_method=DELETE"
+                  method="POST">
+                <input type="hidden" name="_method" value="DELETE">
+                <div class="modal fade" id="eliminarAlumno" tabindex="-1" aria-labelledby="eliminarAlumno"
+                     aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="eliminarAlumnoLabel">Eliminar Alumno</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                ¿Está seguro que desea eliminar el alumno? Se eliminara permanentemente.
+                            </div>
+                            <div class="modal-footer">
+                                <a class="btn btn-secondary" data-dismiss="modal">Cancelar</a>
+                                <button type=submit" class="btn btn-danger">Eliminar</button>
                             </div>
                         </div>
-                    </form>
-                {{else}}
+                    </div>
+                </div>
+            </form>
+        {{else}}
+            <div class="jumbotron jumbotron-fluid">
+                <div class="container text-center">
+                    <p class="lead">
                     <h2>Seleccione un alumno para mostrar más información.</h2>
-                {{/if}}
+                    </p>
+                </div>
             </div>
-        </div>
+        {{/if}}
+
     </div>
-</div>
+</main>
 
 <script>
     document.getElementById('switchEditar').onclick = function () {
