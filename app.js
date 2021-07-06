@@ -10,8 +10,8 @@ const flash = require('connect-flash');
 const exphbs = require('express-handlebars');
 const dbcreator = require('./helpers/db');
 const firstRun = require('electron-first-run');
-const ipfilter= require('express-ipfilter').IpFilter;
-const ips = ['127.0.0.1'];
+let middleware = require('express-ip-filter-middleware');
+
 
 const options = {
     mode: 'whitelist',
@@ -24,8 +24,7 @@ const options = {
 //Inicialización de Express
 var app = express();
 
-//app.use(ipfilter(ips, {mode: "allow"}));
-
+app.use(middleware(options))
 //Configuración del motor de vista
 app.set('views', path.join(__dirname , 'views'));
 //Se declara que se utilizará archivos hbs para su compatibilidad con Handlebars Express
