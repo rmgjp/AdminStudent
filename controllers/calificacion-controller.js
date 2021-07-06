@@ -59,21 +59,21 @@ const vistaCalif = async(req,res)=>{
                     calcCalificacion = (calificacion.dataValues.valor* actividades[actividad].valor)/100;
 
                     switch (parseInt(configuracion.califi)){
-                        case 0:
-                            if(calificacion.dataValues.valor < 70){
-                                acumulador = "NA"
-                            }
-                            else if (calificacion.dataValues.valor >= 70){
-                                if(acumulador != "NA"){
-                                    //Calculo de las calificaciones cuando se promedia.
-                                    acumulador += calcCalificacion;
-                                }
-                            }
-                            break;
-                        case 1:
-                            acumulador += calcCalificacion;
-                            break;
-                    }
+                         case 0:
+                             if(calificacion.dataValues.valor < 70){
+                                 acumulador = "NA"
+                             }
+                             else if (calificacion.dataValues.valor >= 70){
+                                 if(acumulador != "NA"){
+                                     //Calculo de las calificaciones cuando se promedia.
+                                     acumulador += calcCalificacion;
+                                 }
+                             }
+                             break;
+                         case 1:
+                             acumulador += calcCalificacion;
+                             break;
+                     }
                     calificaciones.push(calificacion.dataValues.valor);
                 }
             }

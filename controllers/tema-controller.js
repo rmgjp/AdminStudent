@@ -211,4 +211,4 @@ function tryParseJSON (jsonString){
     }
     catch (e) { }
     return false;
-};
+}

@@ -23,8 +23,9 @@ const getAllGrupos = async (req, res) => {
 
 //Metodo para renderizar todos los grupos
 const renderAllGrupos = async (req, res) =>{
+    const estado = 3;
     const grupos = await getAllGrupos(req,res);
-    res.render('index', {grupos, config});
+    res.render('index', {grupos, config, estado});
 }
 
 //Metodo para actualizar grupo a estado 2 (papelera)

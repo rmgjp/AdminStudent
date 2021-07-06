@@ -63,13 +63,15 @@
                     <th data-field="clave" data-sorteable="false" class="column">Clave</th>
                     <th data-field="nombre" data-sorteable="false" class="column">Nombre</th>
 
-                        {{#each actividades}}
-                            <th data-field="calificaciones.{{@index}}" class="column">{{dataValues.nombre}}: {{dataValues.valor}}</th>
-                        {{/each}}
-                        <th data-field="califinal" class="column">Calif. Final</th>
-                    </tr>
-                    </thead>
-                    <tbody>
+                    {{#each actividades}}
+                        <th data-field="calificaciones.{{@index}}" class="column">{{dataValues.nombre}}
+                            : {{dataValues.valor}}</th>
+                    {{/each}}
+                    <th data-field="califinal" class="column">Calif. Final</th>
+                </tr>
+                </thead>
+
+                <tbody>
 
                 </tbody>
             </table>

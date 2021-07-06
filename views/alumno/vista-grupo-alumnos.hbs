@@ -78,83 +78,83 @@
                                 <div class="row">
                                     <div class="col">
 
-                                                <label for="nombre" class="form-label col-form-label-sm">Apellidos y
-                                                    Nombre(s)</label>
-                                                <input type="text" class="form-control form-control-sm" disabled
-                                                       id="nombre"
-                                                       name="nombre"
-                                                       id="nombre" value="{{alumno.dataValues.nombre}}">
+                                        <label for="nombre" class="form-label col-form-label-sm">Apellidos y
+                                            Nombre(s)</label>
+                                        <input type="text" class="form-control form-control-sm" disabled
+                                               id="nombre"
+                                               name="nombre"
+                                               id="nombre" value="{{alumno.dataValues.nombre}}">
 
-                                            </div>
-                                        </div>
-                                        <div class="row ">
-                                            <div class="col col-xl col-lg col-sm col-md">
-                                                <label for="clave" class="form-label col-form-label-sm">Clave</label>
-                                                <input type="text" class="form-control form-control-sm" disabled
-                                                       id="clave"
-                                                       name="clave" id="clave"
-                                                       value="{{alumno.dataValues.clave}}">
-                                            </div>
-                                            <div class="col col-xl col-lg col-sm col-md">
-                                                <label for="correo"
-                                                       class="form-label col-form-label-sm disabled">Correo</label>
-                                                <input type="email" id="correo" name="correo" id="correo"
-                                                       class="form-control form-control-sm" disabled
-                                                       value="{{alumno.dataValues.correo}}">
-                                            </div>
-                                        </div>
                                     </div>
-
-                                    <!--MODAL PARA EDITAR LOS DATOS DE UN ALUMNO-->
-                                    <div class="modal fade" id="editarAlumno" tabindex="-1"
-                                         aria-labelledby="editarAlumno"
-                                         aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="editarAlumnoLabel">Editar Alumno</h5>
-                                                    <button type="button" class="close" data-dismiss="modal"
-                                                            aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    ¿Está seguro que desea editar el alumno?
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <a type="button" class="btn btn-secondary"
-                                                       data-dismiss="modal">No</a>
-                                                    <button type="submit" class="btn btn-primary">Sí</button>
-                                                </div>
-                                            </div>
-                                        </div>
+                                </div>
+                                <div class="row ">
+                                    <div class="col col-xl col-lg col-sm col-md">
+                                        <label for="clave" class="form-label col-form-label-sm">Clave</label>
+                                        <input type="text" class="form-control form-control-sm" disabled
+                                               id="clave"
+                                               name="clave" id="clave"
+                                               value="{{alumno.dataValues.clave}}">
                                     </div>
-
-                                </form>
-                                <div class="card-footer">
-                                    <button class="btn badge-primary" id="guardar" name="guardar" data-toggle="modal"
-                                            disabled
-                                            data-target="#editarAlumno">Guardar
-                                    </button>
+                                    <div class="col col-xl col-lg col-sm col-md">
+                                        <label for="correo"
+                                               class="form-label col-form-label-sm disabled">Correo</label>
+                                        <input type="email" id="correo" name="correo" id="correo"
+                                               class="form-control form-control-sm" disabled
+                                               value="{{alumno.dataValues.correo}}">
+                                    </div>
                                 </div>
                             </div>
+
+                            <!--MODAL PARA EDITAR LOS DATOS DE UN ALUMNO-->
+                            <div class="modal fade" id="editarAlumno" tabindex="-1"
+                                 aria-labelledby="editarAlumno"
+                                 aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="editarAlumnoLabel">Editar Alumno</h5>
+                                            <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            ¿Está seguro que desea editar el alumno?
+                                        </div>
+                                        <div class="modal-footer">
+                                            <a type="button" class="btn btn-secondary"
+                                               data-dismiss="modal">No</a>
+                                            <button type="submit" class="btn btn-primary">Sí</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </form>
+                        <div class="card-footer">
+                            <button class="btn badge-primary" id="guardar" name="guardar" data-toggle="modal"
+                                    disabled
+                                    data-target="#editarAlumno">Guardar
+                            </button>
                         </div>
                     </div>
+                </div>
+            </div>
 
-                    <div class="row">
-                        <div class="col">
-                            <input type="hidden" id="valorTabla" name="valorTabla" value="{{listaFormateada}}">
-                            <table id="table" data-toggle="table" data-toolbar="#toolbar" data-click-to-select="true"
-                                   data-search="true"
-                                   data-advanced-search="true" data-filter-control="true" name="table">
-                                <thead>
-                                <tr>
-                                    <th data-field="no_unidad" data-sorteable="false" class="column">Clave</th>
-                                    <th data-field="nombre" data-sorteable="false" class="column">Nombre</th>
-                                    <th data-field="califinal" class="column">Calif. Final</th>
-                                </tr>
-                                </thead>
-                                <tbody>
+            <div class="row">
+                <div class="col">
+                    <input type="hidden" id="valorTabla" name="valorTabla" value="{{listaFormateada}}">
+                    <table id="table" data-toggle="table" data-toolbar="#toolbar" data-click-to-select="true"
+                           data-search="true"
+                           data-advanced-search="true" data-filter-control="true" name="table">
+                        <thead>
+                        <tr>
+                            <th data-field="no_unidad" data-sorteable="false" class="column">Clave</th>
+                            <th data-field="nombre" data-sorteable="false" class="column">Nombre</th>
+                            <th data-field="califinal" class="column">Calif. Final</th>
+                        </tr>
+                        </thead>
+                        <tbody>
 
                         </tbody>
                     </table>
