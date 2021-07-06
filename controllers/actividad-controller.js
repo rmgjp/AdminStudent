@@ -1,27 +1,13 @@
 const Sequelize = require('sequelize');
 const Models = require('../models');
-const alumnoController = require('./alumno-controller');
-
-
-const getAllTareas = async (idGrupo)=>{
-    try{
-        const tareas = Models.tarea.findAll({
-
-        })
-    }
-    catch (err){
-
-    }
-}
 
 const getActividadById = async (idactividad)=>{
     try{
-        const tarea = await Models.tarea.findOne({
+        return await Models.tarea.findOne({
             where:{
                 id: idactividad
             }
         })
-        return tarea;
     }
     catch (e){
         console.log(e)
@@ -96,12 +82,44 @@ const eliminarActividad = async (req,res)=>{
     }
 };
 
+const getTemasAndActividades = async (req,res)=>{
+    //Obtener datos del grupo
+    const grupo = await Models.grupo.findOne({where:{id: req.params.idgrupo}});
+    //Obtenemos temas de ese grupo
+    const temas = await Models.tema.findAll({where:{idgrupo:req.params.idgrupo}});
+    var datos = [];
+    for (let tema in temas){
+        const actividades = await Models.tarea.findAll({where:{idtema:temas[tema].dataValues.id}});
+        datos.push({
+            tema: temas[tema].dataValues,
+            actividades: actividades,
+        })
+    }
+    res.render('actividad/vista-grupo-actividades', {idgrupo: req.params.idgrupo, asignatura: grupo.dataValues.asignatura, clave:grupo.dataValues.clave,datos});
+}
+
+const getTemasActividadesAndActividad = async (req,res)=>{
+    //Obtener datos del grupo
+    const grupo = await Models.grupo.findOne({where:{id: req.params.idgrupo}});
+    //Obtenemos temas de ese grupo
+    const temas = await Models.tema.findAll({where:{idgrupo:req.params.idgrupo}});
+    var datos = [];
+    for (let tema in temas) {
+        const actividades = await Models.tarea.findAll({where: {idtema: temas[tema].dataValues.id}});
+        datos.push({
+            tema: temas[tema].dataValues,
+            actividades: actividades,
+        });
+    }
+    const actividad = await getActividadById(req.params.idactividad);
+    res.render('actividad/vista-grupo-actividades', {idgrupo:req.params.idgrupo, datos, idtema:req.params.idtema, actividad, tipoActividad:actividad.tipo, asignatura:grupo.dataValues.asignatura,clave: grupo.dataValues.clave});
+
+}
 module.exports = {
+    getTemasActividadesAndActividad,
+    getTemasAndActividades,
     eliminarActividad,
     editarActividad,
     getActividadById,
     guardarDesdeGrid,
-    getAllTareasByTema,
-    getAllTareas
-
 }
