@@ -13,6 +13,12 @@ const firstRun = require('electron-first-run');
 const ipfilter= require('express-ipfilter').IpFilter;
 const ips = ['127.0.0.1'];
 
+const options = {
+    mode: 'whitelist',
+    allow: ['127.0.0.1'],
+    deny: [],
+};
+
 
 
 //Inicialización de Express
