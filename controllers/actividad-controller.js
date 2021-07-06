@@ -14,20 +14,6 @@ const getActividadById = async (idactividad)=>{
     }
 }
 
-const getAllTareasByTema = async (idTema)=>{
-    try{
-        const tareas = await Models.tarea.findAll({
-            where:{
-                idtema: idTema
-            }
-        });
-        return tareas;
-    }
-    catch (err){
-        console.log(err)
-    }
-}
-
 const guardarDesdeGrid = async (req, res, idtema) => {
     //Se obtiene el arreglo alojado en objeto invisible del body correspondiente a la tabla
     tareas = JSON.parse(req.body.valorTabla);
@@ -75,7 +61,7 @@ const eliminarActividad = async (req,res)=>{
         }
         var actividad = await Models.tarea.findOne({where:{id:req.params.idactividad}});
         await actividad.destroy();
-        res.redirect('/grupo/actividades/'+ req.params.idgrupo +'/' + req.params.idtema);
+        res.redirect('/grupo/actividades/'+ req.params.idgrupo);
     }
     catch(err){
         console.log(err);

@@ -1,8 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const temaController = require('../controllers/tema-controller');
 const actividadController = require('../controllers/actividad-controller');
-const grupoController = require('../controllers/grupo-controller');
+
 
 //renderizacion de la vista de actividades
 router.get('/grupo/actividades/:idgrupo', actividadController.getTemasAndActividades);
@@ -20,8 +19,8 @@ router.get('/actividad/nueva-actividad/:idgrupo/:idtema', (req,res)=>{
 });
 
 router.post('/actividad/nueva-actividad/:idgrupo/:idtema', async(req,res)=>{
-    actividadController.guardarDesdeGrid(req,res,req.params.idtema);
-    res.redirect('/grupo/actividades/'+req.params.idgrupo+'/'+req.params.idtema);
+    await actividadController.guardarDesdeGrid(req,res,req.params.idtema);
+    res.redirect('/grupo/actividades/'+req.params.idgrupo);
 });
 
 
