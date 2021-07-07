@@ -1,27 +1,27 @@
-const Sequelize = require('sequelize');
 const Models = require('../models');
 const fs = require('fs');
 const path = require('path');
 const tableToJSON = require('tabletojson').Tabletojson;
 const configuracion = require('../config/userconfig.json');
 
+//Controlador que contiene métodos relacionados con el manejo de los datos del modelo alumno
+//y su asociación con el modelo grupo.
 
-//Metodo para guardar los alumnos dentro de la tabla/Grid
-const guardarDesdeGrid = async (req, res) => {
-    var idgrupo = req.params.idGrupo;
-    var add = req.params.add;
+//Guardar contenidos en la tabla/grid
+const saveFromGrid = async (req, res) => {
+    let idgrupo = req.params.idgrupo;
+    let add = req.params.add;
     //Se obtiene el arreglo alojado en objeto invisible del body correspondiente a la tabla
-    if(tryParseJSON(req.body.valorTabla) == false){
-        console.log('Alumnos Vacios');
+    if (tryParseJSON(req.body.valorTabla) === false) {
+
         let errors = []
         errors.push({text: 'No ha registrado ningún alumno, registre al menos uno'})
-        res.render('alumno/grid-alumnos', {errors,idgrupo})
-    }
-    else{
-        alumnos = tryParseJSON(req.body.valorTabla)
-        console.log("Alumnos leidos: " + alumnos);
+        res.render('alumno/grid-alumnos', {errors, idgrupo})
+    } else {
+        let alumnos = tryParseJSON(req.body.valorTabla)
+
         //Ciclo para iterar entre los datos del arreglo Tabla
-        console.log('Alumnos con datos');
+
         for (let alumno in alumnos) {
             //Llamado del modelo para buscar el registro
             //si existe el registro no se guarda
@@ -38,48 +38,50 @@ const guardarDesdeGrid = async (req, res) => {
                     }
                 });
         }
-        console.log(idgrupo)
-        await agregaraGrupo(idgrupo, alumnos);
+        await addToGroup(idgrupo, alumnos);
         //Llamada del método para asociar la tabla alumno y grupo
         //con la tabla alumnogrupo resultado de una relación muchos a
         //muchos.
-        if(add == 0){
+        if (add == 0) {
             res.redirect('/');
-        }
-        else{
-            res.redirect('/grupo/alumnos/'+idgrupo);
+        } else {
+            res.redirect('/grupo/alumnos/' + idgrupo);
         }
     }
 }
-const obtenerListaAlumnos = async (req,res) =>{
-    var file = req.params.archivo;
-    var txtFile = path.join(__dirname, '../public/doc/' + file);
+
+//Obtener la lista de estudiantes mediante un archivo de texto.
+const getStudentList = async (req, res) => {
+    let file = req.params.archivo;
+    let txtFile = path.join(__dirname, '../public/doc/' + file);
     await fs.readFile(txtFile, "binary", (err, data) => {
         if (err) {
+
             throw err;
-            return;
         } else {
-            var listaAlumnos = tableToJSON.convert(data,{onlyColumns:[1,2]});
+            let listaAlumnos = tableToJSON.convert(data, {onlyColumns: [1, 2]});
             listaAlumnos = JSON.stringify(listaAlumnos[0]);
-            var listaFormateada = JSON.parse(listaAlumnos, function (k,v){
-                if(k.match(/^Nombre\s+Temas->/gm)){
+            let listaFormateada = JSON.parse(listaAlumnos, function (k, v) {
+                if (k.match(/^Nombre\s+Temas->/gm)) {
                     this.nombre = v;
                     return;
-                }
-                else if(k.match("Num Ctrol")){
+                } else if (k.match("Num Ctrol")) {
                     this.clave = v;
                     return;
                 }
                 return v;
             })
             listaFormateada = JSON.stringify(listaFormateada);
-            res.render('alumno/grid-alumnos', {idgrupo: req.params.idGrupo, adds:req.params.add, listaFormateada});
+            res.render('alumno/grid-alumnos', {idgrupo: req.params.idgrupo, adds: req.params.add, listaFormateada});
         }
     });
 }
-function tryParseJSON (jsonString){
+
+
+//Verifica si el contenido se puede parsear como JSON
+function tryParseJSON(jsonString) {
     try {
-        var o = JSON.parse(jsonString);
+        let o = JSON.parse(jsonString);
 
         // Handle non-exception-throwing cases:
         // Neither JSON.parse(false) or JSON.parse(1234) throw errors, hence the type-checking,
@@ -88,240 +90,205 @@ function tryParseJSON (jsonString){
         if (o && typeof o === "object") {
             return o;
         }
+    } catch (e) {
     }
-    catch (e) { }
     return false;
-};
-//Metodo para buscar a un alumno mediante la clave de este
-const getAlumnoByClave = async (claveAlumno) =>{
+}
+
+//Buscar a un alumno mediante la clave del mismo
+const getStudentByKey = async (claveAlumno) => {
     //Objeto que recibe el resultado de la consulta select, es decir el alumno buscado
-    console.log(claveAlumno);
-    const alumno = await Models.alumno.findOne({
+    return Models.alumno.findOne({
         where: {
             clave: claveAlumno,
         }
     })
-
-    return alumno;
 }
 
-//Metodo para consultar los registros de la tabla alumno
-const getAllAlumnos = async (req, res, next) => {
-    //Objeto que alojara el arreglo de alumnos recueprado de la base de datos atravez del modelo de datos
-    const alumnos = await Models.alumno.findAll({});
-    //res.render('index', {alumnos})
-}
+
 /**
  * Sección para metodos de la relación Alumno-Grupo
  */
-//Metodo para agregar el id del grupo y id del alumno y relacionar ambas tablas.
-const agregaraGrupo = async (idgrupo, alumnos) => {
+
+//Relación del Grupo y Alumno agregando ambos ID dentro de la tabla Alumno-Grupo
+const addToGroup = async (idgrupo, alumnos) => {
 
     for (let alumno in alumnos) {
-        try {
-            console.log(alumnos[alumno].clave.toUpperCase());
-            //Busqueda del alumno para obtener el id interno de la base de datos.
-            const findAlumno = await Models.alumno.findOne({
-                where: {
-                    clave: alumnos[alumno].clave.toUpperCase()
-                }
-            });
-            await Models.alumnogrupo.findOrCreate({
-                where: {
-                    idalumno: findAlumno.dataValues.id,
-                    idgrupo: idgrupo
-                },
-                defaults: {
-                    idalumno: findAlumno.dataValues.id,
-                    idgrupo: idgrupo
-                }
-            });
-        } catch (err) {
-            console.log(err);
-        }
+        //Busqueda del alumno para obtener el id interno de la base de datos.
+        const findAlumno = await Models.alumno.findOne({
+            where: {
+                clave: alumnos[alumno].clave.toUpperCase()
+            }
+        });
+        await Models.alumnogrupo.findOrCreate({
+            where: {
+                idalumno: findAlumno.dataValues.id,
+                idgrupo: idgrupo
+            },
+            defaults: {
+                idalumno: findAlumno.dataValues.id,
+                idgrupo: idgrupo
+            }
+        });
     }
 }
-//metodo para desasociar alumno y borrar calificaciones correspondientes
-const desasociarAlumno = async (req,res)=>{
+//Desasociar alumno del grupo y borrar calificaciones correspondientes
+const disassociateFromGroup = async (req, res) => {
     //Buscar las calificaciones relacionadas al alumno
-    var calificaciones = await Models.calificacion.findAll({
-        where:{idalumno: req.params.idalumno}
+    let calificaciones = await Models.calificacion.findAll({
+        where: {idalumno: req.params.idalumno}
     })
     //Eliminar calificaciones
-    for(var calificacion in calificaciones){
+    for (let calificacion in calificaciones) {
         await calificaciones[calificacion].destroy();
     }
     //Busqueda de la asociación de alumno con grupo por medio de la tabla alumnogrupo
-    var alumnogrupo = await Models.alumnogrupo.findOne({
-        where:{idalumno: req.params.idalumno}
+    let alumnogrupo = await Models.alumnogrupo.findOne({
+        where: {idalumno: req.params.idalumno}
     });
     //Eliminación de la asociación
     await alumnogrupo.destroy();
-    res.redirect('/grupo/alumnos/'+req.params.idgrupo);
+    res.redirect('/grupo/alumnos/' + req.params.idgrupo);
 }
-//metodo para actualizar el registro de alumno
-const editarAlumno = async (req,res)=>{
+
+//Actualizar el registro de alumno
+const editStudent = async (req, res) => {
     const {clave, apellidos, nombre, correo} = req.body;
-    try{
-        var alumno = await Models.alumno.findOne({where: {id: req.params.idalumno}})
-        await alumno.update({
-            clave: clave.toUpperCase(),
-            nombre: nombre.toUpperCase(),
-            correo: correo
-        });
-        res.redirect('/grupo/alumnos/'+req.params.idgrupo+'/'+ alumno.clave);
-    }catch(err){
-        console.log(err);
-    }
+
+    let alumno = await Models.alumno.findOne({where: {id: req.params.idalumno}})
+    await alumno.update({
+        clave: clave.toUpperCase(),
+        nombre: nombre.toUpperCase(),
+        correo: correo
+    });
+    res.redirect('/grupo/alumnos/' + req.params.idgrupo + '/' + alumno.clave);
+
 }
 
-//Método para obtener los alumnos relacionados con X grupo.
-const getListAlumnosByGroup = async (req, res) => {
-    try {
-        //Obtención del id
-        const idgrupo = req.params.idgrupo;
 
-        //Se obtienen todos los datos del grupo mediante el id
-        const grupo = await Models.grupo.findOne({
+//Consultar los registros de la tabla alumno
+const getAllStudents = async (req, res) => {
+    //Se busca la relación de los alumnos.
+    const alumnogrupos = await Models.alumnogrupo.findAll({
+        where: {
+            idgrupo: req.params.idgrupo
+        }
+    });
+
+    //Se genera un arreglo donde se guardan los alumnos relacionados con el grupo
+    var alumnos = [];
+
+    for (let punteroAlumno in alumnogrupos) {
+        let alumnoTemp = await Models.alumno.findAll({
             where: {
-                id: req.params.idgrupo
+                id: alumnogrupos[punteroAlumno].dataValues.idalumno
             }
         });
-        //Se separan los datos del grupo
-        const {asignatura, clave} = grupo;
+        alumnos.push(alumnoTemp[0]);
+    }
 
-        //Se busca la relación de los alumnos.
-        const alumnogrupos = await Models.alumnogrupo.findAll({
-            where: {
-                idgrupo: req.params.idgrupo
-            }
-        });
 
-        //Se genera un arreglo donde se guardan los alumnos relacionados con el grupo
-        let alumnos = [];
+    alumnos.sort(function (a, b) {
+        return a.dataValues.nombre.localeCompare(b.dataValues.nombre);
+    });
+    return alumnos;
+}
 
-        for (punteroAlumno in alumnogrupos){
-            let alumno = await Models.alumno.findAll({
+//Obtener los alumnos relacionados con el grupo.
+const getStudentListByGroup = async (req, res) => {
+    //Se obtienen todos los datos del grupo mediante el id
+    const grupo = await Models.grupo.findOne({
+        where: {
+            id: req.params.idgrupo
+        }
+    });
+    //Se separan los datos del grupo
+    const {asignatura, clave} = grupo;
+    //Obtención del id
+    const alumnos = await getAllStudents(req,res);
+    res.render('alumno/vista-grupo-alumnos', {alumnos, idgrupo:req.params.idgrupo, asignatura, clave});
+}
+
+//Obtener la información de un alumno en concreto y la lista de alumnos.
+const getStudentAndStudents = async (req, res) => {
+    const claveAlumno = req.params.clave;
+    //Obtención del id
+    const idgrupo = req.params.idgrupo;
+    //Se obtienen todos los datos del grupo mediante el id
+    const grupo = await Models.grupo.findOne({
+        where: {
+            id: req.params.idgrupo
+        }
+    });
+    //Se separan los datos del grupo
+    const {asignatura, clave} = grupo;
+
+    let alumnos = await getAllStudents(req,res);
+
+    const alumno = await getStudentByKey(claveAlumno);
+
+    //Calculo de calificaciones por unidad
+
+    const temas = await Models.tema.findAll({
+        where: {idgrupo: req.params.idgrupo}
+    });
+
+    let listaFormateada = [];
+
+    //Lista de las calificaciones de las unidad.
+    for (let tema in temas) {
+        const actividades = await Models.tarea.findAll({where: {idtema: temas[tema].dataValues.id}});
+        let califinal = 0;
+        let calcCalificacion;
+
+        for (let actividad in actividades) {
+            let calificacion = await Models.calificacion.findOne({
                 where: {
-                    id: alumnogrupos[punteroAlumno].dataValues.idalumno
+                    idalumno: alumno.dataValues.id,
+                    idtarea: actividades[actividad].dataValues.id,
                 }
             });
-            alumnos.push(alumno[0]);
-        }
-        alumnos.sort(function (a, b) {
-            return a.dataValues.nombre.localeCompare(b.dataValues.nombre);
-        });
-        res.render('alumno/vista-grupo-alumnos', {alumnos, idgrupo, asignatura, clave});
 
-    } catch (err) {
-        console.log(err);
-    }
-}
-//Método para obtener los alumnos relacionados con X grupo.
-const getAlumnoAndAlumnosByGroup = async (req, res) => {
-    try {
-        //Obtención del id
-        const idgrupo = req.params.idgrupo;
-        const claveAlumno = req.params.clave;
+            if (calificacion != null) {
+                calcCalificacion = (calificacion.dataValues.valor * actividades[actividad].valor) / 100;
 
-        //Se obtienen todos los datos del grupo mediante el id
-        const grupo = await Models.grupo.findOne({
-            where: {
-                id: req.params.idgrupo
-            }
-        });
-        //Se separan los datos del grupo
-        const {asignatura, clave} = grupo;
-
-        //Se busca la relación de los alumnos.
-        const alumnogrupos = await Models.alumnogrupo.findAll({
-            where: {
-                idgrupo: req.params.idgrupo
-            }
-        });
-
-        //Se genera un arreglo donde se guardan los alumnos relacionados con el grupo
-        let alumnos = [];
-
-        for (punteroAlumno in alumnogrupos){
-            let alumnoTemp = await Models.alumno.findAll({
-                where: {
-                    id: alumnogrupos[punteroAlumno].dataValues.idalumno
-                }
-            });
-            alumnos.push(alumnoTemp[0]);
-        }
-
-        const alumno = await getAlumnoByClave(claveAlumno);
-        alumnos.sort(function (a, b) {
-            return a.dataValues.nombre.localeCompare(b.dataValues.nombre);
-        });
-        //Calculo de calificaciones por unidad
-
-        const temas = await Models.tema.findAll({
-            where:{idgrupo:req.params.idgrupo}
-        });
-
-        var listaFormateada = [];
-
-        //Lista de las calificaciones de las unidad.
-        for(let tema in temas){
-            const actividades = await Models.tarea.findAll({where:{idtema : temas[tema].dataValues.id}});
-            let califinal = 0;
-            let calcCalificacion;
-
-            for(actividad in actividades){
-                var calificacion = await Models.calificacion.findOne({where:{
-                        idalumno: alumno.dataValues.id,
-                        idtarea: actividades[actividad].dataValues.id,}
-                });
-
-                if(calificacion != null){
-                    calcCalificacion = (calificacion.dataValues.valor* actividades[actividad].valor)/100;
-
-                    switch (parseInt(configuracion.califi)){
-                        case 0:
-                            if(calificacion.dataValues.valor < 70){
-                                califinal = "NA";
+                switch (parseInt(configuracion.califi)) {
+                    case 0:
+                        if (calificacion.dataValues.valor < 70) {
+                            califinal = "NA";
+                        } else if (calificacion.dataValues.valor >= 70) {
+                            if (califinal !== "NA") {
+                                //Calculo de las calificaciones cuando se promedia.
+                                califinal += calcCalificacion;
                             }
-                            else if (calificacion.dataValues.valor >= 70){
-                                if(califinal != "NA"){
-                                    //Calculo de las calificaciones cuando se promedia.
-                                    califinal += calcCalificacion;
-                                }
-                            }
-                            break;
-                        case 1:
-                            califinal += calcCalificacion;
-                            break;
-                    }
+                        }
+                        break;
+                    case 1:
+                        califinal += calcCalificacion;
+                        break;
                 }
             }
-            listaFormateada.push({
-                no_unidad:temas[tema].dataValues.numerotema,
-                nombre:temas[tema].dataValues.nombre,
-                califinal: califinal
-            });
         }
-
-        listaFormateada = JSON.stringify(listaFormateada);
-
-        res.render('alumno/vista-grupo-alumnos', {alumnos, idgrupo, asignatura, clave, alumno, listaFormateada});
-
-
-
-    } catch (err) {
-        console.log(err);
+        listaFormateada.push({
+            no_unidad: temas[tema].dataValues.numerotema,
+            nombre: temas[tema].dataValues.nombre,
+            califinal: califinal
+        });
     }
+
+    listaFormateada = JSON.stringify(listaFormateada);
+    res.render('alumno/vista-grupo-alumnos', {alumnos, idgrupo, asignatura, clave, alumno, listaFormateada});
 }
+
 //Exportación de los métodos para su posterior uso dentro del programa
 module.exports = {
-    obtenerListaAlumnos,
-    desasociarAlumno,
-    editarAlumno,
-    getAlumnoAndAlumnosByGroup,
-    getAlumnoByClave,
-    guardarDesdeGrid,
-    getAllAlumnos,
-    getListAlumnosByGroup
+    getStudentList,
+    saveFromGrid,
+    disassociateFromGroup,
+    editStudent,
+    getStudentListByGroup,
+    getStudentAndStudents,
+
+
+
 }

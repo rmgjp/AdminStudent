@@ -29,12 +29,12 @@ router.get('/grupo/wizard-crear-grupo', ((req, res) =>
 ));
 
 //Ruta para crear un grupo manualmente
-router.get('/grupo/wizard-crear-grupo-manual', ((req, res) =>
+router.get('/grupo/crear-grupo', ((req, res) =>
         res.render('grupo/datosgrupo')
 ));
-router.post('/grupo/wizard-crear-grupo-manual', controladorGrupo.createGrupoManual);
+router.post('/grupo/crear-grupo', controladorGrupo.createGroup);
 
-router.post('/grupo/wizard-crear-grupo-manual/:archivo', controladorGrupo.createGrupoManual);
+router.post('/grupo/crear-grupo/:archivo', controladorGrupo.createGroup);
 //Rutas para importar archivo excel
 
 router.post('/grupo/importar-archivo', load.single('archivo'), async (req, res) => {
@@ -45,27 +45,26 @@ router.post('/grupo/importar-archivo', load.single('archivo'), async (req, res) 
     res.redirect('/grupo/wizard-crear-grupo-importado/' + archivo);
 });
 
-router.get('/grupo/wizard-crear-grupo-importado/:archivo', controladorGrupo.obtenerDatosGrupo);
+router.get('/grupo/wizard-crear-grupo-importado/:archivo', controladorGrupo.getGroupDataFromFile);
 
 //Rutas de Edición del grupo
-router.get('/grupo/editar/:idgrupo', controladorGrupo.getDatosGrupoEditar);
-
-router.put('/grupo/editar/:idgrupo', controladorGrupo.editarGrupo);
+router.get('/grupo/editar/:idgrupo', controladorGrupo.renderGroupEdit);
+router.put('/grupo/editar/:idgrupo', controladorGrupo.editGroup);
 
 //Ruta para vista inicial del grupo.
-router.get('/grupo-inicio/:idgrupo', controladorGrupo.renderDatosGrupo);
+router.get('/grupo-inicio/:idgrupo', controladorGrupo.renderGroupData);
 
 //Ruta para eliminar el grupo cuando se cancela el Wizard.
-router.get('/abortar-grupo/:idgrupo', controladorGrupo.abortarGrupo);
+router.get('/abortar-grupo/:idgrupo', controladorGrupo.abortGroup);
 
 //Ruta para mover el grupo a la papelera de reciclaje.
-router.put('/moverapapelera/:idgrupo', controladorGrupo.moveraPapelera);
+router.put('/moverapapelera/:idgrupo', controladorGrupo.removeGroup);
 
 //Ruta para sacar el grupo de la papelera de reciclaje.
-router.put('/restaurargrupo/:idgrupo', controladorGrupo.restaurarGrupo);
+router.put('/restaurargrupo/:idgrupo', controladorGrupo.restoreGroup);
 
 //Ruta para eliminar el grupo junto con los datos asociados a el.
-router.delete('/eliminargrupo/:idgrupo', controladorGrupo.eliminarGrupo);
+router.delete('/eliminargrupo/:idgrupo', controladorGrupo.deleteGroup);
 
 //router.post('/crearusuario/manual', controladorGrupo.create);
 module.exports = router;

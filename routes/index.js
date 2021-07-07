@@ -9,7 +9,7 @@ router.use(function(req, res, next) {
     next();
 });
 
-router.get('/', controladorGrupo.renderAllGrupos);
+router.get('/', controladorGrupo.renderAllGroups);
 
 
 router.get('/about', (req, res) => {
@@ -34,5 +34,5 @@ router.put('/set-config', async (req, res) =>{
     res.redirect('/');
 });
 
-router.get('/filtro/:estado', controladorGrupo.getAllGruposByState);
+router.get('/filtro/:estado', controladorGrupo.getAllGroupsByState);
 module.exports = router;
