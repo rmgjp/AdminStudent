@@ -39,7 +39,7 @@
     </div>
 
     <!-- Tabla -->
-    {{#ifeq adds '0'}}
+    {{#ifeq add '0'}}
         <form class="needs-validation" action="/alumno/wizard-agregar-alumnos-manual/{{idgrupo}}/0" method="POST"
               novalidate>
             <input type="hidden" id="valorTabla" name="valorTabla" value="{{listaFormateada}}">
