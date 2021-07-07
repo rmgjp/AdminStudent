@@ -1,3 +1,12 @@
+{{#if error}}
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>¡Error!</strong> {{error}}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+{{/if}}
+
 <title>{{asignatura}} {{clave}} - Temas - Seguimiento de Estudiantes</title>
 
 <div class="row container-fluid">
@@ -42,6 +51,7 @@
                 </div>
                 <div class="card-footer">
                     <a href="/grupo/actividades/{{dataValues.idgrupo}}" class="btn btn-primary">Actividades</a>
+                    <a href="/grupo/calificaciones/{{dataValues.idgrupo}}/{{dataValues.id}}/0" class="btn btn-primary">Calificaciones</a>
                 </div>
             </div>
         </div>
