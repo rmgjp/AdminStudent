@@ -39,10 +39,14 @@ router.post('/grupo/crear-grupo/:archivo', controladorGrupo.createGroup);
 
 router.post('/grupo/importar-archivo', load.single('archivo'), async (req, res) => {
     let file = req.file;
-    let archivo = file.originalname.toString().replace(' ', '');
-    //fileReader.obtenerListaAlumnos(file.originalname.toString().replace(' ', ''));
-    //fileReader.obtenerDatosGrupo(file.originalname.toString().replace(' ', ''));
-    res.redirect('/grupo/wizard-crear-grupo-importado/' + archivo);
+    if(!file){
+        let error = "No se ha seleccionado un archivo.";
+        res.render('grupo/inicio-wizard', {error});
+    }else{
+        let archivo = file.originalname.toString().replace(' ', '');
+        res.redirect('/grupo/wizard-crear-grupo-importado/' + archivo);
+    }
+
 });
 
 router.get('/grupo/wizard-crear-grupo-importado/:archivo', controladorGrupo.getGroupDataFromFile);

@@ -74,7 +74,7 @@ const deleteGroup = async (req, res) => {
         await alumnos[alumno].destroy();
     }
     await grupo.destroy();
-    res.redirect('/')
+    res.redirect('/filtro/2')
 };
 
 //Consultar los grupos dependiendo del estado
