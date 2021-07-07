@@ -1,14 +1,14 @@
-{{#ifeq adds '0'}}
+{{#ifeq add '0'}}
     <title>Agregar alumnos a nuevo grupo - Seguimiento de Estudiantes</title>
 {{else}}
     <title>Agregar alumnos a grupo - Seguimiento de Estudiantes</title>
 {{/ifeq}}
-<body onload="cargarDatos()">
+<body>
 <div class="container bg-light m-100">
-    <!-- Sección de declaración de errores. -->
+    <!-- Sección de declaración de errores.
     {{#each errors}}
         <div class="alert alert-warning alert-dismissible fade show" role="alert">
-            {{text}}
+            {{text}}.
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
