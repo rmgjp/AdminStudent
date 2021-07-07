@@ -134,16 +134,16 @@ const getTopicsByFile = async (req, res) => {
         } else {
             //data = Buffer.from(data, 'utf-8');
             //Se busca la etiqueta </BR> para obtener los indices del contenido.
-            var inicioBR = data.lastIndexOf('</BR>') + 5;
+            let inicioBR = data.lastIndexOf('</BR>') + 5;
             //Se busca la etiqueta </I> para obtener el ultimo indice del contenido.
-            var finI = data.lastIndexOf("</I>");
-            var contenidoBR = data.substring(inicioBR, finI);
-            var temas = contenidoBR.split(',');
-            var indice;
-            var numerotema = 1;
+            let finI = data.lastIndexOf("</I>");
+            let contenidoBR = data.substring(inicioBR, finI);
+            let temas = contenidoBR.split(',');
+            let indice;
+            let numerotema = 1;
 
-            var listaFormateada = [];
-            for(tema in temas){
+            let listaFormateada = [];
+            for (tema in temas) {
                 indice = temas[tema].indexOf('-');
                 listaFormateada.push(
                     {

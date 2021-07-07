@@ -6,7 +6,7 @@ const router = express.Router();
 **/
 //Agregar alumnos a grupo mientras se crea el grupo.
 router.get('/alumno/wizard-agregar-alumnos-manual/:idgrupo/:add', (req,res)=>(
-    res.render('alumno/grid-alumnos', {idgrupo: req.params.idgrupo, adds:req.params.add})
+    res.render('alumno/grid-alumnos', {idgrupo: req.params.idgrupo, add:req.params.add})
 ));
 
 router.get('/alumno/wizard-agregar-alumnos-manual/:idgrupo/:add/:archivo', controladorAlumno.getStudentList);

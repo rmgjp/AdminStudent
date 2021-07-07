@@ -11,12 +11,13 @@ const configuracion = require('../config/userconfig.json');
 const saveFromGrid = async (req, res) => {
     let idgrupo = req.params.idgrupo;
     let add = req.params.add;
+    console.log("Parametro add: " + add);
     //Se obtiene el arreglo alojado en objeto invisible del body correspondiente a la tabla
     if (tryParseJSON(req.body.valorTabla) === false) {
 
         let errors = []
         errors.push({text: 'No ha registrado ningún alumno, registre al menos uno'})
-        res.render('alumno/grid-alumnos', {errors, idgrupo})
+        res.render('alumno/grid-alumnos', {errors, idgrupo, add})
     } else {
         let alumnos = tryParseJSON(req.body.valorTabla)
 
