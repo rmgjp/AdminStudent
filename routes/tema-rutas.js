@@ -21,18 +21,18 @@ const load = (multer({
 
 
 //Ruta para visualizar
-router.get('/grupo/temas/:idgrupo', controladorTema.getTemasByGrupo);
+router.get('/grupo/temas/:idgrupo', controladorTema.getTopicByGroup);
 
 router.get('/tema/nuevo-tema/:idgrupo', (req,res) =>{
     res.render('tema/tema-nuevo', {idgrupo: req.params.idgrupo});
 });
 
 
-router.post('/tema/nuevo-tema/:idgrupo', controladorTema.guardarTemaActividades);
+router.post('/tema/nuevo-tema/:idgrupo', controladorTema.saveTopicsAndActivities);
 
-router.put('/tema/editar-tema/:idgrupo/:idtema', controladorTema.editarTema);
+router.put('/tema/editar-tema/:idgrupo/:idtema', controladorTema.editTopic);
 
-router.delete('/tema/eliminar-tema/:idgrupo/:idtema', controladorTema.eliminarTema);
+router.delete('/tema/eliminar-tema/:idgrupo/:idtema', controladorTema.deleteTopic);
 
 router.post('/tema/importar/:idgrupo', load.single('archivo'),async (req,res)=>{
     let file = req.file;
@@ -40,8 +40,8 @@ router.post('/tema/importar/:idgrupo', load.single('archivo'),async (req,res)=>{
     res.redirect('/tema/lista-temas/' + req.params.idgrupo + '/' + archivo);
 });
 
-router.get('/tema/lista-temas/:idgrupo/:archivo', controladorTema.obtenerTemasByFile);
+router.get('/tema/lista-temas/:idgrupo/:archivo', controladorTema.getTopicsByFile);
 
-router.post('/tema/lista-temas/:idgrupo', controladorTema.guardarTemaGrid);
+router.post('/tema/lista-temas/:idgrupo', controladorTema.saveTopicByGrid);
 
 module.exports = router;

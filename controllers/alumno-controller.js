@@ -44,7 +44,7 @@ const saveFromGrid = async (req, res) => {
         //muchos.
         if (add == 0) {
             res.redirect('/');
-        } else {
+        } else if(add == 1) {
             res.redirect('/grupo/alumnos/' + idgrupo);
         }
     }
@@ -72,7 +72,7 @@ const getStudentList = async (req, res) => {
                 return v;
             })
             listaFormateada = JSON.stringify(listaFormateada);
-            res.render('alumno/grid-alumnos', {idgrupo: req.params.idgrupo, adds: req.params.add, listaFormateada});
+            res.render('alumno/grid-alumnos', {idgrupo: req.params.idgrupo, add: req.params.add, listaFormateada});
         }
     });
 }

@@ -1,10 +1,10 @@
-const Sequelize = require('sequelize');
 const Models = require('../models');
 const configuracion = require('../config/userconfig.json');
+//Este controlador contiene las funciones requeridas para la busqueda y consulta de las calificaciones
 
 /**
  * Visualizacion de la vista de calificaciones*/
-const vistaCalif = async(req,res)=>{
+const viewCalf = async(req,res)=>{
     const grupo = await Models.grupo.findOne({where: {id: req.params.idgrupo}});
     const {asignatura, clave} = grupo;
     //Busqueda de temas por grupo.
@@ -26,10 +26,8 @@ const vistaCalif = async(req,res)=>{
                 idgrupo: req.params.idgrupo
             }
         });
-
         //Se genera un arreglo donde se guardan los alumnos relacionados con el grupo
         let alumnos = [];
-
         for (punteroAlumno in alumnogrupos){
             let alumno = await Models.alumno.findAll({
                 where: {
@@ -41,43 +39,48 @@ const vistaCalif = async(req,res)=>{
         alumnos.sort(function (a, b) {
             return a.dataValues.nombre.localeCompare(b.dataValues.nombre);
         });
-        var calificaciones;
-        var listaFormateada = [];
+        //
+        let listaFormateada = [];
         for(let alumno in alumnos){
             let calificaciones = [];
             let acumulador = 0;
             let calcCalificacion;
+            //ciclo para recuperar las calificaciones relacionadas a cada alumno del grupo
             for(actividad in actividades){
-                var calificacion = await Models.calificacion.findOne({where:{
+                let calificacion = await Models.calificacion.findOne({where:{
                         idalumno: alumnos[alumno].dataValues.id,
                         idtarea: actividades[actividad].dataValues.id,}
                 });
+                //Si no hay calificacion se asigna como no asignado
                 if(!calificacion){
                     calificaciones.push("No capturado.");
                 }
                 else {
+                    //Si hay calificacion se calcula el valor correspondiente con relación al valor de la actividad
                     calcCalificacion = (calificacion.dataValues.valor* actividades[actividad].valor)/100;
-
+                    //Se asigna la calificacion dependiendo de los parametros de configuracion establecidos por el usuario
                     switch (parseInt(configuracion.califi)){
                          case 0:
+                             //Si es 0 se promedia unicamente si todas las actividades estan aprovadas
                              if(calificacion.dataValues.valor < 70){
                                  acumulador = "NA"
                              }
                              else if (calificacion.dataValues.valor >= 70){
-                                 if(acumulador != "NA"){
+                                 if(acumulador !== "NA"){
                                      //Calculo de las calificaciones cuando se promedia.
                                      acumulador += calcCalificacion;
                                  }
                              }
                              break;
-                         case 1:
+                        case 1:
+                             //Si es 1, se promedia independientemente de si están todas las actividades aprobado o no
                              acumulador += calcCalificacion;
                              break;
                      }
                     calificaciones.push(calificacion.dataValues.valor);
                 }
             }
-
+            //Se añade la inforamcion recuperada del alumno y sus calificaciones correspindientes con el formato de JSON
             listaFormateada.push({
                 clave: alumnos[alumno].dataValues.clave,
                 nombre: alumnos[alumno].dataValues.nombre,
@@ -94,7 +97,7 @@ const vistaCalif = async(req,res)=>{
 }
 
 
-const renderVistaCalifI = async (req,res)=>{
+const renderViewCalif = async (req,res)=>{
     const alumnogrupos = await Models.alumnogrupo.findAll({
         where: {
             idgrupo: req.params.idgrupo
@@ -116,7 +119,7 @@ const renderVistaCalifI = async (req,res)=>{
         return a.dataValues.nombre.localeCompare(b.dataValues.nombre);
     });
 
-    var calificacion = [];
+    let calificacion = [];
     for (let alumno in alumnos){
         let valor = await Models.calificacion.findOne({
             where:{
@@ -133,7 +136,7 @@ const renderVistaCalifI = async (req,res)=>{
         }
     }
 
-    var listaFormateada = [];
+    let listaFormateada = [];
     for(let alumno = 0; alumno< alumnos.length; alumno++){
         listaFormateada.push({
             clave: alumnos[alumno].dataValues.clave,
@@ -154,17 +157,17 @@ const renderVistaCalifI = async (req,res)=>{
 
 /*
 * Guardar calificación individualmente**/
-const calificarIndividual = async (req,res)=>{
+const scoreSingle = async (req,res)=>{
     calificaciones = JSON.parse(req.body.valorTabla);
 
     //Datos alumno
-    var alumnos = [];
+    let alumnos = [];
     for(alumnopuntero in calificaciones){
         const alumno = await Models.alumno.findOne({
             where:{clave: calificaciones[alumnopuntero].clave}
         })
         //Buscar la calificación
-        var calificacion = await Models.calificacion.findOne({
+        let calificacion = await Models.calificacion.findOne({
             where:{
                 idalumno: alumno.dataValues.id,
                 idtarea: req.params.idactividad
@@ -190,8 +193,8 @@ const calificarIndividual = async (req,res)=>{
 }
 
 module.exports = {
-    renderVistaCalifI,
-    calificarIndividual,
-    vistaCalif
+    renderViewCalif,
+    scoreSingle,
+    viewCalf
 
 }
