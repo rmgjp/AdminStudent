@@ -17,6 +17,7 @@ const viewCalf = async(req,res)=>{
         res.render('calificacion/vista-grupo-calificaciones', {temas, idgrupo:req.params.idgrupo, asignatura, clave});
     }
     else {
+        const tema = await Models.tema.findOne({where:{id: req.params.idtema}});
         //Busqueda de las actividades por grupo
         const actividades = await Models.tarea.findAll({where:{idtema : req.params.idtema}})
 
