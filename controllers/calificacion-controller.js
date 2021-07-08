@@ -92,7 +92,7 @@ const viewCalf = async(req,res)=>{
         listaFormateada = JSON.stringify(listaFormateada);
 
         res.render('calificacion/vista-grupo-calificaciones', {temas, idgrupo:req.params.idgrupo, actividades, listaFormateada,
-            asignatura, clave});
+            asignatura, clave, tema});
     }
 }
 
