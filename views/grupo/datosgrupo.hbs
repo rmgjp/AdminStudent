@@ -13,7 +13,12 @@
 
 
     <!-- Cuerpo del archivo -->
-    <h1 class="display-6">Datos del grupo</h1>
+    <h2 class="display-6">Datos del grupo</h2>
+    <div class="row">
+        <div class="col">
+            <img src="/img/0.jpeg" class="img-fluid" alt="" id="vistaImagen" style="object-fit: none; object-position: center; width: 100%; max-height: 250px; margin-bottom: 1rem;">
+        </div>
+    </div>
     <form class="needs-validation" action="/grupo/crear-grupo/{{archivo}}" method="POST" novalidate>
         <div class="row">
             <div class="col">
@@ -39,7 +44,7 @@
                 </select>
             </div>
             <div class="col">
-                <label for="estado" class="form-label">Imagen</label>
+                <label for="imagen" class="form-label">Imagen</label>
                 <select class="form-select custom-select" id="imagen" name="imagen" required>
                     <option value=0>Calculadora</option>
                     <option value=1>Código</option>
@@ -64,4 +69,20 @@
         </div>
     </form>
 </div>
+
+<script>
+    document.getElementById('imagen').onchange = function (){
+        const imagen = {
+            0 : '/img/0.jpeg',
+            1: '/img/1.jpeg',
+            2 : '/img/2.jpeg',
+            3 : '/img/3.jpeg',
+            4 : '/img/4.jpeg',
+            5 : '/img/5.jpeg'
+        }
+
+        document.getElementById('vistaImagen').src = imagen[parseInt(document.getElementById('imagen').value)];
+        console.log(imagen[parseInt(document.getElementById('imagen').value)]);
+    }
+</script>
 
