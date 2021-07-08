@@ -13,10 +13,11 @@ desarrollado por:
 </p>
 <h4> Descripción </h4>
 <p>
-La Herramienta para la administración y gestión del rendiento del estudiante es un software de escritorio que permite 
-a los docentes del Instituto Técnologico Superior de Irapuato generar de manera rapida reportes de reprobación y de administración
-basado en información alojada sobre grupos, alumnos y calificaciónes de estos ultimos.
-Permite visualizar mediante graficas generadas basada en la información el avance del alumno en la materia.
+La Herramienta para la administración y gestión del rendimiento del estudiante es un software de escritorio que permite a los docentes del Instituto Tecnológico Superior de Irapuato generar de manera rápida y sencilla cálculo de calificaciones, reportes y administración del grupo basado en la información alojada sobre grupos, alumnos y actividades que el docente capture en el transcurso del semestre.
+
+ <li>Permite alojar la información de múltiples grupos.</li>
+ <li>Generación de graficas para una mejor visualización del progreso del grupo y alumnos de este.</li>
+ <li>Calculo automático de calificaciones de los temas/unidades de la materia.</li>
 </p>
 
 <h4> Tecnologías Utilizadas </h4>
