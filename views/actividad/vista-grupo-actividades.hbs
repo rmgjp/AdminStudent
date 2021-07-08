@@ -71,25 +71,25 @@
                     </div>
                     <!--Inicio Form -->
                     <form action="/actividad/editar-actividad/{{idgrupo}}/{{idtema}}/{{actividad.dataValues.id}}?_method=PUT"
-                          method="POST" novalidate>
+                          method="POST" class="needs-validation">
                         <input type="hidden" name="_method" value="PUT">
                         <div class="card-body">
                             <div class="row">
                                 <div class="col">
                                     <label for="nombre" class="form-label">Nombre</label>
                                     <input type="text" class="form-control" id="nombre" name="nombre"
-                                           disabled value="{{actividad.dataValues.nombre}}">
+                                           disabled value="{{actividad.dataValues.nombre}}" required>
                                 </div>
                                 <div class="col">
                                     <label for="valor">Valor</label>
                                     <input type="number" min="1" max="100" class="form-control" id="valor"
                                            name="valor"
-                                           disabled value="{{actividad.dataValues.valor}}">
+                                           disabled value="{{actividad.dataValues.valor}}" required>
                                 </div>
                                 <div class="col">
                                     <div class="col">
                                         <label for="tipoBox" class="form-label">Categoría</label>
-                                        <select class="custom-select" name="tipoBox" disabled id="tipoBox">
+                                        <select class="custom-select" name="tipoBox" disabled id="tipoBox" required>
                                             {{#select tipoActividad}}
                                                 <option value="Investigación">Investigación</option>
                                                 <option value="Presentación">Presentación</option>
@@ -100,6 +100,7 @@
                                                 <option value="Cuadro Sinoptico">Cuadro Sinoptico</option>
                                                 <option value="Mapa Mental">Mapa Mental</option>
                                                 <option value="Ejercicios">Ejercicios</option>
+                                                <option value="Examen">Examen</option>
                                                 <option value="Otros">Otros</option>
                                             {{/select}}
                                         </select>
@@ -110,7 +111,7 @@
                                 <label for="descripcion">Descripción</label>
                                 <textarea type="text" class="form-control"
                                           disabled id="descripcion"
-                                          name="descripcion">{{actividad.dataValues.descripcion}}</textarea>
+                                          name="descripcion" required>{{actividad.dataValues.descripcion}}</textarea>
                             </div>
                         </div>
                         <!-- Modal para verificar la edición-->
