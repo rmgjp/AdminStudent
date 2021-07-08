@@ -56,8 +56,7 @@
             </div>
         </div>
         <!--Modal de edición -->
-        <form action="/tema/editar-tema/{{dataValues.idgrupo}}/{{dataValues.id}}?_method=PUT" method="POST"
-              novalidate>
+        <form action="/tema/editar-tema/{{dataValues.idgrupo}}/{{dataValues.id}}?_method=PUT" method="POST" class="needs-validation">
             <input type="hidden" name="_method" value="PUT">
             <div class="modal fade" id="editarTemaModal{{dataValues.id}}" tabindex="-1" aria-labelledby="editarTemaModal{{dataValues.id}}"
                  aria-hidden="true">
@@ -72,20 +71,20 @@
                         <div class="modal-body">
                             <form>
                                 <div class="form-group">
-                                    <label for="recipient-name" class="col-form-label">Unidad:</label>
+                                    <label for="unidad" class="col-form-label" >Unidad:</label>
                                     <input type="number" min="1" class="form-control" id="unidad" name="unidad"
-                                           value="{{dataValues.numerotema}}">
+                                           value="{{dataValues.numerotema}}" required>
                                 </div>
                                 <div class="form-group">
-                                    <label for="message-text" class="col-form-label">Nombre:</label>
+                                    <label for="nombre" class="col-form-label">Nombre:</label>
                                     <input class="form-control" id="nombre" name="nombre"
-                                           value="{{dataValues.nombre}}">
+                                           value="{{dataValues.nombre}}" required>
                                 </div>
                             </form>
                         </div>
                         <div class="modal-footer">
                             <a type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</a>
-                            <button type="submit" class="btn btn-primary">Guardar</button>
+                            <button type="submit" class="btn btn-primary" id="guardarEditarBtn">Guardar</button>
                         </div>
                     </div>
                 </div>

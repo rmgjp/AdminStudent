@@ -72,7 +72,7 @@
                         </div>
                         <form action="/grupo/alumnos/{{idgrupo}}/{{alumno.dataValues.id}}?_method=PUT"
                               method="POST"
-                              novalidate>
+                              class="needs-validation">
                             <input type="hidden" name="_method" value="PUT">
                             <div class="card-body">
                                 <div class="row">
@@ -81,9 +81,9 @@
                                         <label for="nombre" class="form-label col-form-label-sm">Apellidos y
                                             Nombre(s)</label>
                                         <input type="text" class="form-control form-control-sm" disabled
-                                               id="nombre"
+
                                                name="nombre"
-                                               id="nombre" value="{{alumno.dataValues.nombre}}">
+                                               id="nombre" value="{{alumno.dataValues.nombre}}" required>
 
                                     </div>
                                 </div>
@@ -92,13 +92,13 @@
                                         <label for="clave" class="form-label col-form-label-sm">Clave</label>
                                         <input type="text" class="form-control form-control-sm" disabled
                                                id="clave"
-                                               name="clave" id="clave"
-                                               value="{{alumno.dataValues.clave}}">
+                                               name="clave"
+                                               value="{{alumno.dataValues.clave}}" required>
                                     </div>
                                     <div class="col col-xl col-lg col-sm col-md">
                                         <label for="correo"
                                                class="form-label col-form-label-sm disabled">Correo</label>
-                                        <input type="email" id="correo" name="correo" id="correo"
+                                        <input type="email" name="correo" id="correo"
                                                class="form-control form-control-sm" disabled
                                                value="{{alumno.dataValues.correo}}">
                                     </div>
@@ -143,6 +143,7 @@
 
             <div class="row">
                 <div class="col">
+                    <h4>Calificaciones de la materia</h4>
                     <input type="hidden" id="valorTabla" name="valorTabla" value="{{listaFormateada}}">
                     <table id="table" data-toggle="table" data-toolbar="#toolbar" data-click-to-select="true"
                            data-search="true"
