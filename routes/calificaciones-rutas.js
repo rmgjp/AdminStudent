@@ -6,8 +6,8 @@ router.get('/actividad/calificar-individual/:idgrupo/:idtema/:idactividad', cali
 
 router.put('/actividad/calificar-individual/:idgrupo/:idtema/:idactividad', calificacionController.scoreSingle);
 
-router.get('/grupo/calificaciones/:idgrupo', calificacionController.viewCalf)
+router.get('/grupo/calificaciones/:idgrupo', calificacionController.retriveCalf);
 
-router.get('/grupo/calificaciones/:idgrupo/:idtema/:modo', calificacionController.viewCalf)
+router.get('/grupo/calificaciones/:idgrupo/:idtema/:modo', calificacionController.viewCalf);
 
 module.exports = router;

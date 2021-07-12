@@ -2,6 +2,7 @@ const Models = require('../models');
 const fs = require('fs');
 const path = require('path');
 const config = require('../config/userconfig.json');
+const calificacionController = require('./calificacion-controller');
 
 /*Este controlador contiene unicamente métodos relacionados con el manejo
 del modelo de datos Grupo*/
