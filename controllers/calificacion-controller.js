@@ -4,6 +4,90 @@ const configuracion = require('../config/userconfig.json');
 
 /**
  * Visualizacion de la vista de calificaciones*/
+
+const calcCalif = async (req,res)=>{
+    const tema = await Models.tema.findOne({where:{id: req.params.idtema}});
+    //Busqueda de las actividades por grupo
+    const actividades = await Models.tarea.findAll({where:{idtema : req.params.idtema}})
+
+    //Se busca la relación de los alumnos.
+    const alumnogrupos = await Models.alumnogrupo.findAll({
+        where: {
+            idgrupo: req.params.idgrupo
+        }
+    });
+    //Se genera un arreglo donde se guardan los alumnos relacionados con el grupo
+    let alumnos = [];
+    for (punteroAlumno in alumnogrupos){
+        let alumno = await Models.alumno.findAll({
+            where: {
+                id: alumnogrupos[punteroAlumno].dataValues.idalumno
+            }
+        });
+        alumnos.push(alumno[0]);
+    }
+    alumnos.sort(function (a, b) {
+        return a.dataValues.nombre.localeCompare(b.dataValues.nombre);
+    });
+    //
+    let listaFormateada = [];
+    for(let alumno in alumnos){
+        let calificaciones = [];
+        let acumulador = 0;
+        let calcCalificacion;
+        //ciclo para recuperar las calificaciones relacionadas a cada alumno del grupo
+        for(actividad in actividades){
+            let calificacion = await Models.calificacion.findOne({where:{
+                    idalumno: alumnos[alumno].dataValues.id,
+                    idtarea: actividades[actividad].dataValues.id,}
+            });
+            //Si no hay calificacion se asigna como no asignado
+            if(!calificacion){
+                calificaciones.push("No capturado.");
+            }
+            else {
+                //Si hay calificacion se calcula el valor correspondiente con relación al valor de la actividad
+                calcCalificacion = (calificacion.dataValues.valor* actividades[actividad].valor)/100;
+                //Se asigna la calificacion dependiendo de los parametros de configuracion establecidos por el usuario
+                switch (parseInt(configuracion.califi)){
+                    case 0:
+                        //Si es 0 se promedia unicamente si todas las actividades estan aprovadas
+                        if(calificacion.dataValues.valor < 70){
+                            acumulador = "NA"
+                        }
+                        else if (calificacion.dataValues.valor >= 70){
+                            if(acumulador !== "NA"){
+                                //Calculo de las calificaciones cuando se promedia.
+                                acumulador += calcCalificacion;
+                            }
+                        }
+                        break;
+                    case 1:
+                        //Si es 1, se promedia independientemente de si están todas las actividades aprobado o no
+                        acumulador += calcCalificacion;
+                        break;
+                }
+                calificaciones.push(calificacion.dataValues.valor);
+            }
+        }
+        //Se añade la inforamcion recuperada del alumno y sus calificaciones correspindientes con el formato de JSON
+        listaFormateada.push({
+            clave: alumnos[alumno].dataValues.clave,
+            nombre: alumnos[alumno].dataValues.nombre,
+            calificaciones,
+            califinal: Math.round(acumulador)
+        })
+    }
+
+    listaFormateada = JSON.stringify(listaFormateada);
+    return listaFormateada;
+}
+const retriveCalf = async (req,res)=>{
+    const temas = await Models.tema.findAll({where:{idgrupo: req.params.idgrupo}})
+    res.redirect("/grupo/calificaciones/"+req.params.idgrupo+"/"+temas[0].dataValues.id+"/0");
+}
+
+
 const viewCalf = async(req,res)=>{
     const grupo = await Models.grupo.findOne({where: {id: req.params.idgrupo}});
     const {asignatura, clave} = grupo;
@@ -195,7 +279,8 @@ const scoreSingle = async (req,res)=>{
 
 module.exports = {
     renderViewCalif,
+    retriveCalf,
     scoreSingle,
-    viewCalf
-
+    viewCalf,
+    calcCalif
 }

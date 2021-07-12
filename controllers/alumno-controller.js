@@ -11,7 +11,6 @@ const configuracion = require('../config/userconfig.json');
 const saveFromGrid = async (req, res) => {
     let idgrupo = req.params.idgrupo;
     let add = req.params.add;
-    console.log("Parametro add: " + add);
     //Se obtiene el arreglo alojado en objeto invisible del body correspondiente a la tabla
     if (tryParseJSON(req.body.valorTabla) === false) {
 
@@ -197,17 +196,10 @@ const getAllStudents = async (req, res) => {
 
 //Obtener los alumnos relacionados con el grupo.
 const getStudentListByGroup = async (req, res) => {
-    //Se obtienen todos los datos del grupo mediante el id
-    const grupo = await Models.grupo.findOne({
-        where: {
-            id: req.params.idgrupo
-        }
-    });
-    //Se separan los datos del grupo
-    const {asignatura, clave} = grupo;
-    //Obtención del id
+    //Lista de alumnos relacionada al grupo
     const alumnos = await getAllStudents(req,res);
-    res.render('alumno/vista-grupo-alumnos', {alumnos, idgrupo:req.params.idgrupo, asignatura, clave});
+    res.redirect("/grupo/alumnos/"+req.params.idgrupo+"/"+alumnos[0].dataValues.clave);
+   //res.render('alumno/vista-grupo-alumnos', {alumnos, idgrupo:req.params.idgrupo, asignatura, clave});
 }
 
 //Obtener la información de un alumno en concreto y la lista de alumnos.

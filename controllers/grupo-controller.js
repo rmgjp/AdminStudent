@@ -100,9 +100,21 @@ const getGroupData = async (req, res) => {
 }
 
 //Renderizar los datos del grupo.
-const renderGroupData = async (req, res) => {
+const retriveGroupData = async (req, res) => {
+    const temas = await Models.tema.findAll({
+        where:{idgrupo: req.params.idgrupo}
+    })
+    res.redirect("/grupo-inicio/"+ req.params.idgrupo+"/"+temas[0].dataValues.id);
+}
+
+const renderGroupData = async (req, res) =>{
+    const temas = await Models.tema.findAll({
+        where:{idgrupo: req.params.idgrupo}
+    })
     const grupo = await getGroupData(req, res);
-    res.render('grupo/vista-inicio-grupo', {grupo});
+    const calificaciones = await calificacionController.calcCalif(req,res);
+    console.log(calificaciones);
+    res.render('grupo/vista-inicio-grupo', {grupo,temas});
 }
 
 //Renderizar los datos del grupo para su edición
@@ -219,6 +231,7 @@ const editGroup = async (req, res) => {
 
 //Exportación de los métodos para su uso interno en aplicación.
 module.exports = {
+    retriveGroupData,
     renderAllGroups,
     removeGroup,
     restoreGroup,
