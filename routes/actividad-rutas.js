@@ -18,8 +18,15 @@ router.get('/actividad/nueva-actividad/:idgrupo/:idtema', (req,res)=>{
 });
 
 router.post('/actividad/nueva-actividad/:idgrupo/:idtema', async(req,res)=>{
-    await actividadController.saveFromGrid(req,res,req.params.idtema);
-    res.redirect('/grupo/actividades/'+req.params.idgrupo);
+    let guardado = await actividadController.saveFromGrid(req,res,req.params.idtema);
+    if(guardado){
+        res.redirect('/grupo/actividades/'+req.params.idgrupo);
+    }
+    else{
+        let errors = []
+        errors.push({text: 'No ha registrado ninguna actividad, registre al menos una'})
+        res.render('actividad/actividad-nuevo', {idtema:req.params.idtema, idgrupo:req.params.idgrupo, errors})
+    }
 });
 
 

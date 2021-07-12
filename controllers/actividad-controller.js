@@ -11,8 +11,9 @@ const getActivityById = async (idactividad) => {
 }
 //Guardar actividades alojadas en una tabla de la vista
 const saveFromGrid = async (req, res, idtema) => {
+
     //Se obtiene el arreglo alojado en objeto invisible del body correspondiente a la tabla
-    tareas = JSON.parse(req.body.valorTabla);
+
     //Ciclo para iterar entre los datos del arreglo Tabla
 
     for (let tarea in tareas) {
