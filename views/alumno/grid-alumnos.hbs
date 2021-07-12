@@ -5,7 +5,6 @@
 {{/ifeq}}
 <body>
 <div class="container bg-light m-100">
-    <!-- Sección de declaración de errores.
     {{#each errors}}
         <div class="alert alert-warning alert-dismissible fade show" role="alert">
             {{text}}.
@@ -19,7 +18,7 @@
         <h1 class="display-4">Agregar alumnos</h1>
     </div>
     <!-- Datos del alumno -->
-    <div class="row m-3">
+    <div class="row m-2">
         <div class="col input-group">
             <input class="form-control" type="text" placeholder="No. Control" id="ClaveBox" name="ClaveBox"
                    aria-label="Clave">
@@ -29,7 +28,7 @@
                    aria-label="Nombre(s)">
         </div>
     </div>
-    <div class="row-cols-1  d-flex flex-row-reverse">
+    <div class="row-cols-1  d-flex flex-row-reverse ">
         <div class="col-auto d-flex flex-row-reverse p-3">
             <div id="toolbar">
                 <a id="remove" class="btn btn-danger">Eliminar</a>
@@ -44,7 +43,7 @@
               novalidate>
             <input type="hidden" id="valorTabla" name="valorTabla" value="{{listaFormateada}}">
             <div class="row-cols-1 ">
-                <div class="col-auto">
+                <div class="col-auto navbar-nav-scroll">
                     <table id="table" data-toggle="table" data-toolbar="#toolbar" data-click-to-select="false"
                            data-search="true"
                            data-advanced-search="true" data-filter-control="true" name="table" data-editable="true">
@@ -71,7 +70,7 @@
               novalidate>
             <input type="hidden" id="valorTabla" name="valorTabla">
             <div class="row-cols-1 ">
-                <div class="col-auto">
+                <div class="col-auto navbar-nav-scroll">
                     <table id="table" data-toggle="table" data-toolbar="#toolbar" data-click-to-select="false"
                            data-search="true"
                            data-advanced-search="true" data-filter-control="true" name="table">
