@@ -15,20 +15,26 @@ const saveFromGrid = async (req, res, idtema) => {
     //Se obtiene el arreglo alojado en objeto invisible del body correspondiente a la tabla
 
     //Ciclo para iterar entre los datos del arreglo Tabla
-
-    for (let tarea in tareas) {
-        //Llamado del modelo para buscar el registro
-        //si existe el registro no se guarda
-        //si no existe el registro se guarda
-        //evita duplicados.
-        await Models.tarea.create(
-            {
-                idtema: idtema,
-                nombre: tareas[tarea].nombreCol,
-                valor: tareas[tarea].valorCol,
-                tipo: tareas[tarea].tipoCol,
-                descripcion: tareas[tarea].descripcionCol,
-            });
+    if(tryParseJSON(req.body.valorTabla)===false){
+        return false;
+    }
+    else{
+        tareas = JSON.parse(req.body.valorTabla);
+        for (let tarea in tareas) {
+            //Llamado del modelo para buscar el registro
+            //si existe el registro no se guarda
+            //si no existe el registro se guarda
+            //evita duplicados.
+            await Models.tarea.create(
+                {
+                    idtema: idtema,
+                    nombre: tareas[tarea].nombreCol,
+                    valor: tareas[tarea].valorCol,
+                    tipo: tareas[tarea].tipoCol,
+                    descripcion: tareas[tarea].descripcionCol,
+                });
+        }
+        return true;
     }
 };
 /*
@@ -116,6 +122,21 @@ const getTopicActivitiesAndActivity = async (req, res) => {
         clave: grupo.dataValues.clave
     });
 
+}
+function tryParseJSON(jsonString) {
+    try {
+        let o = JSON.parse(jsonString);
+
+        // Handle non-exception-throwing cases:
+        // Neither JSON.parse(false) or JSON.parse(1234) throw errors, hence the type-checking,
+        // but... JSON.parse(null) returns null, and typeof null === "object",
+        // so we must check for that, too. Thankfully, null is falsey, so this suffices:
+        if (o && typeof o === "object") {
+            return o;
+        }
+    } catch (e) {
+    }
+    return false;
 }
 module.exports = {
     getTopicActivitiesAndActivity,
