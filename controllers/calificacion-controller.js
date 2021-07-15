@@ -75,7 +75,7 @@ const calcCalif = async (req,res)=>{
             clave: alumnos[alumno].dataValues.clave,
             nombre: alumnos[alumno].dataValues.nombre,
             calificaciones,
-            califinal: Math.round(acumulador)
+            califinal: acumulador
         })
     }
 
