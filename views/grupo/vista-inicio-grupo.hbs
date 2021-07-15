@@ -26,17 +26,15 @@
         </li>
     </ul>
 </div>
-<div class="row m-2 p-2">
-
+<div class="row m-2 p-2 flex-grow-1 flex-shrink-0">
     <nav id="sideBar" class="col-md-3 col-lg-2 d-md-block bg-light sidebar navbar-nav-scroll">
         <div class="sidebar-sticky">
             <h4 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
                 Temas</h4>
             <ul class="nav flex-column">
-
                 {{#each temas}}
                     <li class="nav-item"><a class="nav-link"
-                                            href="/grupo/calificaciones/{{../idgrupo}}/{{dataValues.id}}/0"><i
+                                            href="/grupo-inicio/{{../grupo.dataValues.id}}/{{dataValues.id}}"><i
                             class="bi-book-half"></i><strong> {{dataValues.nombre}}</strong></a></li>
                 {{/each}}
             </ul>
