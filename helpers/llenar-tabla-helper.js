@@ -1,6 +1,7 @@
-var table = $('#table');
-var tablaDatos;
-var i = 0;
+let table = $('#table');
+let tablaDatos;
+let i = 0;
+var selectedIndex;
 
 
 $(function cargarDatos(){
@@ -24,5 +25,5 @@ $(function cargarDatos(){
 $('#table').on('editable-save.bs.table', function(e, field, row, oldValue, $el){
     tablaDatos = table.bootstrapTable('getData');
     document.getElementById("valorTabla").value = JSON.stringify(tablaDatos);
-    console.log(tablaDatos);
+
 })
