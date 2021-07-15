@@ -112,10 +112,39 @@ const renderGroupData = async (req, res) =>{
     const temas = await Models.tema.findAll({
         where:{idgrupo: req.params.idgrupo}
     })
+    const tema = await Models.tema.findOne({where:{id: req.params.idtema}});
     const grupo = await getGroupData(req, res);
-    const calificaciones = await calificacionController.calcCalif(req,res);
-    console.log(calificaciones);
-    res.render('grupo/vista-inicio-grupo', {grupo,temas});
+    const actividades = await Models.tarea.findAll({where:{idtema: req.params.idtema}})
+    let calificaciones = JSON.parse(await calificacionController.calcCalif(req,res));
+
+    let reprobados = 0;
+    for(let calificacion in calificaciones){
+        if(calificaciones[calificacion].califinal === "NA"){
+            reprobados++;
+        }
+    }
+
+    let reprobadosPorcentaje = Math.round((reprobados * 100)/calificaciones.length);
+    let aprobadosPorcentaje= 100 - reprobadosPorcentaje;
+    let aprobados =  calificaciones.length - reprobados;
+
+    let dataReprobacion = [{label:"Aprobados", value: aprobadosPorcentaje},{label : "Reprobados", value: reprobadosPorcentaje}]
+    let dataReprobacionAct = [];
+
+    for(let actividad in actividades){
+        let cantReprobados = 0;
+        for(let calificacion in calificaciones){
+            if(calificaciones[calificacion].calificaciones[actividad] < 70){
+                cantReprobados++;
+            }
+        }
+        dataReprobacionAct.push({label:actividades[actividad].dataValues.nombre, a:cantReprobados,b:calificaciones.length-cantReprobados})
+    }
+    //[{label:'Hola', a:10, b,10},{label:'Adios, a:7, b:80}]
+    dataReprobacion = JSON.stringify(dataReprobacion);
+    dataReprobacionAct = JSON.stringify(dataReprobacionAct);
+
+    res.render('grupo/vista-inicio-grupo', {grupo,temas, dataReprobacion, reprobados, aprobados, tema, dataReprobacionAct});
 }
 
 //Renderizar los datos del grupo para su edición
@@ -198,17 +227,17 @@ const getGroupDataFromFile = async (req, res) => {
                 //Se obtiene un subString con los indices encontrados
                 var grupoContenido = data.substring(grupoIndex, grupoLastIndex).trim();
 
-            //Se busca el inicio y el final del contendio de PERIODO haciendo uso de una expresion regular
-            var periodoIndex = data.search(/\s+(PERIODO)\s*:\s?(\w+)/mg, data);
-            var periodoLastIndex = data.search("MATERIA", data) - 1;
-            //Se obtiene un subString con los indices encontrados
-            var periodoContenido = data.substring(periodoIndex, periodoLastIndex).trim();
+                //Se busca el inicio y el final del contendio de PERIODO haciendo uso de una expresion regular
+                var periodoIndex = data.search(/\s+(PERIODO)\s*:\s?(\w+)/mg, data);
+                var periodoLastIndex = data.search("MATERIA", data) - 1;
+                //Se obtiene un subString con los indices encontrados
+                var periodoContenido = data.substring(periodoIndex, periodoLastIndex).trim();
 
-            var grupo = grupoContenido.split(":");
-            var materia = materiaContenido.split(":");
-            var periodo = periodoContenido.split(":");
+                var grupo = grupoContenido.split(":");
+                var materia = materiaContenido.split(":");
+                var periodo = periodoContenido.split(":");
 
-            var datos = {grupo: grupo[1].trim(), materia: materia[1].trim(), periodo: periodo[1].trim()};
+                var datos = {grupo: grupo[1].trim(), materia: materia[1].trim(), periodo: periodo[1].trim()};
 
                 res.render('grupo/datosgrupo', {datos, archivo});
             }
