@@ -128,7 +128,7 @@ const getTopicsByFile = async (req, res) => {
     let archivo = req.params.archivo;
 
     let txtFile = path.join(__dirname, '../public/doc/' + archivo);
-    await fs.readFile(txtFile, "binary", (err, data) => {
+    await fs.readFile(txtFile, "binary", async (err, data) => {
         if (err) {
             res.redirect('/');
             throw err;
