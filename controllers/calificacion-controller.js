@@ -70,6 +70,11 @@ const calcCalif = async (req,res)=>{
                 calificaciones.push(calificacion.dataValues.valor);
             }
         }
+
+        acumulador = Math.round(acumulador);
+        if(acumulador < 70 || acumulador === "NA"){
+            acumulador = "NA";
+        }
         //Se añade la inforamcion recuperada del alumno y sus calificaciones correspindientes con el formato de JSON
         listaFormateada.push({
             clave: alumnos[alumno].dataValues.clave,
