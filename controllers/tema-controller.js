@@ -26,6 +26,7 @@ const getTopicByGroup = async (req, res) => {
     res.render('tema/vista-grupo-temas', {tema, idgrupo, asignatura, clave});
 }
 
+
 const getTopicsByGroupLabel = async (idGrupo) => {
     return Models.tema.findAll({where: {idgrupo: idGrupo}});
 }
@@ -129,33 +130,54 @@ const getTopicsByFile = async (req, res) => {
     let txtFile = path.join(__dirname, '../public/doc/' + archivo);
     await fs.readFile(txtFile, "binary", (err, data) => {
         if (err) {
-            throw err;
             res.redirect('/');
+            throw err;
         } else {
-            //data = Buffer.from(data, 'utf-8');
-            //Se busca la etiqueta </BR> para obtener los indices del contenido.
-            let inicioBR = data.lastIndexOf('</BR>') + 5;
-            //Se busca la etiqueta </I> para obtener el ultimo indice del contenido.
-            let finI = data.lastIndexOf("</I>");
-            let contenidoBR = data.substring(inicioBR, finI);
-            let temas = contenidoBR.split(',');
-            let indice;
-            let numerotema = 1;
+            if (data.includes("MATERIA") && data.includes("MAESTRO") && data.includes("GRUPO") && data.includes("PERIODO") && data.includes("PRE") && data.includes("BR") && data.includes("I")) {
+                //data = Buffer.from(data, 'utf-8');
+                //Se busca la etiqueta </BR> para obtener los indices del contenido.
+                let inicioBR = data.lastIndexOf('</BR>') + 5;
+                //Se busca la etiqueta </I> para obtener el ultimo indice del contenido.
+                let finI = data.lastIndexOf("</I>");
+                let contenidoBR = data.substring(inicioBR, finI);
+                let temas = contenidoBR.split(',');
+                let indice;
+                let numerotema = 1;
 
-            let listaFormateada = [];
-            for (tema in temas) {
-                indice = temas[tema].indexOf('-');
-                listaFormateada.push(
-                    {
-                        numerotema: numerotema,
-                        nombre: temas[tema].substring(indice + 1, temas[tema].length)
+                let listaFormateada = [];
+                for (tema in temas) {
+                    indice = temas[tema].indexOf('-');
+                    listaFormateada.push(
+                        {
+                            numerotema: numerotema,
+                            nombre: temas[tema].substring(indice + 1, temas[tema].length)
+                        }
+                    );
+                    numerotema += 1;
+                }
+                listaFormateada = JSON.stringify(listaFormateada);
+
+                res.render('tema/importar-tema', {idgrupo: req.params.idgrupo, listaFormateada});
+            } else {
+                const error = "Archivo no valido: el archivo no contiene información de la materia y temas de la materia.";
+                //Obtenemos el ID del grupo
+                const idgrupo = req.params.idgrupo;
+                //Obtenemos los datos del grupo
+                const grupo = await Models.grupo.findOne({
+                    where: {
+                        id: req.params.idgrupo
                     }
-                );
-                numerotema += 1;
-            }
-            listaFormateada = JSON.stringify(listaFormateada);
+                });
+                //Se extraen los atributos del grupo
+                const {asignatura, clave} = grupo;
+                const tema = await Models.tema.findAll({
+                    where: {
+                        idgrupo: req.params.idgrupo
+                    }
+                });
+                res.render('tema/vista-grupo-temas', {tema, idgrupo, asignatura, clave, error});
 
-            res.render('tema/importar-tema', {idgrupo: req.params.idgrupo, listaFormateada});
+            }
         }
     });
 }

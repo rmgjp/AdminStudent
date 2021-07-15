@@ -3,6 +3,7 @@ const controladorTema = require('../controllers/tema-controller');
 const router = express.Router();
 const multer = require('multer');
 const path = require('path')
+const Models = require('../models');
 
 router.use(function (req, res, next) {
     next();
@@ -36,8 +37,30 @@ router.delete('/tema/eliminar-tema/:idgrupo/:idtema', controladorTema.deleteTopi
 
 router.post('/tema/importar/:idgrupo', load.single('archivo'),async (req,res)=>{
     let file = req.file;
-    let archivo = file.originalname.toString().replace(' ', '');
-    res.redirect('/tema/lista-temas/' + req.params.idgrupo + '/' + archivo);
+    if(!file){
+        const error = "No se ha cargado ningún archivo.";
+        //Obtenemos el ID del grupo
+        const idgrupo = req.params.idgrupo;
+        //Obtenemos los datos del grupo
+        const grupo = await Models.grupo.findOne({
+            where: {
+                id: req.params.idgrupo
+            }
+        });
+        //Se extraen los atributos del grupo
+        const {asignatura, clave} = grupo;
+        const tema = await Models.tema.findAll({
+            where: {
+                idgrupo: req.params.idgrupo
+            }
+        });
+        res.render('tema/vista-grupo-temas', {tema, idgrupo, asignatura, clave,error});
+    }
+    else{
+        let archivo = file.originalname.toString().replace(' ', '');
+        res.redirect('/tema/lista-temas/' + req.params.idgrupo + '/' + archivo);
+    }
+
 });
 
 router.get('/tema/lista-temas/:idgrupo/:archivo', controladorTema.getTopicsByFile);
