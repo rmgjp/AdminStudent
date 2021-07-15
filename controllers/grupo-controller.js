@@ -181,21 +181,22 @@ const getGroupDataFromFile = async (req, res) => {
             res.redirect('/');
             throw err;
         } else {
-            //data = Buffer.from(data, 'utf-8');
-            //Se busca el inicio el cierre de la etiqueta <PRE> para obtener los indices del contenido.
-            var inicioPRE = data.indexOf('PRE')
-            var finPRE = data.indexOf("/PRE");
-            var contenidoPRE = data.substring(inicioPRE, finPRE);
-            //Se busca el inicio y el final del contendio de MATERIA haciendo uso de una expresion regular
-            var materiaIndex = data.search(/^(MATERIA)\s*:\s?(\w+)\s*((\w+)\s?(\w+)\s?)*/mg, data);
-            var materiaLastIndex = data.search("MAESTRO", data) - 1;
-            //Se obtiene un subString con los indices encontrados
-            var materiaContenido = data.substring(materiaIndex, materiaLastIndex).trim();
-            //Se busca el inicio y el final del contendio de GRUPO haciendo uso de una expresion regular
-            var grupoIndex = data.search(/\s+(GRUPO)\s*:\s?(\w+)/mg, data);
-            var grupoLastIndex = data.search("EXTEN", data) - 1;
-            //Se obtiene un subString con los indices encontrados
-            var grupoContenido = data.substring(grupoIndex, grupoLastIndex).trim();
+            if(data.includes("MATERIA") && data.includes("MAESTRO") && data.includes("GRUPO")&&data.includes("PERIODO") && data.includes("PRE")){
+                //data = Buffer.from(data, 'utf-8');
+                //Se busca el inicio el cierre de la etiqueta <PRE> para obtener los indices del contenido.
+                var inicioPRE = data.indexOf('PRE')
+                var finPRE = data.indexOf("/PRE");
+                var contenidoPRE = data.substring(inicioPRE, finPRE);
+                //Se busca el inicio y el final del contendio de MATERIA haciendo uso de una expresion regular
+                var materiaIndex = data.search(/^(MATERIA)\s*:\s?(\w+)\s*((\w+)\s?(\w+)\s?)*/mg, data);
+                var materiaLastIndex = data.search("MAESTRO", data) - 1;
+                //Se obtiene un subString con los indices encontrados
+                var materiaContenido = data.substring(materiaIndex, materiaLastIndex).trim();
+                //Se busca el inicio y el final del contendio de GRUPO haciendo uso de una expresion regular
+                var grupoIndex = data.search(/\s+(GRUPO)\s*:\s?(\w+)/mg, data);
+                var grupoLastIndex = data.search("EXTEN", data) - 1;
+                //Se obtiene un subString con los indices encontrados
+                var grupoContenido = data.substring(grupoIndex, grupoLastIndex).trim();
 
             //Se busca el inicio y el final del contendio de PERIODO haciendo uso de una expresion regular
             var periodoIndex = data.search(/\s+(PERIODO)\s*:\s?(\w+)/mg, data);
@@ -209,7 +210,12 @@ const getGroupDataFromFile = async (req, res) => {
 
             var datos = {grupo: grupo[1].trim(), materia: materia[1].trim(), periodo: periodo[1].trim()};
 
-            res.render('grupo/datosgrupo', {datos, archivo});
+                res.render('grupo/datosgrupo', {datos, archivo});
+            }
+            else{
+                let error = "Archivo no valido: el archivo no contiene información de la materia y lista de alumnos.";
+                res.render('grupo/inicio-wizard', {error});
+            }
         }
     });
 }

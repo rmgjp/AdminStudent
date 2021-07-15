@@ -1,22 +1,27 @@
 <title>{{grupo.dataValues.asignatura}} {{grupo.dataValues.clave}} - Inicio - Seguimiento de Estudiantes</title>
 <div class="row container-fluid">
     <!-- Barra de navegación -->
-    <ul class="nav nav-tabs">
+    <ul class="nav nav-tabs sticky-top">
         <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="/grupo-inicio/{{grupo.dataValues.id}}"  title="Muestra el progreso general del grupo.">Inicio</a>
+            <a class="nav-link active" aria-current="page" href="/grupo-inicio/{{grupo.dataValues.id}}"
+               title="Muestra el progreso general del grupo.">Inicio</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" title="Muestra la lista de alumnos que contiene el grupo." href="/grupo/alumnos/{{grupo.dataValues.id}}"><i class="bi bi-people-fill" ></i> Alumnos</a>
+            <a class="nav-link" title="Muestra la lista de alumnos que contiene el grupo."
+               href="/grupo/alumnos/{{grupo.dataValues.id}}"><i class="bi bi-people-fill"></i> Alumnos</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" title="Muestra la lista de temas/unidades que contiene el grupo." href="/grupo/temas/{{grupo.dataValues.id}}"><i class="bi bi-book-fill"  ></i> Temas</a>
+            <a class="nav-link" title="Muestra la lista de temas/unidades que contiene el grupo."
+               href="/grupo/temas/{{grupo.dataValues.id}}"><i class="bi bi-book-fill"></i> Temas</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link " title="Muestra la lista de actividades por grupo o por tema." href="/grupo/actividades/{{grupo.dataValues.id}}"><i class="bi bi-bookmark-check-fill"></i>
+            <a class="nav-link " title="Muestra la lista de actividades por grupo o por tema."
+               href="/grupo/actividades/{{grupo.dataValues.id}}"><i class="bi bi-bookmark-check-fill"></i>
                 Actividades</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" title="Muestra las calificaciones almacenadas." href="/grupo/calificaciones/{{grupo.dataValues.id}}"><i class="bi bi-file-spreadsheet-fill"  ></i>
+            <a class="nav-link" title="Muestra las calificaciones almacenadas."
+               href="/grupo/calificaciones/{{grupo.dataValues.id}}"><i class="bi bi-file-spreadsheet-fill"></i>
                 Calificaciones</a>
         </li>
     </ul>
@@ -24,8 +29,8 @@
 <div class="row m-2 p-2">
 
     <nav id="sideBar" class="col-md-3 col-lg-2 d-md-block bg-light sidebar navbar-nav-scroll">
-        <div class="sidebar-sticky pt-3">
-            <h4 class="sidebar-heading d-flex justify-content-between align-items-center text-muted">
+        <div class="sidebar-sticky">
+            <h4 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
                 Temas</h4>
             <ul class="nav flex-column">
 
@@ -38,22 +43,52 @@
         </div>
     </nav>
 
-    <main class="col p-2 m-1">
-        <h2 class="">{{grupo.dataValues.clave}} - {{grupo.dataValues.asignatura}}</h2>
-        <div class="card" style="width: 18rem;">
-            <div id="indiceReprobacion" style="height: 250px;"></div>
-            <div class="card-body">
-                <p class="card-text">Indice de reprobación</p>
+    <main class="col col-md col-xl col-sm col-lg">
+        <h3>Tema: {{tema.dataValues.nombre}}</h3>
+        <div class="row">
+            <div class="col-3 col-md-4 col-xl-2 col-sm-3 col-lg-2">
+                <div class="card" style="width: 16rem;height: 385px">
+                    <input type="hidden" id="indiceReprobacionData" value="{{dataReprobacion}}">
+                    <div class="card-body">
+                        <h4 class="card-title text-center">Indice de reprobación</h4>
+                        <div id="indiceReprobacion" style="height: 250px;"></div>
+                        <div class="card-text">Alumnos Aprobados: {{aprobados}}</div>
+                        <div class="card-text">Alumnos Reprobados: {{reprobados}}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col col-md col-xl col-sm col-lg">
+                <div class="card " style="width: 50rem; height: 385px">
+                    <input type="hidden" id="actividadesReprobacionData" value="{{dataReprobacionAct}}">
+                    <div class="card-body">
+                        <h4 class="card-title text-center">Indice de reprobación por actividad</h4>
+                        <div id="actividadesAprobacion" style="height: 250px;"></div>
+                    </div>
+                </div>
             </div>
         </div>
     </main>
-
 </div>
 <script>
+    dataReprobacion = document.getElementById("indiceReprobacionData").value;
+    dataReprobacionAct = document.getElementById("actividadesReprobacionData").value;
+
     new Morris.Donut({
         element: "indiceReprobacion",
-        data:[{label:"Reprobados", value:20},{label:"Aprobados", value:10}],
-        formatter: function (y) {return y+ "%"},
+        data: JSON.parse(dataReprobacion),
+
+        formatter: function (y) {
+            return y + "%"
+        },
         resize: true,
+    })
+
+    new Morris.Bar({
+        element: "actividadesAprobacion",
+        data: JSON.parse(dataReprobacionAct),
+        xkey:'label',
+        ykeys:['a','b'],
+        labels: ['Reprobados', 'Aprobados'],
+        resize: true
     })
 </script>
