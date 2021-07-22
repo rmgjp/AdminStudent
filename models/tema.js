@@ -37,6 +37,12 @@ module.exports = (sequelize, DataTypes) => {
       as: 'tema',
       foreignKey:'idtema',
     })
+
+    tema.hasMany(models.equipo,{
+      onDelete: 'CASCADE',
+      as: 'equipo',
+      foreignKey:'idtema',
+    })
   };
   return tema;
 };
