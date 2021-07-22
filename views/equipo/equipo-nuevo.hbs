@@ -1,0 +1,78 @@
+<title>Crear nuevo equipo</title>
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h3 class="p-2 m-2">Crear nuevo equipo</h3>
+        </div>
+    </div>
+    <div class="row p-2 m-2">
+        <label for="nombreBox" class="form-label">Nombre</label>
+        <input type="text" class="form-control" name="nombreBox" id="nombreBox" required>
+    </div>
+    <div class="row">
+        <div class="col">
+            <p class="p-2 m-2">
+                Seleccione los temas a los que aplicará este equipo.
+            </p>
+        </div>
+    </div>
+
+    <div class="row-cols-1 ">
+        <div class="col-auto navbar-nav-scroll">
+            <input type="hidden" id="valorTablaTemas" value="{{listaFormateadaTemas}}">
+            <table id="tableTemas" data-toggle="table" data-click>
+                <thead>
+                <tr>
+                    <th data-field="estado" data-sorteable="false" data-checkbox="true"></th>
+                    <th data-field="numerotema" data-sorteable="false">No. tema</th>
+                    <th data-field="nombre" data-sorteable="true">Nombre</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="row-cols-1  d-flex flex-row-reverse ">
+        <div class="col-auto d-flex flex-row-reverse p-3">
+            <div id="toolbar">
+                <p class="">
+                    Seleccione los alumnos que conformaran el equipo.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row-cols-1 ">
+        <div class="col-auto navbar-nav-scroll">
+            <input type="hidden" id="valorTablaAlumnos" value="{{listaFormateadaAlumnos}}">
+            <table id="tableAlumnos" data-toggle="table" data-toolbar="#toolbar" data-click-to-select="false"
+                   data-search="true"
+                   data-advanced-search="true" data-filter-control="true">
+                <thead>
+                <tr>
+                    <th data-field="estado" data-sorteable="false" data-checkbox="true"></th>
+                    <th data-field="clave" data-sorteable="false">No. Control</th>
+                    <th data-field="nombre" data-sorteable="true">Nombre</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <form>
+        <input type="hidden" id="listaAlumnos">
+        <input type="hidden" id="listaTemas">
+        <div class="row d-flex flex-row-reverse p-2 m-2">
+            <button class="btn btn-primary" type="submit">
+                Guardar
+            </button>
+            <a class="btn btn-danger" href="#">Cancelar</a>
+        </div>
+    </form>
+</div>
+<script src="/js/grid-equipos-helper.js"></script>
