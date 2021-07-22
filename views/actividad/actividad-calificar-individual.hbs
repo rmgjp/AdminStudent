@@ -10,6 +10,11 @@
                 <h4>{{actividad.dataValues.nombre}}</h4>
                 <h6>Valor de la actividad: {{actividad.dataValues.valor}}</h6>
                 <p>{{actividad.dataValues.descripcion}}</p><br>
+                <div class="custom-control custom-switch"
+                     title="Desplazar automaticamente hacia abajo">
+                    <input type="checkbox" class="custom-control-input" id="autoopen">
+                    <label class="custom-control-label" for="autoopen">Abrir el siguiente campo de edición automaticamente.</label>
+                </div>
             </div>
         </div>
     </div>
@@ -21,12 +26,12 @@
             <div class="col-auto">
 B                <table id="table" class="table table-striped" data-toggle="table" data-toolbar="#toolbar" data-click-to-select="false"
                        data-search="true"
-                       data-search-text="" data-filter-control="true" name="table" data-editable="true">
+                       data-search-text="" data-filter-control="true">
                     <thead>
                     <tr>
                         <th data-field="clave" data-sorteable="false">No. Control</th>
                         <th data-field="nombre" data-sorteable="true">Nombre</th>
-                        <th data-field="calificacion" data-sorteable="true" data-editable="true" data-editable-type="number" data-editable-min="0"  data-editable-max="100">Calificación</th>
+                        <th data-field="calificacion" id="calificacion" data-editable="true" data-editable-type="number" data-editable-min="0"  data-editable-max="100">Calificación</th>
                     </tr>
                     </thead>
                     <tbody>
