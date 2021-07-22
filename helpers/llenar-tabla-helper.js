@@ -29,21 +29,4 @@ $('#table').on('editable-save.bs.table', function(e, field, row, oldValue, $el){
 })
 
 
-$(function(){
-    $('#table .editable').on('hidden', function(e, reason){
-
-        if(reason === 'save' || reason === 'nochange') {
-            var $next = $(this).closest('tr').next().find('.editable');
-            console.log($next);
-            if(true) {
-                setTimeout(function() {
-                    $next.editable('show');
-                }, 300);
-            } else {
-                $next.focus();
-            }
-        }
-    });
-})
-
 
