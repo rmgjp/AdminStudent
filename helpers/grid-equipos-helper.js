@@ -1,7 +1,5 @@
 let tableTemas = $('#tableTemas');
 let tableAlumnos = $('#tableAlumnos');
-let tablaDatos;
-
 
 $(function cargarDatos() {
     let listaTemas = document.getElementById("valorTablaTemas").value;
@@ -24,4 +22,20 @@ $(function cargarDatos() {
     }
     tableAlumnos.bootstrapTable('load', rowsAlumnos);
 
-})
+});
+
+tableTemas.on('check.bs.table', function (e, row) {
+    document.getElementById('listaTemas').value = JSON.stringify(tableTemas.bootstrapTable('getSelections'));
+});
+
+tableTemas.on('uncheck.bs.table', function (e, row) {
+    document.getElementById('listaTemas').value = JSON.stringify(tableTemas.bootstrapTable('getSelections'));
+});
+
+tableAlumnos.on('check.bs.table', function (e, row) {
+    document.getElementById('listaAlumnos').value = JSON.stringify(tableAlumnos.bootstrapTable('getSelections'));
+});
+
+tableAlumnos.on('uncheck.bs.table', function (e, row) {
+    document.getElementById('listaAlumnos').value = JSON.stringify(tableAlumnos.bootstrapTable('getSelections'));
+});
