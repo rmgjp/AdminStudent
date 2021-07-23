@@ -1,5 +1,17 @@
 <title>Crear nuevo equipo</title>
+<body>
+
+
 <div class="container">
+    {{#each errors}}
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            {{text}}.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    {{/each}}
+
     <div class="row">
         <div class="col">
             <h3 class="p-2 m-2">Crear nuevo equipo</h3>
@@ -64,9 +76,10 @@
             </table>
         </div>
     </div>
-    <form>
-        <input type="hidden" id="listaAlumnos">
-        <input type="hidden" id="listaTemas">
+    <form action="/equipo/nuevo/{{idgrupo}}" method="POST" novalidate>
+        <input type="hidden" id="valorTablaAlumnos" value="{{listaFormateadaAlumnos}}">
+        <input type="hidden" id="listaAlumnos" name="listaAlumnos">
+        <input type="hidden" id="listaTemas" name="listaTemas" >
         <div class="row d-flex flex-row-reverse p-2 m-2">
             <button class="btn btn-primary" type="submit">
                 Guardar
@@ -75,4 +88,5 @@
         </div>
     </form>
 </div>
-<script src="/js/grid-equipos-helper.js"></script>
+<script src="/js/grid-equipos-helper.js" type="text/javascript"></script>
+</body>
