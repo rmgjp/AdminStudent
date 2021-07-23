@@ -50,5 +50,6 @@ const saveTeam = async (req,res) => {
 }
 module.exports = {
     renderAllTeams,
-    renderNewTeam
+    renderNewTeam,
+    saveTeam
 }
