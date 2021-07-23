@@ -24,6 +24,30 @@ const renderNewTeam = async (req, res) => {
 
     res.render('equipo/equipo-nuevo', {listaFormateadaAlumnos, listaFormateadaTemas, idgrupo: req.params.idgrupo});
 }
+const saveTeam = async (req,res) => {
+    const nombre = req.params.body.nombreBox;
+    const listaTemas = req.body.listaTemas;
+    const listaAlumnos = req.body.listaAlumnos;
+    let error = [];
+    if(!listaTemas){
+        error.push({text: 'No se ha seleccionado ningún tema.'});
+        res.render('equipo/equipo-nuevo', {listaFormateadaAlumnos: req.body.valorTablaTemas, listaFormateadaTemas:req.body.valorTablaAlumnos, idgrupo:req.params.idgrupo})
+    }
+    else if(!listaAlumnos){
+        error.push({text: 'No se ha seleccionado ningún alumno.'});
+    }
+    else if(!listaAlumnos && !listaTemas){
+        error.push({text: 'No se ha seleccionado ningún tema.'});
+        error.push({text: 'No se ha seleccionado ningún alumno.'});
+    }
+    else {
+        await Models.equipo.create({
+            nombre: nombre,
+
+        })
+    }
+
+}
 module.exports = {
     renderAllTeams,
     renderNewTeam
