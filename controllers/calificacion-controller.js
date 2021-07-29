@@ -1,5 +1,6 @@
 const Models = require('../models');
 const configuracion = require('../config/userconfig.json');
+const alumnoController = require('./alumno-controller')
 //Este controlador contiene las funciones requeridas para la busqueda y consulta de las calificaciones
 
 /**
@@ -10,26 +11,8 @@ const calcCalif = async (req,res)=>{
     //Busqueda de las actividades por grupo
     const actividades = await Models.tarea.findAll({where:{idtema : req.params.idtema}})
 
-    //Se busca la relación de los alumnos.
-    const alumnogrupos = await Models.alumnogrupo.findAll({
-        where: {
-            idgrupo: req.params.idgrupo
-        }
-    });
-    //Se genera un arreglo donde se guardan los alumnos relacionados con el grupo
-    let alumnos = [];
-    for (punteroAlumno in alumnogrupos){
-        let alumno = await Models.alumno.findAll({
-            where: {
-                id: alumnogrupos[punteroAlumno].dataValues.idalumno
-            }
-        });
-        alumnos.push(alumno[0]);
-    }
-    alumnos.sort(function (a, b) {
-        return a.dataValues.nombre.localeCompare(b.dataValues.nombre);
-    });
-    //
+    const alumnos = await alumnoController.getAllStudents(req,res);
+
     let listaFormateada = [];
     for(let alumno in alumnos){
         let calificaciones = [];
@@ -119,26 +102,7 @@ const viewCalf = async(req,res)=>{
 
 
 const renderViewCalif = async (req,res)=>{
-    const alumnogrupos = await Models.alumnogrupo.findAll({
-        where: {
-            idgrupo: req.params.idgrupo
-        }
-    });
-
-    //Se genera un arreglo donde se guardan los alumnos relacionados con el grupo
-    let alumnos = [];
-
-    for (punteroAlumno in alumnogrupos){
-        let alumno = await Models.alumno.findAll({
-            where: {
-                id: alumnogrupos[punteroAlumno].dataValues.idalumno
-            }
-        });
-        alumnos.push(alumno[0]);
-    }
-    alumnos.sort(function (a, b) {
-        return a.dataValues.nombre.localeCompare(b.dataValues.nombre);
-    });
+    const alumnos = await alumnoController.getAllStudents(req,res);
 
     let calificacion = [];
     for (let alumno in alumnos){
@@ -179,10 +143,9 @@ const renderViewCalif = async (req,res)=>{
 /*
 * Guardar calificación individualmente**/
 const scoreSingle = async (req,res)=>{
-    calificaciones = JSON.parse(req.body.valorTabla);
+    let calificaciones = JSON.parse(req.body.valorTabla);
 
     //Datos alumno
-    let alumnos = [];
     for(alumnopuntero in calificaciones){
         const alumno = await Models.alumno.findOne({
             where:{clave: calificaciones[alumnopuntero].clave}

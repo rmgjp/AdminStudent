@@ -169,25 +169,14 @@ const editStudent = async (req, res) => {
 //Consultar los registros de la tabla alumno
 const getAllStudents = async (req, res) => {
     //Se busca la relación de los alumnos.
-    const alumnogrupos = await Models.alumnogrupo.findAll({
-        where: {
-            idgrupo: req.params.idgrupo
-        }
-    });
-
-    //Se genera un arreglo donde se guardan los alumnos relacionados con el grupo
-    var alumnos = [];
-
-    for (let punteroAlumno in alumnogrupos) {
-        let alumnoTemp = await Models.alumno.findAll({
-            where: {
-                id: alumnogrupos[punteroAlumno].dataValues.idalumno
+    const alumnos = await Models.alumno.findAll({
+        include:[{
+            model : Models.alumnogrupo,
+            where:{
+                idgrupo: req.params.idgrupo
             }
-        });
-        alumnos.push(alumnoTemp[0]);
-    }
-
-
+        }]
+    })
     alumnos.sort(function (a, b) {
         return a.dataValues.nombre.localeCompare(b.dataValues.nombre);
     });
