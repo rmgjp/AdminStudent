@@ -8,7 +8,7 @@ const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
 const flash = require('connect-flash');
 const exphbs = require('express-handlebars');
-const dbcreator = require('./helpers/db');
+const dbcreator = require('./controllers/db');
 const firstRun = require('electron-first-run');
 //let middleware = require('express-ip-filter-middleware');
 
