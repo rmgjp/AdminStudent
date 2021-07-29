@@ -32,6 +32,7 @@ module.exports = {
         db.calificacion = require('../models/calificacion')(sequelize, Sequelize);
         db.equipo = require('../models/equipo')(sequelize, Sequelize);
         db.alumnoequipo = require('../models/alumnoequipo')(sequelize, Sequelize);
+        db.equipotema = require('../models/equipotema')(sequelize, Sequelize);
         db.asistencia = require('../models/asistencia')(sequelize, Sequelize);
 
         //Creación de las tablas basado en los modelos anteriores.

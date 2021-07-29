@@ -46,14 +46,12 @@ module.exports = (sequelize, DataTypes) => {
     alumnogrupo.belongsTo(models.alumno,{
       //Información de la tabla a la que pertenece la tabla del modelo actual
       onDelete: 'CASCADE',
-      as:'alumno',
       foreignKey: 'idalumno',
       targetKey: 'id'
     })
 
     alumnogrupo.belongsTo(models.grupo,{
       onDelete: 'CASCADE',
-      as:'grupo',
       foreignKey: 'idgrupo',
       targetKey: 'id'
     })

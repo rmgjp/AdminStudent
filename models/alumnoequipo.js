@@ -35,7 +35,6 @@ module.exports = (sequelize, DataTypes) => {
         alumnoequipo.belongsTo(models.alumno,{
             //Información de la tabla a la que pertenece la tabla del modelo actual
             onDelete: 'CASCADE',
-            as:'alumno',
             foreignKey: 'idalumno',
             targetKey: 'id'
         });
