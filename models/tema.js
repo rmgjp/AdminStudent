@@ -34,13 +34,11 @@ module.exports = (sequelize, DataTypes) => {
     //Añadimos atributo idtema en la tabla de tarea
     tema.hasMany(models.tarea,{
       onDelete: 'CASCADE',
-      as: 'tema',
       foreignKey:'idtema',
     })
 
     tema.hasMany(models.equipo,{
       onDelete: 'CASCADE',
-      as: 'equipo',
       foreignKey:'idtema',
     })
   };

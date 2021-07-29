@@ -28,7 +28,6 @@ module.exports = (sequelize, DataTypes) => {
   tarea.associate = function (models){
     tarea.belongsTo(models.tema,{
       onDelete: 'CASCADE',
-      as: 'tema',
       foreignKey:'idtema'
     });
 
