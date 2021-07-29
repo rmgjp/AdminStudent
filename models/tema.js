@@ -37,7 +37,7 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey:'idtema',
     })
 
-    tema.hasMany(models.equipo,{
+    tema.hasMany(models.equipotema,{
       onDelete: 'CASCADE',
       foreignKey:'idtema',
     })
