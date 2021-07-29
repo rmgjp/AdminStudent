@@ -2,8 +2,19 @@ const Models = require('../models');
 const temaController = require('./tema-controller');
 const alumnoController = require('./alumno-controller');
 
-const renderAllTeams = async (req, res) => {
-    res.render('equipo/vista-grupo-equipo', {idgrupo: req.params.idgrupo})
+const retriveTeamsData = async (req, res) => {
+    const temas = await Models.tema.findAll({
+        where: {
+            idgrupo: req.params.idgrupo
+        }
+    })
+    const equipos = await Models.equipo.findAll({where: {idgrupo: req.params.idgrupo}});
+
+    if (!equipos || equipos.length === 0) {
+        res.render('equipo/vista-grupo-equipo', {idgrupo: req.params.idgrupo})
+    } else {
+        res.redirect('/grupo/equipos/' + req.params.idgrupo + '/' + equipos[0].dataValues.id);
+    }
 }
 
 const renderSelectedTeams = async (req, res) => {
@@ -70,8 +81,22 @@ const saveTeam = async (req, res) => {
     } else {
         const equipo = await Models.equipo.create({
             nombre: nombre,
+            idgrupo: req.params.idgrupo
+        });
 
-        })
+        for (let alumno in listaAlumnos) {
+            await Models.alumnoequipo.create({
+                idequipo: equipo.id,
+                idalumno: listaAlumnos[alumno].id,
+            });
+        }
+        for (let tema in listaTemas) {
+            await Models.equipotema.create({
+                idequipo: equipo.id,
+                idtema: listaTemas[tema].id,
+            });
+        }
+        res.redirect('/grupo/equipos/' + req.params.idgrupo);
     }
 
 }
@@ -93,7 +118,8 @@ function tryParseJSON(jsonString) {
 }
 
 module.exports = {
-    renderAllTeams,
+    retriveTeamsData,
+    renderSelectedTeams,
     renderNewTeam,
     saveTeam
 }
