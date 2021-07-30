@@ -1,6 +1,5 @@
-<title>Calificar - {{actividad.dataValues.nombre}}</title>
-
-<div class="container bg-light m-100">
+<title>Calificar en equipo - {{actividad.dataValues.nombre}}</title>
+<main class="container">
     <div class="row m-2 p-3">
         <h2 class="display-4">Calificar Actividad</h2>
     </div>
@@ -10,28 +9,25 @@
                 <h4>{{actividad.dataValues.nombre}}</h4>
                 <h6>Valor de la actividad: {{actividad.dataValues.valor}}</h6>
                 <p>{{actividad.dataValues.descripcion}}</p><br>
-                <div class="custom-control custom-switch"
-                     title="Desplazar automaticamente hacia abajo">
-                    <input type="checkbox" class="custom-control-input" id="autoopen">
-                    <label class="custom-control-label" for="autoopen">Abrir el siguiente campo de edición automaticamente.</label>
-                </div>
             </div>
         </div>
     </div>
-    <div class="rows-cols-1">
-        <form action="/actividad/calificar-individual/{{idgrupo}}/{{idtema}}/{{actividad.dataValues.id}}?_method=PUT" method="POST"
-              novalidate>
+
+    {{#iflogico opcion "==" "0"}}
+        <form>
             <input type="hidden" name="_method" value="PUT">
             <input type="hidden" id="valorTabla" name="valorTabla" value="{{listaFormateada}}">
             <div class="col-auto">
-                <table id="table" class="table table-striped" data-toggle="table" data-toolbar="#toolbar" data-click-to-select="false"
+                <table id="table" class="table table-striped" data-toggle="table" data-toolbar="#toolbar"
+                       data-click-to-select="false"
                        data-search="true"
                        data-search-text="" data-filter-control="true">
                     <thead>
                     <tr>
-                        <th data-field="clave" data-sorteable="false">No. Control</th>
-                        <th data-field="nombre" data-sorteable="true">Nombre</th>
-                        <th data-field="calificacion" id="calificacion" data-editable="true" data-editable-type="number" data-editable-min="0"  data-editable-max="100">Calificación</th>
+                        <th data-field="nombre" data-sorteable="true">Nombre del Equipo</th>
+                        <th data-field="calificacion" id="calificacion" data-editable="true" data-editable-type="number"
+                            data-editable-min="0" data-editable-max="100">Calificación
+                        </th>
                     </tr>
                     </thead>
                     <tbody>
@@ -44,6 +40,9 @@
                 <a class="btn btn-danger" href="/grupo/actividades/{{idgrupo}}/{{idtema}}/{{actividad.dataValues.id}}">Cancelar</a>
             </div>
         </form>
-    </div>
-</div>
-<script src="/js/llenar-tabla-helper.js"></script>
+    {{else}}
+        <form>
+
+        </form>
+    {{/iflogico}}
+</main>

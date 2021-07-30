@@ -6,40 +6,40 @@ const alumnoController = require('./alumno-controller')
 /**
  * Visualizacion de la vista de calificaciones*/
 
-const calcCalif = async (req,res)=>{
-    const tema = await Models.tema.findOne({where:{id: req.params.idtema}});
+const calcCalif = async (req, res) => {
+    const tema = await Models.tema.findOne({where: {id: req.params.idtema}});
     //Busqueda de las actividades por grupo
-    const actividades = await Models.tarea.findAll({where:{idtema : req.params.idtema}})
+    const actividades = await Models.tarea.findAll({where: {idtema: req.params.idtema}})
 
-    const alumnos = await alumnoController.getAllStudents(req,res);
+    const alumnos = await alumnoController.getAllStudents(req, res);
 
     let listaFormateada = [];
-    for(let alumno in alumnos){
+    for (let alumno in alumnos) {
         let calificaciones = [];
         let acumulador = 0;
         let calcCalificacion;
         //ciclo para recuperar las calificaciones relacionadas a cada alumno del grupo
-        for(actividad in actividades){
-            let calificacion = await Models.calificacion.findOne({where:{
+        for (actividad in actividades) {
+            let calificacion = await Models.calificacion.findOne({
+                where: {
                     idalumno: alumnos[alumno].dataValues.id,
-                    idtarea: actividades[actividad].dataValues.id,}
+                    idtarea: actividades[actividad].dataValues.id,
+                }
             });
             //Si no hay calificacion se asigna como no asignado
-            if(!calificacion){
+            if (!calificacion) {
                 calificaciones.push("No capturado.");
-            }
-            else {
+            } else {
                 //Si hay calificacion se calcula el valor correspondiente con relación al valor de la actividad
-                calcCalificacion = (calificacion.dataValues.valor* actividades[actividad].valor)/100;
+                calcCalificacion = (calificacion.dataValues.valor * actividades[actividad].valor) / 100;
                 //Se asigna la calificacion dependiendo de los parametros de configuracion establecidos por el usuario
-                switch (parseInt(configuracion.califi)){
+                switch (parseInt(configuracion.califi)) {
                     case 0:
                         //Si es 0 se promedia unicamente si todas las actividades estan aprovadas
-                        if(calificacion.dataValues.valor < 70){
+                        if (calificacion.dataValues.valor < 70) {
                             acumulador = "NA"
-                        }
-                        else if (calificacion.dataValues.valor >= 70){
-                            if(acumulador !== "NA"){
+                        } else if (calificacion.dataValues.valor >= 70) {
+                            if (acumulador !== "NA") {
                                 //Calculo de las calificaciones cuando se promedia.
                                 acumulador += calcCalificacion;
                             }
@@ -55,7 +55,7 @@ const calcCalif = async (req,res)=>{
         }
 
         acumulador = Math.round(acumulador);
-        if(acumulador < 70 || acumulador === "NA"){
+        if (acumulador < 70 || acumulador === "NA") {
             acumulador = "NA";
         }
         //Se añade la inforamcion recuperada del alumno y sus calificaciones correspindientes con el formato de JSON
@@ -70,59 +70,59 @@ const calcCalif = async (req,res)=>{
     listaFormateada = JSON.stringify(listaFormateada);
     return listaFormateada;
 }
-const retriveCalf = async (req,res)=>{
-    const temas = await Models.tema.findAll({where:{idgrupo: req.params.idgrupo}})
-    res.redirect("/grupo/calificaciones/"+req.params.idgrupo+"/"+temas[0].dataValues.id+"/0");
+const retriveCalf = async (req, res) => {
+    const temas = await Models.tema.findAll({where: {idgrupo: req.params.idgrupo}})
+    res.redirect("/grupo/calificaciones/" + req.params.idgrupo + "/" + temas[0].dataValues.id + "/0");
 }
 
 
-const viewCalf = async(req,res)=>{
+const viewCalf = async (req, res) => {
     const grupo = await Models.grupo.findOne({where: {id: req.params.idgrupo}});
     const {asignatura, clave} = grupo;
     //Busqueda de temas por grupo.
     const temas = await Models.tema.findAll({
-        where:{idgrupo:req.params.idgrupo}
+        where: {idgrupo: req.params.idgrupo}
     });
 
     //verificar si se selecciono un tema
-    if(!req.params.idtema){
-        res.render('calificacion/vista-grupo-calificaciones', {temas, idgrupo:req.params.idgrupo, asignatura, clave});
-    }
-    else {
-        const tema = await Models.tema.findOne({where:{id: req.params.idtema}});
+    if (!req.params.idtema) {
+        res.render('calificacion/vista-grupo-calificaciones', {temas, idgrupo: req.params.idgrupo, asignatura, clave});
+    } else {
+        const tema = await Models.tema.findOne({where: {id: req.params.idtema}});
         //Busqueda de las actividades por grupo
-        const actividades = await Models.tarea.findAll({where:{idtema : req.params.idtema}})
+        const actividades = await Models.tarea.findAll({where: {idtema: req.params.idtema}})
 
-        let listaFormateada = await calcCalif(req,res);
+        let listaFormateada = await calcCalif(req, res);
 
-        res.render('calificacion/vista-grupo-calificaciones', {temas, idgrupo:req.params.idgrupo, actividades, listaFormateada,
-            asignatura, clave, tema});
+        res.render('calificacion/vista-grupo-calificaciones', {
+            temas, idgrupo: req.params.idgrupo, actividades, listaFormateada,
+            asignatura, clave, tema
+        });
     }
 }
 
 
-const renderViewCalif = async (req,res)=>{
-    const alumnos = await alumnoController.getAllStudents(req,res);
+const renderViewCalif = async (req, res) => {
+    const alumnos = await alumnoController.getAllStudents(req, res);
 
     let calificacion = [];
-    for (let alumno in alumnos){
+    for (let alumno in alumnos) {
         let valor = await Models.calificacion.findOne({
-            where:{
-                idtarea:req.params.idactividad,
+            where: {
+                idtarea: req.params.idactividad,
                 idalumno: alumnos[alumno].dataValues.id,
             }
         });
 
-        if(!valor){
+        if (!valor) {
             calificacion.push(0)
-        }
-        else {
+        } else {
             calificacion.push(valor.dataValues.valor);
         }
     }
 
     let listaFormateada = [];
-    for(let alumno = 0; alumno< alumnos.length; alumno++){
+    for (let alumno = 0; alumno < alumnos.length; alumno++) {
         listaFormateada.push({
             clave: alumnos[alumno].dataValues.clave,
             nombre: alumnos[alumno].dataValues.nombre,
@@ -133,47 +133,96 @@ const renderViewCalif = async (req,res)=>{
     listaFormateada = JSON.stringify(listaFormateada);
 
     const actividad = await Models.tarea.findOne({
-        where:{id:req.params.idactividad}
+        where: {id: req.params.idactividad}
     })
 
-    res.render('actividad/actividad-calificar-individual', {idgrupo:req.params.idgrupo, idtema:req.params.idtema, actividad, listaFormateada});
+    res.render('actividad/actividad-calificar-individual', {
+        idgrupo: req.params.idgrupo,
+        idtema: req.params.idtema,
+        actividad,
+        listaFormateada
+    });
 };
 
 
 /*
 * Guardar calificación individualmente**/
-const scoreSingle = async (req,res)=>{
+const scoreSingle = async (req, res) => {
     let calificaciones = JSON.parse(req.body.valorTabla);
 
     //Datos alumno
-    for(alumnopuntero in calificaciones){
+    for (alumnopuntero in calificaciones) {
         const alumno = await Models.alumno.findOne({
-            where:{clave: calificaciones[alumnopuntero].clave}
+            where: {clave: calificaciones[alumnopuntero].clave}
         })
         //Buscar la calificación
         let calificacion = await Models.calificacion.findOne({
-            where:{
+            where: {
                 idalumno: alumno.dataValues.id,
                 idtarea: req.params.idactividad
             }
         })
         //Si la calificacion == null
         //Agregar calificación
-        if(!calificacion){
+        if (!calificacion) {
             await Models.calificacion.create({
                 idtarea: req.params.idactividad,
                 idalumno: alumno.dataValues.id,
                 valor: calificaciones[alumnopuntero].calificacion
             })
-        }else{
+        } else {
             //Si la calificación no es es null
             // calificación.update();
             calificacion.update({
-                valor:parseInt(calificaciones[alumnopuntero].calificacion)
+                valor: parseInt(calificaciones[alumnopuntero].calificacion)
             })
         }
     }
-    res.redirect('/grupo/actividades/'+req.params.idgrupo+'/'+req.params.idtema+'/'+req.params.idactividad);
+    res.redirect('/grupo/actividades/' + req.params.idgrupo + '/' + req.params.idtema + '/' + req.params.idactividad);
+}
+/*Opción 1: hace referencia al caso en el que todos los integrantes obtendrán la misma calificación*/
+const renderScoreTeam = async (req, res) => {
+    const actividad = await Models.tarea.findOne({
+        where: {
+            id: req.params.idactividad
+        }
+    });
+    const equipos = await Models.equipo.findAll({
+        where: {
+            idgrupo: req.params.idgrupo
+        },
+        include: [{
+            model: Models.equipotema,
+            where: {
+                idtema: req.params.idtema
+            }
+        }]
+    })
+    switch (parseInt(configuracion.calife)) {
+
+        /*Opción 0: hace referencia al caso en el que todos los integrantes obtendrán la misma calificación*/
+        case 0:
+            res.render('actividad/actividad-calificar-equipo',{idgrupo: req.params.idgrupo, idtema: req.params.idtema, actividad, opcion:0})
+            break;
+        /*Opción 1: hace referencia al caso en el que los integrantes obtendrán la calificación sumando un rubro individual y uno en equipo*/
+        case 1:
+
+            break;
+    }
+    console.log(equipos);
+
+}
+
+const scoreTeam = async (req, res) => {
+    switch (parseInt(configuracion.calife)) {
+        /*Opción 0: hace referencia al caso en el que todos los integrantes obtendrán la misma calificación*/
+        case 0:
+
+            break;
+        /*Opción 1: hace referencia al caso en el que los integrantes obtendrán la calificación sumando un rubro individual y uno en equipo*/
+        case 1:
+            break;
+    }
 }
 
 module.exports = {

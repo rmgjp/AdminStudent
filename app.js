@@ -54,6 +54,7 @@ app.use('/js', express.static(path.join(__dirname , 'helpers')));
 app.use('/js', express.static(path.join(__dirname, 'node_modules/x-editable-bs4/dist')));
 app.use('/js',express.static(path.join(__dirname, 'node_modules/bs-custom-file-input/dist')));
 app.use('/img', express.static(path.join(__dirname , 'public/img')));
+app.use('/cssc', express.static(path.join(__dirname , 'public/css')));
 app.use('/js', express.static(path.join(__dirname, 'node_modules/morris.js')))
 app.use('/js', express.static(path.join(__dirname, 'node_modules/raphael')))
 

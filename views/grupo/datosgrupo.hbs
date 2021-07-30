@@ -16,14 +16,16 @@
     <h2 class="display-6">Datos del grupo</h2>
     <div class="row">
         <div class="col">
-            <img src="/img/0.jpeg" class="img-fluid" alt="" id="vistaImagen" style="object-fit: none; object-position: center; width: 100%; max-height: 250px; margin-bottom: 1rem;">
+            <img src="/img/0.jpeg" class="img-fluid" alt="" id="vistaImagen"
+                 style="object-fit: none; object-position: center; width: 100%; max-height: 250px; margin-bottom: 1rem;">
         </div>
     </div>
     <form class="needs-validation" action="/grupo/crear-grupo/{{archivo}}" method="POST" novalidate>
         <div class="row">
             <div class="col">
                 <label for="asignatura" class="form-label">Asignatura</label>
-                <input type="text" class="form-control" name="asignatura" id="asignatura" required value="{{datos.materia}}">
+                <input type="text" class="form-control" name="asignatura" id="asignatura" required
+                       value="{{datos.materia}}">
             </div>
         </div>
 
@@ -34,7 +36,8 @@
             </div>
             <div class="col">
                 <label for="periodo" class="form-label">Periodo</label>
-                <input type="text" class="form-control" name="periodo" id="periodo" placeholder="Ej. ENE-JUN-2021" required value="{{datos.periodo}}">
+                <input type="text" class="form-control" name="periodo" id="periodo" placeholder="Ej. ENE-JUN-2021"
+                       required value="{{datos.periodo}}">
             </div>
             <div class="col">
                 <label for="estado" class="form-label">Estado</label>
@@ -71,14 +74,14 @@
 </div>
 
 <script>
-    document.getElementById('imagen').onchange = function (){
+    document.getElementById('imagen').onchange = function () {
         const imagen = {
-            0 : '/img/0.jpeg',
+            0: '/img/0.jpeg',
             1: '/img/1.jpeg',
-            2 : '/img/2.jpeg',
-            3 : '/img/3.jpeg',
-            4 : '/img/4.jpeg',
-            5 : '/img/5.jpeg'
+            2: '/img/2.jpeg',
+            3: '/img/3.jpeg',
+            4: '/img/4.jpeg',
+            5: '/img/5.jpeg'
         }
 
         document.getElementById('vistaImagen').src = imagen[parseInt(document.getElementById('imagen').value)];
