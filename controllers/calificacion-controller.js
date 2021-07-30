@@ -226,6 +226,7 @@ const scoreTeam = async (req, res) => {
 }
 
 module.exports = {
+    renderScoreTeam,
     renderViewCalif,
     retriveCalf,
     scoreSingle,

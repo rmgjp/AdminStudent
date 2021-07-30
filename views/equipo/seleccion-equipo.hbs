@@ -1,0 +1,40 @@
+<main class="container">
+    <div class="row m-2 p-3">
+        <h2 class="display-4">Seleccionar Equipo</h2>
+    </div>
+    <div class="row-cols-1">
+        <div class="row-cols-1 ">
+            <div class="col-auto navbar-nav-scroll">
+                <table id="table" data-toggle="table" data-click-to-select="false"
+                       data-search="true"
+                       data-advanced-search="true" data-filter-control="true" name="table">
+                    <thead>
+                    <tr>
+                        <th data-field="estado" data-sorteable="false" data-checkbox="true"></th>
+                        <th data-field="nombre" data-sorteable="true" data-editable="true">Nombre</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                        <div class="form-check"
+                        {{#each equipo}}
+
+                            <tr>
+                                <td class="column form-check-input" ><input id="{{dataValues.id}}" type="radio" value="{{dataValues.id}}"></td>
+                                <td class="column">{{dataValues.nombre}}</td>
+                            </tr>
+                        {{/each}}
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script>
+    $('input:radio').change(function() {
+        $('#console-event').html('Toggle: ' + $(this).prop('checked'));
+        console.log("Change event: " + this.id);
+    })
+</script>
