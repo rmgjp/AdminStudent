@@ -3,46 +3,122 @@
     <div class="row m-2 p-3">
         <h2 class="display-4">Calificar Actividad</h2>
     </div>
-    <div class="row-cols-1  d-flex flex-row-reverse">
-        <div class="col-auto d-flex flex-row-reverse p-3">
-            <div id="toolbar">
-                <h4>{{actividad.dataValues.nombre}}</h4>
-                <h6>Valor de la actividad: {{actividad.dataValues.valor}}</h6>
-                <p>{{actividad.dataValues.descripcion}}</p><br>
+    <form action="/actividad/calificar-equipo/{{idgrupo}}/{{idtema}}/{{actividad.dataValues.id}}/{{idequipo}}?_method=PUT" method="POST">
+        <input type="hidden" name="_method" value="PUT">
+        <input type="hidden" name="estado" id='estado' value="false">
+        <div class="row-cols-1  d-flex flex-row-reverse">
+
+            <div class="col-auto d-flex flex-row-reverse p-3">
+                <div id="toolbar">
+                    <h4>{{actividad.dataValues.nombre}}</h4>
+                    <h6>Valor de la actividad: {{actividad.dataValues.valor}}</h6>
+                    <p>{{actividad.dataValues.descripcion}}</p><br>
+                    <div class="row-cols-1">
+                        <div class="custom-control custom-switch" title="">
+                            <input type="checkbox" class="custom-control-input" id="switchCalificacion" name="switchCalificacion">
+
+                            <label class="custom-control-label" for="switchCalificacion">Aplicar la misma calificación a todo el
+                                equipo.</label>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
+        <div class="row-cols-1">
 
-    {{#iflogico opcion "==" "0"}}
-        <form>
-            <input type="hidden" name="_method" value="PUT">
-            <input type="hidden" id="valorTabla" name="valorTabla" value="{{listaFormateada}}">
-            <div class="col-auto">
-                <table id="table" class="table table-striped" data-toggle="table" data-toolbar="#toolbar"
-                       data-click-to-select="false"
-                       data-search="true"
-                       data-search-text="" data-filter-control="true">
-                    <thead>
-                    <tr>
-                        <th data-field="nombre" data-sorteable="true">Nombre del Equipo</th>
-                        <th data-field="calificacion" id="calificacion" data-editable="true" data-editable-type="number"
-                            data-editable-min="0" data-editable-max="100">Calificación
-                        </th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
-            </div>
+            <input type="hidden" id="valorTablaEquipo" name="valorTablaEquipo" value="{{valorTablaEquipo}}">
 
-            <div class="row p-3 d-flex flex-row-reverse">
-                <button class="btn btn-primary" type="submit" id="finalizar">Finalizar</button>
-                <a class="btn btn-danger" href="/grupo/actividades/{{idgrupo}}/{{idtema}}/{{actividad.dataValues.id}}">Cancelar</a>
-            </div>
-        </form>
-    {{else}}
-        <form>
+            <table id="tableEquipo" class="table table-striped" data-toggle="table" data-toolbar="#toolbar"
+                   data-click-to-select="false"
+                   data-search="false">
+                <thead>
+                <tr>
+                    <th data-field="nombre" data-sorteable="true">Nombre del Equipo</th>
+                    <th data-field="calificacion" id="calificacionEquipo" data-editable="true" data-editable-type="number"
+                        data-editable-min="0" data-editable-max="100">Calificación
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
 
-        </form>
-    {{/iflogico}}
+        </div>
+        <div class="row-cols-1">
+            <p>Integrantes del equipo</p>
+            <input type="hidden" id="valorTablaAlumnos" name="valorTablaAlumnos" value="{{valorTablaAlumnos}}">
+
+            <table id="tableAlumno" class="table table-striped" data-toggle="table"
+                   data-click-to-select="false"
+                   data-search="false">
+                <thead>
+                <tr>
+                    <th data-field="clave" data-sorteable="true">No. Control</th>
+                    <th data-field="nombre" data-sorteable="true">Nombre del Alumno</th>
+                    <th data-field="calificacion" id="calificacionAlumno" data-editable="true" data-editable-min="0" data-editable-max="100">Calificación
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+        <div class="row p-3 d-flex flex-row-reverse">
+            <button class="btn btn-primary" type="submit" id="finalizar">Finalizar</button>
+            <a class="btn btn-danger" href="/grupo/actividades/{{idgrupo}}/{{idtema}}/{{actividad.dataValues.id}}">Cancelar</a>
+        </div>
+    </form>
+    <script type="text/javascript">
+        let tableAlumno = $('#tableAlumno');
+        let tableEquipo = $('#tableEquipo');
+
+        $(function cargarDatos() {
+            let equipos = document.getElementById("valorTablaEquipo").value;
+            equipos = JSON.parse(equipos);
+
+            let rowsEquipos = [];
+            for (let dato = 0; dato < equipos.length; dato++) {
+                rowsEquipos.push(equipos[dato]);
+            }
+            tableEquipo.bootstrapTable('load', rowsEquipos);
+
+            let alumnos = document.getElementById("valorTablaAlumnos").value;
+            alumnos = JSON.parse(alumnos);
+
+            let rowsAlumnos = [];
+            for (let dato = 0; dato < alumnos.length; dato++) {
+                rowsAlumnos.push(alumnos[dato]);
+            }
+            tableAlumno.bootstrapTable('load', rowsAlumnos);
+
+            tableAlumno.bootstrapTable('showColumn', 'calificacion');
+            tableEquipo.bootstrapTable('hideColumn', 'calificacion');
+        });
+
+        tableAlumno.on('editable-save.bs.table', function (e, field, row, oldValue, $el) {
+            let tablaDatosAlumno = tableAlumno.bootstrapTable('getData');
+            document.getElementById("valorTablaAlumnos").value = JSON.stringify(tablaDatosAlumno);
+            console.log(tablaDatosAlumno);
+        });
+
+        tableEquipo.on('editable-save.bs.table', function (e, field, row, oldValue, $el) {
+            let tablaDatosEquipo = tableEquipo.bootstrapTable('getData');
+            document.getElementById("valorTablaEquipo").value = JSON.stringify(tablaDatosEquipo);
+            console.log(tablaDatosEquipo);
+        });
+
+        document.getElementById('switchCalificacion').onclick = function () {
+            if ($(this).is(':checked')) {
+                tableEquipo.bootstrapTable('showColumn', 'calificacion');
+                tableAlumno.bootstrapTable('hideColumn', 'calificacion');
+                document.getElementById('estado').value = "true";
+
+            } else {
+                tableAlumno.bootstrapTable('showColumn', 'calificacion');
+                tableEquipo.bootstrapTable('hideColumn', 'calificacion');
+                document.getElementById('estado').value = "false";
+            }
+        }
+
+    </script>
 </main>

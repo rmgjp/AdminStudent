@@ -3,7 +3,12 @@
         <h2 class="display-4">Seleccionar Equipo</h2>
     </div>
     <div class="row-cols-1">
-        <div class="row-cols-1 ">
+        <div class="row-cols-1">
+            <input type="hidden" id="valorTabla" name="valorTabla" value="{{equipos}}">
+            <input type="hidden" id="idgrupo" name="idgrupo" value="{{idgrupo}}">
+            <input type="hidden" id="idactividad" name="idactividad" value="{{idactividad}}">
+            <input type="hidden" id="idtema" name="idtema" value="{{idtema}}">
+
             <div class="col-auto navbar-nav-scroll">
                 <table id="table" data-toggle="table" data-click-to-select="false"
                        data-search="true"
@@ -11,7 +16,7 @@
                     <thead>
                     <tr>
                         <th data-field="estado" data-sorteable="false" data-checkbox="true"></th>
-                        <th data-field="nombre" data-sorteable="true" data-editable="true">Nombre</th>
+                        <th data-field="nombre" data-sorteable="true">Nombre</th>
                     </tr>
                     </thead>
 
@@ -28,6 +33,12 @@
                     </tbody>
                 </table>
             </div>
+        </div>
+        <div class="row d-flex flex-row-reverse p-2 m-2">
+            <a class="btn btn-primary" type="button" id="siguiente">
+                Siguiente
+            </a>
+            <a class="btn btn-danger" href="/grupo/actividades/{{idgrupo}}">Cancelar</a>
         </div>
     </div>
 </main>

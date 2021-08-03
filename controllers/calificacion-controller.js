@@ -189,28 +189,52 @@ const renderScoreTeam = async (req, res) => {
     });
     const equipos = await Models.equipo.findAll({
         where: {
-            idgrupo: req.params.idgrupo
-        },
-        include: [{
-            model: Models.equipotema,
-            where: {
-                idtema: req.params.idtema
-            }
+            id: req.params.idequipo
+        }
+    });
+    let valorTablaEquipo = [];
+    valorTablaEquipo.push({
+        id: equipo.dataValues.id,
+        nombre: equipo.dataValues.nombre,
+        calificacion: 0
+    });
+
+    valorTablaEquipo = JSON.stringify(valorTablaEquipo);
+    const alumnos = await Models.alumno.findAll({
+        include:[{
+            model: Models.alumnoequipo,
+            where:{idequipo: req.params.idequipo}
         }]
-    })
-    switch (parseInt(configuracion.calife)) {
+    });
 
-        /*Opción 0: hace referencia al caso en el que todos los integrantes obtendrán la misma calificación*/
-        case 0:
-            res.render('actividad/actividad-calificar-equipo',{idgrupo: req.params.idgrupo, idtema: req.params.idtema, actividad, opcion:0})
-            break;
-        /*Opción 1: hace referencia al caso en el que los integrantes obtendrán la calificación sumando un rubro individual y uno en equipo*/
-        case 1:
+    let calificacion = [];
+    for (let alumno in alumnos) {
+        let valor = await Models.calificacion.findOne({
+            where: {
+                idtarea: req.params.idactividad,
+                idalumno: alumnos[alumno].dataValues.id,
+            }
+        });
 
-            break;
+        if (!valor) {
+            calificacion.push(0)
+        } else {
+            calificacion.push(valor.dataValues.valor);
+        }
     }
-    console.log(equipos);
 
+    let valorTablaAlumnos = [];
+    for (let alumno = 0; alumno < alumnos.length; alumno++) {
+        valorTablaAlumnos.push({
+            id: alumnos[alumno].dataValues.id,
+            clave: alumnos[alumno].dataValues.clave,
+            nombre: alumnos[alumno].dataValues.nombre,
+            calificacion: calificacion[alumno]
+        })
+    }
+
+    valorTablaAlumnos = JSON.stringify(valorTablaAlumnos);
+    res.render('actividad/actividad-calificar-equipo',{idgrupo: req.params.idgrupo, idtema: req.params.idtema, actividad, idequipo:req.params.idequipo, valorTablaEquipo,valorTablaAlumnos});
 }
 
 const scoreTeam = async (req, res) => {
@@ -224,7 +248,6 @@ const scoreTeam = async (req, res) => {
             break;
     }
 }
-
 module.exports = {
     renderScoreTeam,
     renderViewCalif,
