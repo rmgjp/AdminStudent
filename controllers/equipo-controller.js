@@ -35,24 +35,30 @@ const renderSelectionTeamsAct = async (req, res) => {
 const renderSelectedTeams = async (req, res) => {
     const equipo = await Models.equipo.findOne({where: {id: req.params.idequipo}});
     const temas = await Models.tema.findAll({
-        include:[{
-            model : Models.equipotema,
-            where:{
+        include: [{
+            model: Models.equipotema,
+            where: {
                 idequipo: req.params.idequipo
             }
         }]
     })
     const alumnos = await Models.alumno.findAll({
         include: [{
-            model : Models.alumnoequipo,
-            where:{idequipo: req.params.idequipo}
+            model: Models.alumnoequipo,
+            where: {idequipo: req.params.idequipo}
         }]
     })
     console.log({alumnos});
     const equipos = await Models.equipo.findAll({where: {idgrupo: req.params.idgrupo}});
 
 
-    res.render('equipo/vista-grupo-equipo', {idgrupo: req.params.idgrupo, equipo, equipos,listaFormateadaAlumnos: JSON.stringify(alumnos), listaFormateadaTemas: JSON.stringify(temas)})
+    res.render('equipo/vista-grupo-equipo', {
+        idgrupo: req.params.idgrupo,
+        equipo,
+        equipos,
+        listaFormateadaAlumnos: JSON.stringify(alumnos),
+        listaFormateadaTemas: JSON.stringify(temas)
+    })
 }
 
 const renderNewTeam = async (req, res) => {
@@ -137,5 +143,6 @@ module.exports = {
     retriveTeamsData,
     renderSelectedTeams,
     renderNewTeam,
-    saveTeam
+    saveTeam,
+    renderSelectionTeamsAct
 }
