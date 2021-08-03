@@ -1,6 +1,9 @@
 <main class="container">
     <div class="row m-2 p-3">
-        <h2 class="display-4">Seleccionar Equipo</h2>
+        <h4 class="display-4">Seleccionar Equipo</h4>
+        <p>
+            Seleccione el equipo que desea calificar. En caso de que la tabla se encuentre vacía es probable que no existan equipos asociados al tema de dicha actividad.
+        </p>
     </div>
     <div class="row-cols-1">
         <div class="row-cols-1">
@@ -10,9 +13,9 @@
             <input type="hidden" id="idtema" name="idtema" value="{{idtema}}">
 
             <div class="col-auto navbar-nav-scroll">
-                <table id="table" data-toggle="table" data-click-to-select="false"
+                <table id="table" data-toggle="table" data-click-to-select="true"
                        data-search="true"
-                       data-advanced-search="true" data-filter-control="true" name="table">
+                       data-advanced-search="true" data-filter-control="true" name="table" data-single-select="true">
                     <thead>
                     <tr>
                         <th data-field="estado" data-sorteable="false" data-checkbox="true"></th>
@@ -21,14 +24,6 @@
                     </thead>
 
                     <tbody>
-                        <div class="form-check"
-                        {{#each equipo}}
-
-                            <tr>
-                                <td class="column form-check-input" ><input id="{{dataValues.id}}" type="radio" value="{{dataValues.id}}"></td>
-                                <td class="column">{{dataValues.nombre}}</td>
-                            </tr>
-                        {{/each}}
 
                     </tbody>
                 </table>
@@ -43,9 +38,30 @@
     </div>
 </main>
 
-<script>
-    $('input:radio').change(function() {
-        $('#console-event').html('Toggle: ' + $(this).prop('checked'));
-        console.log("Change event: " + this.id);
-    })
+<script type="text/javascript">
+    let table = $('#table');
+    let btnSiguiente = document.getElementById('siguiente');
+    let idgrupo = document.getElementById('idgrupo').value;
+    let idtema = document.getElementById('idtema').value;
+    let idactividad = document.getElementById('idactividad').value;
+    let seleccion;
+
+    $(function cargarDatos() {
+        let equipos = document.getElementById("valorTabla").value;
+        equipos = JSON.parse(equipos);
+
+        let rowsEquipos = [];
+        for (let dato = 0; dato < equipos.length; dato++) {
+            rowsEquipos.push(equipos[dato]);
+        }
+        table.bootstrapTable('load', rowsEquipos);
+        btnSiguiente.disabled = true;
+    });
+    table.on('check.bs.table', function (e, row) {
+        seleccion = table.bootstrapTable('getSelections');
+        btnSiguiente.setAttribute('href', `/actividad/calificar-equipo/${idgrupo}/${idtema}/${idactividad}/${seleccion[0].id}`);
+        btnSiguiente.disabled = false;
+        console.log(btnSiguiente.href);
+    });
+
 </script>

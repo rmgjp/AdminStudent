@@ -10,7 +10,8 @@ router.get('/grupo/calificaciones/:idgrupo', calificacionController.retriveCalf)
 
 router.get('/grupo/calificaciones/:idgrupo/:idtema/:modo', calificacionController.viewCalf);
 
-router.get('/actividad/calificar-equipo/:idgrupo/:idtema/:idactividad', calificacionController.renderScoreTeam);
+router.get('/actividad/calificar-equipo/:idgrupo/:idtema/:idactividad/:idequipo', calificacionController.renderScoreTeam);
 
+router.put('/actividad/calificar-equipo/:idgrupo/:idtema/:idactividad/:idequipo', calificacionController.scoreTeam)
 module.exports = router;
 

@@ -173,7 +173,7 @@ const scoreSingle = async (req, res) => {
         } else {
             //Si la calificación no es es null
             // calificación.update();
-            calificacion.update({
+            await calificacion.update({
                 valor: parseInt(calificaciones[alumnopuntero].calificacion)
             })
         }
@@ -187,7 +187,7 @@ const renderScoreTeam = async (req, res) => {
             id: req.params.idactividad
         }
     });
-    const equipos = await Models.equipo.findAll({
+    const equipo = await Models.equipo.findOne({
         where: {
             id: req.params.idequipo
         }
@@ -238,18 +238,60 @@ const renderScoreTeam = async (req, res) => {
 }
 
 const scoreTeam = async (req, res) => {
-    switch (parseInt(configuracion.calife)) {
-        /*Opción 0: hace referencia al caso en el que todos los integrantes obtendrán la misma calificación*/
-        case 0:
+    const datosEquipo = JSON.parse(req.body.valorTablaEquipo);
+    const datosAlumnos = JSON.parse(req.body.valorTablaAlumnos);
+    const valorSwitch =  (req.body.estado === 'true');
 
-            break;
-        /*Opción 1: hace referencia al caso en el que los integrantes obtendrán la calificación sumando un rubro individual y uno en equipo*/
-        case 1:
-            break;
+    if(valorSwitch){
+        for(let alumno in datosAlumnos){
+
+            let calificacion = await Models.calificacion.findOne({
+                where: {
+                    idtarea: req.params.idactividad,
+                    idalumno: datosAlumnos[alumno].id,
+                }
+            })
+            if(!calificacion){
+                await Models.calificacion.create({
+                        idtarea: req.params.idactividad,
+                        idalumno: datosAlumnos[alumno].id,
+                        valor: datosEquipo[0].calificacion
+                });
+            }
+            else{
+                await calificacion.update({
+                    valor: datosEquipo[0].calificacion
+                });
+            }
+        }
     }
+    else {
+        for(let alumno in datosAlumnos){
+            let calificacion = await Models.calificacion.findOne({
+                where: {
+                    idtarea: req.params.idactividad,
+                    idalumno: datosAlumnos[alumno].id,
+                }
+            })
+            if(!calificacion){
+                await Models.calificacion.create({
+                    idtarea: req.params.idactividad,
+                    idalumno: datosAlumnos[alumno].id,
+                    valor: datosAlumnos[alumno].calificacion
+                });
+            }
+            else{
+                await calificacion.update({
+                    valor: datosAlumnos[alumno].calificacion
+                });
+            }
+        }
+    }
+    res.redirect(`/grupo/actividades/${req.params.idgrupo}/${req.params.idtema}/${req.params.idactividad}`);
 }
 module.exports = {
     renderScoreTeam,
+    scoreTeam,
     renderViewCalif,
     retriveCalf,
     scoreSingle,
