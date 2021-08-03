@@ -14,7 +14,6 @@ $(function cargarDatos(){
         table.bootstrapTable('load', rows);
         i = lista.length;
         tablaDatos = table.bootstrapTable('getData');
-        console.log(tablaDatos);
         document.getElementById("valorTabla").value = JSON.stringify(tablaDatos);
     }
 })
@@ -22,7 +21,6 @@ $(function cargarDatos(){
 table.on('editable-save.bs.table', function(e, field, row, oldValue, $el){
     tablaDatos = table.bootstrapTable('getData');
     document.getElementById("valorTabla").value = JSON.stringify(tablaDatos);
-    console.log(tablaDatos);
 })
 
 
@@ -40,8 +38,7 @@ $('#add').on('click', function () {
         document.getElementById("NombreBox").value = "";
         tablaDatos = table.bootstrapTable('getData');
         document.getElementById("valorTabla").value = JSON.stringify(tablaDatos);
-        i = i + 1
-        console.log(tablaDatos);
+        i = i + 1;
     }
 })
 
