@@ -55,5 +55,5 @@ $('#remove').on('click', function () {
     })
     tablaDatos = table.bootstrapTable('getData');
     document.getElementById("valorTabla").value = JSON.stringify(tablaDatos);
-    i = i - 1
+    i = i - 1;
 })
