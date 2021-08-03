@@ -3,11 +3,6 @@ const temaController = require('./tema-controller');
 const alumnoController = require('./alumno-controller');
 
 const retriveTeamsData = async (req, res) => {
-    const temas = await Models.tema.findAll({
-        where: {
-            idgrupo: req.params.idgrupo
-        }
-    })
     const equipos = await Models.equipo.findAll({where: {idgrupo: req.params.idgrupo}});
 
     if (!equipos || equipos.length === 0) {
@@ -16,6 +11,26 @@ const retriveTeamsData = async (req, res) => {
         res.redirect('/grupo/equipos/' + req.params.idgrupo + '/' + equipos[0].dataValues.id);
     }
 }
+
+const getDataTeams = async (req, res) => {
+    return Models.equipo.findAll({where: {idgrupo: req.params.idgrupo}});
+}
+
+const renderSelectionTeamsAct = async (req, res) => {
+    const equipos = await Models.equipo.findAll(
+        {
+            where:
+                {idgrupo: req.params.idgrupo},
+            include: [{
+                model : Models.equipotema,
+                where:{idtema: req.params.idtema}
+            }]
+        },
+    );
+
+    res.render('equipo/seleccion-equipo', {equipos: JSON.stringify(equipos), idgrupo: req.params.idgrupo, idactividad: req.params.idactividad, idtema: req.params.idtema});
+}
+
 
 const renderSelectedTeams = async (req, res) => {
     const equipo = await Models.equipo.findOne({where: {id: req.params.idequipo}});
@@ -118,6 +133,7 @@ function tryParseJSON(jsonString) {
 }
 
 module.exports = {
+    getDataTeams,
     retriveTeamsData,
     renderSelectedTeams,
     renderNewTeam,
