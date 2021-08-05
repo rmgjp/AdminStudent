@@ -1,0 +1,89 @@
+<main class="container m-2 p-2">
+    <div class="row-cols-1">
+        <h2 class="display-6">Crear reporte de reprobación y deserción</h2>
+    </div>
+    <form action="/generar-reporte" method="POST">
+        <div class="row-cols-1">
+            <div class="form-group">
+                <label for="coordinadorNombre">Coordinador(a)</label>
+                <input type="text" class="form-control" id="coordinadorNombre" name="coordinadorNombre">
+            </div>
+        </div>
+        <div class="row-cols-1">
+            <select class="form-select custom-select" id="pronombre" name="pronombre" required>
+                <option value="Coordinadora de carrera de ">Coordinadora de carrera de </option>
+                <option value="Coordinador de carrera de ">Coordinador de carrera de </option>
+            </select>
+            <label for="carrera">Carrera</label>
+            <select class="form-select custom-select" id="carrera" name="carrera" required>
+                <option value="Ingenieria en Aeronáutica">Ingenieria en Aeronáutica</option>
+                <option value="Licenciatura en Biología">Licenciatura en Biología</option>
+                <option value="Ingenieria en Bioquímica">Ingenieria en Bioquímica</option>
+                <option value="Ingenieria en Electromecánica">Ingenieria en Electromecánica</option>
+                <option value="Ingenieria en Electrónica">Ingenieria en Electrónica</option>
+                <option value="Ingenieria en Gestión Empresarial">Ingenieria en Gestión Empresarial</option>
+                <option value="Ingenieria en Industrial">Ingenieria Industrial</option>
+                <option value="Ingenieria en Informática">Ingenieria en Informática</option>
+                <option value="Ingenieria en Logística">Ingenieria en Logística</option>
+                <option value="Ingenieria en Materiales">Ingenieria en Materiales</option>
+                <option value="Ingenieria en Mecatrónica">Ingenieria en Mecatrónica</option>
+                <option value="Ingenieria en Química">Ingenieria en Química</option>
+                <option value="Ingenieria en Sistemas Automotrices">Ingenieria en Sistemas Automotrices</option>
+                <option value="Ingenieria en Sistemas Computacionales">Ingenieria en Sistemas Computacionales</option>
+            </select>
+        </div>
+        <div class="row-cols-1">
+            <div class="form-group">
+                <label for="mensaje">Mensaje</label>
+                <textarea type="text" class="form-control" id="mensaje" name="mensaje">
+
+                </textarea>
+            </div>
+        </div>
+        <div class="row-cols-1">
+            <p>Seleccione los grupos que se incluiran en el reporte</p>
+        </div>
+        <div class="row-cols-1">
+            <div class="col-auto navbar-nav-scroll">
+                <input type="hidden" id="valorTabla" name="valorTabla" value="{{listaFormateada}}">
+                <table id="table" data-toggle="table" data-click-to-select="true" name="table" >
+                    <thead>
+                    <tr>
+                        <th data-field="estado" data-sorteable="false" data-checkbox="true"></th>
+                        <th data-field="clave" data-sorteable="true">Clave</th>
+                        <th data-field="asignatura" data-sorteable="true">Asignatura</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+        <div class="row d-flex flex-row-reverse p-2 m-2">
+            <button type="submit" class="btn btn-primary" id="siguiente">
+                Siguiente
+            </button>
+            <a class="btn btn-danger" href="/">Cancelar</a>
+        </div>
+    </form>
+</main>
+
+<script type="text/javascript" src="/js/llenar-tabla-helper.js"></script>
+<script>
+    $(table.bootstrapTable('uncheckAll'));
+
+    //let table = $('#table');
+    table.on('check.bs.table', function (e, row) {
+        document.getElementById('valorTabla').value = JSON.stringify(table.bootstrapTable('getSelections'));
+        console.log(JSON.stringify(table.bootstrapTable('getSelections')));
+    });
+
+    table.on('uncheck.bs.table', function (e, row) {
+        document.getElementById('valorTabla').value = JSON.stringify(table.bootstrapTable('getSelections'));
+        console.log(JSON.stringify(table.bootstrapTable('getSelections')));
+    });
+</script>
