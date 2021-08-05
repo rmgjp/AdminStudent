@@ -1,5 +1,6 @@
 var table = $('#table')
 var tablaDatos;
+var i = 0;
 
 $(function cargarDatos(){
     var lista = document.getElementById("valorTabla").value;
