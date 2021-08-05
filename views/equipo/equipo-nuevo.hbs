@@ -33,7 +33,7 @@
         <div class="row-cols-1 ">
             <div class="col-auto navbar-nav-scroll">
                 <input type="hidden" id="valorTablaTemas" name="valorTablaTemas" value="{{listaFormateadaTemas}}">
-                <table id="tableTemas" data-toggle="table" data-click>
+                <table id="tableTemas" data-toggle="table" data-click-to-select="true">
                     <thead>
                     <tr>
                         <th data-field="estado" data-sorteable="false" data-checkbox="true"></th>
@@ -61,7 +61,7 @@
         <div class="row-cols-1 ">
             <div class="col-auto navbar-nav-scroll">
                 <input type="hidden" id="valorTablaAlumnos" name="valorTablaAlumnos" value="{{listaFormateadaAlumnos}}">
-                <table id="tableAlumnos" data-toggle="table" data-toolbar="#toolbar" data-click-to-select="false"
+                <table id="tableAlumnos" data-toggle="table" data-toolbar="#toolbar" data-click-to-select="true"
                        data-search="true"
                        data-advanced-search="true" data-filter-control="true">
                     <thead>
