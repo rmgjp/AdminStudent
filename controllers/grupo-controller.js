@@ -105,7 +105,13 @@ const retriveGroupData = async (req, res) => {
     const temas = await Models.tema.findAll({
         where:{idgrupo: req.params.idgrupo}
     })
-    res.redirect("/grupo-inicio/"+ req.params.idgrupo+"/"+temas[0].dataValues.id);
+    if(!temas || temas.length === 0){
+        const grupo = await getGroupData(req, res);
+        res.render('grupo/vista-inicio-grupo', {grupo});
+    }
+    else{
+        res.redirect("/grupo-inicio/"+ req.params.idgrupo+"/"+temas[0].dataValues.id);
+    }
 }
 
 const renderGroupData = async (req, res) =>{
