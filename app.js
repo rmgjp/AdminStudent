@@ -78,6 +78,7 @@ app.use(require('./routes/grupos-rutas'));
 app.use(require('./routes/calificaciones-rutas'));
 app.use(require('./routes/tema-rutas'));
 app.use(require('./routes/equipo-rutas'));
+app.use(require('./routes/reporte-rutas'));
 
 
 
