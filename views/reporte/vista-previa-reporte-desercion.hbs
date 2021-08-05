@@ -1,0 +1,51 @@
+<header class="container d-print-">
+    <figure class="row-cols-1 d-flex align-items-center">
+        <img style="width: auto; height: 100%;" src="/img/Encabezado.png" alt="Encabezado">
+    </figure>
+</header>
+<main class="container d-print-">
+    <div class="row m-2 p-2 flex-row-reverse">
+        Irapuato, Gto. {{fecha}}
+    </div>
+    <div class="row  m-2 p-2 flex-row-reverse">
+        Asunto: Reporte parcial
+    </div>
+    <div class="row m-2 p-2">
+        {{coordinadorNombre}} {{pronombre}} {{carrera}}
+    </div>
+    <div class="row m-2 p-2 -align-justify">
+        {{mensaje}}
+    </div>
+    <div class="row-cols-1 m-2 p-2">
+        <h5>Índice de reprobación</h5>
+    </div>
+    <div class="row-cols-1">
+        <div class="col-auto navbar-nav-scroll">
+            <input type="hidden" id="valorTabla" name="valorTabla" value="{{listaFormateada}}">
+            <table id="table" data-toggle="table" data-click-to-select="true" name="table">
+                <thead>
+                    <th data-field="clave" data-sorteable="true">Clave</th>
+                    <th data-field="asignatura" data-sorteable="true">Asignatura</th>
+                    {{#each temas}}
+                    {{/each}}
+                </tr>
+                </thead>
+
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <div class="row-cols-1 m-2 p-2">
+        <button id='current' class="btn btn-primary no-print" onclick="print_current_page()">Imprimir</button>
+    </div>
+</main>
+
+<script type="text/javascript">
+    function print_current_page() {
+        window.print();
+    }
+</script>
