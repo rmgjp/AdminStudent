@@ -72,7 +72,11 @@ const calcCalif = async (req, res) => {
 }
 const retriveCalf = async (req, res) => {
     const temas = await Models.tema.findAll({where: {idgrupo: req.params.idgrupo}})
-    res.redirect("/grupo/calificaciones/" + req.params.idgrupo + "/" + temas[0].dataValues.id + "/0");
+    if(!temas || temas.length === 0){
+        res.render('calificacion/vista-grupo-calificaciones', {idgrupo:req.params.idgrupo});
+    }else{
+        res.redirect("/grupo/calificaciones/" + req.params.idgrupo + "/" + temas[0].dataValues.id + "/0");
+    }
 }
 
 
