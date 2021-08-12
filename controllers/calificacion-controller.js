@@ -72,8 +72,9 @@ const calcCalif = async (req, res) => {
 }
 const retriveCalf = async (req, res) => {
     const temas = await Models.tema.findAll({where: {idgrupo: req.params.idgrupo}})
+    const menu = 1;
     if(!temas || temas.length === 0){
-        res.render('calificacion/vista-grupo-calificaciones', {idgrupo:req.params.idgrupo});
+        res.render('calificacion/vista-grupo-calificaciones', {idgrupo:req.params.idgrupo, menu});
     }else{
         res.redirect("/grupo/calificaciones/" + req.params.idgrupo + "/" + temas[0].dataValues.id + "/0");
     }
@@ -90,17 +91,18 @@ const viewCalf = async (req, res) => {
 
     //verificar si se selecciono un tema
     if (!req.params.idtema) {
-        res.render('calificacion/vista-grupo-calificaciones', {temas, idgrupo: req.params.idgrupo, asignatura, clave});
+        const menu = 1;
+        res.render('calificacion/vista-grupo-calificaciones', {temas, idgrupo: req.params.idgrupo, asignatura, clave, menu});
     } else {
         const tema = await Models.tema.findOne({where: {id: req.params.idtema}});
         //Busqueda de las actividades por grupo
         const actividades = await Models.tarea.findAll({where: {idtema: req.params.idtema}})
 
         let listaFormateada = await calcCalif(req, res);
-
+        const menu = 1;
         res.render('calificacion/vista-grupo-calificaciones', {
             temas, idgrupo: req.params.idgrupo, actividades, listaFormateada,
-            asignatura, clave, tema
+            asignatura, clave, tema, menu
         });
     }
 }

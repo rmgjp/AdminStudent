@@ -76,6 +76,7 @@ const deleteActivity = async (req, res) => {
 //Obtener todas las unidades de la asignatura y las actividades de está
 const getTopicsAndActivities = async (req, res) => {
     //Obtener datos del grupo
+    const menu = 1;
     const grupo = await Models.grupo.findOne({where: {id: req.params.idgrupo}});
     //Obtenemos temas de ese grupo
     const temas = await Models.tema.findAll({where: {idgrupo: req.params.idgrupo}});
@@ -92,7 +93,7 @@ const getTopicsAndActivities = async (req, res) => {
         idgrupo: req.params.idgrupo,
         asignatura: grupo.dataValues.asignatura,
         clave: grupo.dataValues.clave,
-        datos
+        datos, menu
     });
 }
 //Obtener los temas/unidades de la asignatura, las actividades de
@@ -102,6 +103,7 @@ const getTopicActivitiesAndActivity = async (req, res) => {
     const grupo = await Models.grupo.findOne({where: {id: req.params.idgrupo}});
     //Obtenemos temas de ese grupo
     const temas = await Models.tema.findAll({where: {idgrupo: req.params.idgrupo}});
+    const menu = 1;
     let datos = [];
     for (let tema in temas) {
         const actividades = await Models.tarea.findAll({where: {idtema: temas[tema].dataValues.id}});
@@ -119,7 +121,8 @@ const getTopicActivitiesAndActivity = async (req, res) => {
         actividad,
         tipoActividad: actividad.tipo,
         asignatura: grupo.dataValues.asignatura,
-        clave: grupo.dataValues.clave
+        clave: grupo.dataValues.clave,
+        menu
     });
 
 }

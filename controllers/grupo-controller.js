@@ -3,6 +3,8 @@ const fs = require('fs');
 const path = require('path');
 const config = require('../config/userconfig.json');
 const calificacionController = require('./calificacion-controller');
+let menu;
+const visualizacion = 0;
 
 /*Este controlador contiene unicamente métodos relacionados con el manejo
 del modelo de datos Grupo*/
@@ -21,7 +23,8 @@ const getAllGroups = async (req, res) => {
 const renderAllGroups = async (req, res) => {
     const estado = 3;
     const grupos = await getAllGroups(req, res);
-    res.render('index', {grupos, config, estado});
+    menu = 0;
+    res.render('index', {grupos, config, estado, menu});
 }
 
 //Actualizar grupo a estado 2 (papelera)
@@ -86,6 +89,7 @@ const getAllGroupsByState = async (req, res, next) => {
             estado: req.params.estado
         }
     })
+    menu = 0;
     //console.log({grupos})
     //Renderiza la vista index, sobrecargando el objeto grupos
     res.render('index', {grupos, estado: req.params.estado, config})
