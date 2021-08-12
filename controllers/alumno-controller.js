@@ -262,7 +262,8 @@ const getStudentAndStudents = async (req, res) => {
     }
 
     listaFormateada = JSON.stringify(listaFormateada);
-    res.render('alumno/vista-grupo-alumnos', {alumnos, idgrupo, asignatura, clave, alumno, listaFormateada});
+    const menu = 1;
+    res.render('alumno/vista-grupo-alumnos', {alumnos, idgrupo, asignatura, clave, alumno, listaFormateada, menu});
 }
 
 //Exportación de los métodos para su posterior uso dentro del programa
