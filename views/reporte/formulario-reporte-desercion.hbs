@@ -14,10 +14,10 @@
         <div class="row-cols-1 m-2 p-2">
             <div class="form-group">
                 <label for="coordinadorNombre">Coordinador(a)</label>
-                <input type="text" class="form-control" id="coordinadorNombre" name="coordinadorNombre">
+                <input type="text" class="form-control" id="coordinadorNombre" name="coordinadorNombre" required>
             </div>
         </div>
-        <div class="row-cols-1">
+        <div class="row-cols-1 m-2 p-2">
             <select class="form-select custom-select" id="pronombre" name="pronombre" required>
                 <option value="Coordinadora de carrera de ">Coordinadora de carrera de</option>
                 <option value="Coordinador de carrera de ">Coordinador de carrera de</option>
@@ -53,7 +53,7 @@
         <div class="row-cols-1">
             <div class="col-auto navbar-nav-scroll">
                 <input type="hidden" id="valorTabla" name="valorTabla" value="{{listaFormateada}}">
-                <table id="table" data-toggle="table" data-click-to-select="true" name="table" >
+                <table id="table" data-toggle="table" data-click-to-select="true">
                     <thead>
                     <tr>
                         <th data-field="estado" data-sorteable="false" data-checkbox="true"></th>
@@ -67,7 +67,6 @@
                     </tbody>
                 </table>
             </div>
-
         </div>
 
         <div class="row d-flex flex-row-reverse p-2 m-2">
@@ -81,7 +80,7 @@
 
 <script type="text/javascript" src="/js/llenar-tabla-helper.js"></script>
 <script>
-    $(table.bootstrapTable('uncheckAll'));
+    //$(table.bootstrapTable('uncheckAll'));
 
     //let table = $('#table');
     table.on('check.bs.table', function (e, row) {
