@@ -23,7 +23,8 @@ const getTopicByGroup = async (req, res) => {
             idgrupo: req.params.idgrupo
         }
     });
-    res.render('tema/vista-grupo-temas', {tema, idgrupo, asignatura, clave});
+    const menu = 1;
+    res.render('tema/vista-grupo-temas', {tema, menu ,idgrupo, asignatura, clave});
 }
 
 
@@ -175,7 +176,8 @@ const getTopicsByFile = async (req, res) => {
                         idgrupo: req.params.idgrupo
                     }
                 });
-                res.render('tema/vista-grupo-temas', {tema, idgrupo, asignatura, clave, error});
+                const menu = 1;
+                res.render('tema/vista-grupo-temas', {tema,menu , idgrupo, asignatura, clave, error});
 
             }
         }
