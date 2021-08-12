@@ -1,0 +1,146 @@
+<title>{{asignatura}} {{clave}} - Inicio - Seguimiento de Estudiantes</title>
+<div class="row m-2 p-2 flex-grow-1 flex-shrink-0">
+    <nav id="sideBar" class="col-md-3 col-lg-2 d-md-block bg-light sidebar navbar-nav-scroll">
+        <div class="sidebar-sticky">
+            <h4 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                Temas</h4>
+            <ul class="nav flex-column">
+                {{#each temas}}
+                    <li class="nav-item"><a class="nav-link"
+                        {{#if ../alumno}}
+                                            href="/grupo-inicio/alumno/{{../idgrupo}}/{{dataValues.id}}/{{../alumno.dataValues.id}}"
+                        {{else}}
+                                            href="/grupo-inicio/equipo/{{../idgrupo}}/{{dataValues.id}}/{{../equipo.dataValues.id}}"
+                        {{/if}}><i
+                            class="bi-book-half"></i><strong> {{dataValues.nombre}}</strong></a></li>
+                {{/each}}
+                <li class="nav-item"><a class="nav-link" href="#"><i class="bi-book-half"></i><strong> Todos</strong></a></li>
+            </ul>
+        </div>
+    </nav>
+    <main class="col col-md col-xl col-sm col-lg">
+        <div class="row">
+            <div class="col">
+                <span>
+                    <a style="font-size: 1.75rem;font-weight: 500;line-height: 1.2; margin-bottom: 0.5rem;" {{#if alumno}} href="/grupo-inicio/alumnos/{{idgrupo}}/{{idtema}}"
+                    {{else}} href="/grupo-inicio/equipos/{{idgrupo}}/{{idtema}}"
+                    {{/if}}>
+                        <i class="bi bi-arrow-left-circle-fill" style="size:1.75rem;"></i>
+                    </a>
+                </span>
+                <a style="font-size: 1.75rem;font-weight: 500;line-height: 1.2; margin-bottom: 0.5rem;">Tema: {{tema.dataValues.nombre}}</a>
+            </div>
+        </div>
+
+        {{#if alumno}}
+            <!-- Datos personales del alumno -->
+            <div class="row m-2">
+                <div class="col">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col">
+                                    <h4><i class="bi bi-file-person-fill"></i> Datos del Alumno</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col">
+
+                                    <label for="nombre" class="form-label col-form-label-sm">Apellidos y
+                                        Nombre(s)</label>
+                                    <input type="text" class="form-control form-control-sm" disabled
+
+                                           name="nombre"
+                                           id="nombre" value="{{alumno.dataValues.nombre}}" required>
+                                </div>
+                            </div>
+                            <div class="row ">
+                                <div class="col col-xl col-lg col-sm col-md">
+                                    <label for="clave" class="form-label col-form-label-sm">Clave</label>
+                                    <input type="text" class="form-control form-control-sm" disabled
+                                           id="clave"
+                                           name="clave"
+                                           value="{{alumno.dataValues.clave}}" required>
+                                </div>
+                                <div class="col col-xl col-lg col-sm col-md">
+                                    <label for="correo"
+                                           class="form-label col-form-label-sm disabled">Correo</label>
+                                    <input type="email" name="correo" id="correo"
+                                           class="form-control form-control-sm" disabled
+                                           value="{{alumno.dataValues.correo}}">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Graficación de los datos -->
+            <div class="row d-flex m-2 p-2">
+                <div class="col-4 col-md-5 col-xl-3 col-sm-4 col-lg-3 graph-container">
+                        <div class="caption text-center">Indice de Reprobación</div>
+                        <input type="hidden" id="indiceReprobacionData" value="{{dataReprobacion}}">
+                        <div id="indiceReprobacion" style="width: 100%; height: 250px;">
+                        </div>
+                        <p>
+                            Actividades aprobadas: {{actAprobadas}}
+                        </p>
+                        <p>
+                            Actividades reprobadas: {{actReprobadas}}
+                        </p>
+                </div>
+                <div class="col col-md col-xl col-sm col-lg graph-container">
+                    <div class="caption text-center">Rendimiento en actividades</div>
+                    <input type="hidden" id="actividadesReprobacionData" value="{{dataReprobacionAct}}">
+                    <div id="actividadesAprobacion" style="width: 90%; height: 250px;"></div>
+
+                </div>
+            </div>
+            <script>
+                dataReprobacion = document.getElementById("indiceReprobacionData").value;
+                dataReprobacionAct = document.getElementById("actividadesReprobacionData").value;
+
+                console.log(JSON.parse(dataReprobacionAct));
+
+                new Morris.Bar({
+                    element: "actividadesAprobacion",
+                    data: JSON.parse(dataReprobacionAct),
+                    xkey:'label',
+                    ykeys:['value'],
+                    labels: ['Calificación'],
+                    resize: true
+                })
+
+                new Morris.Donut({
+                    element: "indiceReprobacion",
+                    data: JSON.parse(dataReprobacion),
+
+                    formatter: function (y) {
+                        return y + "%"
+                    },
+                    resize: true,
+                })
+
+
+
+            </script>
+        {{else}}
+            <!--Informacion del equipo-->
+            <div class="row">
+                <div class="col">
+
+                </div>
+            </div>
+            <!-- Graficación de los datos EQUIPO -->
+            <div class="row">
+                <div class="col">
+
+                </div>
+            </div>
+            <script>
+
+            </script>
+        {{/if}}
+    </main>
+</div>

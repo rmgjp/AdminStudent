@@ -1,0 +1,45 @@
+<title>{{asignatura}} {{clave}} - Inicio - Seguimiento de Estudiantes</title>
+<div class="row m-2 p-2 flex-grow-1 flex-shrink-0">
+    <nav id="sideBar" class="col-md-3 col-lg-2 d-md-block bg-light sidebar navbar-nav-scroll">
+        <div class="sidebar-sticky">
+            <h4 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                Temas</h4>
+            <ul class="nav flex-column">
+                {{#each temas}}
+                    <li class="nav-item"><a class="nav-link" {{#if ../alumnos}}href= "/grupo-inicio/alumnos/{{../idgrupo}}/{{dataValues.id}}"
+                        {{else}}href="/grupo-inicio/equipos/{{../idgrupo}}/{{dataValues.id}}" {{/if}}><i
+                            class="bi-book-half"></i><strong> {{dataValues.nombre}}</strong></a></li>
+                {{/each}}
+            </ul>
+        </div>
+    </nav>
+
+    <main class="col col-md col-xl col-sm col-lg">
+        <div class="row">
+            <div class="col">
+                <h3>Tema: {{tema.dataValues.nombre}}</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="list-group list-group-flush border-bottom h-auto navbar-nav-scroll nav-fill">
+                    {{#if alumnos}}
+                        {{#each alumnos}}
+                            <a type="button" class="list-group-item list-group-item-action" aria-current="true"
+                               href="/grupo-inicio/alumno/{{../idgrupo}}/{{../tema.dataValues.id}}/{{dataValues.id}}">
+                                <i class="bi-person-badge-fill"></i><strong>{{dataValues.clave}}</strong>
+                                - {{dataValues.apellidos}} {{dataValues.nombre}}
+                            </a>
+                        {{/each}}
+                    {{/if}}
+                    {{#if equipos}}
+                        {{#each equipos}}
+                            <a class="list-group-item list-group-item-action button-sm"
+                               href="/grupo-inicio/equipo/{{../idgrupo}}/{{../tema.dataValues.id}}/{{dataValues.id}}">{{dataValues.nombre}}</a>
+                        {{/each}}
+                    {{/if}}
+                </div>
+            </div>
+        </div>
+    </main>
+</div>

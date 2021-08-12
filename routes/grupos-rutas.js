@@ -57,7 +57,6 @@ router.put('/grupo/editar/:idgrupo', controladorGrupo.editGroup);
 
 //Ruta para vista inicial del grupo.
 router.get('/grupo-inicio/:idgrupo', controladorGrupo.retriveGroupData);
-
 router.get('/grupo-inicio/:idgrupo/:idtema', controladorGrupo.renderGroupData);
 
 //Ruta para eliminar el grupo cuando se cancela el Wizard.
