@@ -22,8 +22,8 @@ const renderSelectionTeamsAct = async (req, res) => {
             where:
                 {idgrupo: req.params.idgrupo},
             include: [{
-                model : Models.equipotema,
-                where:{idtema: req.params.idtema}
+                model: Models.equipotema,
+                where: {idtema: req.params.idtema}
             }]
         },
     );
@@ -79,12 +79,15 @@ const renderNewTeam = async (req, res) => {
 
     res.render('equipo/equipo-nuevo', {listaFormateadaAlumnos, listaFormateadaTemas, idgrupo: req.params.idgrupo});
 }
+
 const saveTeam = async (req, res) => {
     const nombre = req.body.nombreBox;
     const listaTemas = tryParseJSON(req.body.listaTemas);
     const listaAlumnos = tryParseJSON(req.body.listaAlumnos);
     let errors = [];
-    if (!listaTemas || !listaAlumnos) {
+    const validacion = await validateStudents(req, res);
+
+    if (!listaTemas || !listaAlumnos || validacion.estado) {
         //const listaFormateadaAlumnos = req.body.valorTablaAlumnos.value;
         //const listaFormateadaTemas = req.body.valorTablaTemas.value;
         if (!listaTemas) {
@@ -119,7 +122,70 @@ const saveTeam = async (req, res) => {
         }
         res.redirect('/grupo/equipos/' + req.params.idgrupo);
     }
+    /**
+     * 1.- Buscar equipos con base a los temas
+     * 2.- Extraer los alumnos con base a los equipos obtenidos
+     * 3.- Comparar los alumnos a guardar en un equipo con los guardados anteriormente
+     *
+     */
 
+}
+
+const validateStudents = async (req, res) => {
+    const listaTemas = tryParseJSON(req.body.listaTemas);
+    const listaAlumnos = tryParseJSON(req.body.listaAlumnos);
+
+    let resultado = {
+        estado: false,
+        alumnos: []
+    };
+
+    for (let tema in listaTemas) {
+        const equipos = await Models.equipotema.findAll({
+            idtema: listaTemas[tema].id,
+        });
+
+        for (let equipo in equipos) {
+            for (let alumno in listaAlumnos) {
+                const alumnosequipo = await Models.alumnoequipo.findOne({where: {idalumno: listaAlumnos[alumno].id}})
+                if (alumnosequipo) {
+                    resultado.estado = true;
+                    resultado.alumnos.push(listaAlumnos[alumno]);
+                }
+            }
+        }
+    }
+
+    resultado.alumnos = resultado.alumnos.filter((value, index) => resultado.alumnos.indexOf(value) === index);
+
+    return resultado;
+}
+
+const deleteTeam = async (req, res) => {
+    const alumnoEquipo = await Models.alumnoequipo.findAll({
+        where: {
+            idequipo: req.params.idequipo
+        }
+    });
+
+    for (let alumno in alumnoEquipo) {
+        await alumnoEquipo[alumno].destroy();
+    }
+
+    const equipoTema = await Models.equipotema.findAll({
+        where: {
+            idequipo: req.params.idequipo
+        }
+    });
+
+    for (let tema in equipoTema) {
+        await equipoTema[tema].destroy();
+    }
+
+    const equipo = await Models.equipo.findOne({where: {id: req.params.idequipo}});
+    await equipo.destroy();
+
+    res.redirect('/grupo/equipos/' + req.params.idgrupo);
 }
 
 function tryParseJSON(jsonString) {
@@ -144,5 +210,6 @@ module.exports = {
     renderSelectedTeams,
     renderNewTeam,
     saveTeam,
-    renderSelectionTeamsAct
+    renderSelectionTeamsAct,
+    deleteTeam
 }
