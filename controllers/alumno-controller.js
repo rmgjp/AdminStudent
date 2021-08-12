@@ -251,6 +251,9 @@ const getStudentAndStudents = async (req, res) => {
                 }
             }
         }
+        if(califinal < 70){
+            califinal = 'NA';
+        }
         listaFormateada.push({
             no_unidad: temas[tema].dataValues.numerotema,
             nombre: temas[tema].dataValues.nombre,
