@@ -1,9 +1,17 @@
-<main class="container m-2 p-2">
-    <div class="row-cols-1">
-        <h2 class="display-6">Crear reporte de reprobación y deserción</h2>
+<div class="container">
+    {{#if error}}
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>¡Error!</strong> {{error}}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    {{/if}}
+    <div class="row-cols-1 m-2 p-2">
+        <h2 class="display-6">Crear reporte parcial</h2>
     </div>
-    <form action="/generar-reporte" method="POST">
-        <div class="row-cols-1">
+    <form action="/generar-reporte" method="POST" >
+        <div class="row-cols-1 m-2 p-2">
             <div class="form-group">
                 <label for="coordinadorNombre">Coordinador(a)</label>
                 <input type="text" class="form-control" id="coordinadorNombre" name="coordinadorNombre">
@@ -11,8 +19,8 @@
         </div>
         <div class="row-cols-1">
             <select class="form-select custom-select" id="pronombre" name="pronombre" required>
-                <option value="Coordinadora de carrera de ">Coordinadora de carrera de </option>
-                <option value="Coordinador de carrera de ">Coordinador de carrera de </option>
+                <option value="Coordinadora de carrera de ">Coordinadora de carrera de</option>
+                <option value="Coordinador de carrera de ">Coordinador de carrera de</option>
             </select>
             <label for="carrera">Carrera</label>
             <select class="form-select custom-select" id="carrera" name="carrera" required>
@@ -32,15 +40,14 @@
                 <option value="Ingenieria en Sistemas Computacionales">Ingenieria en Sistemas Computacionales</option>
             </select>
         </div>
-        <div class="row-cols-1">
+        <div class="row-cols-1 m-2 p-2">
             <div class="form-group">
                 <label for="mensaje">Mensaje</label>
-                <textarea type="text" class="form-control" id="mensaje" name="mensaje">
-
+                <textarea type="text" class="form-control" id="mensaje" name="mensaje" required>
                 </textarea>
             </div>
         </div>
-        <div class="row-cols-1">
+        <div class="row-cols-1 m-2 p-2">
             <p>Seleccione los grupos que se incluiran en el reporte</p>
         </div>
         <div class="row-cols-1">
@@ -70,7 +77,7 @@
             <a class="btn btn-danger" href="/">Cancelar</a>
         </div>
     </form>
-</main>
+</div>
 
 <script type="text/javascript" src="/js/llenar-tabla-helper.js"></script>
 <script>
@@ -82,7 +89,17 @@
         console.log(JSON.stringify(table.bootstrapTable('getSelections')));
     });
 
+    table.on('check-all.bs.table', function (e, row) {
+        document.getElementById('valorTabla').value = JSON.stringify(table.bootstrapTable('getSelections'));
+        console.log(JSON.stringify(table.bootstrapTable('getSelections')));
+    });
+
     table.on('uncheck.bs.table', function (e, row) {
+        document.getElementById('valorTabla').value = JSON.stringify(table.bootstrapTable('getSelections'));
+        console.log(JSON.stringify(table.bootstrapTable('getSelections')));
+    });
+
+    table.on('uncheck-all.bs.table', function (e, row) {
         document.getElementById('valorTabla').value = JSON.stringify(table.bootstrapTable('getSelections'));
         console.log(JSON.stringify(table.bootstrapTable('getSelections')));
     });
