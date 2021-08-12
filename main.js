@@ -1,15 +1,29 @@
 /**
  * Archivo encargado de guardar las configuraciones para la creación de la ventana por Electron
  */
-
-const {app, BrowserWindow} = require('electron')
+const path = require('path');
+const {app, BrowserWindow} = require('electron');
 //Declaración del Servidor mediante Express mediante la llamada del archivo app.js
 //archivo cuyo codigo tiene la información necesaria para ejecutar ExpressJS
 const server = require('./app');
+const child = require('child_process').execFile;
+var executablePath = path.join(__dirname , 'mariadb/bin/mysqld.exe');
+var parameters = ["--no-defaults"];
+
 
 let mainWindow;
 
 function createWindow () {
+    //if(process.platform === 'win32'){
+       /* child(executablePath, parameters, function(err, data) {
+            if(err){
+                console.error(err);
+                return;
+            }
+            console.log("Error: " + data.toString());
+        });*/
+    //}
+
 
     mainWindow = new BrowserWindow({
         width: 800,
