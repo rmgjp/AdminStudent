@@ -5,6 +5,7 @@ const equipoController = require('../controllers/equipo-controller');
 router.get('/grupo/equipos/:idgrupo',equipoController.retriveTeamsData);
 router.get('/grupo/equipos/:idgrupo/:idequipo',equipoController.renderSelectedTeams);
 
+router.delete('/equipo/eliminar/:idgrupo/:idequipo',equipoController.deleteTeam);
 
 router.get('/equipo/nuevo/:idgrupo', equipoController.renderNewTeam);
 router.post('/equipo/nuevo/:idgrupo', equipoController.saveTeam);
