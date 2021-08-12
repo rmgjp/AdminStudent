@@ -24,6 +24,7 @@
             <input type="hidden" id="valorTabla" name="valorTabla" value="{{listaFormateada}}">
             <table id="table" data-toggle="table" data-click-to-select="true" name="table">
                 <thead>
+                <tr>
                     <th data-field="clave" data-sorteable="true">Clave</th>
                     <th data-field="asignatura" data-sorteable="true">Asignatura</th>
                     {{#each temas}}
@@ -43,6 +44,8 @@
         <button id='current' class="btn btn-primary no-print" onclick="print_current_page()">Imprimir</button>
     </div>
 </main>
+
+<script src="/js/llenar-tabla-helper.js" type="text/javascript"></script>
 
 <script type="text/javascript">
     function print_current_page() {
