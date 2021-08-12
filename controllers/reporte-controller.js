@@ -1,5 +1,5 @@
 const Models = require('../models');
-
+const configuracion = require('../config/userconfig.json');
 
 const renderFormReporte = async (req, res) => {
     const grupos = await Models.grupo.findAll({

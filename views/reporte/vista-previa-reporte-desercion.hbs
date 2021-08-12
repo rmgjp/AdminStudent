@@ -28,6 +28,7 @@
                     <th data-field="clave" data-sorteable="true">Clave</th>
                     <th data-field="asignatura" data-sorteable="true">Asignatura</th>
                     {{#each temas}}
+                        <th data-field="temas.{{@index}}" data-sorteable="true">U{{@index}}</th>
                     {{/each}}
                 </tr>
                 </thead>
