@@ -6,7 +6,8 @@ const retriveTeamsData = async (req, res) => {
     const equipos = await Models.equipo.findAll({where: {idgrupo: req.params.idgrupo}});
 
     if (!equipos || equipos.length === 0) {
-        res.render('equipo/vista-grupo-equipo', {idgrupo: req.params.idgrupo})
+        const menu = 1;
+        res.render('equipo/vista-grupo-equipo', {idgrupo: req.params.idgrupo, menu})
     } else {
         res.redirect('/grupo/equipos/' + req.params.idgrupo + '/' + equipos[0].dataValues.id);
     }
@@ -50,11 +51,12 @@ const renderSelectedTeams = async (req, res) => {
     })
     console.log({alumnos});
     const equipos = await Models.equipo.findAll({where: {idgrupo: req.params.idgrupo}});
-
+    const menu = 1;
 
     res.render('equipo/vista-grupo-equipo', {
         idgrupo: req.params.idgrupo,
         equipo,
+        menu,
         equipos,
         listaFormateadaAlumnos: JSON.stringify(alumnos),
         listaFormateadaTemas: JSON.stringify(temas)
@@ -95,6 +97,11 @@ const saveTeam = async (req, res) => {
         }
         if (!listaAlumnos) {
             errors.push({text: 'No se ha seleccionado ningún alumno.'});
+        }
+        if (validacion.estado) {
+            for (let alumno in validacion.alumnos) {
+                errors.push({text: `El alumno ${validacion.alumnos[alumno].nombre} ya esta agregado a un equipo existente con los temas seleccionados.`});
+            }
         }
         res.render('equipo/equipo-nuevo', {
             listaFormateadaAlumnos: req.body.valorTablaAlumnos,
