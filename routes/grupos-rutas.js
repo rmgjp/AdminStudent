@@ -46,7 +46,6 @@ router.post('/grupo/importar-archivo', load.single('archivo'), async (req, res) 
         let archivo = file.originalname.toString().replace(' ', '');
         res.redirect('/grupo/wizard-crear-grupo-importado/' + archivo);
     }
-
 });
 
 router.get('/grupo/wizard-crear-grupo-importado/:archivo', controladorGrupo.getGroupDataFromFile);
@@ -58,6 +57,12 @@ router.put('/grupo/editar/:idgrupo', controladorGrupo.editGroup);
 //Ruta para vista inicial del grupo.
 router.get('/grupo-inicio/:idgrupo', controladorGrupo.retriveGroupData);
 router.get('/grupo-inicio/:idgrupo/:idtema', controladorGrupo.renderGroupData);
+
+router.get('/grupo-inicio/alumnos/:idgrupo/:idtema', controladorGrupo.renderGroupDataListStudents);
+router.get('/grupo-inicio/alumno/:idgrupo/:idtema/:idalumno', controladorGrupo.renderStudentData);
+
+router.get('/grupo-inicio/equipos/:idgrupo/:idtema', controladorGrupo.renderGroupDataListTeams);
+router.get('/grupo-inicio/equipo/:idgrupo/:idtema/:idequipo', );
 
 //Ruta para eliminar el grupo cuando se cancela el Wizard.
 router.get('/abortar-grupo/:idgrupo', controladorGrupo.abortGroup);

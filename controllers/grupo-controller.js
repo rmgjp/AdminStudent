@@ -92,7 +92,7 @@ const getAllGroupsByState = async (req, res, next) => {
     menu = 0;
     //console.log({grupos})
     //Renderiza la vista index, sobrecargando el objeto grupos
-    res.render('index', {grupos, estado: req.params.estado, config})
+    res.render('index', {grupos, estado: req.params.estado, config, menu})
 }
 
 //Obtener todos los datos del grupo.
@@ -111,13 +111,92 @@ const retriveGroupData = async (req, res) => {
     })
     if(!temas || temas.length === 0){
         const grupo = await getGroupData(req, res);
-        res.render('grupo/vista-inicio-grupo', {grupo});
+        menu = 1;
+        const visualizacion = 0;
+        res.render('grupo/vista-inicio-grupo', {asignatura: grupo.dataValues.asignatura, clave: grupo.dataValues.clave ,idgrupo: grupo.dataValues.id, menu, visualizacion});
     }
     else{
         res.redirect("/grupo-inicio/"+ req.params.idgrupo+"/"+temas[0].dataValues.id);
     }
 }
+const renderGroupDataListStudents = async (req,res)=>{
+    const temas = await Models.tema.findAll({
+        where:{idgrupo: req.params.idgrupo}
+    });
 
+    const grupo = await getGroupData(req, res);
+
+    const tema = await Models.tema.findOne({
+        where:{id: req.params.idtema}
+    });
+
+    const alumnos = await Models.alumno.findAll({
+        include:[{
+            model : Models.alumnogrupo,
+            where:{
+                idgrupo: req.params.idgrupo
+            }
+        }]
+    });
+    menu = 1;
+
+    res.render('grupo/vista-inicio-grupo-lista', {asignatura: grupo.dataValues.asignatura, clave: grupo.dataValues.clave, idgrupo: grupo.dataValues.id, temas, tema, menu, visualizacion, alumnos});
+
+}
+const renderGroupDataListTeams = async (req,res)=>{
+    const temas = await Models.tema.findAll({
+        where:{idgrupo: req.params.idgrupo}
+    });
+
+    const grupo = await getGroupData(req, res);
+
+    const tema = await Models.tema.findOne({
+        where:{id: req.params.idtema}
+    });
+    const equipos = await Models.equipo.findAll({
+        include:[{
+            model: Models.equipotema,
+            where:{
+                idtema: tema.id
+            }
+        }]
+    })
+    res.render('grupo/vista-inicio-grupo-lista', {asignatura: grupo.dataValues.asignatura, clave: grupo.dataValues.clave, idgrupo: grupo.dataValues.id, temas, tema, menu, visualizacion, equipos});
+}
+const renderStudentData = async (req,res) =>{
+    const temas = await Models.tema.findAll({
+        where:{idgrupo: req.params.idgrupo}
+    })
+    const grupo = await getGroupData(req, res);
+    const tema = await Models.tema.findOne({where:{id: req.params.idtema}});
+    const alumno = await Models.alumno.findOne({where:{id: req.params.idalumno}});
+    menu = 1;
+    let calificaciones = [];
+    let actAprobadas = 0;
+    let actReprobadas = 0;
+
+    const actividades = await Models.tarea.findAll({where:{idtema: req.params.idtema}});
+    for(let actividad in actividades){
+        const calificacion = await Models.calificacion.findOne({where:{idtarea: actividades[actividad].id, idalumno: alumno.id}});
+        if(calificacion.valor >= 70){
+            actAprobadas++;
+        }
+        else{
+            actReprobadas++;
+        }
+        calificaciones.push({
+            label: actividades[actividad].nombre,
+            value: calificacion.valor
+        })
+    }
+    const aprobadasPorcentaje = Math.round((actAprobadas*100)/(actividades.length));
+
+    let dataReprobacion = JSON.stringify([{label:"Aprobadas", value: aprobadasPorcentaje},{label : "Reprobadas", value: (100-aprobadasPorcentaje)}]);
+
+    console.log({calificaciones})
+
+    res.render('grupo/vista-inicio-grupo-seleccion', {actAprobadas,actReprobadas,dataReprobacionAct: JSON.stringify(calificaciones), dataReprobacion ,idtema: req.params.idtema ,asignatura: grupo.dataValues.asignatura, clave: grupo.dataValues.clave, idgrupo: grupo.dataValues.id,temas, tema, alumno, menu })
+}
 const renderGroupData = async (req, res) =>{
     const temas = await Models.tema.findAll({
         where:{idgrupo: req.params.idgrupo}
@@ -153,8 +232,10 @@ const renderGroupData = async (req, res) =>{
     //[{label:'Hola', a:10, b,10},{label:'Adios, a:7, b:80}]
     dataReprobacion = JSON.stringify(dataReprobacion);
     dataReprobacionAct = JSON.stringify(dataReprobacionAct);
+    menu = 1;
 
-    res.render('grupo/vista-inicio-grupo', {grupo,temas, dataReprobacion, reprobados, aprobados, tema, dataReprobacionAct});
+    const visualizacion = 0;
+    res.render('grupo/vista-inicio-grupo', {asignatura: grupo.dataValues.asignatura, clave: grupo.dataValues.clave ,idgrupo: grupo.dataValues.id,temas, dataReprobacion, reprobados, aprobados, tema, dataReprobacionAct, menu, visualizacion});
 }
 
 //Renderizar los datos del grupo para su edición
@@ -277,6 +358,9 @@ const editGroup = async (req, res) => {
 
 //Exportación de los métodos para su uso interno en aplicación.
 module.exports = {
+    renderStudentData,
+    renderGroupDataListTeams,
+    renderGroupDataListStudents,
     retriveGroupData,
     renderAllGroups,
     removeGroup,
