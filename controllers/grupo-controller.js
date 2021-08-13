@@ -178,16 +178,25 @@ const renderStudentData = async (req,res) =>{
     const actividades = await Models.tarea.findAll({where:{idtema: req.params.idtema}});
     for(let actividad in actividades){
         const calificacion = await Models.calificacion.findOne({where:{idtarea: actividades[actividad].id, idalumno: alumno.id}});
-        if(calificacion.valor >= 70){
-            actAprobadas++;
+        if(!calificacion){
+            actReprobadas++;
+            calificaciones.push({
+                label: actividades[actividad].nombre,
+                value: 0
+            })
         }
         else{
-            actReprobadas++;
+            if(calificacion.valor >= 70){
+                actAprobadas++;
+            }
+            else{
+                actReprobadas++;
+            }
+            calificaciones.push({
+                label: actividades[actividad].nombre,
+                value: calificacion.valor
+            })
         }
-        calificaciones.push({
-            label: actividades[actividad].nombre,
-            value: calificacion.valor
-        })
     }
     const aprobadasPorcentaje = Math.round((actAprobadas*100)/(actividades.length));
 
