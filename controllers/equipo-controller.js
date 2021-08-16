@@ -1,6 +1,7 @@
 const Models = require('../models');
 const temaController = require('./tema-controller');
 const alumnoController = require('./alumno-controller');
+const configuracion = require('../config/userconfig.json');
 
 const retriveTeamsData = async (req, res) => {
     const equipos = await Models.equipo.findAll({where: {idgrupo: req.params.idgrupo}});
@@ -89,7 +90,16 @@ const saveTeam = async (req, res) => {
     let errors = [];
     const validacion = await validateStudents(req, res);
 
-    if (!listaTemas || !listaAlumnos || validacion.estado) {
+
+    if(configuracion.valequipo === '1'){
+        if(validacion.estado){
+            for (let alumno in validacion.alumnos) {
+                errors.push({text: `El alumno ${validacion.alumnos[alumno].nombre} ya esta agregado a un equipo existente con los temas seleccionados.`});
+            }
+        }
+    }
+
+    if (!listaTemas || !listaAlumnos || (configuracion.valequipo === '1' && validacion.estado)) {
         //const listaFormateadaAlumnos = req.body.valorTablaAlumnos.value;
         //const listaFormateadaTemas = req.body.valorTablaTemas.value;
         if (!listaTemas) {
