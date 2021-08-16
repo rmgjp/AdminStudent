@@ -1,20 +1,41 @@
+<style>
+    .montserrat {
+    font-family:'Montserrat'
+    }
+.extra-bold{
+    font-family: 'Montserrat';
+    font-weight: 800;
+    font-size: 10pt;
+}
+.regular p{
+    font-family: 'Montserrat';
+    font-wight: 400;
+    font-size: 9pt;
+}
+
+</style>
+
 <header class="container d-print-">
     <figure class="row-cols-1 d-flex align-items-center">
         <img style="width: auto; height: 100%;" src="/img/Encabezado.png" alt="Encabezado">
     </figure>
 </header>
-<main class="container d-print-">
-    <div class="row m-2 p-2 flex-row-reverse">
-        Irapuato, Gto. {{fecha}}
+<main class="container d-print- ">
+    <div class="row m-2 p-2 flex-row-reverse regular">
+        <p style="background-color: black; color: white;"> {{fecha}}</p>
+        <p>Irapuato, Gto. </p>
     </div>
-    <div class="row  m-2 p-2 flex-row-reverse">
-        Asunto: Reporte parcial
+
+    <div class="row m-2 p-2 extra-bold" style="text-transform: uppercase">
+        {{coordinadorNombre}}<br>
+        {{pronombre}} {{carrera}}<br>
+        PRESENTE<br>
     </div>
-    <div class="row m-2 p-2">
-        {{coordinadorNombre}} {{pronombre}} {{carrera}}
+    <div class="row  m-2 p-2 flex-row-reverse extra-bold">
+        <p>Asunto: Reporte parcial</p>
     </div>
-    <div class="row m-2 p-2 -align-justify">
-        {{mensaje}}
+    <div class="row m-2 p-2 -align-justify regular">
+        <p>{{mensaje}}</p>
     </div>
     <div class="row-cols-1 m-2 p-2">
         <h5>Índice de reprobación</h5>
@@ -38,6 +59,9 @@
                 </tbody>
             </table>
         </div>
+    </div>
+
+    <div class="row-cols-1 m-2 p-2 montserrat" ">
 
     </div>
 
