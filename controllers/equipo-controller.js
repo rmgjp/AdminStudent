@@ -108,11 +108,7 @@ const saveTeam = async (req, res) => {
         if (!listaAlumnos) {
             errors.push({text: 'No se ha seleccionado ningún alumno.'});
         }
-        if (validacion.estado) {
-            for (let alumno in validacion.alumnos) {
-                errors.push({text: `El alumno ${validacion.alumnos[alumno].nombre} ya esta agregado a un equipo existente con los temas seleccionados.`});
-            }
-        }
+
         res.render('equipo/equipo-nuevo', {
             listaFormateadaAlumnos: req.body.valorTablaAlumnos,
             listaFormateadaTemas: req.body.valorTablaTemas,
@@ -139,13 +135,6 @@ const saveTeam = async (req, res) => {
         }
         res.redirect('/grupo/equipos/' + req.params.idgrupo);
     }
-    /**
-     * 1.- Buscar equipos con base a los temas
-     * 2.- Extraer los alumnos con base a los equipos obtenidos
-     * 3.- Comparar los alumnos a guardar en un equipo con los guardados anteriormente
-     *
-     */
-
 }
 
 const validateStudents = async (req, res) => {
