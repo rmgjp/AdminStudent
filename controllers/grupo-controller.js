@@ -200,9 +200,7 @@ const renderStudentData = async (req,res) =>{
     }
     const aprobadasPorcentaje = Math.round((actAprobadas*100)/(actividades.length));
 
-    let dataReprobacion = JSON.stringify([{label:"Aprobadas", value: aprobadasPorcentaje},{label : "Reprobadas", value: (100-aprobadasPorcentaje)}]);
-
-    console.log({calificaciones})
+    let dataReprobacion = JSON.stringify([{label:"Aprobadas", value: aprobadasPorcentaje},{label : "No aprobadas", value: (100-aprobadasPorcentaje)}]);
 
     res.render('grupo/vista-inicio-grupo-seleccion', {actAprobadas,actReprobadas,dataReprobacionAct: JSON.stringify(calificaciones), dataReprobacion ,idtema: req.params.idtema ,asignatura: grupo.dataValues.asignatura, clave: grupo.dataValues.clave, idgrupo: grupo.dataValues.id,temas, tema, alumno, menu })
 }
