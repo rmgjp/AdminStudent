@@ -11,6 +11,13 @@ const renderFormReporte = async (req, res) => {
 }
 
 const generarReporte = async (req, res) => {
+    const mes = {0: "enero", 1: "febrero", 2: "marzo", 3: "abril",
+        4: "mayo", 5: 'junio', 6:'julio', 7:'agosto', 8:'septiembre',
+        9: "octubre", 10: 'noviembre', 11: 'diciembre'
+    }
+    const date = new Date();
+
+    const fecha = `${date.getDate()}/${mes[date.getMonth()]}/${date.getFullYear()}`;
     let {coordinadorNombre, pronombre, carrera, mensaje, valorTabla} = req.body;
     valorTabla = JSON.parse(valorTabla);
     let error;
