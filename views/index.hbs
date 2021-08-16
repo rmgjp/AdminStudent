@@ -245,17 +245,16 @@
                             <h5>Formación de equipos</h5>
                             <div class="row m-1">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" value=0 id="calfe1"
-                                           name="calfe" {{#iflogico config.calife "===" "0"}} checked {{/iflogico}}>
-                                    <label class="form-check-label" for="calfe1">Todos obtienen la misma
-                                        calificación.</label>
+                                    <input class="form-check-input" type="radio" value=0 id="valequipo1"
+                                           name="valequipo" {{#iflogico config.valequipo "===" "0"}} checked {{/iflogico}}>
+                                    <label class="form-check-label" for="valequipo1">Los alumnos pueden ser parte de uno o más equipos en un mismo tema.</label>
                                 </div>
                             </div>
                             <div class="row m-1">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" value=1 id="calfe2"
-                                           name="calfe" {{#iflogico config.calife '===' "1"}} checked {{/iflogico}}>
-                                    <label class="form-check-label" for="calfe2">La calificación del equipo se promedia con un rubro individual.</label>
+                                    <input class="form-check-input" type="radio" value=1 id="valequipo2"
+                                           name="valequipo" {{#iflogico config.valequipo '===' "1"}} checked {{/iflogico}}>
+                                    <label class="form-check-label" for="valequipo2">Los alumnos solo pueden ser parte de un equipo por tema.</label>
                                 </div>
                             </div>
 

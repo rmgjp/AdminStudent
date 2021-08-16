@@ -17,12 +17,12 @@ router.get('/about', (req, res) => {
 });
 
 router.put('/set-config', async (req, res) =>{
-    const {nombre, clave, correo, calfi, calfe} = req.body;
+    const {nombre, clave, correo, calfi, valequipo} = req.body;
     configFile.nombre = nombre;
     configFile.clave = clave;
     configFile.correo = correo;
     configFile.califi = calfi;
-    configFile.calife = calfe;
+    configFile.valequipo = valequipo;
 
     await fs.writeFileSync(path.join(__dirname, '../config/userconfig.json'), JSON.stringify(configFile, null, 2), function writeJSON(err){
         if (err) return console.log(err);
