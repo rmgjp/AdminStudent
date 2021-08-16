@@ -47,7 +47,7 @@ const generarReporte = async (req, res) => {
 
         const temas =  reprobacionGrupos[indiceMayor].temas;
 
-        res.render('reporte/vista-previa-reporte-desercion', {coordinadorNombre, pronombre, carrera, mensaje, listaFormateada: JSON.stringify(reprobacionGrupos), temas})
+        res.render('reporte/vista-previa-reporte-desercion', {coordinadorNombre, pronombre, carrera, mensaje, fecha,listaFormateada: JSON.stringify(reprobacionGrupos), temas})
     }
 
 }
