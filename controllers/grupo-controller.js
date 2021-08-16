@@ -224,7 +224,7 @@ const renderGroupData = async (req, res) =>{
     let aprobadosPorcentaje= 100 - reprobadosPorcentaje;
     let aprobados =  calificaciones.length - reprobados;
 
-    let dataReprobacion = [{label:"Aprobados", value: aprobadosPorcentaje},{label : "Reprobados", value: reprobadosPorcentaje}]
+    let dataReprobacion = [{label:"Aprobados", value: aprobadosPorcentaje},{label : "No aprobados", value: reprobadosPorcentaje}]
     let dataReprobacionAct = [];
 
     for(let actividad in actividades){
