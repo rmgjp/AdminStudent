@@ -1,17 +1,35 @@
 <style>
     .montserrat {
-    font-family:'Montserrat'
+        font-family: 'Montserrat'
     }
-.extra-bold{
-    font-family: 'Montserrat';
-    font-weight: 800;
-    font-size: 10pt;
-}
-.regular p{
-    font-family: 'Montserrat';
-    font-wight: 400;
-    font-size: 9pt;
-}
+
+    .extra-bold {
+        font-family: 'Montserrat';
+        font-weight: 800;
+        font-size: 10pt;
+    }
+
+    .regular p {
+        font-family: 'Montserrat';
+        font-wight: 400;
+        font-size: 9pt;
+    }
+
+    #page-container {
+        position: relative;
+        min-height: 90vh;
+    }
+
+    #content-wrap {
+        padding-bottom: 2.5rem; /* Footer height */
+    }
+
+    #footer {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        height: 2.5rem; /* Footer height */
+    }
 
 </style>
 
@@ -26,44 +44,44 @@
         <p>Irapuato, Gto. </p>
     </div>
 
-    <div class="row m-2 p-2 extra-bold" style="text-transform: uppercase">
-        {{coordinadorNombre}}<br>
-        {{pronombre}} {{carrera}}<br>
-        PRESENTE<br>
-    </div>
-    <div class="row  m-2 p-2 flex-row-reverse extra-bold">
-        <p>Asunto: Reporte parcial</p>
-    </div>
-    <div class="row m-2 p-2 -align-justify regular">
-        <p>{{mensaje}}</p>
-    </div>
-    <div class="row-cols-1 m-2 p-2 regular">
-        <h5>Índice de reprobación</h5>
-    </div>
-    <div class="row-cols-1" style="font-family: 'Montserrat'; font-size: 10pt">
-        <div class="col-auto navbar-nav-scroll">
-            <input type="hidden" id="valorTabla" name="valorTabla" value="{{listaFormateada}}">
-            <table id="table" data-toggle="table" data-click-to-select="true" name="table">
-                <thead>
-                <tr>
-                    <th data-field="clave" data-sorteable="true">Clave</th>
-                    <th data-field="asignatura" data-sorteable="true">Asignatura</th>
-                    {{#each temas}}
-                        <th data-field="temas.{{@index}}" data-sorteable="true">U{{@index}}</th>
-                    {{/each}}
-                </tr>
-                </thead>
+            <div class="row m-2 p-2 extra-bold" style="text-transform: uppercase">
+                {{coordinadorNombre}}<br>
+                {{pronombre}} {{carrera}}<br>
+                PRESENTE<br>
+            </div>
+            <div class="row  m-2 p-2 flex-row-reverse extra-bold">
+                <p>Asunto: Reporte parcial</p>
+            </div>
+            <div class="row m-2 p-2 -align-justify regular">
+                <p>{{mensaje}}</p>
+            </div>
+            <div class="row-cols-1 m-2 p-2 regular">
+                <h5>Índice de reprobación</h5>
+            </div>
+            <div class="row-cols-1" style="font-family: 'Montserrat'; font-size: 10pt">
+                <div class="col-auto navbar-nav-scroll">
+                    <input type="hidden" id="valorTabla" name="valorTabla" value="{{listaFormateada}}">
+                    <table id="table" data-toggle="table" data-click-to-select="true" name="table">
+                        <thead>
+                        <tr>
+                            <th data-field="clave" data-sorteable="true">Clave</th>
+                            <th data-field="asignatura" data-sorteable="true">Asignatura</th>
+                            {{#each temas}}
+                                <th data-field="temas.{{@index}}" data-sorteable="true">U{{@index}}</th>
+                            {{/each}}
+                        </tr>
+                        </thead>
 
-                <tbody>
+                        <tbody>
 
-                </tbody>
-            </table>
-        </div>
-    </div>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
 
     <div class="row-cols-1 m-2 p-2 montserrat" ">
 
-    </div>
+            </div>
 
     <div class="row-cols-1 m-2 p-2">
         <button id='current' class="btn btn-primary no-print" onclick="print_current_page()">Imprimir</button>
