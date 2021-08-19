@@ -8,9 +8,11 @@
         <div class="sidebar-sticky pt-3 nav d-flex flex-column navbar-nav-scroll nav-fill">
             <ul class="list-group  border-bottom h-auto">
                 {{#each datos}}
-                    <li class="list-group-item list-group-item-secondary d-flex justify-content-between align-items-center font-italic font-weight-bold">{{tema.numerotema}}. {{tema.nombre}}<span class="badge bi bi-book-fill"> </span></li>
+                    <li class="list-group-item list-group-item-secondary d-flex justify-content-between align-items-center font-italic font-weight-bold">{{tema.numerotema}}
+                        . {{tema.nombre}}<span class="badge bi bi-book-fill"> </span></li>
                     {{#each actividades}}
-                        <a class="list-group-item list-group-item-action button-sm" href="/grupo/actividades/{{../../idgrupo}}/{{../tema.id}}/{{dataValues.id}}">{{dataValues.nombre}}</a>
+                        <a class="list-group-item list-group-item-action button-sm"
+                           href="/grupo/actividades/{{../../idgrupo}}/{{../tema.id}}/{{dataValues.id}}">{{dataValues.nombre}}</a>
                     {{/each}}
                     <a class="list-group-item list-group-item-action"
                        href="/actividad/nueva-actividad/{{../idgrupo}}/{{tema.id}}"><i class="bi bi-plus"></i>
@@ -153,7 +155,7 @@
                 <div class="jumbotron jumbotron-fluid">
                     <div class="container text-center">
                         <p class="lead">
-                            <h2>Seleccione una actividad para mostrar más información.</h2>
+                        <h2>Seleccione una actividad para mostrar más información.</h2>
                         </p>
                     </div>
                 </div>
@@ -173,7 +175,14 @@
                 </button>
             </div>
             <div class="modal-body">
-                Seleccione la forma en la que desea calificar la actividad.
+                Seleccione la forma en la que desea calificar la actividad.<br>
+                <div class="custom-control custom-switch"
+                     title="Calificar esta actividad como segunda oportunidad.">
+                    <input type="checkbox" class="custom-control-input" id="switchSegunda">
+                    <label class="custom-control-label" for="switchSegunda">Segunda oportunidad</label>
+                </div>
+
+
             </div>
             <div class="modal-footer">
                 <a type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</a>
@@ -200,6 +209,30 @@
             document.getElementById('descripcion').disabled = true;
             document.getElementById('tipoBox').disabled = true;
             document.getElementById('guardar').disabled = true;
+        }
+    }
+    document.getElementById('switchSegunda').onclick = function () {
+        if ($(this).is(':checked')) {
+            document.getElementById('individual').disabled = true;
+            document.getElementById('individualSegunda').disabled = false;
+            document.getElementById('individual').hidden = true;
+            document.getElementById('individualSegunda').hidden = false;
+
+            document.getElementById('equipo').disabled = true;
+            document.getElementById('equipoSegunda').disabled = false;
+            document.getElementById('equipo').hidden = true;
+            document.getElementById('equipoSegunda').hidden = false;
+
+        } else {
+            document.getElementById('individual').disabled = false;
+            document.getElementById('individualSegunda').disabled = true;
+            document.getElementById('individual').hidden = false;
+            document.getElementById('individualSegunda').hidden = true;
+
+            document.getElementById('equipo').disabled = false;
+            document.getElementById('equipoSegunda').disabled = true;
+            document.getElementById('equipo').hidden = false;
+            document.getElementById('equipoSegunda').hidden = true;
         }
     }
 

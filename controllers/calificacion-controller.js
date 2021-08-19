@@ -109,8 +109,6 @@ const viewCalf = async (req, res) => {
 
 
 const renderViewCalif = async (req, res) => {
-    const alumnos = await alumnoController.getAllStudents(req, res);
-
     let calificacion = [];
     for (let alumno in alumnos) {
         let valor = await Models.calificacion.findOne({
@@ -179,9 +177,15 @@ const scoreSingle = async (req, res) => {
         } else {
             //Si la calificación no es es null
             // calificación.update();
-            await calificacion.update({
-                valor: parseInt(calificaciones[alumnopuntero].calificacion)
-            })
+            if (!req.params.second) {
+                await calificacion.update({
+                    valor: parseInt(calificaciones[alumnopuntero].calificacion)
+                })
+            } else {
+                await calificacion.update({
+                    valor_s2: parseInt(calificaciones[alumnopuntero].calificacion)
+                })
+            }
         }
     }
     res.redirect('/grupo/actividades/' + req.params.idgrupo + '/' + req.params.idtema + '/' + req.params.idactividad);

@@ -48,7 +48,11 @@ module.exports = (sequelize, DataTypes) => {
         deferrable: Deferrable.INITIALLY_IMMEDIATE
       }
     },
-    valor: DataTypes.INTEGER
+    valor: DataTypes.INTEGER,
+    valor_s2 : {
+      type: DataTypes.INTEGER,
+      allowNull:true
+    }
   }, {
     sequelize,
     modelName: 'calificacion',

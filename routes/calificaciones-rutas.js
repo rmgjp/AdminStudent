@@ -12,6 +12,11 @@ router.get('/grupo/calificaciones/:idgrupo/:idtema/:modo', calificacionControlle
 
 router.get('/actividad/calificar-equipo/:idgrupo/:idtema/:idactividad/:idequipo', calificacionController.renderScoreTeam);
 
+router.get('/actividad/calificar-equipo/:idgrupo/:idtema/:idactividad/:idequipo/:second', calificacionController.renderScoreTeam);
+
 router.put('/actividad/calificar-equipo/:idgrupo/:idtema/:idactividad/:idequipo', calificacionController.scoreTeam)
+
+router.put('/actividad/calificar-equipo/:idgrupo/:idtema/:idactividad/:idequipo/:second', calificacionController.scoreTeam)
+
 module.exports = router;
 
