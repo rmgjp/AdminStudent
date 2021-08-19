@@ -164,7 +164,7 @@
         </div>
     </div>
 </div>
-<!-- Modal -->
+<!-- Modal calificación-->
 <div class="modal fade" id="calificarModal" tabindex="-1" aria-labelledby="calificarModal" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -186,9 +186,20 @@
             </div>
             <div class="modal-footer">
                 <a type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</a>
-                <a type="button" class="btn btn-primary"
+
+                <a type="button" id="individual" class="btn btn-primary"
                    href="/actividad/calificar-individual/{{idgrupo}}/{{idtema}}/{{actividad.dataValues.id}}">Individual</a>
-                <a type="button" class="btn btn-primary" href="/equipo/seleccion/{{idgrupo}}/{{idtema}}/{{actividad.dataValues.id}}">Por equipo</a>
+
+                <a type="button" id="individualSegunda" class="btn btn-outline-primary" hidden
+                   href="/actividad/calificar-individual/{{idgrupo}}/{{idtema}}/{{actividad.dataValues.id}}/1">Individual</a>
+
+
+                <a type="button" id="equipo" class="btn btn-primary"
+                       href="/equipo/seleccion/{{idgrupo}}/{{idtema}}/{{actividad.dataValues.id}}">Por equipo</a>
+
+                <a type="button" id="equipoSegunda" class="btn btn-outline-primary" hidden
+                       href="/equipo/seleccion/{{idgrupo}}/{{idtema}}/{{actividad.dataValues.id}}/1">Por equipo</a>
+
             </div>
         </div>
     </div>

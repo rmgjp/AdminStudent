@@ -11,6 +11,7 @@
             <input type="hidden" id="idgrupo" name="idgrupo" value="{{idgrupo}}">
             <input type="hidden" id="idactividad" name="idactividad" value="{{idactividad}}">
             <input type="hidden" id="idtema" name="idtema" value="{{idtema}}">
+            <input type="hidden" id="second" name="second" value={{second}}>
 
             <div class="col-auto navbar-nav-scroll">
                 <table id="table" data-toggle="table" data-click-to-select="true"
@@ -60,7 +61,13 @@
     });
     table.on('check.bs.table', function (e, row) {
         seleccion = table.bootstrapTable('getSelections');
-        btnSiguiente.setAttribute('href', `/actividad/calificar-equipo/${idgrupo}/${idtema}/${idactividad}/${seleccion[0].id}`);
+        if(second === 0){
+            btnSiguiente.setAttribute('href', `/actividad/calificar-equipo/${idgrupo}/${idtema}/${idactividad}/${seleccion[0].id}`)
+        }
+        else{
+            btnSiguiente.setAttribute('href', `/actividad/calificar-equipo/${idgrupo}/${idtema}/${idactividad}/${seleccion[0].id}/1`)
+
+        }
         btnSiguiente.disabled = false;
         console.log(btnSiguiente.href);
     });
