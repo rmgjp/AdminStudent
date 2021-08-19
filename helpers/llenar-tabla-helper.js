@@ -21,7 +21,7 @@ $(function cargarDatos() {
 table.on('editable-save.bs.table', function (e, field, row, oldValue, $el) {
     tablaDatos = table.bootstrapTable('getData');
     document.getElementById("valorTabla").value = JSON.stringify(tablaDatos)
-    var $next = $(this).closest('tr').next().find('.editable');
+    let $next = $(this).closest('tr').next().find('.editable');
     setTimeout(function() {
         $next.editable('show');
     }, );

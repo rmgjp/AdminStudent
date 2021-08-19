@@ -19,6 +19,10 @@ const getDataTeams = async (req, res) => {
 }
 
 const renderSelectionTeamsAct = async (req, res) => {
+    let second = 0;
+    if(req.params.second){
+        second = 1;
+    }
     const equipos = await Models.equipo.findAll(
         {
             where:
@@ -30,7 +34,7 @@ const renderSelectionTeamsAct = async (req, res) => {
         },
     );
 
-    res.render('equipo/seleccion-equipo', {equipos: JSON.stringify(equipos), idgrupo: req.params.idgrupo, idactividad: req.params.idactividad, idtema: req.params.idtema});
+    res.render('equipo/seleccion-equipo', {equipos: JSON.stringify(equipos), idgrupo: req.params.idgrupo, idactividad: req.params.idactividad, idtema: req.params.idtema,second});
 }
 
 

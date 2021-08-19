@@ -177,7 +177,7 @@ const renderStudentData = async (req,res) =>{
 
     const actividades = await Models.tarea.findAll({where:{idtema: req.params.idtema}});
     for(let actividad in actividades){
-        const calificacion = await Models.calificacion.findOne({where:{idtarea: actividades[actividad].id, idalumno: alumno.id}});
+        const calificacion = await Models.calificacion.findOne({where:{idtarea: actividades[actividad].id, idalumno: alumno.dataValues.id}});
         if(!calificacion){
             actReprobadas++;
             calificaciones.push({

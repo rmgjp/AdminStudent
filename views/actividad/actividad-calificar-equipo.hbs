@@ -55,7 +55,7 @@
                 <tr>
                     <th data-field="clave" data-sorteable="true">No. Control</th>
                     <th data-field="nombre" data-sorteable="true">Nombre del Alumno</th>
-                    <th data-field="calificacion" id="calificacionAlumno" data-editable="true" data-editable-min="0" data-editable-max="100">Calificación
+                    <th data-field="calificacion" id="calificacionAlumno" data-editable="true" data-editable-type="number" data-editable-min="0"  data-editable-max="100">Calificación
                     </th>
                 </tr>
                 </thead>
@@ -104,6 +104,11 @@
         tableEquipo.on('editable-save.bs.table', function (e, field, row, oldValue, $el) {
             let tablaDatosEquipo = tableEquipo.bootstrapTable('getData');
             document.getElementById("valorTablaEquipo").value = JSON.stringify(tablaDatosEquipo);
+            let $next = $(this).closest('tr').next().find('.editable');
+            setTimeout(function() {
+                $next.editable('show');
+            }, );
+            console.log($next);
             console.log(tablaDatosEquipo);
         });
 

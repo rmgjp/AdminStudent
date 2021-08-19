@@ -1,6 +1,7 @@
 const Models = require('../models');
 const configuracion = require('../config/userconfig.json');
 const alumnoController = require('./alumno-controller')
+const {Op} = require('sequelize');
 //Este controlador contiene las funciones requeridas para la busqueda y consulta de las calificaciones
 
 /**
@@ -73,9 +74,9 @@ const calcCalif = async (req, res) => {
 const retriveCalf = async (req, res) => {
     const temas = await Models.tema.findAll({where: {idgrupo: req.params.idgrupo}})
     const menu = 1;
-    if(!temas || temas.length === 0){
-        res.render('calificacion/vista-grupo-calificaciones', {idgrupo:req.params.idgrupo, menu});
-    }else{
+    if (!temas || temas.length === 0) {
+        res.render('calificacion/vista-grupo-calificaciones', {idgrupo: req.params.idgrupo, menu});
+    } else {
         res.redirect("/grupo/calificaciones/" + req.params.idgrupo + "/" + temas[0].dataValues.id + "/0");
     }
 }
@@ -92,7 +93,13 @@ const viewCalf = async (req, res) => {
     //verificar si se selecciono un tema
     if (!req.params.idtema) {
         const menu = 1;
-        res.render('calificacion/vista-grupo-calificaciones', {temas, idgrupo: req.params.idgrupo, asignatura, clave, menu});
+        res.render('calificacion/vista-grupo-calificaciones', {
+            temas,
+            idgrupo: req.params.idgrupo,
+            asignatura,
+            clave,
+            menu
+        });
     } else {
         const tema = await Models.tema.findOne({where: {id: req.params.idtema}});
         //Busqueda de las actividades por grupo
@@ -110,22 +117,51 @@ const viewCalf = async (req, res) => {
 
 const renderViewCalif = async (req, res) => {
     let calificacion = [];
-    for (let alumno in alumnos) {
-        let valor = await Models.calificacion.findOne({
-            where: {
-                idtarea: req.params.idactividad,
-                idalumno: alumnos[alumno].dataValues.id,
-            }
-        });
+    let listaFormateada = [];
+    let segundaoportunidad = 0;
+    let alumnos;
 
-        if (!valor) {
-            calificacion.push(0)
-        } else {
+    if (!req.params.second) {
+        alumnos = await alumnoController.getAllStudents(req, res);
+        for (let alumno in alumnos) {
+            let valor = await Models.calificacion.findOne({
+                where: {
+                    idtarea: req.params.idactividad,
+                    idalumno: alumnos[alumno].dataValues.id,
+                }
+            });
+
+            if (!valor) {
+                calificacion.push(0)
+            } else {
+                calificacion.push(valor.dataValues.valor);
+            }
+        }
+    } else {
+        segundaoportunidad = 1;
+        alumnos = await Models.alumno.findAll({
+            include: [{
+                model: Models.calificacion,
+                where: {
+                    idtarea: req.params.idactividad,
+                    valor: {
+                        [Op.lt]: 70
+                    }
+                }
+            }]
+        })
+        for (let alumno in alumnos) {
+            let valor = await Models.calificacion.findOne({
+                where: {
+                    idtarea: req.params.idactividad,
+                    idalumno: alumnos[alumno].dataValues.id,
+                }
+            });
             calificacion.push(valor.dataValues.valor);
         }
     }
 
-    let listaFormateada = [];
+
     for (let alumno = 0; alumno < alumnos.length; alumno++) {
         listaFormateada.push({
             clave: alumnos[alumno].dataValues.clave,
@@ -144,7 +180,8 @@ const renderViewCalif = async (req, res) => {
         idgrupo: req.params.idgrupo,
         idtema: req.params.idtema,
         actividad,
-        listaFormateada
+        listaFormateada,
+        segundaoportunidad
     });
 };
 
@@ -155,7 +192,7 @@ const scoreSingle = async (req, res) => {
     let calificaciones = JSON.parse(req.body.valorTabla);
 
     //Datos alumno
-    for (alumnopuntero in calificaciones) {
+    for (let alumnopuntero in calificaciones) {
         const alumno = await Models.alumno.findOne({
             where: {clave: calificaciones[alumnopuntero].clave}
         })
@@ -192,6 +229,13 @@ const scoreSingle = async (req, res) => {
 }
 /*Opción 1: hace referencia al caso en el que todos los integrantes obtendrán la misma calificación*/
 const renderScoreTeam = async (req, res) => {
+    let alumnos;
+    let second = 0;
+    let calificacion = [];
+    let valorTablaEquipo = [];
+    let valorTablaAlumnos = [];
+
+
     const actividad = await Models.tarea.findOne({
         where: {
             id: req.params.idactividad
@@ -202,22 +246,22 @@ const renderScoreTeam = async (req, res) => {
             id: req.params.idequipo
         }
     });
-    let valorTablaEquipo = [];
+    //Aplicar calificación para todo el equipo
     valorTablaEquipo.push({
         id: equipo.dataValues.id,
         nombre: equipo.dataValues.nombre,
         calificacion: 0
     });
-
     valorTablaEquipo = JSON.stringify(valorTablaEquipo);
-    const alumnos = await Models.alumno.findAll({
-        include:[{
+
+    //Calificaciones individuales
+    alumnos = await Models.alumno.findAll({
+        include: [{
             model: Models.alumnoequipo,
-            where:{idequipo: req.params.idequipo}
+            where: {idequipo: req.params.idequipo}
         }]
     });
 
-    let calificacion = [];
     for (let alumno in alumnos) {
         let valor = await Models.calificacion.findOne({
             where: {
@@ -233,27 +277,59 @@ const renderScoreTeam = async (req, res) => {
         }
     }
 
-    let valorTablaAlumnos = [];
+    for (let alumno in alumnos) {
+        let valor = await Models.calificacion.findOne({
+            where: {
+                idtarea: req.params.idactividad,
+                idalumno: alumnos[alumno].dataValues.id,
+            }
+        });
+
+        if (!valor) {
+            calificacion.push(0)
+        } else {
+            calificacion.push(valor.dataValues.valor);
+        }
+    }
+
     for (let alumno = 0; alumno < alumnos.length; alumno++) {
-        valorTablaAlumnos.push({
-            id: alumnos[alumno].dataValues.id,
-            clave: alumnos[alumno].dataValues.clave,
-            nombre: alumnos[alumno].dataValues.nombre,
-            calificacion: calificacion[alumno]
-        })
+        if (!req.params.second) {
+            valorTablaAlumnos.push({
+                id: alumnos[alumno].dataValues.id,
+                clave: alumnos[alumno].dataValues.clave,
+                nombre: alumnos[alumno].dataValues.nombre,
+                calificacion: calificacion[alumno]
+            })
+        } else {
+            if (calificacion[alumno] < 70) {
+                valorTablaAlumnos.push({
+                    id: alumnos[alumno].dataValues.id,
+                    clave: alumnos[alumno].dataValues.clave,
+                    nombre: alumnos[alumno].dataValues.nombre,
+                    calificacion: calificacion[alumno]
+                })
+            }
+        }
     }
 
     valorTablaAlumnos = JSON.stringify(valorTablaAlumnos);
-    res.render('actividad/actividad-calificar-equipo',{idgrupo: req.params.idgrupo, idtema: req.params.idtema, actividad, idequipo:req.params.idequipo, valorTablaEquipo,valorTablaAlumnos});
+    res.render('actividad/actividad-calificar-equipo', {
+        idgrupo: req.params.idgrupo,
+        idtema: req.params.idtema,
+        actividad,
+        idequipo: req.params.idequipo,
+        valorTablaEquipo,
+        valorTablaAlumnos
+    });
 }
 
 const scoreTeam = async (req, res) => {
     const datosEquipo = JSON.parse(req.body.valorTablaEquipo);
     const datosAlumnos = JSON.parse(req.body.valorTablaAlumnos);
-    const valorSwitch =  (req.body.estado === 'true');
+    const valorSwitch = (req.body.estado === 'true');
 
-    if(valorSwitch){
-        for(let alumno in datosAlumnos){
+    if (valorSwitch) {
+        for (let alumno in datosAlumnos) {
 
             let calificacion = await Models.calificacion.findOne({
                 where: {
@@ -261,36 +337,33 @@ const scoreTeam = async (req, res) => {
                     idalumno: datosAlumnos[alumno].id,
                 }
             })
-            if(!calificacion){
+            if (!calificacion) {
                 await Models.calificacion.create({
-                        idtarea: req.params.idactividad,
-                        idalumno: datosAlumnos[alumno].id,
-                        valor: datosEquipo[0].calificacion
+                    idtarea: req.params.idactividad,
+                    idalumno: datosAlumnos[alumno].id,
+                    valor: datosEquipo[0].calificacion
                 });
-            }
-            else{
+            } else {
                 await calificacion.update({
                     valor: datosEquipo[0].calificacion
                 });
             }
         }
-    }
-    else {
-        for(let alumno in datosAlumnos){
+    } else {
+        for (let alumno in datosAlumnos) {
             let calificacion = await Models.calificacion.findOne({
                 where: {
                     idtarea: req.params.idactividad,
                     idalumno: datosAlumnos[alumno].id,
                 }
             })
-            if(!calificacion){
+            if (!calificacion) {
                 await Models.calificacion.create({
                     idtarea: req.params.idactividad,
                     idalumno: datosAlumnos[alumno].id,
                     valor: datosAlumnos[alumno].calificacion
                 });
-            }
-            else{
+            } else {
                 await calificacion.update({
                     valor: datosAlumnos[alumno].calificacion
                 });

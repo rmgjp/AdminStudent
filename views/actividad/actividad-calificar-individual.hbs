@@ -2,7 +2,7 @@
 
 <div class="container bg-light m-100">
     <div class="row-cols-1 m-2 p-3">
-        <h2 class="display-4">Calificar Actividad</h2>
+        <h2 class="display-4">Calificar Actividad {{#iflogico segundaoportunidad "===" 1}}- Segunda Oportunidad{{/iflogico}}</h2>
     </div>
     <div class="row-cols-1  d-flex flex-row-reverse">
         <div class="col-auto d-flex flex-row-reverse p-3">
@@ -19,7 +19,12 @@
         </div>
     </div>
     <div class="rows-cols-1">
-        <form action="/actividad/calificar-individual/{{idgrupo}}/{{idtema}}/{{actividad.dataValues.id}}?_method=PUT" method="POST"
+        <form {{#iflogico segundaoportunidad '===' 1}}
+                        action="/actividad/calificar-individual-segunda-oportunidad/{{idgrupo}}/{{idtema}}/{{actividad.dataValues.id}}/1?_method=PUT"
+                {{else}}
+                        action="/actividad/calificar-individual/{{idgrupo}}/{{idtema}}/{{actividad.dataValues.id}}?_method=PUT"
+                {{/iflogico}}
+                method="POST"
               novalidate>
             <input type="hidden" name="_method" value="PUT">
             <input type="hidden" id="valorTabla" name="valorTabla" value="{{listaFormateada}}">

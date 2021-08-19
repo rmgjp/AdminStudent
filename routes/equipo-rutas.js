@@ -12,5 +12,8 @@ router.post('/equipo/nuevo/:idgrupo', equipoController.saveTeam);
 
 router.get('/equipo/seleccion/:idgrupo/:idtema/:idactividad', equipoController.renderSelectionTeamsAct)
 
+router.get('/equipo/seleccion/:idgrupo/:idtema/:idactividad/:second', equipoController.renderSelectionTeamsAct)
+
+
 
 module.exports = router;

@@ -6,6 +6,10 @@ router.get('/actividad/calificar-individual/:idgrupo/:idtema/:idactividad', cali
 
 router.put('/actividad/calificar-individual/:idgrupo/:idtema/:idactividad', calificacionController.scoreSingle);
 
+router.get('/actividad/calificar-individual/:idgrupo/:idtema/:idactividad/:second', calificacionController.renderViewCalif)
+
+router.put('/actividad/calificar-individual-segunda-oportunidad/:idgrupo/:idtema/:idactividad/:second', calificacionController.scoreSingle);
+
 router.get('/grupo/calificaciones/:idgrupo', calificacionController.retriveCalf);
 
 router.get('/grupo/calificaciones/:idgrupo/:idtema/:modo', calificacionController.viewCalf);
