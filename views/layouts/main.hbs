@@ -25,22 +25,18 @@
         ::-webkit-scrollbar {
             width: 10px;
         }
-
         /* Track */
         ::-webkit-scrollbar-track {
             background: #f1f1f1;
         }
-
         /* Handle */
         ::-webkit-scrollbar-thumb {
             background: #888;
         }
-
         /* Handle on hover */
         ::-webkit-scrollbar-thumb:hover {
             background: #555;
         }
-
         @media print {
             .no-print, .no-print * {
                 display: none !important;
@@ -148,6 +144,23 @@
                 <a class="nav-link" href="/grupo-inicio/equipos/{{idgrupo}}/{{tema.dataValues.id}}"
                    title="Genera la visualización de los datos agrupado por equipos.">Equipo</a>
             </li>
+        {{/iflogico}}
+
+        {{#iflogico visualizacion '===' 1}}
+            <li class="nav-item">
+                <a class="navbar-text">Vista:</a>
+            </li>
+            <li class="nav-item" >
+                <a class="nav-link" href="/grupo/calificaciones/{{idgrupo}}/{{tema.dataValues.id}}" title="Genera la visualización de datos del grupo."
+                   aria-current="page">1ra Oportunidad</a>
+
+            </li>
+            <li class="nav-item" >
+                <a class="nav-link" href="/grupo/calificaciones/{{idgrupo}}/{{tema.dataValues.id}}/1"
+                   title="Genera la visualización de los datos de un alumno.">2da Oportunidad</a>
+
+            </li>
+
         {{/iflogico}}
 
     </ul>
