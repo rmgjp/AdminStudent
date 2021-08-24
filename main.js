@@ -20,6 +20,7 @@ function createWindow () {
     if(process.platform === 'win32'){
         //gyNr%s@&#SN#
         if(firstRun()){
+
             exec(path.join(__dirname, `mariadb\\bin\\mysql_install_db.exe --datadir=${path.join(__dirname, `mariadb\\data`)} --password=${datadb.registrobd.password} --port=${datadb.registrobd.port}`))
         }
 
