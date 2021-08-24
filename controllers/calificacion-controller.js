@@ -34,7 +34,21 @@ const calcCalif = async (req, res) => {
                 calificaciones.push("No capturado.");
             } else {
                 //Si hay calificacion se calcula el valor correspondiente con relación al valor de la actividad
-                calcCalificacion = (calificacion.dataValues.valor * actividades[actividad].valor) / 100;
+                if(!req.params.modo){
+                    valorCalificacion = calificacion.dataValues.valor;
+                }
+                else{
+                    //Segunda oportunidad
+                    if(calificacion.dataValues.valor_s2 !== null){
+                        valorCalificacion = calificacion.dataValues.valor_s2;
+
+                    }
+                    else {
+                        valorCalificacion = calificacion.dataValues.valor;
+
+                    }
+                }
+                calcCalificacion = (valorCalificacion * actividades[actividad].valor) / 100;
 
                 //Se asigna la calificacion dependiendo de los parametros de configuracion establecidos por el usuario
                 switch (parseInt(configuracion.califi)) {

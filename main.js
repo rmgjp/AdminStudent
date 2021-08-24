@@ -6,23 +6,33 @@ const {app, BrowserWindow} = require('electron');
 //Declaración del Servidor mediante Express mediante la llamada del archivo app.js
 //archivo cuyo codigo tiene la información necesaria para ejecutar ExpressJS
 const server = require('./app');
-const child = require('child_process').execFile;
-var executablePath = path.join(__dirname , 'mariadb/bin/mysqld.exe');
-var parameters = ["--no-defaults"];
+const {exec} = require('child_process');
+var executablePath = path.join(__dirname , 'mariadb\\bin\\mysqld.exe --console');
+var parameters = ["--console"];
+const firstRun = require('electron-first-run');
+const datadb = require('./config/config.json')
+
 
 
 let mainWindow;
 
 function createWindow () {
-    //if(process.platform === 'win32'){
-       /* child(executablePath, parameters, function(err, data) {
+    if(process.platform === 'win32'){
+        //gyNr%s@&#SN#
+        if(firstRun()){
+            exec(path.join(__dirname, `mariadb\\bin\\mysql_install_db.exe --datadir=${path.join(__dirname, `mariadb\\data`)} --password=${datadb.registrobd.password} --port=${datadb.registrobd.port}`))
+        }
+
+
+       exec(executablePath, (err, stdout,stderr)=> {
             if(err){
-                console.error(err);
+                console.error("Hubo un error: " + err);
                 return;
             }
-            console.log("Error: " + data.toString());
-        });*/
-    //}
+           console.log(`stdout: ${stdout}`);
+           console.error(`stderr: ${stderr}`);
+        });
+    }
 
 
     mainWindow = new BrowserWindow({
