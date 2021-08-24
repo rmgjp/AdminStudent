@@ -19,6 +19,7 @@ const calcCalif = async (req, res) => {
         let calificaciones = [];
         let acumulador = 0;
         let calcCalificacion;
+        let valorCalificacion;
         let segundaOp;
 
         //ciclo para recuperar las calificaciones relacionadas a cada alumno del grupo
@@ -54,9 +55,9 @@ const calcCalif = async (req, res) => {
                 switch (parseInt(configuracion.califi)) {
                     case 0:
                         //Si es 0 se promedia unicamente si todas las actividades estan aprovadas
-                        if (calificacion.dataValues.valor < 70) {
+                        if (valorCalificacion < 70) {
                             acumulador = "NA"
-                        } else if (calificacion.dataValues.valor >= 70) {
+                        } else if (valorCalificacion >= 70) {
                             if (acumulador !== "NA") {
                                 //Calculo de las calificaciones cuando se promedia.
                                 acumulador += calcCalificacion;
@@ -68,7 +69,7 @@ const calcCalif = async (req, res) => {
                         acumulador += calcCalificacion;
                         break;
                 }
-                calificaciones.push(calificacion.dataValues.valor);
+                calificaciones.push(valorCalificacion);
             }
         }
         if (!acumulador === "NA") {
