@@ -232,7 +232,12 @@ const getStudentAndStudents = async (req, res) => {
             });
 
             if (calificacion != null) {
-                calcCalificacion = (calificacion.dataValues.valor * actividades[actividad].valor) / 100;
+                if(calificacion.dataValues.valor_s2 !== null){
+                    calcCalificacion = (calificacion.dataValues.valor_s2 * actividades[actividad].valor) / 100;
+                }
+                else {
+                    calcCalificacion = (calificacion.dataValues.valor * actividades[actividad].valor) / 100;
+                }
 
                 switch (parseInt(configuracion.califi)) {
                     case 0:
