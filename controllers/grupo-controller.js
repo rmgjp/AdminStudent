@@ -363,6 +363,96 @@ const editGroup = async (req, res) => {
     res.redirect('/');
 }
 
+const renderGeneralView = async (req,res) => {
+    const grupo = await getGroupData(req, res);
+    let reprobados = 0;
+
+    const temas = await Models.tema.findAll({
+        where:{idgrupo: req.params.idgrupo}
+    })
+
+    const alumnos = await Models.alumno.findAll({
+        include:[{
+            model : Models.alumnogrupo,
+            where:{
+                idgrupo: req.params.idgrupo
+            }
+        }]
+    });
+
+    /**
+     * alumno:{
+     *     tema1: 50
+     *     tema2: 60
+     *     tema3: 70
+     * }
+     */
+
+    for(let alumno in alumnos){
+        let calificaciones = [];
+        let reprobado = false;
+
+        for (let tema in temas) {
+            const actividades = await Models.tarea.findAll({where: {idtema: temas[tema].dataValues.id}});
+            let califinal = 0;
+            let calcCalificacion;
+
+            for (let actividad in actividades) {
+                let calificacion = await Models.calificacion.findOne({
+                    where: {
+                        idalumno: alumnos[alumno].dataValues.id,
+                        idtarea: actividades[actividad].dataValues.id,
+                    }
+                });
+
+                if (calificacion != null) {
+                    if(calificacion.dataValues.valor_s2 !== null){
+                        calcCalificacion = (calificacion.dataValues.valor_s2 * actividades[actividad].valor) / 100;
+                    }
+                    else {
+                        calcCalificacion = (calificacion.dataValues.valor * actividades[actividad].valor) / 100;
+                    }
+
+                    switch (parseInt(configuracion.califi)) {
+                        case 0:
+                            if (calificacion.dataValues.valor < 70) {
+                                califinal = "NA";
+                            } else if (calificacion.dataValues.valor >= 70) {
+                                if (califinal !== "NA") {
+                                    //Calculo de las calificaciones cuando se promedia.
+                                    califinal += calcCalificacion;
+                                }
+                            }
+                            break;
+                        case 1:
+                            califinal += calcCalificacion;
+                            break;
+                    }
+                }
+            }
+            if(califinal < 70){
+                califinal = 'NA';
+            }
+            calificaciones.push(califinal);
+        }
+
+        for(let calificacion in calificaciones){
+            if(calificaciones[calificacion] === 'NA'){
+                reprobado = true;
+            }
+        }
+        if(reprobado){
+            reprobados++;
+        }
+    }
+    let reprobadosPorcentaje = Math.round((reprobados * 100)/alumnos.length);
+    let aprobadosPorcentaje= 100 - reprobadosPorcentaje;
+    let aprobados =  alumnos.length - reprobados;
+
+    const dataReprobacion = JSON.stringify([{label:"Aprobados", value: aprobadosPorcentaje},{label : "No aprobados", value: reprobadosPorcentaje}]);
+
+    res.render('grupo/vista-inicio-grupo', {dataReprobacion, temas, asignatura: grupo.dataValues.asignatura, clave: grupo.dataValues.clave, idgrupo: grupo.dataValues.id, title: 'General', menu:1, aprobados, reprobados})
+}
 //Exportación de los métodos para su uso interno en aplicación.
 module.exports = {
     renderStudentData,
@@ -380,4 +470,5 @@ module.exports = {
     createGroup,
     getGroupDataFromFile,
     editGroup,
+    renderGeneralView
 }

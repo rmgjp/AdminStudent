@@ -54,15 +54,24 @@ router.get('/grupo/wizard-crear-grupo-importado/:archivo', controladorGrupo.getG
 router.get('/grupo/editar/:idgrupo', controladorGrupo.renderGroupEdit);
 router.put('/grupo/editar/:idgrupo', controladorGrupo.editGroup);
 
-//Ruta para vista inicial del grupo.
+//Ruta para vista inicial del grupo
 router.get('/grupo-inicio/:idgrupo', controladorGrupo.retriveGroupData);
+
+//Ruta que grafica la información del grupo con un tema especifico
 router.get('/grupo-inicio/:idgrupo/:idtema', controladorGrupo.renderGroupData);
 
+//Ruta para renderizar la lista de alumnos para su selección
 router.get('/grupo-inicio/alumnos/:idgrupo/:idtema', controladorGrupo.renderGroupDataListStudents);
+
+//Ruta para graficar la información del alumno.
 router.get('/grupo-inicio/alumno/:idgrupo/:idtema/:idalumno', controladorGrupo.renderStudentData);
 
 router.get('/grupo-inicio/equipos/:idgrupo/:idtema', controladorGrupo.renderGroupDataListTeams);
-router.get('/grupo-inicio/equipo/:idgrupo/:idtema/:idequipo', );
+//router.get('/grupo-inicio/equipo/:idgrupo/:idtema/:idequipo', );
+
+router.get('/grupo/vista-general/:idgrupo', controladorGrupo.renderGeneralView);
+
+router.get('/grupo/vista-general/')
 
 //Ruta para eliminar el grupo cuando se cancela el Wizard.
 router.get('/abortar-grupo/:idgrupo', controladorGrupo.abortGroup);
@@ -75,6 +84,8 @@ router.put('/restaurargrupo/:idgrupo', controladorGrupo.restoreGroup);
 
 //Ruta para eliminar el grupo junto con los datos asociados a el.
 router.delete('/eliminargrupo/:idgrupo', controladorGrupo.deleteGroup);
+
+
 
 //router.post('/crearusuario/manual', controladorGrupo.create);
 module.exports = router;

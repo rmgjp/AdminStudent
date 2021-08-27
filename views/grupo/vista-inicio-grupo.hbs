@@ -10,7 +10,7 @@
                                             href="/grupo-inicio/{{../idgrupo}}/{{dataValues.id}}"><i
                             class="bi-book-half"></i><strong> {{dataValues.nombre}}</strong></a></li>
                 {{/each}}
-                <li class="nav-item"><a class="nav-link" href="#"><i class="bi-book-half"></i><strong> Todos</strong></a></li>
+                <li class="nav-item"><a class="nav-link" href="/grupo/vista-general/{{idgrupo}}"><i class="bi-book-half"></i><strong> Todos</strong></a></li>
             </ul>
         </div>
     </nav>
@@ -18,7 +18,7 @@
     <main class="col col-md col-xl col-sm col-lg">
         <div class="row">
             <div class="col">
-                <h3>Tema: {{tema.dataValues.nombre}}</h3>
+                <h3>Tema: {{tema.dataValues.nombre}}{{title}}</h3>
             </div>
         </div>
         <div class="row">
