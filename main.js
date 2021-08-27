@@ -7,25 +7,35 @@ const {app, BrowserWindow} = require('electron');
 //archivo cuyo codigo tiene la información necesaria para ejecutar ExpressJS
 const server = require('./app');
 const {exec} = require('child_process');
-var executablePath = path.join(__dirname , 'mariadb\\bin\\mysqld.exe --console');
+const datadb = require('./config/config.json')
+var executablePath = path.join(__dirname , `mariadb\\bin\\mariadbd.exe  --defaults-file=C:\\AdminStudent\\Data\\my.ini -u root -p ${datadb.registrobd.password} --console`);
 var parameters = ["--console"];
 const firstRun = require('electron-first-run');
-const datadb = require('./config/config.json')
+
+var installPath = path.join(__dirname, `mariadb\\bin\\mysql_install_db.exe --datadir=C:\\AdminStudent\\Data\\ --password=${datadb.registrobd.password} --port=${datadb.registrobd.port} --verbose`);
 
 
 
 let mainWindow;
 
-function createWindow () {
-    if(process.platform === 'win32'){
+async function createWindow () {
+    /*if(process.platform === 'win32'){
         //gyNr%s@&#SN#
-        if(firstRun()){
 
-            exec(path.join(__dirname, `mariadb\\bin\\mysql_install_db.exe --datadir=${path.join(__dirname, `mariadb\\data`)} --password=${datadb.registrobd.password} --port=${datadb.registrobd.port}`))
+        if(true){
+
+            await exec(installPath, (err, stdout,stderr)=> {
+                if(err){
+                    console.error("Hubo un error: " + err);
+                    return;
+                }
+                console.log(`stdout: ${stdout}`);
+                console.error(`stderr: ${stderr}`);
+            });
         }
 
 
-       exec(executablePath, (err, stdout,stderr)=> {
+       await exec(executablePath, (err, stdout,stderr)=> {
             if(err){
                 console.error("Hubo un error: " + err);
                 return;
@@ -33,7 +43,7 @@ function createWindow () {
            console.log(`stdout: ${stdout}`);
            console.error(`stderr: ${stderr}`);
         });
-    }
+    }*/
 
 
     mainWindow = new BrowserWindow({
@@ -53,7 +63,7 @@ function createWindow () {
     mainWindow.maximize();
 }
 
-app.on('ready', createWindow)
+app.on('ready',  createWindow)
 
 app.on('resize', function(e,x,y){
     mainWindow.setSize(x, y);
@@ -65,9 +75,9 @@ app.on('window-all-closed', function () {
     }
 })
 
-app.on('activate', function () {
+app.on('activate', async function () {
     if (mainWindow === null) {
-        createWindow()
+        await createWindow()
 
     }
 })
