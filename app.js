@@ -6,12 +6,13 @@ const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
+const session = require('express-session');
 const flash = require('connect-flash');
 const exphbs = require('express-handlebars');
 const dbcreator = require('./controllers/db');
 const firstRun = require('electron-first-run');
-//let middleware = require('express-ip-filter-middleware');
-
+const sessionStore = new session.MemoryStore;
+const cookieParser = require('cookie-parser');
 
 const options = {
     mode: 'whitelist',
@@ -19,28 +20,33 @@ const options = {
     deny: [],
 };
 
-
-
 //Inicialización de Express
-var app = express();
+let app = express();
 
-//app.use(middleware(options))
 //Configuración del motor de vista
 app.set('views', path.join(__dirname , 'views'));
 //Se declara que se utilizará archivos hbs para su compatibilidad con Handlebars Express
-app.set('view engine', '.hbs');
 
+//Middlewares
+app.use(session({
+    secret: 'secret',
+    resave: true,
+    saveUninitialized: true
+}));
 
 app.use(express.urlencoded({extended : false}));
 app.use(methodOverride('_method'));
+app.use(flash());
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use((req,res,next)=>{
+    res.locals.success_msg = req.flash('success_msg');
+    res.locals.error_msg = req.flash('error_msg');
+    res.locals.info_msg = req.flash('info_msg');
+    next();
+});
 
 //Configuración de rutas estaticas
 app.use(express.static(path.join(__dirname + 'public')));
-
-
 app.use('/css', express.static(path.join(__dirname , 'node_modules/bootstrap/dist/css')));
 app.use('/css', express.static(path.join(__dirname , 'node_modules/font-awesome/css')));
 app.use('/css', express.static(path.join(__dirname , 'node_modules/bootstrap-icons/font')));
@@ -59,17 +65,6 @@ app.use('/font', express.static(path.join(__dirname , 'public/fonts')));
 app.use('/js', express.static(path.join(__dirname, 'node_modules/morris.js')))
 app.use('/js', express.static(path.join(__dirname, 'node_modules/raphael')))
 
-
-//Inicialización de Express Handlebars
-app.engine('.hbs', exphbs({
-    defaultLayout: 'main',
-    layoutsDir: path.join(app.set('views'), 'layouts'),
-    partialsDir: path.join(app.get('views'), 'partials'),
-    helpers: require(path.join(__dirname,'/helpers/helperhbs')),
-    extname: '.hbs'
-}));
-
-
 //Requerimos los archivos de las rutas.
 app.use(require('./routes/index'));
 app.use(require('./routes/asistencia-rutas'));
@@ -82,19 +77,31 @@ app.use(require('./routes/equipo-rutas'));
 app.use(require('./routes/reporte-rutas'));
 
 
+//Inicialización de Express Handlebars
+app.engine('.hbs', exphbs({
+    defaultLayout: 'main',
+    layoutsDir: path.join(app.set('views'), 'layouts'),
+    partialsDir: path.join(app.get('views'), 'partials'),
+    helpers: require(path.join(__dirname,'/helpers/helperhbs')),
+    extname: '.hbs'
+}));
+app.set('view engine', '.hbs');
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
 
-app.use((req, res, next) => {
-    res.locals.success_msg = req.flash('success_msg');
-    res.locals.error_msg = req.flash('error_msg');
-    res.locals.error = req.flash('error');
-    next();
-})
+
+
+
+
+
+
 
 
 //Creación de una función para notificar que no se encuentra un directorio.
 app.use(function(req, res, next) {
-    var err = new Error('Not Found');
+    let err = new Error('Not Found');
     err.status = 404;
     next(err);
 });
