@@ -45,6 +45,7 @@ const saveFromGrid = async (req, res) => {
         if (add == 0) {
             res.redirect('/');
         } else if(add == 1) {
+            req.flash('success_msg', 'El/los alumnos se agregaron al grupo correctamente.')
             res.redirect('/grupo/alumnos/' + idgrupo);
         }
     }
@@ -148,6 +149,7 @@ const disassociateFromGroup = async (req, res) => {
     });
     //Eliminación de la asociación
     await alumnogrupo.destroy();
+    req.flash('success_msg', 'El alumno se elimino de grupo correctamente.');
     res.redirect('/grupo/alumnos/' + req.params.idgrupo);
 }
 

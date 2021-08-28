@@ -78,6 +78,7 @@ const editTopic = async (req, res) => {
         numerotema: parseInt(unidad),
         nombre: nombre
     });
+    req.flash('success_msg', 'El equipo se editó correctamente.');
     res.redirect('/grupo/temas/' + req.params.idgrupo);
 }
 //Guardar temas desde un grid en la vista

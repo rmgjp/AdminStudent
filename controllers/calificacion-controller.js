@@ -253,6 +253,7 @@ const scoreSingle = async (req, res) => {
             }
         }
     }
+    req.flash('success_msg', 'La actividad se calificó correctamente.');
     res.redirect('/grupo/actividades/' + req.params.idgrupo + '/' + req.params.idtema + '/' + req.params.idactividad);
 }
 /*Opción 1: hace referencia al caso en el que todos los integrantes obtendrán la misma calificación*/
@@ -398,6 +399,7 @@ const scoreTeam = async (req, res) => {
             }
         }
     }
+    req.flash('success_msg', 'La actividad se calificó correctamente.');
     res.redirect(`/grupo/actividades/${req.params.idgrupo}/${req.params.idtema}/${req.params.idactividad}`);
 }
 module.exports = {

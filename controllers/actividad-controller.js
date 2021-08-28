@@ -54,6 +54,7 @@ const editActivity = async (req, res) => {
         valor: parseInt(valor),
         tipo: tipoBox
     });
+    req.flash('success_msg', 'La actividad se editó correctamente.')
     res.redirect('/grupo/actividades/' + idgrupo + '/' + idtema + '/' + idtarea);
 };
 //Eliminar la actividad seleccionada
@@ -68,6 +69,7 @@ const deleteActivity = async (req, res) => {
         //Buscamos la actividad a eliminar y se destruye el objeto
         let actividad = await Models.tarea.findOne({where: {id: req.params.idactividad}});
         await actividad.destroy();
+        req.flash('success_msg', 'La actividad se eliminó correctamente.')
         res.redirect('/grupo/actividades/' + req.params.idgrupo);
     } catch (err) {
         console.log(err);

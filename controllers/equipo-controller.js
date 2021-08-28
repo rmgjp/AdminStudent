@@ -137,6 +137,7 @@ const saveTeam = async (req, res) => {
                 idtema: listaTemas[tema].id,
             });
         }
+        req.flash('success_msg', 'El equipo se creó correctamente.');
         res.redirect('/grupo/equipos/' + req.params.idgrupo);
     }
 }
@@ -194,7 +195,7 @@ const deleteTeam = async (req, res) => {
 
     const equipo = await Models.equipo.findOne({where: {id: req.params.idequipo}});
     await equipo.destroy();
-
+    req.flash('info_msg', 'El equipo se eliminó permanentemente.');
     res.redirect('/grupo/equipos/' + req.params.idgrupo);
 }
 
