@@ -98,6 +98,7 @@ const retriveCalf = async (req, res) => {
     if (!temas || temas.length === 0) {
         res.render('calificacion/vista-grupo-calificaciones', {idgrupo: req.params.idgrupo, menu, visualizacion: 1});
     } else {
+
         res.redirect("/grupo/calificaciones/" + req.params.idgrupo + "/" + temas[0].dataValues.id);
     }
 }
@@ -371,6 +372,7 @@ const scoreTeam = async (req, res) => {
                     idtarea: req.params.idactividad,
                     idalumno: datosAlumnos[alumno].id,
                     valor: datosEquipo[0].calificacion
+
                 });
             } else {
                 await calificacion.update({

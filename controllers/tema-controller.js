@@ -64,6 +64,7 @@ const saveTopicsAndActivities = async (req, res) => {
             const {id} = tema;
             await actividadControler.saveFromGrid(req, res, id);
         }
+        req.flash('success_msg', 'El tema se ha creado correctamente.');
         res.redirect('/grupo/temas/' + req.params.idgrupo);
     }
 }
@@ -94,6 +95,7 @@ const saveTopicByGrid = async (req, res) => {
             numerotema: temas[tema].numerotema
         })
     }
+    req.flash('success_msg', 'Los temas se han importado correctamente.');
     res.redirect('/grupo/temas/' + req.params.idgrupo);
 }
 
@@ -123,6 +125,7 @@ const deleteTopic = async (req, res) => {
     });
     //Eliminacion del tema
     await tema.destroy();
+    req.flash('info_msg', 'El tema se ha eliminado permanentemente.');
     res.redirect('/grupo/temas/' + req.params.idgrupo);
 };
 

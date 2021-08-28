@@ -43,6 +43,7 @@ const saveFromGrid = async (req, res) => {
         //con la tabla alumnogrupo resultado de una relación muchos a
         //muchos.
         if (add == 0) {
+            req.flash('success_msg', 'El grupo se creó correctamente.')
             res.redirect('/');
         } else if(add == 1) {
             req.flash('success_msg', 'El/los alumnos se agregaron al grupo correctamente.')
@@ -163,6 +164,7 @@ const editStudent = async (req, res) => {
         nombre: nombre.toUpperCase(),
         correo: correo
     });
+    req.flash('success_msg', 'Los datos del alumno se han actualizado correctamente.');
     res.redirect('/grupo/alumnos/' + req.params.idgrupo + '/' + alumno.clave);
 
 }

@@ -3,6 +3,8 @@ const fs = require('fs');
 const path = require('path');
 const config = require('../config/userconfig.json');
 const calificacionController = require('./calificacion-controller');
+const configuracion = require("../config/userconfig.json");
+//const {JSON} = require("sequelize");
 let menu;
 const visualizacion = 0;
 
@@ -31,6 +33,7 @@ const renderAllGroups = async (req, res) => {
 const removeGroup = async (req, res) => {
     const grupo = await getGroupData(req, res);
     await grupo.update({estado: 2});
+    req.flash('info_msg', 'El grupo se ha movido a la papelera.')
     res.redirect('/');
 }
 
@@ -38,6 +41,7 @@ const removeGroup = async (req, res) => {
 const restoreGroup = async (req, res) => {
     let grupo = await getGroupData(req, res);
     await grupo.update({estado: 1});
+    req.flash('info_msg', 'El grupo se ha restaurado y su estado cambió a activo.')
     res.redirect('/');
 };
 
@@ -78,6 +82,7 @@ const deleteGroup = async (req, res) => {
         await alumnos[alumno].destroy();
     }
     await grupo.destroy();
+    req.flash('info_msg', 'El grupo se ha eliminado permanentemente.')
     res.redirect('/filtro/2')
 };
 
