@@ -37,7 +37,8 @@
                 <div class="card " style="width: 90%; height: 385px">
                     <input type="hidden" id="actividadesReprobacionData" value="{{dataReprobacionAct}}">
                     <div class="card-body">
-                        <h5 class="card-title text-center">Rendimiento del grupo por actividad</h5>
+                        <h5 class="card-title text-center">Rendimiento del grupo por {{#if title}}tema
+                        {{else}}actividad{{/if}}</h5>
                         <div id="actividadesAprobacion" style="width: 100%; height: 250px;"></div>
                     </div>
                 </div>
