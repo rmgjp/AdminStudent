@@ -4,6 +4,7 @@ const path = require('path');
 const config = require('../config/userconfig.json');
 const calificacionController = require('./calificacion-controller');
 const configuracion = require("../config/userconfig.json");
+const alumnoController = require("./alumno-controller");
 //const {JSON} = require("sequelize");
 let menu;
 const visualizacion = 0;
@@ -128,13 +129,7 @@ const renderGroupDataListStudents = async (req,res)=>{
     const temas = await Models.tema.findAll({
         where:{idgrupo: req.params.idgrupo}
     });
-
     const grupo = await getGroupData(req, res);
-
-    const tema = await Models.tema.findOne({
-        where:{id: req.params.idtema}
-    });
-
     const alumnos = await Models.alumno.findAll({
         include:[{
             model : Models.alumnogrupo,
@@ -144,8 +139,14 @@ const renderGroupDataListStudents = async (req,res)=>{
         }]
     });
     menu = 1;
-
-    res.render('grupo/vista-inicio-grupo-lista', {asignatura: grupo.dataValues.asignatura, clave: grupo.dataValues.clave, idgrupo: grupo.dataValues.id, temas, tema, menu, visualizacion, alumnos});
+    if(req.params.idtema){
+        const tema = await Models.tema.findOne({
+            where:{id: req.params.idtema}
+        });
+        res.render('grupo/vista-inicio-grupo-lista', {asignatura: grupo.dataValues.asignatura, clave: grupo.dataValues.clave, idgrupo: grupo.dataValues.id, temas, tema, menu, visualizacion, alumnos});
+    }else{
+        res.render('grupo/vista-inicio-grupo-lista', {asignatura: grupo.dataValues.asignatura, clave: grupo.dataValues.clave, idgrupo: grupo.dataValues.id, temas, menu, visualizacion, alumnos});
+    }
 
 }
 const renderGroupDataListTeams = async (req,res)=>{
@@ -205,7 +206,7 @@ const renderStudentData = async (req,res) =>{
     }
     const aprobadasPorcentaje = Math.round((actAprobadas*100)/(actividades.length));
 
-    let dataReprobacion = JSON.stringify([{label:"Aprobadas", value: aprobadasPorcentaje},{label : "No aprobadas", value: (100-aprobadasPorcentaje)}]);
+    let dataReprobacion = JSON.stringify([{label:"Aprobados", value: aprobadasPorcentaje},{label : "No aprobados", value: (100-aprobadasPorcentaje)}]);
 
     res.render('grupo/vista-inicio-grupo-seleccion', {actAprobadas,actReprobadas,dataReprobacionAct: JSON.stringify(calificaciones), dataReprobacion ,idtema: req.params.idtema ,asignatura: grupo.dataValues.asignatura, clave: grupo.dataValues.clave, idgrupo: grupo.dataValues.id,temas, tema, alumno, menu })
 }
@@ -385,14 +386,18 @@ const renderGeneralView = async (req,res) => {
         }]
     });
 
-    /**
-     * alumno:{
-     *     tema1: 50
-     *     tema2: 60
-     *     tema3: 70
-     * }
-     */
+    let conteoPorTema = [];
 
+    for(let tema in temas){
+        conteoPorTema.push(
+            {
+                id: temas[tema].dataValues.id,
+                label:  temas[tema].dataValues.nombre,
+                a: 0,
+                b: 0
+            }
+        )
+    }
     for(let alumno in alumnos){
         let calificaciones = [];
         let reprobado = false;
@@ -437,6 +442,9 @@ const renderGeneralView = async (req,res) => {
             }
             if(califinal < 70){
                 califinal = 'NA';
+            }
+            else {
+                conteoPorTema[tema].b++;
             }
             calificaciones.push(califinal);
         }
