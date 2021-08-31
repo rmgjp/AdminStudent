@@ -158,7 +158,11 @@ const validateStudents = async (req, res) => {
 
         for (let equipo in equipos) {
             for (let alumno in listaAlumnos) {
-                const alumnosequipo = await Models.alumnoequipo.findOne({where: {idalumno: listaAlumnos[alumno].id}})
+                const alumnosequipo = await Models.alumnoequipo.findOne({where: {
+                        idalumno: listaAlumnos[alumno].id,
+                        idequipo: equipos[equipo].id
+                    }
+                })
                 if (alumnosequipo) {
                     resultado.estado = true;
                     resultado.alumnos.push(listaAlumnos[alumno]);
