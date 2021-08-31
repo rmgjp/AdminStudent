@@ -218,10 +218,17 @@ const getStudentAndStudents = async (req, res) => {
     const temas = await Models.tema.findAll({
         where: {idgrupo: req.params.idgrupo}
     });
+    //Lista de las calificaciones de las unidad.
+    let listaFormateada = await calCalifStudent(temas, alumno);
 
+    listaFormateada = JSON.stringify(listaFormateada);
+    const menu = 1;
+    res.render('alumno/vista-grupo-alumnos', {alumnos, idgrupo, asignatura, clave, alumno, listaFormateada, menu});
+}
+const calCalifStudent = async (temas, alumno)=>{
     let listaFormateada = [];
 
-    //Lista de las calificaciones de las unidad.
+
     for (let tema in temas) {
         const actividades = await Models.tarea.findAll({where: {idtema: temas[tema].dataValues.id}});
         let califinal = 0;
@@ -236,13 +243,11 @@ const getStudentAndStudents = async (req, res) => {
             });
 
             if (calificacion != null) {
-                if(calificacion.dataValues.valor_s2 !== null){
+                if (calificacion.dataValues.valor_s2 !== null) {
                     calcCalificacion = (calificacion.dataValues.valor_s2 * actividades[actividad].valor) / 100;
-                }
-                else {
+                } else {
                     calcCalificacion = (calificacion.dataValues.valor * actividades[actividad].valor) / 100;
                 }
-
                 switch (parseInt(configuracion.califi)) {
                     case 0:
                         if (calificacion.dataValues.valor < 70) {
@@ -266,17 +271,14 @@ const getStudentAndStudents = async (req, res) => {
         listaFormateada.push({
             no_unidad: temas[tema].dataValues.numerotema,
             nombre: temas[tema].dataValues.nombre,
-            califinal: califinal
+            califinal: califinal,
         });
     }
-
-    listaFormateada = JSON.stringify(listaFormateada);
-    const menu = 1;
-    res.render('alumno/vista-grupo-alumnos', {alumnos, idgrupo, asignatura, clave, alumno, listaFormateada, menu});
+    return listaFormateada;
 }
-
 //Exportación de los métodos para su posterior uso dentro del programa
 module.exports = {
+    calCalifStudent,
     getStudentList,
     saveFromGrid,
     disassociateFromGroup,
