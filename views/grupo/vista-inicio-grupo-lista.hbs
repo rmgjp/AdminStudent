@@ -10,7 +10,7 @@
                         {{else}}href="/grupo-inicio/equipos/{{../idgrupo}}/{{dataValues.id}}" {{/if}}><i
                             class="bi-book-half"></i><strong> {{dataValues.nombre}}</strong></a></li>
                 {{/each}}
-                <li class="nav-item"><a class="nav-link" href="/grupo/vista-general/alumnos/{{idgrupo}}/"><i class="bi-book-half"></i><strong> Todos</strong></a></li>
+                <li class="nav-item"><a class="nav-link" href="/grupo-inicio/lista/alumnos/{{idgrupo}}"><i class="bi-book-half"></i><strong> Todos</strong></a></li>
             </ul>
         </div>
     </nav>
@@ -18,7 +18,7 @@
     <main class="col col-md col-xl col-sm col-lg">
         <div class="row">
             <div class="col">
-                <h3>Tema: {{tema.dataValues.nombre}}</h3>
+                <h3>Tema: {{#if tema}}{{tema.dataValues.nombre}}{{else}}Todos{{/if}}</h3>
             </div>
         </div>
         <div class="row">
@@ -27,7 +27,10 @@
                     {{#if alumnos}}
                         {{#each alumnos}}
                             <a type="button" class="list-group-item list-group-item-action" aria-current="true"
-                               href="/grupo-inicio/alumno/{{../idgrupo}}/{{../tema.dataValues.id}}/{{dataValues.id}}">
+                                {{#if ../tema}}href="/grupo-inicio/alumno/{{../idgrupo}}/{{../tema.dataValues.id}}/{{dataValues.id}}"
+                                {{else}}
+                                            href="/grupo/vista-general/{{../idgrupo}}/{{dataValues.id}}"
+                                {{/if}}>
                                 <i class="bi-person-badge-fill"></i><strong>{{dataValues.clave}}</strong>
                                 - {{dataValues.apellidos}} {{dataValues.nombre}}
                             </a>
