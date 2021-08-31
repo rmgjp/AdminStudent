@@ -71,7 +71,7 @@ router.get('/grupo-inicio/equipos/:idgrupo/:idtema', controladorGrupo.renderGrou
 
 router.get('/grupo/vista-general/:idgrupo', controladorGrupo.renderGeneralView);
 
-router.get('/grupo/vista-general/')
+
 
 //Ruta para eliminar el grupo cuando se cancela el Wizard.
 router.get('/abortar-grupo/:idgrupo', controladorGrupo.abortGroup);
