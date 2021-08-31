@@ -285,7 +285,8 @@ module.exports = {
     editStudent,
     getStudentListByGroup,
     getStudentAndStudents,
-    getAllStudents
+    getAllStudents,
+    getStudentByKey
 
 
 
