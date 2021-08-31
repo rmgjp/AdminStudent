@@ -153,7 +153,7 @@ const validateStudents = async (req, res) => {
 
     for (let tema in listaTemas) {
         const equipos = await Models.equipotema.findAll({
-            idtema: listaTemas[tema].id,
+           where:{ idtema: listaTemas[tema].id,}
         });
 
         for (let equipo in equipos) {
@@ -166,7 +166,6 @@ const validateStudents = async (req, res) => {
             }
         }
     }
-
     resultado.alumnos = resultado.alumnos.filter((value, index) => resultado.alumnos.indexOf(value) === index);
 
     return resultado;
