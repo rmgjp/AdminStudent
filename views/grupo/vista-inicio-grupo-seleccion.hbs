@@ -14,7 +14,7 @@
                         {{/if}}><i
                             class="bi-book-half"></i><strong> {{dataValues.nombre}}</strong></a></li>
                 {{/each}}
-                <li class="nav-item"><a class="nav-link" href="#"><i class="bi-book-half"></i><strong> Todos</strong></a></li>
+                <li class="nav-item"><a class="nav-link" href="/grupo/vista-general/{{idgrupo}}/{{alumno.dataValues.id}}"><i class="bi-book-half"></i><strong> Todos</strong></a></li>
             </ul>
         </div>
     </nav>
@@ -22,8 +22,9 @@
         <div class="row">
             <div class="col">
                 <span>
-                    <a style="font-size: 1.75rem;font-weight: 500;line-height: 1.2; margin-bottom: 0.5rem;" {{#if alumno}} href="/grupo-inicio/alumnos/{{idgrupo}}/{{idtema}}"
-                    {{else}} href="/grupo-inicio/equipos/{{idgrupo}}/{{idtema}}"
+                    <a style="font-size: 1.75rem;font-weight: 500;line-height: 1.2; margin-bottom: 0.5rem;"
+                        {{#if tema}} href="/grupo-inicio/alumnos/{{idgrupo}}/{{idtema}}"
+                    {{else}} href="/grupo-inicio/lista/alumnos/{{idgrupo}}"
                     {{/if}}>
                         <i class="bi bi-arrow-left-circle-fill" style="size:1.75rem;"></i>
                     </a>
@@ -87,7 +88,7 @@
                             Actividades aprobadas: {{actAprobadas}}
                         </p>
                         <p>
-                            Actividades no aprobadas: {{actReprobadas}}
+                            {{#if title}}Temas no aprobados{{else}}Actividades no aprobadas{{/if}}: {{actReprobadas}}
                         </p>
                 </div>
                 <div class="col col-md col-xl col-sm col-lg graph-container">
