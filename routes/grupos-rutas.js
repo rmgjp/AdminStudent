@@ -57,19 +57,24 @@ router.put('/grupo/editar/:idgrupo', controladorGrupo.editGroup);
 //Ruta para vista inicial del grupo
 router.get('/grupo-inicio/:idgrupo', controladorGrupo.retriveGroupData);
 
+
 //Ruta que grafica la información del grupo con un tema especifico
 router.get('/grupo-inicio/:idgrupo/:idtema', controladorGrupo.renderGroupData);
+//Ruta que grafica la información del grupo en todos los temas
+router.get('/grupo/vista-general/:idgrupo', controladorGrupo.renderGeneralView);
 
 //Ruta para renderizar la lista de alumnos para su selección
+router.get('/grupo-inicio/lista/alumnos/:idgrupo', controladorGrupo.renderGroupDataListStudents)
 router.get('/grupo-inicio/alumnos/:idgrupo/:idtema', controladorGrupo.renderGroupDataListStudents);
 
 //Ruta para graficar la información del alumno.
 router.get('/grupo-inicio/alumno/:idgrupo/:idtema/:idalumno', controladorGrupo.renderStudentData);
+router.get('/grupo/vista-general/:idgrupo/:idalumno',controladorGrupo.renderGeneralViewStudent)
 
+//Renderizar Equipos
 router.get('/grupo-inicio/equipos/:idgrupo/:idtema', controladorGrupo.renderGroupDataListTeams);
-//router.get('/grupo-inicio/equipo/:idgrupo/:idtema/:idequipo', );
 
-router.get('/grupo/vista-general/:idgrupo', controladorGrupo.renderGeneralView);
+
 
 
 
