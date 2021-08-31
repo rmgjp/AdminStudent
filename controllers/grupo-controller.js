@@ -402,8 +402,8 @@ const renderGeneralView = async (req,res) => {
         let calificaciones = [];
         let reprobado = false;
 
-        for (let tema in temas) {
-            const actividades = await Models.tarea.findAll({where: {idtema: temas[tema].dataValues.id}});
+        for (let tema in conteoPorTema) {
+            const actividades = await Models.tarea.findAll({where: {idtema: conteoPorTema[tema].id}});
             let califinal = 0;
             let calcCalificacion;
 
@@ -442,6 +442,7 @@ const renderGeneralView = async (req,res) => {
             }
             if(califinal < 70){
                 califinal = 'NA';
+                conteoPorTema[tema].a++;
             }
             else {
                 conteoPorTema[tema].b++;
@@ -464,7 +465,45 @@ const renderGeneralView = async (req,res) => {
 
     const dataReprobacion = JSON.stringify([{label:"Aprobados", value: aprobadosPorcentaje},{label : "No aprobados", value: reprobadosPorcentaje}]);
 
-    res.render('grupo/vista-inicio-grupo', {dataReprobacion, temas, asignatura: grupo.dataValues.asignatura, clave: grupo.dataValues.clave, idgrupo: grupo.dataValues.id, title: 'General', menu:1, aprobados, reprobados})
+    res.render('grupo/vista-inicio-grupo', {dataReprobacion, temas, asignatura: grupo.dataValues.asignatura, clave: grupo.dataValues.clave, idgrupo: grupo.dataValues.id, title: 'General', menu:1, aprobados, reprobados, dataReprobacionAct: JSON.stringify(conteoPorTema)})
+}
+
+
+const renderGeneralViewStudent = async (req, res)=>{
+    const grupo = await Models.grupo.findOne({
+        where: {id: req.params.idgrupo}
+    })
+
+    const alumno = await Models.alumno.findOne({where:{
+            id: req.params.idalumno
+        }
+    });
+    const temas = await Models.tema.findAll({
+        where:
+            {idgrupo: req.params.idgrupo}
+    });
+
+    const listaFormateada = await alumnoController.calCalifStudent(temas, alumno);
+
+    let dataReprobacionAct = []; //Barra
+
+    let unidadReprobada = 0;
+    listaFormateada.forEach(element => (
+        dataReprobacionAct.push({label: element.nombre, value: (element.califinal === "NA") ? 0 : element.califinal})
+    ));
+    for(let calif in listaFormateada){
+        if(listaFormateada[calif].califinal === "NA"){
+            unidadReprobada++;
+        }
+    }
+    /**
+     * 100 -- no.unidades
+     * X ---no.reprobadas**/
+    let reprobadasPorcentaje = Math.round(((unidadReprobada*100)/listaFormateada.length));
+    //Dona
+
+    let dataReprobacion = JSON.stringify([{label:"Aprobados", value: (100-reprobadasPorcentaje)},{label : "No aprobados", value: reprobadasPorcentaje}]);
+    res.render('grupo/vista-inicio-grupo-seleccion', {title: "Todos" ,actAprobadas: (listaFormateada.length-unidadReprobada),actReprobadas: unidadReprobada,dataReprobacionAct: JSON.stringify(dataReprobacionAct), dataReprobacion ,idtema: req.params.idtema ,asignatura: grupo.dataValues.asignatura, clave: grupo.dataValues.clave, idgrupo: grupo.dataValues.id,temas, alumno, menu })
 }
 //Exportación de los métodos para su uso interno en aplicación.
 module.exports = {
@@ -483,5 +522,6 @@ module.exports = {
     createGroup,
     getGroupDataFromFile,
     editGroup,
-    renderGeneralView
+    renderGeneralView,
+    renderGeneralViewStudent
 }
