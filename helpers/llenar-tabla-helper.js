@@ -30,3 +30,9 @@ table.on('editable-save.bs.table', function (e, field, row, oldValue, $el) {
 
 
 
+
+
+
+
+
+

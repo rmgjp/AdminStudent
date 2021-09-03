@@ -4,7 +4,6 @@ let tableAlumnos = $('#tableAlumnos');
 $(function cargarDatos() {
     let listaTemas = document.getElementById("valorTablaTemas").value;
     listaTemas = JSON.parse(listaTemas);
-    console.log(listaTemas);
 
     let rowsTemas = [];
     for (let dato = 0; dato < listaTemas.length; dato++) {
@@ -14,8 +13,6 @@ $(function cargarDatos() {
 
     let listaAlumnos = document.getElementById("valorTablaAlumnos").value;
     listaAlumnos = JSON.parse(listaAlumnos);
-    console.log(listaAlumnos);
-
     let rowsAlumnos = [];
     for (let dato = 0; dato < listaAlumnos.length; dato++) {
         rowsAlumnos.push(listaAlumnos[dato]);
