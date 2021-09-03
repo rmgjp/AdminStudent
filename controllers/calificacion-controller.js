@@ -2,6 +2,7 @@ const Models = require('../models');
 const configuracion = require('../config/userconfig.json');
 const alumnoController = require('./alumno-controller')
 const {Op} = require('sequelize');
+const {calcCalifStudentTopic} = require("./alumno-controller");
 //Este controlador contiene las funciones requeridas para la busqueda y consulta de las calificaciones
 
 /**
@@ -145,12 +146,12 @@ const viewCalf = async (req, res) => {
 
 
 const renderViewCalif = async (req, res) => {
-    let calificacion = [];
     let listaFormateada = [];
     let segundaoportunidad = 0;
     let alumnos;
 
     if (!req.params.second) {
+
         alumnos = await alumnoController.getAllStudents(req, res);
         for (let alumno in alumnos) {
             let valor = await Models.calificacion.findOne({
@@ -166,6 +167,7 @@ const renderViewCalif = async (req, res) => {
                 calificacion.push(valor.dataValues.valor);
             }
         }
+
     } else {
         segundaoportunidad = 1;
         alumnos = await Models.alumno.findAll({
@@ -186,7 +188,23 @@ const renderViewCalif = async (req, res) => {
                     idalumno: alumnos[alumno].dataValues.id,
                 }
             });
-            calificacion.push(valor.dataValues.valor);
+
+            if(configuracion.califi === "1"){
+                if(await calcCalifStudentTopic(req.params.idtema, alumnos[alumno]) === "NA") {
+                    listaFormateada.push({
+                        clave: alumnos[alumno].dataValues.clave,
+                        nombre: alumnos[alumno].dataValues.nombre,
+                        calificacion: (!valor.dataValues.valor_s2) ? valor.dataValues.valor : valor.dataValues.valor_s2,
+                    })
+                }
+            }
+            else{
+                listaFormateada.push({
+                    clave: alumnos[alumno].dataValues.clave,
+                    nombre: alumnos[alumno].dataValues.nombre,
+                    calificacion: (!valor.dataValues.valor_s2) ? valor.dataValues.valor: valor.dataValues.valor_s2,
+                })
+            }
         }
     }
 
@@ -260,7 +278,7 @@ const scoreSingle = async (req, res) => {
 /*Opción 1: hace referencia al caso en el que todos los integrantes obtendrán la misma calificación*/
 const renderScoreTeam = async (req, res) => {
     let alumnos;
-    let second = 0;
+    let second = (req.params.second)? 1:0;
     let calificacion = [];
     let valorTablaEquipo = [];
     let valorTablaAlumnos = [];
@@ -322,7 +340,7 @@ const renderScoreTeam = async (req, res) => {
         }
     }
 
-    for (let alumno = 0; alumno < alumnos.length; alumno++) {
+    for (let alumno in alumnos) {
         if (!req.params.second) {
             valorTablaAlumnos.push({
                 id: alumnos[alumno].dataValues.id,
@@ -372,7 +390,6 @@ const scoreTeam = async (req, res) => {
                     idtarea: req.params.idactividad,
                     idalumno: datosAlumnos[alumno].id,
                     valor: datosEquipo[0].calificacion
-
                 });
             } else {
                 await calificacion.update({
