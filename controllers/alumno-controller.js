@@ -266,8 +266,6 @@ const calcCalifStudentTopic = async (idtema, alumno) =>{
 
 const calCalifStudent = async (temas, alumno)=>{
     let listaFormateada = [];
-
-
     for (let tema in temas) {
         const actividades = await Models.tarea.findAll({where: {idtema: temas[tema].dataValues.id}});
         let califinal = 0;
@@ -315,6 +313,8 @@ const calCalifStudent = async (temas, alumno)=>{
     }
     return listaFormateada;
 }
+
+
 //Exportación de los métodos para su posterior uso dentro del programa
 module.exports = {
     calcCalifStudentTopic,
