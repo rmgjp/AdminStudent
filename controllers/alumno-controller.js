@@ -42,10 +42,10 @@ const saveFromGrid = async (req, res) => {
         //Llamada del método para asociar la tabla alumno y grupo
         //con la tabla alumnogrupo resultado de una relación muchos a
         //muchos.
-        if (add == 0) {
+        if (add === 0) {
             req.flash('success_msg', 'El grupo se creó correctamente.')
             res.redirect('/');
-        } else if(add == 1) {
+        } else if(add === 1) {
             req.flash('success_msg', 'El/los alumnos se agregaron al grupo correctamente.')
             res.redirect('/grupo/alumnos/' + idgrupo);
         }
@@ -156,7 +156,7 @@ const disassociateFromGroup = async (req, res) => {
 
 //Actualizar el registro de alumno
 const editStudent = async (req, res) => {
-    const {clave, apellidos, nombre, correo} = req.body;
+    const {clave, nombre, correo} = req.body;
 
     let alumno = await Models.alumno.findOne({where: {id: req.params.idalumno}})
     await alumno.update({
@@ -225,10 +225,47 @@ const getStudentAndStudents = async (req, res) => {
     const menu = 1;
     res.render('alumno/vista-grupo-alumnos', {alumnos, idgrupo, asignatura, clave, alumno, listaFormateada, menu});
 }
+const calcCalifStudentTopic = async (idtema, alumno) =>{
+    const actividades = await Models.tarea.findAll({where: {idtema: idtema}});
+    let califinal = 0;
+    let calcCalificacion;
+
+    for (let actividad in actividades) {
+        let calificacion = await Models.calificacion.findOne({
+            where: {
+                idalumno: alumno.dataValues.id,
+                idtarea: actividades[actividad].dataValues.id,
+            }
+        });
+
+        if (calificacion != null) {
+            calcCalificacion = (calificacion.dataValues.valor * actividades[actividad].valor) / 100;
+            switch (parseInt(configuracion.califi)) {
+                case 0:
+                    if (calificacion.dataValues.valor < 70) {
+                        califinal = "NA";
+                    } else if (calificacion.dataValues.valor >= 70) {
+                        if (califinal !== "NA") {
+                            //Calculo de las calificaciones cuando se promedia.
+                            califinal += calcCalificacion;
+                        }
+                    }
+                    break;
+                case 1:
+                    califinal += calcCalificacion;
+                    break;
+            }
+        }
+    }
+    if(califinal < 70){
+        califinal = 'NA';
+    }
+
+    return califinal;
+}
+
 const calCalifStudent = async (temas, alumno)=>{
     let listaFormateada = [];
-
-
     for (let tema in temas) {
         const actividades = await Models.tarea.findAll({where: {idtema: temas[tema].dataValues.id}});
         let califinal = 0;
@@ -276,8 +313,11 @@ const calCalifStudent = async (temas, alumno)=>{
     }
     return listaFormateada;
 }
+
+
 //Exportación de los métodos para su posterior uso dentro del programa
 module.exports = {
+    calcCalifStudentTopic,
     calCalifStudent,
     getStudentList,
     saveFromGrid,

@@ -24,7 +24,6 @@ $(function cargarDatos(){
 $('#table').on('editable-save.bs.table', function(e, field, row, oldValue, $el){
     tablaDatos = table.bootstrapTable('getData');
     document.getElementById("valorTabla").value = JSON.stringify(tablaDatos);
-    console.log(tablaDatos);
 })
 
 
@@ -44,7 +43,6 @@ $('#add').on('click', function () {
         document.getElementById("valorTabla").value = JSON.stringify(tablaDatos);
         i = i + 1
         document.getElementById("numerotema").value = i+1;
-        console.log(tablaDatos);
     }
 })
 

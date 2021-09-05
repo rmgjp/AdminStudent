@@ -33,8 +33,8 @@
                         <th data-field="nombre" data-sorteable="false" class="column">Nombre</th>
 
                         {{#each actividades}}
-                            <th data-field="calificaciones.{{@index}}" class="column">{{dataValues.nombre}}
-                                : {{dataValues.valor}}</th>
+                            <th data-field="calificaciones.{{@index}}" class="column"><a href="/grupo/actividades/{{../idgrupo}}/{{../tema.dataValues.id}}/{{dataValues.id}}">{{dataValues.nombre}}
+                                : {{dataValues.valor}}</a></th>
                         {{/each}}
                         <th data-field="califinal" class="column">Calif. Final</th>
                     </tr>

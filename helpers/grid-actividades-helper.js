@@ -27,7 +27,6 @@ $('#add').on('click', function () {
         //Se convierten los datos de la tabla a JSON.
         document.getElementById("valorTabla").value = JSON.stringify(tablaDatos);
         i = i + 1
-        console.log(tablaDatos);
     }
 })
 //Método para eliminar el elemento(s) seleccionado(s)
@@ -46,11 +45,9 @@ $('#remove').on('click', function () {
     tablaDatos = table.bootstrapTable('getData');
     document.getElementById("valorTabla").value = JSON.stringify(tablaDatos);
     i = i - 1
-    console.log(tablaDatos);
 })
 
 $('#table').on('editable-save.bs.table', function(e, field, row, oldValue, $el){
     tablaDatos = table.bootstrapTable('getData');
     document.getElementById("valorTabla").value = JSON.stringify(tablaDatos);
-    console.log(tablaDatos);
 })

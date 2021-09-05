@@ -3,7 +3,8 @@
     <div class="row-cols-1 m-2 p-3">
         <h2 class="display-4">Calificar Actividad</h2>
     </div>
-    <form action="/actividad/calificar-equipo/{{idgrupo}}/{{idtema}}/{{actividad.dataValues.id}}/{{idequipo}}?_method=PUT" method="POST">
+    <form {{#iflogico second '===' 0}}action="/actividad/calificar-equipo/{{idgrupo}}/{{idtema}}/{{actividad.dataValues.id}}/{{idequipo}}?_method=PUT"{{else}}
+          action="/actividad/calificar-equipo/{{idgrupo}}/{{idtema}}/{{actividad.dataValues.id}}/{{idequipo}}/1?_method=PUT"{{/iflogico}} method="POST">
         <input type="hidden" name="_method" value="PUT">
         <input type="hidden" name="estado" id='estado' value="false">
         <div class="row-cols-1  d-flex flex-row-reverse">

@@ -2,13 +2,13 @@ const Models = require('../models');
 const configuracion = require('../config/userconfig.json');
 const alumnoController = require('./alumno-controller')
 const {Op} = require('sequelize');
+const {calcCalifStudentTopic} = require("./alumno-controller");
 //Este controlador contiene las funciones requeridas para la busqueda y consulta de las calificaciones
 
 /**
  * Visualizacion de la vista de calificaciones*/
 
 const calcCalif = async (req, res) => {
-    const tema = await Models.tema.findOne({where: {id: req.params.idtema}});
     //Busqueda de las actividades por grupo
     const actividades = await Models.tarea.findAll({where: {idtema: req.params.idtema}})
 
@@ -20,7 +20,6 @@ const calcCalif = async (req, res) => {
         let acumulador = 0;
         let calcCalificacion;
         let valorCalificacion;
-        let segundaOp;
 
         //ciclo para recuperar las calificaciones relacionadas a cada alumno del grupo
         for (let actividad in actividades) {
@@ -145,12 +144,12 @@ const viewCalf = async (req, res) => {
 
 
 const renderViewCalif = async (req, res) => {
-    let calificacion = [];
     let listaFormateada = [];
     let segundaoportunidad = 0;
     let alumnos;
 
     if (!req.params.second) {
+
         alumnos = await alumnoController.getAllStudents(req, res);
         for (let alumno in alumnos) {
             let valor = await Models.calificacion.findOne({
@@ -160,12 +159,13 @@ const renderViewCalif = async (req, res) => {
                 }
             });
 
-            if (!valor) {
-                calificacion.push(0)
-            } else {
-                calificacion.push(valor.dataValues.valor);
-            }
+            listaFormateada.push({
+                clave: alumnos[alumno].dataValues.clave,
+                nombre: alumnos[alumno].dataValues.nombre,
+                calificacion: (!valor)? 0 : valor.dataValues.valor
+            })
         }
+
     } else {
         segundaoportunidad = 1;
         alumnos = await Models.alumno.findAll({
@@ -186,25 +186,31 @@ const renderViewCalif = async (req, res) => {
                     idalumno: alumnos[alumno].dataValues.id,
                 }
             });
-            calificacion.push(valor.dataValues.valor);
+
+            if(configuracion.califi === "1"){
+                if(await calcCalifStudentTopic(req.params.idtema, alumnos[alumno]) === "NA") {
+                    listaFormateada.push({
+                        clave: alumnos[alumno].dataValues.clave,
+                        nombre: alumnos[alumno].dataValues.nombre,
+                        calificacion: (!valor.dataValues.valor_s2) ? valor.dataValues.valor : valor.dataValues.valor_s2,
+                    })
+                }
+            }
+            else{
+                listaFormateada.push({
+                    clave: alumnos[alumno].dataValues.clave,
+                    nombre: alumnos[alumno].dataValues.nombre,
+                    calificacion: (!valor.dataValues.valor_s2) ? valor.dataValues.valor: valor.dataValues.valor_s2,
+                })
+            }
         }
+
     }
-
-
-    for (let alumno = 0; alumno < alumnos.length; alumno++) {
-        listaFormateada.push({
-            clave: alumnos[alumno].dataValues.clave,
-            nombre: alumnos[alumno].dataValues.nombre,
-            calificacion: calificacion[alumno]
-        })
-    }
-
     listaFormateada = JSON.stringify(listaFormateada);
 
     const actividad = await Models.tarea.findOne({
         where: {id: req.params.idactividad}
     })
-
     res.render('actividad/actividad-calificar-individual', {
         idgrupo: req.params.idgrupo,
         idtema: req.params.idtema,
@@ -260,7 +266,7 @@ const scoreSingle = async (req, res) => {
 /*Opción 1: hace referencia al caso en el que todos los integrantes obtendrán la misma calificación*/
 const renderScoreTeam = async (req, res) => {
     let alumnos;
-    let second = 0;
+    let second = (req.params.second)? 1:0;
     let calificacion = [];
     let valorTablaEquipo = [];
     let valorTablaAlumnos = [];
@@ -322,7 +328,7 @@ const renderScoreTeam = async (req, res) => {
         }
     }
 
-    for (let alumno = 0; alumno < alumnos.length; alumno++) {
+    for (let alumno in alumnos) {
         if (!req.params.second) {
             valorTablaAlumnos.push({
                 id: alumnos[alumno].dataValues.id,
@@ -331,13 +337,27 @@ const renderScoreTeam = async (req, res) => {
                 calificacion: calificacion[alumno]
             })
         } else {
-            if (calificacion[alumno] < 70) {
-                valorTablaAlumnos.push({
-                    id: alumnos[alumno].dataValues.id,
-                    clave: alumnos[alumno].dataValues.clave,
-                    nombre: alumnos[alumno].dataValues.nombre,
-                    calificacion: calificacion[alumno]
-                })
+            //configuracion modo
+
+            if(configuracion.califi === '1'){
+                if (calificacion[alumno] < 70 && await calcCalifStudentTopic(req.params.idtema, alumnos[alumno])) {
+                    valorTablaAlumnos.push({
+                        id: alumnos[alumno].dataValues.id,
+                        clave: alumnos[alumno].dataValues.clave,
+                        nombre: alumnos[alumno].dataValues.nombre,
+                        calificacion: calificacion[alumno]
+                    })
+                }
+            }
+            else{
+                if (calificacion[alumno] < 70) {
+                    valorTablaAlumnos.push({
+                        id: alumnos[alumno].dataValues.id,
+                        clave: alumnos[alumno].dataValues.clave,
+                        nombre: alumnos[alumno].dataValues.nombre,
+                        calificacion: calificacion[alumno]
+                    })
+                }
             }
         }
     }
@@ -349,7 +369,8 @@ const renderScoreTeam = async (req, res) => {
         actividad,
         idequipo: req.params.idequipo,
         valorTablaEquipo,
-        valorTablaAlumnos
+        valorTablaAlumnos,
+        second
     });
 }
 
@@ -357,7 +378,7 @@ const scoreTeam = async (req, res) => {
     const datosEquipo = JSON.parse(req.body.valorTablaEquipo);
     const datosAlumnos = JSON.parse(req.body.valorTablaAlumnos);
     const valorSwitch = (req.body.estado === 'true');
-
+    const second = (req.params.second)? true:false;
     if (valorSwitch) {
         for (let alumno in datosAlumnos) {
 
@@ -372,12 +393,18 @@ const scoreTeam = async (req, res) => {
                     idtarea: req.params.idactividad,
                     idalumno: datosAlumnos[alumno].id,
                     valor: datosEquipo[0].calificacion
-
                 });
             } else {
-                await calificacion.update({
-                    valor: datosEquipo[0].calificacion
-                });
+                if(second){
+                    await calificacion.update({
+                        valor_s2: datosEquipo[0].calificacion
+                    });
+                }
+                else{
+                    await calificacion.update({
+                        valor: datosEquipo[0].calificacion
+                    });
+                }
             }
         }
     } else {
@@ -395,9 +422,16 @@ const scoreTeam = async (req, res) => {
                     valor: datosAlumnos[alumno].calificacion
                 });
             } else {
-                await calificacion.update({
-                    valor: datosAlumnos[alumno].calificacion
-                });
+                if(second){
+                    await calificacion.update({
+                        valor_s2: datosAlumnos[alumno].calificacion
+                    });
+                }
+                else{
+                    await calificacion.update({
+                        valor: datosAlumnos[alumno].calificacion
+                    });
+                }
             }
         }
     }
