@@ -106,7 +106,6 @@ app.use(function(req, res, next) {
     next(err);
 });
 
-dbcreator.initialize();
 
 const isFirstRun = firstRun()
 console.log(isFirstRun);

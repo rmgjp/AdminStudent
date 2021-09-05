@@ -14,11 +14,15 @@ module.exports = db = {};
 module.exports = {
     async initialize() {
         // Se obtienen las credenciales de la base de datos
-        const { host, port, user, password, database } = config.registrobd;
+        const { host, port, user, password, database } = config.production
         // Se crea la conexión a MariaDB/MySQL
         const connection = await mariadb.createConnection({ host, port, user, password });
         //Ejecucion del query para crear la base de datos, en caso de que no exista
-        await connection.query(`CREATE DATABASE IF NOT EXISTS \`${database}\`;`);
+        const resultado = await connection.query(`CREATE DATABASE IF NOT EXISTS \`${database}\`;`).catch(
+            function (reason){
+                throw reason;
+            }
+        );
         // Llamada a Sequelize para la creación de las tablas.
         const sequelize = new Sequelize(database, user, password, { dialect: 'mariadb' });
 

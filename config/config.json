@@ -1,24 +1,24 @@
 {
   "development": {
     "user": "root",
-    "password": "gyNr%s@&#SN#",
-    "port": "36",
+    "password": "uxrlrpaqga9lfe9l",
+    "port": "3306",
     "database": "registro",
     "host": "127.0.0.1",
     "dialect": "mariadb"
   },
   "registrobd": {
     "user": "root",
-    "password": "gyNr%s@&#SN#",
-    "port": "36",
+    "password": "uxrlrpaqga9lfe9l",
+    "port": "3306",
     "database": "registro",
     "host": "127.0.0.1",
     "dialect": "mariadb"
   },
   "production": {
     "user": "root",
-    "password": "gyNr%s@&#SN#",
-    "port": "36",
+    "password": "uxrlrpaqga9lfe9l",
+    "port": "3306",
     "database": "registro",
     "host": "127.0.0.1",
     "dialect": "mariadb"

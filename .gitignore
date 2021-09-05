@@ -108,3 +108,4 @@ dist
 /.idea/
 /out/
 /mariadb/
+!/out/
