@@ -57,6 +57,6 @@
       "createDesktopShortcut" : true,
       "createStartMenuShortcut" : true
     },
-    "extraFiles": ["mariadb"]
+    "extraFiles": ["build"]
   }
 }
