@@ -20,7 +20,7 @@ var installPath = path.join(__dirname, `mariadb\\bin\\mysql_install_db.exe --pas
 let mainWindow;
 
 async function createWindow () {
-    if(process.platform === 'win32'){
+   /* if(process.platform === 'win32'){
         //gyNr%s@&
 
         if(true){
