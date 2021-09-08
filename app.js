@@ -23,6 +23,9 @@ const options = {
 //Inicialización de Express
 let app = express();
 
+dbcreator.initialize();
+
+
 //Configuración del motor de vista
 app.set('views', path.join(__dirname , 'views'));
 //Se declara que se utilizará archivos hbs para su compatibilidad con Handlebars Express
