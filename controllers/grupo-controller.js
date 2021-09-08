@@ -25,7 +25,9 @@ const getAllGroups = async (req, res) => {
 //Renderizar todos los grupos
 const renderAllGroups = async (req, res) => {
     const estado = 3;
-    const grupos = await getAllGroups(req, res);
+    const grupos = await getAllGroups(req, res).catch((reason => {
+        res.render("error", {error: reason});
+    }))
     menu = 0;
     res.render('index', {grupos, config, estado, menu});
 }
