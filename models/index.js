@@ -14,7 +14,7 @@ const db = {};
 
 
 let sequelize;
-const { host, port, user, password, database, dialect } = config.registrobd;
+const { host, port, user, password, database, dialect } = config.production;
 sequelize = new Sequelize(database, user, password, { dialect: 'mariadb' });
 
 
