@@ -25,7 +25,6 @@
     "connect-flash": "^0.1.1",
     "cookie-parser": "^1.4.5",
     "electron-first-run": "^3.0.0",
-    "electron-squirrel-startup": "^1.0.0",
     "express": "^4.17.1",
     "express-handlebars": "^5.3.2",
     "express-ip-filter-middleware": "^1.0.20",
@@ -50,14 +49,18 @@
     "win": {
       "target": "NSIS"
     },
+    "asar": false,
     "nsis": {
       "oneClick": true,
       "allowElevation": true,
-      "allowToChangeInstallationDirectory" : false,
-      "createDesktopShortcut" : true,
-      "createStartMenuShortcut" : true,
-      "include": "build/installer.nsh"
+      "allowToChangeInstallationDirectory": false,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "include": "build\\installer.nsh"
     },
-    "extraFiles": ["build"]
+    "extraFiles": [
+      "build\\mariadb.msi",
+      "build\\node.msi"
+    ]
   }
 }
