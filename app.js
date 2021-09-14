@@ -83,7 +83,7 @@ app.use(require('./routes/reporte-rutas'));
 //Inicialización de Express Handlebars
 app.engine('.hbs', exphbs({
     defaultLayout: 'main',
-    layoutsDir: path.join(app.set('views'), 'layouts'),
+    layoutsDir: path.join(app.get('views'), 'layouts'),
     partialsDir: path.join(app.get('views'), 'partials'),
     helpers: require(path.join(__dirname,'/helpers/helperhbs')),
     extname: '.hbs'
