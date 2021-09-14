@@ -78,6 +78,9 @@
                 </div>
             </div>
             <!-- Graficación de los datos -->
+            <div class="row-cols-1  m-2 p-2">
+                <p>Primera Oportunidad</p>
+            </div>
             <div class="row d-flex m-2 p-2">
                 <div class="col-4 col-md-5 col-xl-3 col-sm-4 col-lg-3 graph-container">
                         <div class="caption text-center">Indice de Reprobación</div>
@@ -98,21 +101,54 @@
 
                 </div>
             </div>
+            <div class="row-cols-1 m-2 p-2">
+                <p>Segunda Oportunidad</p>
+            </div>
+            <div class="row d-flex m-2 p-2">
+                <div class="col-4 col-md-5 col-xl-3 col-sm-4 col-lg-3 graph-container">
+                    <div class="caption text-center">Indice de Reprobación</div>
+                    <input type="hidden" id="indiceReprobacionDataS2" value="{{dataReprobacionS2}}">
+                    <div id="indiceReprobacionS2" style="width: 100%; height: 250px;">
+                    </div>
+                    <p>
+                        {{#if title}}Temas aprobados{{else}}Actividades aprobadas{{/if}}: {{actAprobadasS2}}
+                    </p>
+                    <p>
+                        {{#if title}}Temas no aprobados{{else}}Actividades no aprobadas{{/if}}: {{actReprobadasS2}}
+                    </p>
+                </div>
+                <div class="col col-md col-xl col-sm col-lg graph-container">
+                    <div class="caption text-center">Rendimiento en {{#if title}}Temas{{else}}actividades{{/if}}</div>
+                    <input type="hidden" id="actividadesReprobacionDataS2" value="{{dataReprobacionActS2}}">
+                    <div id="actividadesAprobacionS2" style="width: 90%; height: 250px;"></div>
+
+                </div>
+            </div>
             <script>
                 dataReprobacion = document.getElementById("indiceReprobacionData").value;
                 dataReprobacionAct = document.getElementById("actividadesReprobacionData").value;
-
+                dataReprobacionS2 = document.getElementById("indiceReprobacionDataS2").value;
+                dataReprobacionActS2 = document.getElementById("actividadesReprobacionDataS2").value;
                 console.log(JSON.parse(dataReprobacionAct));
-
                 new Morris.Bar({
                     element: "actividadesAprobacion",
                     data: JSON.parse(dataReprobacionAct),
                     xkey:'label',
                     ykeys:['value'],
                     labels: ['Calificación'],
-                    resize: true
-                })
+                    resize: true,
+                    xLabelAngle: 15,
+                    barColors:
+                            function (row, series , type) {
+                        if(row.y < 70){
+                            return '#757575';
+                        }
+                        else {
+                            return '#065CA3';
+                        }
+                    }
 
+                })
                 new Morris.Donut({
                     element: "indiceReprobacion",
                     data: JSON.parse(dataReprobacion),
@@ -121,10 +157,37 @@
                         return y + "%"
                     },
                     resize: true,
+                    colors: ['#065CA3', '#757575']
+                })
+                /*Segunda oportunidad*/
+                new Morris.Bar({
+                    element: "actividadesAprobacionS2",
+                    data: JSON.parse(dataReprobacionActS2),
+                    xkey: 'label',
+                    ykeys: ['value'],
+                    labels: ['Calificación'],
+                    resize: true,
+                    xLabelAngle: 15,
+                    barColors:
+                            function (row, series, type) {
+                                if (row.y < 70) {
+                                    return '#757575';
+                                } else {
+                                    return '#4AA96C';
+                                }
+                            }
                 })
 
+                new Morris.Donut({
+                    element: "indiceReprobacionS2",
+                    data: JSON.parse(dataReprobacionS2),
 
-
+                    formatter: function (y) {
+                        return y + "%"
+                    },
+                    resize: true,
+                    colors: ['#4AA96C', '#757575']
+                })
             </script>
         {{else}}
             <!--Informacion del equipo-->

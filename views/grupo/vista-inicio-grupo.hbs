@@ -80,6 +80,8 @@
 <script>
     dataReprobacion = document.getElementById("indiceReprobacionData").value;
     dataReprobacionAct = document.getElementById("actividadesReprobacionData").value;
+    dataReprobacionS2 = document.getElementById("indiceReprobacionDataS2").value;
+    dataReprobacionActS2 = document.getElementById("actividadesReprobacionDataS2").value;
 
     new Morris.Donut({
         element: "indiceReprobacion",
@@ -97,8 +99,30 @@
         data: JSON.parse(dataReprobacionAct),
         xkey:'label',
         ykeys:['a','b'],
-        labels: ['No aprobados','Aprobados'],
+        labels: ['Aprobados','No aprobados'],
+        xLabelAngle: 15,
         resize: true,
         barColors: ['#757575', '#065CA3']
+    })
+    new Morris.Donut({
+        element: "indiceReprobacionS2",
+        data:JSON.parse(dataReprobacionS2),
+
+        formatter: function (y) {
+            return y + "%"
+        },
+        resize: true,
+        colors: ['#4AA96C', '#757575']
+    })
+
+    new Morris.Bar({
+        element: "actividadesAprobacionS2",
+        data: JSON.parse(dataReprobacionActS2),
+        xkey:'label',
+        ykeys:['a','b'],
+        labels: ['Aprobados','No aprobados'],
+        xLabelAngle: 15,
+        resize: true,
+        barColors: ['#757575', '#4AA96C']
     })
 </script>
