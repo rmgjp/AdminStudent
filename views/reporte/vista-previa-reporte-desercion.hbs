@@ -1,19 +1,17 @@
 <style>
 
-    .montserrat {
+    .montserrat .extra-bold .regular .medium {
         font-family: 'Montserrat'
     }
 
     .extra-bold {
-        font-family: 'Montserrat';
         font-weight: 800;
-        font-size: 10pt;
+        font-size: 13px;
     }
 
     .regular p {
-        font-family: 'Montserrat';
-        font-wight: 400;
-        font-size: 9pt;
+        font-weight: 400;
+        font-size: 12px;
     }
     .medium p{
         font-weight: 500;
@@ -39,8 +37,15 @@
         line-height: 60px
     }
 
+    @media print {
+        body{
+            width: 21.59cm;
+            height: 27.94cm;
+            margin: 0.42cm 2cm 2cm 2.5cm;
+        }
+    }
 </style>
-<div id="page-container">
+<main class="container" id="page-container">
     <div id="content-wrap">
         <header class="container d-print-">
             <div class="row">
@@ -53,24 +58,24 @@
             </div>
             </figure>
         </header>
-        <main class="container d-print-">
-            <div class="row m-2 p-2 flex-row-reverse regular">
+        <div class="container d-print-">
+            <div class="row  flex-row-reverse regular">
                 <p style="background-color: black; color: white;"> {{fecha}} </p>
                 <p> Irapuato, Gto. </p>
             </div>
 
-            <div class="row m-2 p-2 extra-bold" style="text-transform: uppercase">
+            <div class="row  extra-bold" style="text-transform: uppercase">
                 {{coordinadorNombre}}<br>
                 {{pronombre}} {{carrera}}<br>
                 PRESENTE<br>
             </div>
-            <div class="row  m-2 p-2 flex-row-reverse extra-bold">
+            <div class="row  flex-row-reverse extra-bold">
                 <p>Asunto: Reporte parcial</p>
             </div>
-            <div class="row m-2 p-2 -align-justify regular">
+            <div class="row -align-justify regular">
                 <p>{{mensaje}}</p>
             </div>
-            <div class="row-cols-1 m-2 p-2 regular">
+            <div class="row-cols-1  regular">
                 <h5>Índice de reprobación</h5>
             </div>
             <div class="row-cols-1" style="font-family: 'Montserrat'; font-size: 10pt">
@@ -94,38 +99,54 @@
                 </div>
             </div>
 
-            <div class="row-cols-1 m-2 p-2 montserrat">
-
+            <div class="row-cols-1 montserrat">
+                _______________________________________
+                <section class="extra-bold">
+                    <br><br>
+                    <p>ATENTAMENTE</p>
+                    <div class="extra-light">
+                        <p>Excelencia en Educación Tecnológica</p>
+                        <p>Espíritu de Excelencia en Desarrollo Tecnológico</p>
+                    </div>
+                </section>
+                <section class="extra-bold">
+                    <br><br>
+                    <p>Nombre</p>
+                    <p>Cargo</p>
+                </section>
+                <section class="medium">
+                    <br><br>
+                    <p>cpp. Archivo</p>
+                    <p>XXX/xxx</p>
+                </section>
             </div>
 
-            <div class="row-cols-1 m-2 p-2">
+            <div class="row-cols-1">
                 <button id='current' class="btn btn-primary no-print" onclick="print_current_page()">Imprimir</button>
                 <a class="btn btn-secondary no-print" href="/">Salir</a>
             </div>
-        </main>
-    </div>
-    <footer class="container d-print-" id="footer">
-        <div class="row">
-            <figure class="col">
-                <img src="/img/footer-left.png" style="height: 40%; width: auto">
-            </figure>
-            <div class="col montserrat" style="font-size: 8pt">
-                <br>
-                <br>
-                <br>
-                Carr. Irapuato – Silao km 12.5 Colonia El Copal,<br>
-                Irapuato, Guanajuato<br>
-                C.P. 36821 Tels. 462 6967900 y 6067602<br>
-                <div class="extra-bold"> tecnm.mx | irapuato.tecnm.mx</div>
-                <br>
-            </div>
-            <figure class="col flex-row-reverse" style="height: 105%; width: auto">
-                <img src="/img/footer-right.png">
-            </figure>
         </div>
+        <footer class="d-print- footer">
+            <div class="row">
+                <figure class="col-2">
+                    <img src="/img/footer-left.png" style="height: 40%; width: auto">
+                </figure>
+                <div class="col -paragraph montserrat">
+                    Carr. Irapuato – Silao km 12.5 Colonia El Copal,
+                    Irapuato, Guanajuato
+                    C.P. 36821 Tels. 462 6967900 y 6067602
+                    tecnm.mx | irapuato.tecnm.mx
+                </div>
 
-    </footer>
-</div>
+                <div>
+                    <figure class="col flex-row-reverse" style="height: 105%; width: auto">
+                        <img src="/img/footer-right.png">
+                    </figure>
+                </div>
+            </div>
+        </footer>
+    </div>
+</main>
 
 
 <script src="/js/llenar-tabla-helper.js" type="text/javascript"></script>
