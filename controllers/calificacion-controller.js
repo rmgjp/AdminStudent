@@ -17,6 +17,7 @@ const calcCalif = async (req, res) => {
     let listaFormateada = [];
     for (let alumno in alumnos) {
         let calificaciones = [];
+        let calificacionesSegundaOp = [];
         let acumulador = 0;
         let calcCalificacion;
         let valorCalificacion;
@@ -36,6 +37,7 @@ const calcCalif = async (req, res) => {
                 //Si hay calificacion se calcula el valor correspondiente con relación al valor de la actividad
                 if(!req.params.modo){
                     valorCalificacion = calificacion.dataValues.valor;
+                    calificacionesSegundaOp.push(calificacion.dataValues.valor_s2);
                 }
                 else{
                     //Segunda oportunidad
@@ -83,6 +85,7 @@ const calcCalif = async (req, res) => {
             clave: alumnos[alumno].dataValues.clave,
             nombre: alumnos[alumno].dataValues.nombre,
             calificaciones,
+            calificacionesSegundaOp,
             califinal: acumulador,
         });
 
