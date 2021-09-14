@@ -216,9 +216,11 @@ const renderGroupData = async (req, res) =>{
     const temas = await Models.tema.findAll({
         where:{idgrupo: req.params.idgrupo}
     })
+
     const tema = await Models.tema.findOne({where:{id: req.params.idtema}});
     const grupo = await getGroupData(req, res);
     const actividades = await Models.tarea.findAll({where:{idtema: req.params.idtema}})
+
     let calificaciones = JSON.parse(await calificacionController.calcCalif(req,res));
 
     let reprobados = 0;
@@ -232,20 +234,26 @@ const renderGroupData = async (req, res) =>{
     let aprobadosPorcentaje= 100 - reprobadosPorcentaje;
     let aprobados =  calificaciones.length - reprobados;
 
+    //Grafica de dona
     let dataReprobacion = [{label:"Aprobados", value: aprobadosPorcentaje},{label : "No aprobados", value: reprobadosPorcentaje}]
     let dataReprobacionAct = [];
+    let dataReprobacionActS2 = [];
 
     for(let actividad in actividades){
         let cantReprobados = 0;
-        for(let calificacion in calificaciones){
-            if(calificaciones[calificacion].calificaciones[actividad] < 70){
+        let cantReprobadosS2 = 0;
+        let cantAprobadosS2 = 0;
+        for(let calificacion in calificaciones){if(calificaciones[calificacion].calificaciones[actividad] < 70 ||calificaciones[calificacion].calificaciones[actividad] === "No capturado."){
                 cantReprobados++;
             }
         }
-        dataReprobacionAct.push({label:actividades[actividad].dataValues.nombre, a:cantReprobados,b:calificaciones.length-cantReprobados})
+
+        dataReprobacionActS2.push({label:actividades[actividad].dataValues.nombre, a:cantAprobadosS2,b:cantReprobadosS2})
+        dataReprobacionAct.push({label:actividades[actividad].dataValues.nombre, a:calificaciones.length-cantReprobados,b:cantReprobados})
     }
-    //[{label:'Hola', a:10, b,10},{label:'Adios, a:7, b:80}]
+    //Conversión del JSON a String para lectura en script de la vista.
     dataReprobacion = JSON.stringify(dataReprobacion);
+    dataReprobacionS2 = JSON.stringify(dataReprobacionS2);
     dataReprobacionAct = JSON.stringify(dataReprobacionAct);
     menu = 1;
 
@@ -373,6 +381,7 @@ const editGroup = async (req, res) => {
 
 const renderGeneralView = async (req,res) => {
     const grupo = await getGroupData(req, res);
+    //Contador de alumnos reprobados en primera oportunidad.
     let reprobados = 0;
 
     const temas = await Models.tema.findAll({
@@ -389,6 +398,7 @@ const renderGeneralView = async (req,res) => {
     });
 
     let conteoPorTema = [];
+    let conteoPorTemaS2 = [];
 
     for(let tema in temas){
         conteoPorTema.push(
@@ -402,11 +412,13 @@ const renderGeneralView = async (req,res) => {
     }
     for(let alumno in alumnos){
         let calificaciones = [];
+        //Variable que ayuda a identificar si el alumno esta reprobado y añadirlo al conteo de alumnos reprobados
         let reprobado = false;
 
         for (let tema in conteoPorTema) {
             const actividades = await Models.tarea.findAll({where: {idtema: conteoPorTema[tema].id}});
             let califinal = 0;
+            let califinalS2 = 0;
             let calcCalificacion;
 
             for (let actividad in actividades) {
@@ -435,6 +447,16 @@ const renderGeneralView = async (req,res) => {
                                     califinal += calcCalificacion;
                                 }
                             }
+
+                            if(calificacion.dataValues.valor_s2 < 70){
+                                califinalS2 = "NA";
+                            }
+                            else if (calificacion.dataValues.valor_s2 >= 70) {
+                            if (califinalS2 !== "NA") {
+                                //Calculo de las calificaciones cuando se promedia.
+                                califinalS2 += calcCalificacionS2;
+                            }
+                        }
                             break;
                         case 1:
                             califinal += calcCalificacion;
@@ -444,21 +466,26 @@ const renderGeneralView = async (req,res) => {
             }
             if(califinal < 70){
                 califinal = 'NA';
-                conteoPorTema[tema].a++;
+                conteoPorTema[tema].b++;
             }
             else {
-                conteoPorTema[tema].b++;
+                conteoPorTema[tema].a++;
             }
             calificaciones.push(califinal);
         }
 
         for(let calificacion in calificaciones){
-            if(calificaciones[calificacion] === 'NA'){
+            if(calificaciones[calificacion].a === 'NA'){
                 reprobado = true;
             }
         }
+        //reprobados por tema, primer oportunidad
         if(reprobado){
-            reprobados++;
+            reprobados++
+        }
+        //reprobados por tema, segunda oportunidad
+        if(reprobadoS2) {
+            reprobadosS2++;
         }
     }
     let reprobadosPorcentaje = Math.round((reprobados * 100)/alumnos.length);
@@ -466,8 +493,16 @@ const renderGeneralView = async (req,res) => {
     let aprobados =  alumnos.length - reprobados;
 
     const dataReprobacion = JSON.stringify([{label:"Aprobados", value: aprobadosPorcentaje},{label : "No aprobados", value: reprobadosPorcentaje}]);
+    const dataReprobacionS2 = JSON.stringify([{label:"Aprobados", value: aprobadosPorcentajeS2},{label : "No aprobados", value: reprobadosPorcentajeS2}]);
 
-    res.render('grupo/vista-inicio-grupo', {dataReprobacion, temas, asignatura: grupo.dataValues.asignatura, clave: grupo.dataValues.clave, idgrupo: grupo.dataValues.id, title: 'General', menu:1, aprobados, reprobados, dataReprobacionAct: JSON.stringify(conteoPorTema)})
+
+    res.render('grupo/vista-inicio-grupo', {dataReprobacion, dataReprobacionS2, temas,
+        asignatura: grupo.dataValues.asignatura, clave: grupo.dataValues.clave,
+        idgrupo: grupo.dataValues.id, title: 'General',
+        menu:1, aprobados, reprobados, aprobadosS2 , reprobadosS2,
+        dataReprobacionAct: JSON.stringify(conteoPorTema),
+        dataReprobacionActS2: JSON.stringify(conteoPorTemaS2)
+    })
 }
 
 
@@ -487,15 +522,21 @@ const renderGeneralViewStudent = async (req, res)=>{
 
     const listaFormateada = await alumnoController.calCalifStudent(temas, alumno);
 
-    let dataReprobacionAct = []; //Barra
+    //Barra
+    let dataReprobacionAct = [];
+    let dataReprobacionActS2 = [];
 
     let unidadReprobada = 0;
-    listaFormateada.forEach(element => (
-        dataReprobacionAct.push({label: element.nombre, value: (element.califinal === "NA") ? 0 : element.califinal})
-    ));
+    let unidadReprobadaS2 = 0;
+
+    listaFormateada.forEach(element => {
+        dataReprobacionActS2.push({label: element.nombre, value: (element.califinal === "NA") ? 0 : element.califinal});
+        dataReprobacionAct.push({label: element.nombre, value: (element.califinalPreS2 === "NA") ? 0 : element.califinalPreS2});
+    });
+
     for(let calif in listaFormateada){
         if(listaFormateada[calif].califinal === "NA"){
-            unidadReprobada++;
+            unidadReprobadaS2++;
         }
     }
     /**
@@ -505,7 +546,17 @@ const renderGeneralViewStudent = async (req, res)=>{
     //Dona
 
     let dataReprobacion = JSON.stringify([{label:"Aprobados", value: (100-reprobadasPorcentaje)},{label : "No aprobados", value: reprobadasPorcentaje}]);
-    res.render('grupo/vista-inicio-grupo-seleccion', {title: "Todos" ,actAprobadas: (listaFormateada.length-unidadReprobada),actReprobadas: unidadReprobada,dataReprobacionAct: JSON.stringify(dataReprobacionAct), dataReprobacion ,idtema: req.params.idtema ,asignatura: grupo.dataValues.asignatura, clave: grupo.dataValues.clave, idgrupo: grupo.dataValues.id,temas, alumno, menu })
+    let dataReprobacionS2 = JSON.stringify([{label:"Aprobados", value: (100-reprobadasPorcentajeS2)},{label : "No aprobados", value: reprobadasPorcentajeS2}]);
+
+
+    res.render('grupo/vista-inicio-grupo-seleccion', {title: "Todos",actAprobadas: (listaFormateada.length-unidadReprobada),
+        actReprobadas: unidadReprobada,dataReprobacionAct: JSON.stringify(dataReprobacionAct),
+        dataReprobacionActS2: JSON.stringify(dataReprobacionActS2),
+        dataReprobacion,idtema: req.params.idtema,
+        asignatura: grupo.dataValues.asignatura, clave: grupo.dataValues.clave,
+        idgrupo: grupo.dataValues.id,temas, alumno, menu, dataReprobacionS2,
+        actAprobadasS2: (listaFormateada.length-unidadReprobadaS2),
+        actReprobadasS2: unidadReprobadaS2})
 }
 //Exportación de los métodos para su uso interno en aplicación.
 module.exports = {
