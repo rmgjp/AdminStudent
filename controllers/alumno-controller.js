@@ -285,19 +285,22 @@ const calCalifStudent = async (temas, alumno)=>{
                 } else {
                     calcCalificacion = (calificacion.dataValues.valor * actividades[actividad].valor) / 100;
                 }
+                calcCalificacionPreS2 = (calificacion.dataValues.valor * actividades[actividad].valor) / 100;
+
                 switch (parseInt(configuracion.califi)) {
                     case 0:
                         if (calificacion.dataValues.valor < 70) {
-                            califinal = "NA";
+                            califinalPreS2 = "NA";
                         } else if (calificacion.dataValues.valor >= 70) {
-                            if (califinal !== "NA") {
+                            if (califinalPreS2 !== "NA") {
                                 //Calculo de las calificaciones cuando se promedia.
-                                califinal += calcCalificacion;
+                                califinalPreS2 += calcCalificacionPreS2;
                             }
                         }
                         break;
                     case 1:
                         califinal += calcCalificacion;
+                        califinalPreS2 += calcCalificacionPreS2;
                         break;
                 }
             }
@@ -309,6 +312,7 @@ const calCalifStudent = async (temas, alumno)=>{
             no_unidad: temas[tema].dataValues.numerotema,
             nombre: temas[tema].dataValues.nombre,
             califinal: califinal,
+            califinalPreS2 : califinalPreS2
         });
     }
     return listaFormateada;
