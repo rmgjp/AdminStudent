@@ -1,4 +1,9 @@
 !macro customInstall
-  File /oname=$PLUGINSDIR\mariadb.msi "${BUILD_RESOURCES_DIR}\mariabd.msi"
-  ExecWait '"msiexec" /i "$PLUGINSDIR\mariadb.msi" [INSTALLDIR=%ProgramFiles%\AdminStudent PORT=36 PASSWORD=uxrlrpaqga9lfe9l SERVICENAME=AdminStudent DATADIR=INSTALLDIR\ REMOVE=HeidiSQL] /qn' 
+  ExecWait '"msiexec" /i "$INSTDIR\build\mariadb.msi" SERVICENAME=AdminStudent INSTALLDIR=C:\adminstudent DATADIR=C:\adminstudent\data PORT=3306 PASSWORD=uxrlrpaqga9lfe9l /passive'
+  ExecWait '"msiexec" /i "$INSTDIR\build\node.msi" /passive'
+!macroend
+
+!macro customUninstall
+  ExecWait '"msiexec" /x "$INSTDIR\build\mariadb.msi" REMOVE=ALL /passive'
+  ExecWait '"msiexec" /x "$INSTDIR\build\node.msi" /passive'
 !macroend

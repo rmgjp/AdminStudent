@@ -106,7 +106,6 @@ dist
 /public/doc/
 /config/
 /.idea/
-/out/
 /mariadb/
 !/out/
-/dist/
+!/dist/

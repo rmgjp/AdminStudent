@@ -14,7 +14,7 @@ module.exports = db = {};
 module.exports = {
     async initialize() {
         // Se obtienen las credenciales de la base de datos
-        const { host, port, user, password, database } = config.registrobd
+        const { host, port, user, password, database } = config.production
         // Se crea la conexión a MariaDB/MySQL
         const connection = await mariadb.createConnection({ host, port, user, password });
         //Ejecucion del query para crear la base de datos, en caso de que no exista

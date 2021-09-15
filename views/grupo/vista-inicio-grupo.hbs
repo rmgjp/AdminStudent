@@ -21,8 +21,12 @@
                 <h3>Tema: {{tema.dataValues.nombre}}{{title}}</h3>
             </div>
         </div>
+        <div class="row-cols-1">
+            <p>Primera oportunidad</p>
+        </div>
         <div class="row">
             <div class="col-4 col-md-5 col-xl-3 col-sm-4 col-lg-3">
+
                 <div class="card" style="width: 100%;height: 385px">
                     <input type="hidden" id="indiceReprobacionData" value="{{dataReprobacion}}">
                     <div class="card-body">
@@ -44,11 +48,40 @@
                 </div>
             </div>
         </div>
+        <div class="row-cols-1">
+            <p>Segunda oportunidad</p>
+
+        </div>
+        <div class="row">
+            <div class="col-4 col-md-5 col-xl-3 col-sm-4 col-lg-3">
+                <div class="card" style="width: 100%;height: 385px">
+                    <input type="hidden" id="indiceReprobacionDataS2" value="{{dataReprobacionS2}}">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">Indice de reprobación grupal</h5>
+                        <div id="indiceReprobacionS2" style="width: 100%; height: 250px;"></div>
+                        <div class="card-text">Alumnos Aprobados: {{aprobadosS2}} <br> Alumnos no aprobados: {{reprobadosS2}}</div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col col-md col-xl col-sm col-lg">
+                <div class="card " style="width: 90%; height: 385px">
+                    <input type="hidden" id="actividadesReprobacionDataS2" value="{{dataReprobacionActS2}}">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">Rendimiento del grupo por {{#if title}}tema
+                        {{else}}actividad{{/if}}</h5>
+                        <div id="actividadesAprobacionS2" style="width: 100%; height: 250px;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </main>
 </div>
 <script>
     dataReprobacion = document.getElementById("indiceReprobacionData").value;
     dataReprobacionAct = document.getElementById("actividadesReprobacionData").value;
+    dataReprobacionS2 = document.getElementById("indiceReprobacionDataS2").value;
+    dataReprobacionActS2 = document.getElementById("actividadesReprobacionDataS2").value;
 
     new Morris.Donut({
         element: "indiceReprobacion",
@@ -66,8 +99,30 @@
         data: JSON.parse(dataReprobacionAct),
         xkey:'label',
         ykeys:['a','b'],
-        labels: ['No aprobados','Aprobados'],
+        labels: ['Aprobados','No aprobados'],
+        xLabelAngle: 15,
         resize: true,
         barColors: ['#757575', '#065CA3']
+    })
+    new Morris.Donut({
+        element: "indiceReprobacionS2",
+        data:JSON.parse(dataReprobacionS2),
+
+        formatter: function (y) {
+            return y + "%"
+        },
+        resize: true,
+        colors: ['#4AA96C', '#757575']
+    })
+
+    new Morris.Bar({
+        element: "actividadesAprobacionS2",
+        data: JSON.parse(dataReprobacionActS2),
+        xkey:'label',
+        ykeys:['a','b'],
+        labels: ['Aprobados','No aprobados'],
+        xLabelAngle: 15,
+        resize: true,
+        barColors: ['#757575', '#4AA96C']
     })
 </script>

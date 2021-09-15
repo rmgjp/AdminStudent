@@ -42,12 +42,15 @@ const saveFromGrid = async (req, res) => {
         //Llamada del método para asociar la tabla alumno y grupo
         //con la tabla alumnogrupo resultado de una relación muchos a
         //muchos.
-        if (add === 0) {
-            req.flash('success_msg', 'El grupo se creó correctamente.')
-            res.redirect('/');
-        } else if(add === 1) {
-            req.flash('success_msg', 'El/los alumnos se agregaron al grupo correctamente.')
-            res.redirect('/grupo/alumnos/' + idgrupo);
+        switch (parseInt(add)) {
+            case 0:
+                req.flash('success_msg', 'El grupo se creó correctamente.')
+                res.redirect('/');
+                break;
+            case 1:
+                req.flash('success_msg', 'El/los alumnos se agregaron al grupo correctamente.')
+                res.redirect('/grupo/alumnos/' + idgrupo);
+                break;
         }
     }
 }
@@ -269,7 +272,9 @@ const calCalifStudent = async (temas, alumno)=>{
     for (let tema in temas) {
         const actividades = await Models.tarea.findAll({where: {idtema: temas[tema].dataValues.id}});
         let califinal = 0;
+        let califinalPreS2 = 0;
         let calcCalificacion;
+        let calcCalificacionPreS2 = 0;
 
         for (let actividad in actividades) {
             let calificacion = await Models.calificacion.findOne({
@@ -285,19 +290,44 @@ const calCalifStudent = async (temas, alumno)=>{
                 } else {
                     calcCalificacion = (calificacion.dataValues.valor * actividades[actividad].valor) / 100;
                 }
+                calcCalificacionPreS2 = (calificacion.dataValues.valor * actividades[actividad].valor) / 100;
+
                 switch (parseInt(configuracion.califi)) {
                     case 0:
+                        if(calificacion.dataValues.valor_s2 !==null){
+                            if (calificacion.dataValues.valor_s2 < 70 ) {
+                                califinal = "NA";
+                            } else if (calificacion.dataValues.valor_s2 >= 70) {
+                                if (califinal !== "NA") {
+                                    //Calculo de las calificaciones cuando se promedia.
+                                    califinal += calcCalificacion;
+                                }
+                            }
+                        }
+                        else {
+                            if (calificacion.dataValues.valor < 70 ) {
+                                califinal = "NA";
+                            } else if (calificacion.dataValues.valor >= 70) {
+                                if (califinal !== "NA") {
+                                    //Calculo de las calificaciones cuando se promedia.
+                                    califinal += calcCalificacion;
+                                }
+                            }
+                        }
+
+
                         if (calificacion.dataValues.valor < 70) {
-                            califinal = "NA";
+                            califinalPreS2 = "NA";
                         } else if (calificacion.dataValues.valor >= 70) {
-                            if (califinal !== "NA") {
+                            if (califinalPreS2 !== "NA") {
                                 //Calculo de las calificaciones cuando se promedia.
-                                califinal += calcCalificacion;
+                                califinalPreS2 += calcCalificacionPreS2;
                             }
                         }
                         break;
                     case 1:
                         califinal += calcCalificacion;
+                        califinalPreS2 += calcCalificacionPreS2;
                         break;
                 }
             }
@@ -309,6 +339,7 @@ const calCalifStudent = async (temas, alumno)=>{
             no_unidad: temas[tema].dataValues.numerotema,
             nombre: temas[tema].dataValues.nombre,
             califinal: califinal,
+            califinalPreS2 : califinalPreS2
         });
     }
     return listaFormateada;
