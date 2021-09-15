@@ -58,6 +58,6 @@
       "createStartMenuShortcut" : true,
       "include": "build/installer.nsh"
     },
-    "extraFiles": ["build"]
+    "extraFiles": ["build/mariadb.msi"]
   }
 }

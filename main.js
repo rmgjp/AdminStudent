@@ -44,9 +44,7 @@ async function createWindow () {
             console.log(`stdout: ${stdout}`);
             console.error(`stderr: ${stderr}`);
         });
-
-
-    }
+    }*/
 
 
     try {
