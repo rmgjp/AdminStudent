@@ -217,6 +217,24 @@ function tryParseJSON(jsonString) {
     }
     return false;
 }
+const findStudent = async (req,res) =>{
+    const datosAlumno = req.params.datos;
+    console.log(datosAlumno)
+    const alumno = await Models.alumno.findOne({
+        where:{
+            [Op.or]:[
+                {nombre: datosAlumno},
+                {clave: datosAlumno}
+            ]
+        },
+        include: [{
+            model: Models.alumnogrupo,
+            idgrupo: req.params.idgrupo
+        }]
+    })
+
+    res.send(JSON.stringify(alumno));
+}
 
 module.exports = {
     getDataTeams,

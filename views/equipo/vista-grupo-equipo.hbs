@@ -56,6 +56,17 @@
                         </div>
                         <div class="row-cols-1">
                             <h4>Integrantes del equipo</h4>
+                        </div>
+
+                        <div class="row-cols-1">
+                            <div class="input-group mb-3">
+                                <input class="form-control" type="text" id="inputBusqueda" placeholder="No. control o Nombre del alumno iniciando por apellidos" aria-describedby="BtnBusqueda">
+                                <div class="input-group-append" >
+                                    <button class="btn-primary btn" type="submit" id="BtnBusqueda">Agregar</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row-cols-1">
                             <input type="hidden" id="valorTablaAlumnos" name="valorTablaAlumnos"
                                    value="{{listaFormateadaAlumnos}}">
                             <table id="tableAlumnos" data-toggle="table" data-toolbar="#toolbar"
@@ -114,3 +125,22 @@
     </div>
 </div>
 <script src="/js/grid-equipos-helper.js" type="text/javascript"></script>
+<script>
+    $('#BtnBusqueda').on('click', function (e){
+        e.preventDefault();
+        let data = {};
+        data.datos =  document.getElementById('inputBusqueda').value;
+        $.ajax({
+            type: "POST",
+            contentType: 'application/json',
+            url: `/equipo-busqueda/${("#idgrupo").value}/${data.datos}`,
+            success: function (data){
+                tableAlumnos.bootstrapTable('append',JSON.parse(data))
+                console.log(data)
+            },
+            error: function () {
+                console.log("Error");
+            }
+        })
+    });
+</script>
