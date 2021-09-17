@@ -194,7 +194,21 @@ const getAllStudents = async (req, res) => {
 const getStudentListByGroup = async (req, res) => {
     //Lista de alumnos relacionada al grupo
     const alumnos = await getAllStudents(req,res);
-    res.redirect("/grupo/alumnos/"+req.params.idgrupo+"/"+alumnos[0].dataValues.clave);
+    if(alumnos.length === 0){
+        const idgrupo = req.params.idgrupo;
+        //Se obtienen todos los datos del grupo mediante el id
+        const grupo = await Models.grupo.findOne({
+            where: {
+                id: req.params.idgrupo
+            }
+        });
+        //Se separan los datos del grupo
+        const {asignatura, clave} = grupo;
+
+        res.render("alumno/vista-grupo-alumnos", {idgrupo, asignatura, clave, menu: 1})
+    }else{
+        res.redirect("/grupo/alumnos/"+req.params.idgrupo+"/"+alumnos[0].dataValues.clave);
+    }
    //res.render('alumno/vista-grupo-alumnos', {alumnos, idgrupo:req.params.idgrupo, asignatura, clave});
 }
 
