@@ -332,7 +332,22 @@ const renderGroupData = async (req, res) =>{
 //Renderizar los datos del grupo para su edición
 const renderGroupEdit = async (req, res) => {
     const grupo = await getGroupData(req, res);
-    res.render('grupo/datos-grupo-editar', {idgrupo: req.params.idgrupo, grupo});
+
+    let listaFormateada = await Models.alumno.findAll({
+        include:[{
+            model : Models.alumnogrupo,
+            where:{
+                idgrupo: req.params.idgrupo
+            },
+        }],
+        order:[
+            ['nombre', 'ASC']
+        ]
+    });
+
+    listaFormateada = JSON.stringify(listaFormateada);
+
+    res.render('grupo/datos-grupo-editar', {idgrupo: req.params.idgrupo, grupo, listaFormateada});
 }
 
 //Eliminar un grupo si se da click en cancelar mientras se están ingresando los datos
@@ -435,6 +450,8 @@ const getGroupDataFromFile = async (req, res) => {
 const editGroup = async (req, res) => {
     const {clave, asignatura, estado, imagen} = req.body;
     let grupo = await getGroupData(req, res);
+    const alumnosEliminados = JSON.parse(req.body.idAlumnosEliminados);
+    const alumnos = JSON.parse(req.body.valorTabla);
 
     await grupo.update({
         clave: req.body.clave.toUpperCase(),
@@ -442,8 +459,17 @@ const editGroup = async (req, res) => {
         estado: parseInt(estado, 10),
         periodo: req.body.periodo.toUpperCase(),
         img: req.body.imagen,
-    })
+    });
 
+
+    for(let alumno in alumnosEliminados){
+        req.params.idalumno = alumnosEliminados;
+        await alumnoController.disassociateFromGroup(req,res);
+    }
+
+    await alumnoController.addToGroup(grupo.dataValues.id,alumnos);
+
+    req.flash('success_msg', "El grupo se editó correctamente.");
     res.redirect('/');
 }
 
