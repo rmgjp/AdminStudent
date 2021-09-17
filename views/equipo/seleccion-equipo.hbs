@@ -61,12 +61,11 @@
     });
     table.on('check.bs.table', function (e, row) {
         seleccion = table.bootstrapTable('getSelections');
-        if(second === 0){
-            btnSiguiente.setAttribute('href', `/actividad/calificar-equipo/${idgrupo}/${idtema}/${idactividad}/${seleccion[0].id}`)
+        if(second == 1){
+            btnSiguiente.setAttribute('href', `/actividad/calificar-equipo/${idgrupo}/${idtema}/${idactividad}/${seleccion[0].id}/1`);
         }
         else{
-            btnSiguiente.setAttribute('href', `/actividad/calificar-equipo/${idgrupo}/${idtema}/${idactividad}/${seleccion[0].id}/1`)
-
+            btnSiguiente.setAttribute('href', `/actividad/calificar-equipo/${idgrupo}/${idtema}/${idactividad}/${seleccion[0].id}`)
         }
         btnSiguiente.disabled = false;
         console.log(btnSiguiente.href);

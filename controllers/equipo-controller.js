@@ -2,6 +2,8 @@ const Models = require('../models');
 const temaController = require('./tema-controller');
 const alumnoController = require('./alumno-controller');
 const configuracion = require('../config/userconfig.json');
+const {Op} = require('sequelize');
+
 
 const retriveTeamsData = async (req, res) => {
     const equipos = await Models.equipo.findAll({where: {idgrupo: req.params.idgrupo}});
@@ -243,5 +245,6 @@ module.exports = {
     renderNewTeam,
     saveTeam,
     renderSelectionTeamsAct,
-    deleteTeam
+    deleteTeam,
+    findStudent
 }
