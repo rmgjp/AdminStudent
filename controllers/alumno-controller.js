@@ -120,18 +120,22 @@ const addToGroup = async (idgrupo, alumnos) => {
 
     for (let alumno in alumnos) {
         //Busqueda del alumno para obtener el id interno de la base de datos.
-        const findAlumno = await Models.alumno.findOne({
+        const findAlumno = await Models.alumno.findOrCreate({
             where: {
                 clave: alumnos[alumno].clave.toUpperCase()
+            },
+            defaults:{
+                nombre: alumnos[alumno].nombre,
+                clave: alumnos[alumno].clave
             }
         });
         await Models.alumnogrupo.findOrCreate({
             where: {
-                idalumno: findAlumno.dataValues.id,
+                idalumno: findAlumno[0].dataValues.id,
                 idgrupo: idgrupo
             },
             defaults: {
-                idalumno: findAlumno.dataValues.id,
+                idalumno: findAlumno[0].dataValues.id,
                 idgrupo: idgrupo
             }
         });
@@ -153,6 +157,11 @@ const disassociateFromGroup = async (req, res) => {
     });
     //Eliminación de la asociación
     await alumnogrupo.destroy();
+
+}
+
+const callDisassociateFromGroup = async (req, res) =>{
+    await disassociateFromGroup(req,res);
     req.flash('success_msg', 'El alumno se elimino de grupo correctamente.');
     res.redirect('/grupo/alumnos/' + req.params.idgrupo);
 }
@@ -371,8 +380,9 @@ module.exports = {
     getStudentListByGroup,
     getStudentAndStudents,
     getAllStudents,
-    getStudentByKey
-
+    getStudentByKey,
+    addToGroup,
+    callDisassociateFromGroup
 
 
 }
