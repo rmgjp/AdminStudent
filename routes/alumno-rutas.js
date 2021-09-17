@@ -25,7 +25,7 @@ router.get('/grupo/alumnos/:idgrupo/:clave', controladorAlumno.getStudentAndStud
 router.put('/grupo/alumnos/:idgrupo/:idalumno', controladorAlumno.editStudent);
 
 //Ruta para la des-asociación de un alumno a un grupo.
-router.delete('/alumnos/eliminar-alumno/:idgrupo/:idalumno', controladorAlumno.disassociateFromGroup);
+router.delete('/alumnos/eliminar-alumno/:idgrupo/:idalumno', controladorAlumno.callDisassociateFromGroup);
 
 
 
