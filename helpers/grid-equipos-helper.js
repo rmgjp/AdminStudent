@@ -42,8 +42,8 @@ tableAlumnos.on('uncheck.bs.table', function (e, row) {
     document.getElementById('listaAlumnos').value = JSON.stringify(tableAlumnos.bootstrapTable('getSelections'));
 });
 tableAlumnos.on('check-all.bs.table', function (e, row) {
-    document.getElementById('listaAlumnos').value = JSON.stringify(table.bootstrapTable('getSelections'));
+    document.getElementById('listaAlumnos').value = JSON.stringify(tableAlumnos.bootstrapTable('getSelections'));
 });
 tableAlumnos.on('uncheck-all.bs.table', function (e, row) {
-    document.getElementById('listaAlumnos').value = JSON.stringify(table.bootstrapTable('getSelections'));
+    document.getElementById('listaAlumnos').value = JSON.stringify(tableAlumnos.bootstrapTable('getSelections'));
 });
