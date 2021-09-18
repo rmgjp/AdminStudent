@@ -29,10 +29,10 @@ tableTemas.on('uncheck.bs.table', function (e, row) {
     document.getElementById('listaTemas').value = JSON.stringify(tableTemas.bootstrapTable('getSelections'));
 });
 tableTemas.on('check-all.bs.table', function (e, row) {
-    document.getElementById('listaTemas').value = JSON.stringify(table.bootstrapTable('getSelections'));
+    document.getElementById('listaTemas').value = JSON.stringify(tableTemas.bootstrapTable('getSelections'));
 });
 tableTemas.on('uncheck-all.bs.table', function (e, row) {
-    document.getElementById('listaTemas').value = JSON.stringify(table.bootstrapTable('getSelections'));
+    document.getElementById('listaTemas').value = JSON.stringify(tableTemas.bootstrapTable('getSelections'));
 });
 tableAlumnos.on('check.bs.table', function (e, row) {
     document.getElementById('listaAlumnos').value = JSON.stringify(tableAlumnos.bootstrapTable('getSelections'));
