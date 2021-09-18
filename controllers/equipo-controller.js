@@ -237,8 +237,58 @@ const findStudent = async (req,res) =>{
 
     res.send(JSON.stringify(alumno));
 }
+const addStudentToTeam = async (idequipo, idalumno) =>{
+    await Models.alumnoequipo.create({
+        idequipo: idequipo,
+        idalumno: idalumno
+    })
+}
 
+
+const validateStudentAjax = async (idEquipo, idGrupo, datosAlumno) => {
+
+    const temas = await Models.equipotema.findAll({
+        where: {
+            idequipo: idEquipo
+        }
+    })
+
+    for (let tema in temas) {
+        const equipos = await Models.equipotema.findAll({
+            where: {idtema: temas[tema].id,}
+        });
+
+        for (let equipo in equipos) {
+
+            const alumnosequipo = await Models.alumnoequipo.findOne({
+                where: {
+                    idalumno: datosAlumno.dataValues.id,
+                    idequipo: equipos[equipo].id
+                }
+            })
+            if (alumnosequipo) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+const deleteStudentToTeam = async (req,res) => {
+    const alumnos = JSON.parse(req.params.datos);
+    for(let alumno in alumnos){
+        const alumnoequipo = await Models.alumnoequipo.findOne({
+            where:{
+                idalumno: alumnos[alumno],
+                idequipo: req.params.idequipo
+            }
+        })
+        await alumnoequipo.destroy();
+
+    }
+    res.send(true);
+}
 module.exports = {
+    deleteStudentToTeam,
     getDataTeams,
     retriveTeamsData,
     renderSelectedTeams,
