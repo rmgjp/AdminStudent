@@ -22,7 +22,7 @@ const getDataTeams = async (req, res) => {
 
 const renderSelectionTeamsAct = async (req, res) => {
     let second = 0;
-    if(req.params.second){
+    if (req.params.second) {
         second = 1;
     }
     const equipos = await Models.equipo.findAll(
@@ -36,7 +36,13 @@ const renderSelectionTeamsAct = async (req, res) => {
         },
     );
 
-    res.render('equipo/seleccion-equipo', {equipos: JSON.stringify(equipos), idgrupo: req.params.idgrupo, idactividad: req.params.idactividad, idtema: req.params.idtema,second});
+    res.render('equipo/seleccion-equipo', {
+        equipos: JSON.stringify(equipos),
+        idgrupo: req.params.idgrupo,
+        idactividad: req.params.idactividad,
+        idtema: req.params.idtema,
+        second
+    });
 }
 
 
@@ -97,8 +103,8 @@ const saveTeam = async (req, res) => {
     const validacion = await validateStudents(req, res);
 
 
-    if(configuracion.valequipo === '1'){
-        if(validacion.estado){
+    if (configuracion.valequipo === '1') {
+        if (validacion.estado) {
             for (let alumno in validacion.alumnos) {
                 errors.push({text: `El alumno ${validacion.alumnos[alumno].nombre} ya esta agregado a un equipo existente con los temas seleccionados.`});
             }
@@ -155,12 +161,13 @@ const validateStudents = async (req, res) => {
 
     for (let tema in listaTemas) {
         const equipos = await Models.equipotema.findAll({
-           where:{ idtema: listaTemas[tema].id,}
+            where: {idtema: listaTemas[tema].id,}
         });
 
         for (let equipo in equipos) {
             for (let alumno in listaAlumnos) {
-                const alumnosequipo = await Models.alumnoequipo.findOne({where: {
+                const alumnosequipo = await Models.alumnoequipo.findOne({
+                    where: {
                         idalumno: listaAlumnos[alumno].id,
                         idequipo: equipos[equipo].id
                     }
@@ -219,12 +226,15 @@ function tryParseJSON(jsonString) {
     }
     return false;
 }
-const findStudent = async (req,res) =>{
+
+const findStudent = async (req, res) => {
     const datosAlumno = req.params.datos;
+    const idequipo = req.params.idequipo;
+
     console.log(datosAlumno)
     const alumno = await Models.alumno.findOne({
-        where:{
-            [Op.or]:[
+        where: {
+            [Op.or]: [
                 {nombre: datosAlumno},
                 {clave: datosAlumno}
             ]
@@ -233,9 +243,41 @@ const findStudent = async (req,res) =>{
             model: Models.alumnogrupo,
             idgrupo: req.params.idgrupo
         }]
-    })
+    });
+    //Verificación de existencia del alumno buscado.
+    if (alumno) {
+        //Verificación de la asociación entre el alumno y equipo
+        const relacion = await Models.alumnoequipo.findOne({
+            where: {
+                idequipo: idequipo,
+                idalumno: alumno.dataValues.id
+            }
+        })
+        //Si no existe la relación se agrega al equipo
+        if (!relacion) {
 
-    res.send(JSON.stringify(alumno));
+            if(configuracion.valequipo === '1'){
+                const result = await validateStudentAjax(req.params.idequipo, req.params.idgrupo, alumno);
+                if (result) {
+                    req.flash('error_msg', 'El alumno ya está agregado a un equipo existente asociado a uno o más temas de este equipo.');
+                }
+                else{
+                    await addStudentToTeam(idequipo, alumno.dataValues.id);
+                    req.flash('success_msg', 'El alumno se a agregado al equipo correctamente.');
+                    res.send(JSON.stringify(alumno));
+                }
+            }
+            else{
+                await addStudentToTeam(idequipo, alumno.dataValues.id);
+                req.flash('success_msg', 'El alumno se a agregado al equipo correctamente.');
+                res.send(JSON.stringify(alumno));
+            }
+        } else {
+            req.flash('error_msg', 'El alumno ya pertenece al equipo.');
+        }
+    } else {
+        req.flash('error_msg', 'No se encontró el alumno.');
+    }
 }
 const addStudentToTeam = async (idequipo, idalumno) =>{
     await Models.alumnoequipo.create({
