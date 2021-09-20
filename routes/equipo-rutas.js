@@ -11,6 +11,8 @@ router.get('/equipo/nuevo/:idgrupo', equipoController.renderNewTeam);
 router.post('/equipo/nuevo/:idgrupo', equipoController.saveTeam);
 
 router.get('/equipo/seleccion/:idgrupo/:idtema/:idactividad', equipoController.renderSelectionTeamsAct)
+router.get('/equipo/seleccion/:idgrupo/:idtema/:idactividad/:second', equipoController.renderSelectionTeamsAct)
+
 
 
 router.post('/equipo-busqueda/:idgrupo/:idequipo/:datos', equipoController.findStudent)
