@@ -29,11 +29,10 @@
 
                 <div class="card" style="width: 100%;height: 385px">
                     <input type="hidden" id="indiceReprobacionData" value="{{dataReprobacion}}">
-                    <div class="card-body">
+                    <div class="card-body" style="overflow: hidden;">
                         <h5 class="card-title text-center">Indice de reprobación grupal</h5>
-                        <div id="indiceReprobacion" style="width: 100%; height: 250px;"></div>
-                        <div class="card-text">Alumnos Aprobados: {{aprobados}} <br> Alumnos no aprobados: {{reprobados}}</div>
-
+                        <div id="indiceReprobacion" style="width: 100%; height: 200px;"></div>
+                        <div style="font-size: 0.9rem;" class="card-text">Alumnos Aprobados: {{aprobados}} <br> Alumnos no aprobados: {{reprobados}}</div>
                     </div>
                 </div>
             </div>
@@ -48,9 +47,8 @@
                 </div>
             </div>
         </div>
-        <div class="row-cols-1">
+        <div class="row-cols-1 m-2">
             <p>Segunda oportunidad</p>
-
         </div>
         <div class="row">
             <div class="col-4 col-md-5 col-xl-3 col-sm-4 col-lg-3">
