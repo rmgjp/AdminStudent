@@ -21,6 +21,7 @@
     <script src="/js/bs-custom-file-input.js"></script>
 
     <style>
+
         /* width */
         ::-webkit-scrollbar {
             width: 10px;
@@ -58,7 +59,7 @@
         </li>
         <li class="nav-item" >
             <div class="dropdown">
-                <a class="nav-link bi bi-list" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                <a class="nav-link" type="button" id="dropdownMenuButton" data-toggle="dropdown"
                    aria-haspopup="true" aria-expanded="false"> Archivo
                 </a>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -100,26 +101,23 @@
             </li>
             <li class="nav-item" role="presentation">
                 <a class="nav-link" title="Muestra la lista de alumnos que contiene el grupo."
-                   href="/grupo/alumnos/{{idgrupo}}"><i class="bi bi-file-person-fill"></i> Alumnos</a>
+                   href="/grupo/alumnos/{{idgrupo}}"> Alumnos</a>
             </li>
             <li class="nav-item" role="presentation">
                 <a class="nav-link" title="Muestra la lista de temas/unidades que contiene el grupo."
-                   href="/grupo/temas/{{idgrupo}}"><i class="bi bi-book-fill"></i> Temas</a>
+                   href="/grupo/temas/{{idgrupo}}">Temas</a>
             </li>
             <li class="nav-item" role="presentation">
                 <a class="nav-link " title="Muestra la lista de actividades por grupo o por tema."
-                   href="/grupo/actividades/{{idgrupo}}"><i class="bi bi-bookmark-check-fill"></i>
-                    Actividades</a>
+                   href="/grupo/actividades/{{idgrupo}}">Actividades</a>
             </li>
             <li class="nav-item" role="presentation">
                 <a class="nav-link" title="Muestra las calificaciones almacenadas."
-                   href="/grupo/calificaciones/{{idgrupo}}"><i class="bi bi-file-spreadsheet-fill"></i>
-                    Calificaciones</a>
+                   href="/grupo/calificaciones/{{idgrupo}}">Calificaciones</a>
             </li>
             <li class="nav-item" role="presentation">
                 <a class="nav-link" title="Muestra los equipos existentes."
-                   href="/grupo/equipos/{{idgrupo}}"><i class="bi bi-people-fill"></i>
-                    Equipos</a>
+                   href="/grupo/equipos/{{idgrupo}}">Equipos</a>
             </li>
         {{/iflogico}}
 
