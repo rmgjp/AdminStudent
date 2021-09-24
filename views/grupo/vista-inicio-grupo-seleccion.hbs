@@ -1,4 +1,4 @@
-<title>{{asignatura}} {{clave}} - Inicio - Seguimiento de Estudiantes</title>
+    <title>{{asignatura}} {{clave}} - Inicio - Seguimiento de Estudiantes</title>
 <div class="row m-2 p-2 flex-grow-1 flex-shrink-0">
     <nav id="sideBar" class="col-md-3 col-lg-2 d-md-block sidebar navbar-nav-scroll">
         <div class="sidebar-sticky">
@@ -11,8 +11,7 @@
                                             href="/grupo-inicio/alumno/{{../idgrupo}}/{{dataValues.id}}/{{../alumno.dataValues.id}}"
                         {{else}}
                                             href="/grupo-inicio/equipo/{{../idgrupo}}/{{dataValues.id}}/{{../equipo.dataValues.id}}"
-                        {{/if}}><i
-                            class="bi-book-half"></i><strong> {{dataValues.nombre}}</strong></a></li>
+                        {{/if}}><i class="bi-book-half"></i><strong> {{dataValues.nombre}}</strong></a></li>
                 {{/each}}
                 <li class="nav-item"><a class="nav-link" href="/grupo/vista-general/{{idgrupo}}/{{alumno.dataValues.id}}"><i class="bi-book-half"></i><strong> Todos</strong></a></li>
             </ul>
