@@ -294,12 +294,13 @@ const renderGroupData = async (req, res) =>{
         let cantReprobados = 0;
         let cantReprobadosS2 = 0;
         let cantAprobadosS2 = 0;
-        for(let calificacion in calificaciones){if(calificaciones[calificacion].calificaciones[actividad] < 70 ||calificaciones[calificacion].calificaciones[actividad] === "No capturado."){
+        for(let calificacion in calificaciones){
+            if(calificaciones[calificacion].calificaciones[actividad] < 70 ||calificaciones[calificacion].calificaciones[actividad] === "No capturado."){
                 cantReprobados++;
             }
-            if(calificaciones[calificacion].calificacionesSegundaOp[actividad] != null ){
+            if(calificacionesS2[calificacion].calificaciones[actividad] != null ){
 
-                if(calificaciones[calificacion].calificacionesSegundaOp[actividad] < 70){
+                if(calificacionesS2[calificacion].calificaciones[actividad] < 70){
                     cantReprobadosS2++;
                 }
                 else{
@@ -603,7 +604,7 @@ const renderGeneralView = async (req,res) => {
         }
         //reprobados por tema, primer oportunidad
         if(reprobado){
-            reprobados++
+            reprobados++;
         }
         //reprobados por tema, segunda oportunidad
         if(reprobadoS2) {
