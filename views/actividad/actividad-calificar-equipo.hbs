@@ -1,7 +1,7 @@
 <title>Calificar en equipo - {{actividad.dataValues.nombre}}</title>
 <main class="container">
-    <div class="row-cols-1 m-2 p-3">
-        <h2 class="display-4">Calificar Actividad</h2>
+    <div class="row-cols-1 ">
+        <h2 class="display-4"><strong>Calificar Actividad</strong></h2>
     </div>
     <form {{#iflogico second '===' 0}}action="/actividad/calificar-equipo/{{idgrupo}}/{{idtema}}/{{actividad.dataValues.id}}/{{idequipo}}?_method=PUT"{{else}}
           action="/actividad/calificar-equipo/{{idgrupo}}/{{idtema}}/{{actividad.dataValues.id}}/{{idequipo}}/1?_method=PUT"{{/iflogico}} method="POST">
@@ -47,6 +47,9 @@
         </div>
         <div class="row-cols-1">
             <p>Integrantes del equipo</p>
+        </div>
+        <div class="row-cols-1">
+
             <input type="hidden" id="valorTablaAlumnos" name="valorTablaAlumnos" value="{{valorTablaAlumnos}}">
 
             <table id="tableAlumno" class="table table-striped" data-toggle="table"

@@ -1,11 +1,11 @@
 <title>Mis Grupos - Seguimiento de Estudiantes</title>
 
-    <div class="row m-2 p-2">
-        <h3>Mis grupos {{#iflogico estado '===' "1"}}activos{{/iflogico}}
+    <div class="row m-2">
+        <h2 class="display-5">Mis grupos {{#iflogico estado '===' "1"}}activos{{/iflogico}}
             {{#iflogico estado '===' "2"}}en papelera{{/iflogico}}
-            {{#iflogico estado '===' "0"}}inactivos{{/iflogico}}</h3>
+            {{#iflogico estado '===' "0"}}inactivos{{/iflogico}}</h2>
     </div>
-    <div class="row m-2 p-2">
+    <div class="row m-2">
     {{#each grupos}}
             <div class="col-md-3 col-3 col-xl-2 col-lg-2 col-sm-3 p-1">
                 <div class="card " style="height:28rem; ">

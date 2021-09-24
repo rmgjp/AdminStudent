@@ -2,7 +2,7 @@
 
 <div class="container bg-light m-100">
     <div class="row-cols-1 m-2 p-3">
-        <h2 class="display-4">Calificar Actividad {{#iflogico segundaoportunidad "===" 1}}- Segunda Oportunidad{{/iflogico}}</h2>
+        <h2 class="display-4"><strong>Calificar Actividad {{#iflogico segundaoportunidad "===" 1}}- Segunda Oportunidad{{/iflogico}}</strong></h2>
     </div>
     <div class="row-cols-1  d-flex flex-row-reverse">
         <div class="col-auto d-flex flex-row-reverse p-3">
@@ -36,8 +36,8 @@
                     <tr>
                         <th data-field="clave" data-sorteable="false">No. Control</th>
                         <th data-field="nombre" data-sorteable="true">Nombre</th>
-                        <th data-field="calificacion" id="calificacion" data-editable="true" data-editable-type="number" data-editable-min="0"  data-editable-max="100"
-                        data-editable-emptytext="0">Calificación</th>
+                        <th data-field="calificacion" id="calificacion" data-editable="true" data-placeholder="Required" data-editable-type="number" data-editable-min="0"  data-editable-max="100"
+                        data-editable-emptytext="Ingrese una calificación valida" style="display: none" >Calificación</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -46,7 +46,7 @@
             </div>
 
             <div class="row p-3 d-flex flex-row-reverse">
-                <button class="btn btn-primary" type="submit" id="finalizar">Finalizar</button>
+                <button class="btn btn-primary" type="submit" id="finalizar">Guardar</button>
                 <a class="btn btn-danger" href="/grupo/actividades/{{idgrupo}}/{{idtema}}/{{actividad.dataValues.id}}">Cancelar</a>
             </div>
         </form>
