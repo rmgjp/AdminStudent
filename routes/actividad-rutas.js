@@ -29,8 +29,4 @@ router.post('/actividad/nueva-actividad/:idgrupo/:idtema', async(req,res)=>{
     }
 });
 
-
-
-
-
 module.exports = router;
