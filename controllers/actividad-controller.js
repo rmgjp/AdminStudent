@@ -114,6 +114,13 @@ const getTopicActivitiesAndActivity = async (req, res) => {
             actividades: actividades,
         });
     }
+    const datosTema = await Models.tema.findOne({
+        where:{
+            id: req.params.idtema
+        }
+
+    })
+    console.log(datosTema.dataValues.nombre)
     const actividad = await getActivityById(req.params.idactividad);
     //Renderizar la vista con los datos recuperados
     res.render('actividad/vista-grupo-actividades', {
@@ -121,6 +128,7 @@ const getTopicActivitiesAndActivity = async (req, res) => {
         datos,
         idtema: req.params.idtema,
         actividad,
+        nombreTema: datosTema.dataValues.nombre,
         tipoActividad: actividad.tipo,
         asignatura: grupo.dataValues.asignatura,
         clave: grupo.dataValues.clave,

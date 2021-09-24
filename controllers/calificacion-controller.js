@@ -439,7 +439,13 @@ const scoreTeam = async (req, res) => {
         }
     }
     req.flash('success_msg', 'La actividad se calificó correctamente.');
-    res.redirect(`/grupo/actividades/${req.params.idgrupo}/${req.params.idtema}/${req.params.idactividad}`);
+    if(second){
+        res.redirect(`/equipo/seleccion/${req.params.idgrupo}/${req.params.idtema}/${req.params.idactividad}/1`);
+    }
+    else{
+        res.redirect(`/equipo/seleccion/${req.params.idgrupo}/${req.params.idtema}/${req.params.idactividad}`);
+    }
+    //res.redirect(`/grupo/actividades/${req.params.idgrupo}/${req.params.idtema}/${req.params.idactividad}`);
 }
 module.exports = {
     renderScoreTeam,
