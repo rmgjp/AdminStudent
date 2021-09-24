@@ -26,20 +26,29 @@ table.on('editable-save.bs.table', function(e, field, row, oldValue, $el){
 
 
 $('#add').on('click', function () {
+    tablaDatos = table.bootstrapTable('getData');
     if(document.getElementById("ClaveBox").value && document.getElementById('NombreBox').value){
-
-        table.bootstrapTable('insertRow',{
-            index: i,
-            row:{
-                clave:  document.getElementById("ClaveBox").value,
-                nombre: document.getElementById('NombreBox').value,
+        let existente = false;
+        for(dato in tablaDatos){
+            if(tablaDatos[dato].clave === document.getElementById("ClaveBox").value.toUpperCase() ||
+                tablaDatos[dato].nombre === document.getElementById("NombreBox").value.toUpperCase()){
+                existente = true;
             }
-        });
+        }
+        if(!existente){
+            table.bootstrapTable('insertRow',{
+                index: i,
+                row:{
+                    clave:  document.getElementById("ClaveBox").value.toUpperCase(),
+                    nombre: document.getElementById('NombreBox').value.toUpperCase(),
+                }
+            });
+            tablaDatos = table.bootstrapTable('getData');
+            document.getElementById("valorTabla").value = JSON.stringify(tablaDatos);
+            i = i + 1;
+        }
         document.getElementById("ClaveBox").value = "";
         document.getElementById("NombreBox").value = "";
-        tablaDatos = table.bootstrapTable('getData');
-        document.getElementById("valorTabla").value = JSON.stringify(tablaDatos);
-        i = i + 1;
     }
 })
 
