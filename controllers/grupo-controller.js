@@ -127,6 +127,8 @@ const retriveGroupData = async (req, res) => {
         res.redirect("/grupo-inicio/"+ req.params.idgrupo+"/"+temas[0].dataValues.id);
     }
 }
+
+//Renderizar lista de alumnos para selección individual
 const renderGroupDataListStudents = async (req,res)=>{
     const temas = await Models.tema.findAll({
         where:{idgrupo: req.params.idgrupo}
@@ -151,6 +153,8 @@ const renderGroupDataListStudents = async (req,res)=>{
     }
 
 }
+
+//Renderizar lista de equipos para su selección
 const renderGroupDataListTeams = async (req,res)=>{
     const temas = await Models.tema.findAll({
         where:{idgrupo: req.params.idgrupo}
@@ -169,8 +173,103 @@ const renderGroupDataListTeams = async (req,res)=>{
             }
         }]
     })
-    res.render('grupo/vista-inicio-grupo-lista', {asignatura: grupo.dataValues.asignatura, clave: grupo.dataValues.clave, idgrupo: grupo.dataValues.id, temas, tema, menu, visualizacion, equipos});
+    res.render('grupo/vista-inicio-grupo-lista', {asignatura: grupo.dataValues.asignatura,
+        clave: grupo.dataValues.clave,
+        idgrupo: grupo.dataValues.id,
+        temas, tema, menu,
+        visualizacion, equipos});
 }
+const renderGeneralTeamData = async (req,res) => {
+    const grupo = await getGroupData(req, res);
+
+    const equipo = await Models.equipo.findOne({
+        where: {
+            id: req.params.idequipo
+        }
+    })
+    const temas = await Models.tema.findAll({
+        where:{idgrupo: req.params.idgrupo}
+    });
+    const integrantes = await Models.alumno.findAll({
+        include:[{
+            model: Models.alumnoequipo,
+            where:{
+                idequipo: req.params.idequipo
+            },
+        }],
+        order:[
+            ['nombre', 'ASC']
+        ]
+    })
+    let listaFormateada = []
+
+    integrantes.forEach(async (value) =>{
+        listaFormateada.push({
+            clave: value.dataValues.clave,
+            nombre: value.dataValues.nombre,
+            calificacion: await alumnoController.calCalifStudent(temas, value)
+        })
+    })
+}
+const renderTeamData = async (req, res) => {
+    const grupo = await getGroupData(req, res);
+
+    const equipo = await Models.equipo.findOne({
+        where: {
+            id: req.params.idequipo
+        }
+    })
+    const actividades = await Models.tarea.findAll({
+        where:{
+            idtema: req.params.idtema
+        }
+    })
+    const temas = await Models.tema.findAll({
+        where:{idgrupo: req.params.idgrupo}
+    });
+
+    const tema = await Models.tema.findOne({
+        where:{id: req.params.idtema}
+    });
+
+    const integrantes = await Models.alumno.findAll({
+        include:[{
+            model: Models.alumnoequipo,
+            where:{
+                idequipo: req.params.idequipo
+            },
+        }],
+        order:[
+            ['nombre', 'ASC']
+        ]
+    })
+    const rawList = JSON.parse(await calificacionController.calcCalif(req,res));
+    req.params.modo = 1;
+    const rawListS2 = JSON.parse(await calificacionController.calcCalif(req,res));
+
+    let listaFormateada = [];
+    let listaFormateadaS2 = [];
+
+    integrantes.forEach((element) => {
+        rawList.forEach((value) => {
+            if(value.clave === element.clave){
+                listaFormateada.push(value);
+            }
+        });
+        rawListS2.forEach((value) => {
+            if(value.clave === element.clave){
+                listaFormateadaS2.push(value);
+            }
+        });
+    });
+
+
+    res.render('grupo/vista-inicio-grupo-seleccion', {idgrupo: grupo.dataValues.id, clave: grupo.dataValues.clave, actividades,
+        asignatura: grupo.dataValues.asignatura, listaFormateada: JSON.stringify(listaFormateada),
+        listaFormateadaS2: JSON.stringify(listaFormateadaS2), temas, tema, menu:1, equipo})
+}
+
+//Renderizar los datos del alumno para graficación
 const renderStudentData = async (req,res) =>{
     const temas = await Models.tema.findAll({
         where:{idgrupo: req.params.idgrupo}
@@ -246,6 +345,8 @@ const renderStudentData = async (req,res) =>{
 
     res.render('grupo/vista-inicio-grupo-seleccion', {actAprobadas,actReprobadas,actAprobadasS2,actReprobadasS2,dataReprobacionAct: JSON.stringify(calificaciones), dataReprobacion ,dataReprobacionActS2: JSON.stringify(calificacionesS2), dataReprobacionS2 ,idtema: req.params.idtema ,asignatura: grupo.dataValues.asignatura, clave: grupo.dataValues.clave, idgrupo: grupo.dataValues.id,temas, tema, alumno, menu })
 }
+
+//Renderizar la graficación de datos del grupo
 const renderGroupData = async (req, res) =>{
     const temas = await Models.tema.findAll({
         where:{idgrupo: req.params.idgrupo}
@@ -474,6 +575,7 @@ const editGroup = async (req, res) => {
     res.redirect('/');
 }
 
+//Renderizar los datos
 const renderGeneralView = async (req,res) => {
     const grupo = await getGroupData(req, res);
     //Contador de alumnos reprobados en primera oportunidad.
@@ -709,5 +811,7 @@ module.exports = {
     getGroupDataFromFile,
     editGroup,
     renderGeneralView,
-    renderGeneralViewStudent
+    renderGeneralViewStudent,
+    renderTeamData,
+    renderGeneralTeamData
 }
