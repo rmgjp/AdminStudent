@@ -1,5 +1,8 @@
-    <title>{{asignatura}} {{clave}} - Inicio - Seguimiento de Estudiantes</title>
-<div class="row m-2 p-2 flex-grow-1 flex-shrink-0">
+<title>{{asignatura}} {{clave}} - Inicio - Seguimiento de Estudiantes</title>
+<div class="row-cols-1 m-2">
+    <h2 class="display-5">Resumen del {{#if alumno}}alumno{{/if}}{{#if equipo}}equipo{{/if}}</h2>
+</div>
+<div class="row flex-grow-1 flex-shrink-0">
     <nav id="sideBar" class="col-md-3 col-lg-2 d-md-block sidebar navbar-nav-scroll">
         <div class="sidebar-sticky">
             <h4 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
@@ -13,7 +16,11 @@
                                             href="/grupo-inicio/equipo/{{../idgrupo}}/{{dataValues.id}}/{{../equipo.dataValues.id}}"
                         {{/if}}><i class="bi-book-half"></i><strong> {{dataValues.nombre}}</strong></a></li>
                 {{/each}}
-                <li class="nav-item"><a class="nav-link" href="/grupo/vista-general/{{idgrupo}}/{{alumno.dataValues.id}}"><i class="bi-book-half"></i><strong> Todos</strong></a></li>
+                {{#if alumno}}
+                    <li class="nav-item"><a class="nav-link" href="/grupo/vista-general/{{idgrupo}}/{{alumno.dataValues.id}}"><i class="bi-book-half"></i><strong> Todos</strong></a></li>
+                {{else}}
+                    <li class="nav-item"><a class="nav-link" href="/grupo/vista-general-equipo/{{idgrupo}}/{{equipo.dataValues.id}}"><i class="bi-book-half"></i><strong> Todos</strong></a></li>
+                {{/if}}
             </ul>
         </div>
     </nav>
@@ -22,19 +29,29 @@
             <div class="col">
                 <span>
                     <a style="font-size: 1.75rem;font-weight: 500;line-height: 1.2; margin-bottom: 0.5rem;"
-                        {{#if tema}} href="/grupo-inicio/alumnos/{{idgrupo}}/{{idtema}}"
-                    {{else}} href="/grupo-inicio/lista/alumnos/{{idgrupo}}"
-                    {{/if}}>
+                            {{#if alumno}}
+                                {{#if tema}}
+                                    href="/grupo-inicio/alumnos/{{idgrupo}}/{{idtema}}"
+                                {{else}}
+                                    href="/grupo-inicio/lista/alumnos/{{idgrupo}}"
+                                {{/if}}>
+                            {{else}}
+                                {{#if tema}}
+                                    href="/grupo-inicio/equipos/{{idgrupo}}/{{tema.dataValues.id}}"
+                                {{else}}
+                                    href="/grupo-inicio/equipos/{{idgrupo}}"
+                                {{/if}}>
+                            {{/if}}
                         <i class="bi bi-arrow-left-circle-fill" style="size:1.75rem;"></i>
                     </a>
                 </span>
-                <a style="font-size: 1.75rem;font-weight: 500;line-height: 1.2; margin-bottom: 0.5rem;">Tema: {{tema.dataValues.nombre}}{{title}}</a>
+                <a style="font-size: 1.75rem;font-weight: 500;line-height: 1.2; margin-bottom: 0.5rem;">Tema: {{tema.dataValues.nombre}}{{title}}  {{equipo.dataValues.nombre}}</a>
             </div>
         </div>
 
         {{#if alumno}}
             <!-- Datos personales del alumno -->
-            <div class="row m-2">
+            <div class="row">
                 <div class="col">
                     <div class="card">
                         <div class="card-header">
@@ -123,7 +140,7 @@
 
                 </div>
             </div>
-            <script>
+            <script type="text/javascript">
                 dataReprobacion = document.getElementById("indiceReprobacionData").value;
                 dataReprobacionAct = document.getElementById("actividadesReprobacionData").value;
                 dataReprobacionS2 = document.getElementById("indiceReprobacionDataS2").value;
@@ -190,19 +207,68 @@
             </script>
         {{else}}
             <!--Informacion del equipo-->
-            <div class="row">
-                <div class="col">
-
-                </div>
+            <div id='toolbar' class="fixed-table-toolbar">
+                Primera Oportunidad
             </div>
-            <!-- Graficación de los datos EQUIPO -->
-            <div class="row">
-                <div class="col">
+            <!--Integrantes, actividades del tema, calificaciones-->
+            <div class="row-cols-1 bootstrap4 bootstrap-table fixed-table-container">
+                <input type="hidden" id="valorTabla" name="valorTabla" value="{{listaFormateada}}">
+                <table id="table" data-toggle="table" data-search="true"
+                       data-advanced-search="true" data-filter-control="true" data-toolbar="#toolbar" name="table">
+                    <thead>
+                    <tr>
+                        <th data-field="clave" data-sorteable="false">No. Control</th>
+                        <th data-field="nombre" data-sorteable="true">Nombre</th>
+                        {{#if actividades}}
+                            {{#each actividades}}
+                                <th data-field="calificaciones.{{@index}}" class="column">{{dataValues.nombre}}: {{dataValues.valor}}</th>
+                            {{/each}}
+                        {{/if}}
+                        {{#if unidad}}
+                            {{#each unidad}}
+                                <th data-field="calificaciones.{{@index}}" class="column">{{dataValues.nombre}}</th>
+                            {{/each}}
+                        {{/if}}
+                        <th data-field="califinal" class="column">Calif. Final</th>
+                    </tr>
+                    </thead>
+                    <tbody>
 
-                </div>
+                    </tbody>
+                </table>
             </div>
-            <script>
 
+            <div id="toolbarS2" class="fixed-table-toolbar">
+                Segunda Oportunidad
+            </div>
+            <!--Integrantes, actividades del tema, calificaciones-->
+            <div class="row-cols-1 bootstrap4 bootstrap-table fixed-table-container">
+                <input type="hidden" id="valorTablaS2" name="valorTablaS2" value="{{listaFormateadaS2}}">
+                <table id="tableS2" data-toggle="table" data-search="true"
+                       data-advanced-search="true" data-filter-control="true" data-toolbar="#toolbarS2" name="tableS2">
+                    <thead>
+                    <tr>
+                        <th data-field="clave" data-sorteable="false">No. Control</th>
+                        <th data-field="nombre" data-sorteable="true">Nombre</th>
+                        {{#if actividades}}
+                            {{#each actividades}}
+                                <th data-field="calificaciones.{{@index}}" class="column">{{dataValues.nombre}}: {{dataValues.valor}}</th>
+                            {{/each}}
+                        {{/if}}
+                        {{#if unidad}}
+                            {{#each unidad}}
+                                <th data-field="calificaciones.{{@index}}" class="column">{{dataValues.nombre}}</th>
+                            {{/each}}
+                        {{/if}}
+                        <th data-field="califinal" class="column">Calif. Final</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </div>
+            <script type="text/javascript" src="/js/llenar-tablas-equipo-inicio.js">
             </script>
         {{/if}}
     </main>
