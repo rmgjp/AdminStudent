@@ -3,7 +3,7 @@ let tablaDatos;
 let i = 0;
 
 $(function cargarDatos() {
-    var lista = document.getElementById("valorTabla").value;
+    let lista = document.getElementById("valorTabla").value;
     lista = JSON.parse(lista);
     table.bootstrapTable('load', lista);
     tablaDatos = table.bootstrapTable('getData');

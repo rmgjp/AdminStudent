@@ -289,7 +289,7 @@ const calcCalifStudentTopic = async (idtema, alumno) =>{
 
     return califinal;
 }
-
+/** Devuelve la calificacion final de todos los temas, del alumno dado**/
 const calCalifStudent = async (temas, alumno)=>{
     let listaFormateada = [];
     for (let tema in temas) {
