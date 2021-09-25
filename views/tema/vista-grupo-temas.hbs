@@ -16,7 +16,7 @@
     <!-- Generación de un card por tema -->
     {{#each tema}}
         <div class="col-md-3 col-3 col-xl-3 col-lg-3 col-sm-3">
-            <div class="card" style="height:14rem;">
+            <div class="card" style="height:18rem;">
                 <div class="card-header d-flex flex-row-reverse">
                     <a class="bi bi-trash-fill " align="right"  data-toggle="modal"
                        data-target="#eliminarTemaModal{{dataValues.id}}" title="Eliminar el tema permanentemente."></a>
@@ -24,7 +24,7 @@
                        data-target="#editarTemaModal{{dataValues.id}}" title="Editar el tema."></a>
                 </div>
                 <div class="card-body">
-                    <h5 class="card-title">{{dataValues.numerotema}}. {{dataValues.nombre}}</h5>
+                    <p><strong>{{dataValues.numerotema}}. {{dataValues.nombre}}</strong></p>
                 </div>
                 <div class="card-footer">
                     <a href="/grupo/actividades/{{dataValues.idgrupo}}" class="btn btn-primary">Actividades</a>
@@ -98,7 +98,7 @@
         <!-- En caso de que no existan temas se despliega un card con un mensaje -->
     {{else}}
         <div class="col-md-3 col-3 col-xl-3 col-lg-3 col-sm-3 p-1">
-            <div class="card" style="height:14rem;">
+            <div class="card" style="height:18rem;">
                 <div class="card-body">
                     <h5 class="card-title">No hay temas existentes en este grupo.</h5>
                     <p class="card-text">Agregue un tema.</p>
