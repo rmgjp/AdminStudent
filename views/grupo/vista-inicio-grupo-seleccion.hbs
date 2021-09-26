@@ -39,7 +39,7 @@
                                 {{#if tema}}
                                     href="/grupo-inicio/equipos/{{idgrupo}}/{{tema.dataValues.id}}"
                                 {{else}}
-                                    href="/grupo-inicio/equipos/{{idgrupo}}"
+                                    href="/grupo-inicio/lista/equipos/{{idgrupo}}"
                                 {{/if}}>
                             {{/if}}
                         <i class="bi bi-arrow-left-circle-fill" style="size:1.75rem;"></i>
@@ -223,13 +223,13 @@
                             {{#each actividades}}
                                 <th data-field="calificaciones.{{@index}}" class="column">{{dataValues.nombre}}: {{dataValues.valor}}</th>
                             {{/each}}
+                            <th data-field="califinal" class="column">Calif. Final</th>
                         {{/if}}
                         {{#if unidad}}
                             {{#each unidad}}
-                                <th data-field="calificaciones.{{@index}}" class="column">{{dataValues.nombre}}</th>
+                                <th data-field="calificacion.{{@index}}.califinalPreS2" class="column">{{dataValues.nombre}}</th>
                             {{/each}}
                         {{/if}}
-                        <th data-field="califinal" class="column">Calif. Final</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -254,13 +254,14 @@
                             {{#each actividades}}
                                 <th data-field="calificaciones.{{@index}}" class="column">{{dataValues.nombre}}: {{dataValues.valor}}</th>
                             {{/each}}
+                            <th data-field="califinal" class="column">Calif. Final</th>
                         {{/if}}
                         {{#if unidad}}
                             {{#each unidad}}
-                                <th data-field="calificaciones.{{@index}}" class="column">{{dataValues.nombre}}</th>
+                                <th data-field="calificacion.{{@index}}.califinal" class="column">{{dataValues.nombre}}</th>
                             {{/each}}
+                            <th data-field="califMateriaS2" class="column">Calif. Final</th>
                         {{/if}}
-                        <th data-field="califinal" class="column">Calif. Final</th>
                     </tr>
                     </thead>
                     <tbody>

@@ -73,8 +73,10 @@ router.get('/grupo/vista-general/:idgrupo/:idalumno',controladorGrupo.renderGene
 
 //Renderizar Equipos
 router.get('/grupo-inicio/equipos/:idgrupo/:idtema', controladorGrupo.renderGroupDataListTeams);
+router.get('/grupo-inicio/lista/equipos/:idgrupo', controladorGrupo.renderGroupDataListTeams);
+
 router.get('/grupo-inicio/equipo/:idgrupo/:idtema/:idequipo', controladorGrupo.renderTeamData);
-//router.get('/grupo/vista-general-equipo/:idgrupo/:idequipo',controladorGrupo)
+router.get('/grupo/vista-general-equipo/:idgrupo/:idequipo',controladorGrupo.renderGeneralTeamData);
 
 
 //Ruta para eliminar el grupo cuando se cancela el Wizard.

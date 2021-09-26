@@ -162,22 +162,36 @@ const renderGroupDataListTeams = async (req,res)=>{
 
     const grupo = await getGroupData(req, res);
 
-    const tema = await Models.tema.findOne({
-        where:{id: req.params.idtema}
-    });
-    const equipos = await Models.equipo.findAll({
-        include:[{
-            model: Models.equipotema,
+    if(req.params.idtema){
+        const tema = await Models.tema.findOne({
+            where:{id: req.params.idtema}
+        });
+        const equipos = await Models.equipo.findAll({
+            include:[{
+                model: Models.equipotema,
+                where:{
+                    idtema: tema.id
+                }
+            }]
+        })
+        res.render('grupo/vista-inicio-grupo-lista', {asignatura: grupo.dataValues.asignatura,
+            clave: grupo.dataValues.clave,
+            idgrupo: grupo.dataValues.id,
+            temas, tema, menu,
+            visualizacion, equipos});
+    }
+    else{
+        const equipos = await Models.equipo.findAll({
             where:{
-                idtema: tema.id
+                idgrupo: req.params.idgrupo
             }
-        }]
-    })
-    res.render('grupo/vista-inicio-grupo-lista', {asignatura: grupo.dataValues.asignatura,
-        clave: grupo.dataValues.clave,
-        idgrupo: grupo.dataValues.id,
-        temas, tema, menu,
-        visualizacion, equipos});
+        })
+        res.render('grupo/vista-inicio-grupo-lista', {asignatura: grupo.dataValues.asignatura,
+            clave: grupo.dataValues.clave,
+            idgrupo: grupo.dataValues.id,
+            temas, menu,
+            visualizacion, equipos});
+    }
 }
 const renderGeneralTeamData = async (req,res) => {
     const grupo = await getGroupData(req, res);
@@ -203,13 +217,58 @@ const renderGeneralTeamData = async (req,res) => {
     })
     let listaFormateada = []
 
-    integrantes.forEach(async (value) =>{
-        listaFormateada.push({
-            clave: value.dataValues.clave,
-            nombre: value.dataValues.nombre,
-            calificacion: await alumnoController.calCalifStudent(temas, value)
+    for(let integrante in integrantes){
+        const calificaciones = await alumnoController.calCalifStudent(temas, integrantes[integrante]);
+        /**
+         * calificaciones = {
+         *     no_unidad:
+         *     nombre:
+         *     califinal
+         *     califinaPreS2
+         *
+         * }
+         */
+        let califMateria = 0;
+        let califMateriaS2 = 0;
+        calificaciones.forEach((value) =>{
+            if(value.califinalPreS2 !== 'NA') {
+                if(califMateria !== 'NA'){
+                    califMateria += value.califinalPreS2;
+                }
+            }
+            else{
+                califMateria = 'NA'
+            }
+            if(value.califinal !== 'NA'){
+                if(califMateriaS2 !== 'NA'){
+                    califMateriaS2 += value.califinal;
+                }
+            }
+            else{
+                califMateriaS2 = 'NA'
+            }
         })
-    })
+        if(califMateria !== 'NA'){
+            califMateria = Math.round(califMateria/temas.length);
+        }
+
+        if(califMateriaS2 !== 'NA'){
+            califMateriaS2 = Math.round(califMateriaS2/temas.length);
+        }
+
+        listaFormateada.push({
+            clave: integrantes[integrante].dataValues.clave,
+            nombre: integrantes[integrante].dataValues.nombre,
+            calificacion: calificaciones,
+            califMateria: califMateria,
+            califMateriaS2: califMateriaS2
+        })
+
+
+    }
+    res.render('grupo/vista-inicio-grupo-seleccion', {idgrupo: grupo.dataValues.id, clave: grupo.dataValues.clave,
+        asignatura: grupo.dataValues.asignatura, listaFormateada: JSON.stringify(listaFormateada),
+        listaFormateadaS2: JSON.stringify(listaFormateada),unidad: temas, menu:1, equipo, temas, title: 'Todos'})
 }
 const renderTeamData = async (req, res) => {
     const grupo = await getGroupData(req, res);
