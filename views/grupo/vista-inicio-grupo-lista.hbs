@@ -11,7 +11,13 @@
                         {{else}}href="/grupo-inicio/equipos/{{../idgrupo}}/{{dataValues.id}}" {{/if}}><i
                             class="bi-book-half"></i><strong> {{dataValues.nombre}}</strong></a></li>
                 {{/each}}
-                <li class="nav-item"><a class="nav-link" href="/grupo-inicio/lista/alumnos/{{idgrupo}}"><i class="bi-book-half"></i><strong> Todos</strong></a></li>
+                <li class="nav-item"><a class="nav-link"
+                {{#if alumnos}}
+                                        href="/grupo-inicio/lista/alumnos/{{idgrupo}}"
+                    {{else}}
+                                        href="/grupo-inicio/lista/equipos/{{idgrupo}}"
+                {{/if}}
+                ><i class="bi-book-half"></i><strong> Todos</strong></a></li>
             </ul>
         </div>
     </nav>
@@ -38,10 +44,17 @@
                         {{/each}}
                     {{/if}}
                     {{#if equipos}}
-                        {{#each equipos}}
-                            <a class="list-group-item list-group-item-action button-sm"
-                               href="/grupo-inicio/equipo/{{../idgrupo}}/{{../tema.dataValues.id}}/{{dataValues.id}}">{{dataValues.nombre}}</a>
-                        {{/each}}
+                        {{#if tema}}
+                                {{#each equipos}}
+                                    <a class="list-group-item list-group-item-action button-sm"
+                                       href="/grupo-inicio/equipo/{{../idgrupo}}/{{../tema.dataValues.id}}/{{dataValues.id}}">{{dataValues.nombre}}</a>
+                                {{/each}}
+                        {{else}}
+                                {{#each equipos}}
+                                    <a class="list-group-item list-group-item-action button-sm"
+                                        href="/grupo/vista-general-equipo/{{../idgrupo}}/{{dataValues.id}}/">{{dataValues.nombre}}</a>
+                                {{/each}}
+                        {{/if}}
                     {{/if}}
                 </div>
             </div>

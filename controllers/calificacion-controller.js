@@ -73,7 +73,7 @@ const calcCalif = async (req, res) => {
                 calificaciones.push(valorCalificacion);
             }
         }
-        if (!acumulador === "NA") {
+        if (acumulador !== "NA") {
             acumulador = Math.round(acumulador);
         }
         if (acumulador < 70 || acumulador === "NA") {

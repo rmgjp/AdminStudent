@@ -357,6 +357,14 @@ const calCalifStudent = async (temas, alumno)=>{
         }
         if(califinal < 70){
             califinal = 'NA';
+        }else{
+            califinal = Math.round(califinal);
+        }
+        if(califinalPreS2 < 70){
+            califinalPreS2 = 'NA';
+        }
+        else{
+            califinalPreS2 = Math.round(califinalPreS2);
         }
         listaFormateada.push({
             no_unidad: temas[tema].dataValues.numerotema,
