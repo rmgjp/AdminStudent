@@ -9,7 +9,7 @@
         font-size: 0.83em;
     }
 
-    .regular p {
+    .regular p th{
         font-weight: 400;
         font-size: 0.75em;
     }
@@ -46,7 +46,7 @@
 </style>
 <main class="container" id="page-container">
     <div id="content-wrap">
-        <header class="container d-print-">
+        <header class="container d-print-" style="height: 5.7cm">
             <div class="row">
                 <figure class="col-10">
                     <img style="width: 100%; height: auto;" src="/img/encabezado-left.png" alt="Encabezado">
@@ -54,6 +54,16 @@
                 <figure class="col">
                     <img style="width: 100%; height: auto;" src="/img/encabezado-right.png" alt="Encabezado">
                 </figure>
+            </div>
+            <div class="row flex-row-reverse">
+                <p class="montserrat extra-bold">
+                    Instituto Tecnológico Superior de Irapuato
+                </p>
+            </div>
+            <div class="row flex-row-reverse medium">
+                <p class="montserrat ">
+                    Dirección General
+                </p>
             </div>
             </figure>
         </header>
@@ -72,10 +82,10 @@
                 <p>Asunto: Reporte parcial</p>
             </div>
             <div class="row -align-justify regular">
-                <p>{{mensaje}}</p>
+                <p class="montserrat">{{mensaje}}</p>
             </div>
-            <div class="row-cols-1  regular">
-                <h5>Índice de reprobación</h5>
+            <div class="row-cols-1 regular">
+                <p class="montserrat">Índice de reprobación</p>
             </div>
             <div class="row-cols-1" style="font-family: 'Montserrat'; font-size: 10pt">
                 <div class="col-auto navbar-nav-scroll">
@@ -83,10 +93,10 @@
                     <table id="table" data-toggle="table" data-click-to-select="true" name="table">
                         <thead>
                         <tr>
-                            <th data-field="clave" data-sorteable="true">Clave</th>
-                            <th data-field="asignatura" data-sorteable="true">Asignatura</th>
+                            <th class="montserrat medium" data-field="clave" data-sorteable="true">Clave</th>
+                            <th class="montserrat medium" data-field="asignatura" data-sorteable="true">Asignatura</th>
                             {{#each temas}}
-                                <th data-field="temas.{{@index}}" data-sorteable="true">U{{@index}}</th>
+                                <th class="montserrat medium" data-field="temas.{{@index}}" data-sorteable="true">U{{inc @index}}</th>
                             {{/each}}
                         </tr>
                         </thead>
@@ -125,10 +135,10 @@
                 <a class="btn btn-secondary no-print" href="/">Salir</a>
             </div>
         </div>
-        <footer class="d-print- footer">
+        <footer class="d-print- footer" style="height: 1.2cm; padding-top: 30px">
             <div class="row">
                 <figure class="col-2">
-                    <img src="/img/footer-left.png" style="height: 40%; width: auto">
+                    <img src="/img/footer-left.png">
                 </figure>
                 <div class="col -paragraph montserrat">
                     Carr. Irapuato – Silao km 12.5 Colonia El Copal,
@@ -138,7 +148,7 @@
                 </div>
 
                 <div>
-                    <figure class="col flex-row-reverse" style="height: 105%; width: auto">
+                    <figure class="col flex-row-reverse">
                         <img src="/img/footer-right.png">
                     </figure>
                 </div>
