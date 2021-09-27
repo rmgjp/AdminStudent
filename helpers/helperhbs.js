@@ -43,5 +43,8 @@ module.exports = {
         return options.fn(this).replace(
             new RegExp(' value=\"' + selected + '\"'),
             '$& selected="selected"');
+    },
+    inc: function (value, options){
+        return parseInt(value)+1;
     }
 }
