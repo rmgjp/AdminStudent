@@ -148,7 +148,12 @@
 
             </li>
             <li class="nav-item" role="presentation">
-                <a class="nav-link" href="/grupo-inicio/equipos/{{idgrupo}}/{{tema.dataValues.id}}"
+                <a class="nav-link"
+                   {{#if tema}}
+                       href="/grupo-inicio/equipos/{{idgrupo}}/{{tema.dataValues.id}}"
+                   {{else}}
+                       href="/grupo-inicio/lista/equipos/{{idgrupo}}"
+                   {{/if}}
                    title="Genera la visualización de los datos agrupado por equipos.">Equipo</a>
             </li>
         {{/iflogico}}
