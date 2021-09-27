@@ -15,6 +15,10 @@
     <div class="row m-2 p-2">
         <h1 class="display-6">Datos del grupo</h1>
     </div>
+    <div class="row m-2 p-2">
+        <p>En esta sección se pueden editar los atributos del grupo junto con la lista de alumnos. Para editar temas, actividades o calificaciones se debe
+        dirigir a sus respectivas vistas.</p>
+    </div>
     <form class="needs-validation" action="/grupo/editar/{{idgrupo}}?_method=PUT" method="POST" novalidate>
         <input type = "hidden" name = "_method" value="PUT">
         <div class="row m-2 p-2">
