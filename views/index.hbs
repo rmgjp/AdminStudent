@@ -7,44 +7,42 @@
     </div>
     <div class="row m-2">
     {{#each grupos}}
-            <div class="col-md-3 col-3 col-xl-2 col-lg-2 col-sm-3 p-1">
-                <div class="card " style="height:28rem; ">
+        <div class="card " style="height:28rem; width: 18rem; margin-right: 5px; margin-bottom: 5px">
+            {{#iflogico dataValues.estado '!=' "2"}}
+                <div class="card-header d-flex flex-row-reverse">
+                    <a class="bi bi-trash-fill " align="right" data-toggle="modal"
+                       data-target="#eliminarGrupo{{dataValues.id}}"
+                       title="Mover grupo a la papelera de reciclaje."></a>
+                    <a class="bi bi-pencil-square " align="right" data-toggle="modal"
+                       data-target="#editarGrupo{{dataValues.id}}" title="Editar los atributos del grupo."></a>
+                </div>
+            {{/iflogico}}
+
+            <img src="/img/{{dataValues.img}}.jpeg" class="card-img-top">
+            <div class="card-body">
+                <h5 class="card-title">{{dataValues.asignatura}}</h5>
+                <h6>{{dataValues.periodo}}</h6>
+                <h6><strong>{{dataValues.clave}}</strong></h6>
+
+            </div>
+            <div class="card-footer">
+                <div class="col" align="right">
                     {{#iflogico dataValues.estado '!=' "2"}}
-                        <div class="card-header d-flex flex-row-reverse">
-                            <a class="bi bi-trash-fill " align="right" data-toggle="modal"
-                               data-target="#eliminarGrupo{{dataValues.id}}"
-                               title="Mover grupo a la papelera de reciclaje."></a>
-                            <a class="bi bi-pencil-square " align="right" data-toggle="modal"
-                               data-target="#editarGrupo{{dataValues.id}}" title="Editar los atributos del grupo."></a>
-                        </div>
+                        <a href="/grupo-inicio/{{dataValues.id}}" class="btn btn-primary"
+                           title="Mostrar la información relacionada con el grupo.">Ver</a>
                     {{/iflogico}}
+                    {{#iflogico dataValues.estado '==' "2"}}
 
-                    <img src="/img/{{dataValues.img}}.jpeg" class="card-img-top">
-                    <div class="card-body">
-                        <h5 class="card-title">{{dataValues.asignatura}}</h5>
-                        <h6>{{dataValues.periodo}}</h6>
-                        <h6><strong>{{dataValues.clave}}</strong></h6>
+                        <a type="button" data-toggle="modal" data-target="#restaurarGrupo{{dataValues.id}}"
+                           class="btn btn-info" title="Restaura el grupo enviándolo fuera de la papelera.">Restaurar</a>
+                        <a type="button" data-toggle="modal" data-target="#eliminarGrupoPerm{{dataValues.id}}"
+                           class="btn btn-danger"
+                           title="Eliminar permanentemente el grupo junto con los datos relacionados del mismo.">Eliminar</a>
 
-                    </div>
-                    <div class="card-footer">
-                        <div class="col" align="right">
-                            {{#iflogico dataValues.estado '!=' "2"}}
-                                <a href="/grupo-inicio/{{dataValues.id}}" class="btn btn-primary"
-                                   title="Mostrar la información relacionada con el grupo.">Ver</a>
-                            {{/iflogico}}
-                            {{#iflogico dataValues.estado '==' "2"}}
-
-                                <a type="button" data-toggle="modal" data-target="#restaurarGrupo{{dataValues.id}}"
-                                   class="btn btn-info" title="Restaura el grupo enviándolo fuera de la papelera.">Restaurar</a>
-                                <a type="button" data-toggle="modal" data-target="#eliminarGrupoPerm{{dataValues.id}}"
-                                   class="btn btn-danger"
-                                   title="Eliminar permanentemente el grupo junto con los datos relacionados del mismo.">Eliminar</a>
-
-                            {{/iflogico}}
-                        </div>
-                    </div>
+                    {{/iflogico}}
                 </div>
             </div>
+        </div>
             <!--Mover a papelera de reciclaje -->
             <form action="/moverapapelera/{{dataValues.id}}?_method=PUT" method="POST">
                 <input type="hidden" name="_method" value="PUT">
@@ -144,33 +142,29 @@
             </div>
 
         {{else}}
+        <div class="card" style="height:28rem; width: 18rem; margin-right: 5px; margin-bottom: 5px">
+            <div class="card-body">
+                {{#iflogico estado '!=' 2}}
+                    <h5 class="card-title text-center">No hay grupos existentes.</h5>
+                    <p class="card-text text-center">Agregue un grupo.</p>
+                {{else}}
+                    <h5 class="card-title text-center">No hay grupos en la papelera de reciclaje.</h5>
 
-            <div class="col-md-3 col-3 col-xl-2 col-lg-2 col-sm-3 p-1">
-                <div class="card" style="height:28rem ">
-                    <div class="card-body">
-                        {{#iflogico estado '!=' 2}}
-                            <h5 class="card-title text-center">No hay grupos existentes.</h5>
-                            <p class="card-text text-center">Agregue un grupo.</p>
-                        {{else}}
-                            <h5 class="card-title text-center">No hay grupos en la papelera de reciclaje.</h5>
-
-                        {{/iflogico}}
-                    </div>
-                </div>
+                {{/iflogico}}
             </div>
+        </div>
         {{/each}}
         {{#iflogico estado '!=' 2}}
             <div class="col-md-3 col-3 col-xl-2 col-lg-2 col-sm-3 p-1">
                 <div class="card" style="height:28rem; ">
                     <div class="card-body justify-content-center align-center">
 
-                        <div class="row text-center align-items-center">
-                            <h5 class="card-title">Agregar nuevo grupo</h5>
-                        </div>
-                        <div class="row justify-content-md-center align-items-center">
-                            <a class="btn btn-success rounded-circle " href="/grupo/wizard-crear-grupo"
-                               title="Agregar un nuevo grupo.">+</a>
-                        </div>
+                    <div class="row text-center align-items-center">
+                        <h5 class="card-title">Agregar nuevo grupo</h5>
+                    </div>
+                    <div class="row justify-content-md-center align-items-center">
+                        <a class="btn btn-success rounded-circle " href="/grupo/wizard-crear-grupo"
+                           title="Agregar un nuevo grupo.">+</a>
                     </div>
                 </div>
             </div>
