@@ -1,20 +1,17 @@
 var table = $('#table')
 var tablaDatos;
-var i = 0;
 var idEliminar = [];
 
 $(function cargarDatos(){
     var lista = document.getElementById("valorTabla").value;
     lista = JSON.parse(lista);
 
+
+
+
     if(lista){
         console.log("Lista encontrada.")
-        var rows= [];
-        for(let dato = 0; dato < lista.length; dato++){
-            rows.push(lista[dato]);
-        }
-        table.bootstrapTable('load', rows);
-        i = lista.length;
+        table.bootstrapTable('load', lista);
         tablaDatos = table.bootstrapTable('getData');
         document.getElementById("valorTabla").value = JSON.stringify(tablaDatos);
     }
@@ -37,16 +34,13 @@ $('#add').on('click', function () {
             }
         }
        if(!existente){
-           table.bootstrapTable('insertRow',{
-               index: i,
-               row:{
+           table.bootstrapTable('append',{
                    clave:  document.getElementById("ClaveBox").value.toUpperCase(),
                    nombre: document.getElementById('NombreBox').value.toUpperCase(),
-               }
+
            });
            tablaDatos = table.bootstrapTable('getData');
            document.getElementById("valorTabla").value = JSON.stringify(tablaDatos);
-           i = i + 1;
        }
         document.getElementById("ClaveBox").value = "";
         document.getElementById("NombreBox").value = "";
@@ -69,9 +63,7 @@ $('#remove').on('click', function () {
         field: 'clave',
         values: claves
     })
-
     tablaDatos = table.bootstrapTable('getData');
     document.getElementById("valorTabla").value = JSON.stringify(tablaDatos);
     document.getElementById("idAlumnosEliminados").value = JSON.stringify(idEliminar);
-    i = i - 1;
 })

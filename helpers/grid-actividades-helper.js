@@ -1,22 +1,18 @@
 var table = $('#table')
 var tablaDatos;
-var i = 0;
 
 //Método para añadir datos a la tabla.
 $('#add').on('click', function () {
     //Se obtienen los datos de las cajas de texto y se agregan a la tabla.
     if(document.getElementById("nombreBox").value){
-
-
-        table.bootstrapTable('insertRow',{
-            index: i,
-            row:{
+        table.bootstrapTable('append',
+            {
                 nombreCol:  document.getElementById("nombreBox").value,
                 valorCol:  document.getElementById('valorBox').value,
                 tipoCol: document.getElementById('tipoBox').value,
                 descripcionCol: document.getElementById('descripcionBox').value,
             }
-        })
+        )
         //Se limpian las cajas de texto
         document.getElementById("nombreBox").value = "";
         document.getElementById("valorBox").value = 1;
@@ -26,7 +22,6 @@ $('#add').on('click', function () {
         tablaDatos = table.bootstrapTable('getData');
         //Se convierten los datos de la tabla a JSON.
         document.getElementById("valorTabla").value = JSON.stringify(tablaDatos);
-        i = i + 1
     }
 })
 //Método para eliminar el elemento(s) seleccionado(s)
@@ -44,7 +39,6 @@ $('#remove').on('click', function () {
     })
     tablaDatos = table.bootstrapTable('getData');
     document.getElementById("valorTabla").value = JSON.stringify(tablaDatos);
-    i = i - 1
 })
 
 $('#table').on('editable-save.bs.table', function(e, field, row, oldValue, $el){

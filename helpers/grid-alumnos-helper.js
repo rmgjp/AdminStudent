@@ -7,13 +7,8 @@ $(function cargarDatos(){
     lista = JSON.parse(lista);
 
     if(lista){
-        console.log("Lista encontrada.")
-        var rows= [];
-        for(let dato = 0; dato < lista.length; dato++){
-            rows.push(lista[dato]);
-        }
-        table.bootstrapTable('load', rows);
-        i = lista.length;
+        console.log("Lista encontrada.");
+        table.bootstrapTable('load', lista);
         tablaDatos = table.bootstrapTable('getData');
         document.getElementById("valorTabla").value = JSON.stringify(tablaDatos);
     }
@@ -29,23 +24,20 @@ $('#add').on('click', function () {
     tablaDatos = table.bootstrapTable('getData');
     if(document.getElementById("ClaveBox").value && document.getElementById('NombreBox').value){
         let existente = false;
-        for(dato in tablaDatos){
+        for(let dato in tablaDatos){
             if(tablaDatos[dato].clave === document.getElementById("ClaveBox").value.toUpperCase() ||
                 tablaDatos[dato].nombre === document.getElementById("NombreBox").value.toUpperCase()){
                 existente = true;
             }
         }
         if(!existente){
-            table.bootstrapTable('insertRow',{
-                index: i,
-                row:{
+            table.bootstrapTable('append',{
                     clave:  document.getElementById("ClaveBox").value.toUpperCase(),
                     nombre: document.getElementById('NombreBox').value.toUpperCase(),
-                }
+
             });
             tablaDatos = table.bootstrapTable('getData');
             document.getElementById("valorTabla").value = JSON.stringify(tablaDatos);
-            i = i + 1;
         }
         document.getElementById("ClaveBox").value = "";
         document.getElementById("NombreBox").value = "";
@@ -62,5 +54,4 @@ $('#remove').on('click', function () {
     })
     tablaDatos = table.bootstrapTable('getData');
     document.getElementById("valorTabla").value = JSON.stringify(tablaDatos);
-    i = i - 1;
 })
