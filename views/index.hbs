@@ -9,13 +9,26 @@
     {{#each grupos}}
         <div class="card " style="height:28rem; width: 18rem; margin-right: 5px; margin-bottom: 5px">
             {{#iflogico dataValues.estado '!=' "2"}}
-                <div class="card-header d-flex flex-row-reverse">
-                    <a class="bi bi-trash-fill " align="right" data-toggle="modal"
-                       data-target="#eliminarGrupo{{dataValues.id}}"
-                       title="Mover grupo a la papelera de reciclaje."></a>
-                    <a class="bi bi-pencil-square " align="right" data-toggle="modal"
-                       data-target="#editarGrupo{{dataValues.id}}" title="Editar los atributos del grupo."></a>
+                <div class="card-header d-flex">
+                    <div class="mr-auto">
+                        {{#iflogico dataValues.estado '==' "0"}}
+                            <div><i class="bi bi-clipboard-check" title="Estado: Completado"></i></div>
+                        {{/iflogico}}
+                        {{#iflogico dataValues.estado '==' "1"}}
+                            <div><i class="bi bi-clipboard-data" title="Estado: Activo"></i> </div>
+                        {{/iflogico}}
+                    </div>
+                    <div class="ml-auto">
+                        <a class="bi bi-trash-fill " align="right" data-toggle="modal"
+                           data-target="#eliminarGrupo{{dataValues.id}}"
+                           title="Mover grupo a la papelera de reciclaje."></a>
+                        <a class="bi bi-pencil-square " align="right" data-toggle="modal"
+                           data-target="#editarGrupo{{dataValues.id}}" title="Editar los atributos del grupo."></a>
+                    </div>
+
+
                 </div>
+
             {{/iflogico}}
 
             <img src="/img/{{dataValues.img}}.jpeg" class="card-img-top">
