@@ -60,7 +60,10 @@ const renderSelectedTeams = async (req, res) => {
         include: [{
             model: Models.alumnoequipo,
             where: {idequipo: req.params.idequipo}
-        }]
+        }],
+        order:[
+            ['nombre', 'ASC']
+        ]
     })
     console.log({alumnos});
     const equipos = await Models.equipo.findAll({where: {idgrupo: req.params.idgrupo}});

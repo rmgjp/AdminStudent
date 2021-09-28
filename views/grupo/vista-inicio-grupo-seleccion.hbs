@@ -97,8 +97,8 @@
             <div class="row-cols-1  m-2 p-2">
                 <p>Primera Oportunidad</p>
             </div>
-            <div class="row d-flex m-2 p-2">
-                <div class="col-4 col-md-5 col-xl-3 col-sm-4 col-lg-3 graph-container">
+            <div class="row m-2 p-2">
+                <div class="col-4 col-md-5 col-xl-3 col-sm-4 col-lg-3" style="width: 100%; height: 385px;">
                         <div class="caption text-center">Indice de Reprobación</div>
                         <input type="hidden" id="indiceReprobacionData" value="{{dataReprobacion}}">
                         <div id="indiceReprobacion" style="width: 100%; height: 250px;">
@@ -110,18 +110,17 @@
                             {{#if title}}Temas no aprobados{{else}}Actividades no aprobadas{{/if}}: {{actReprobadas}}
                         </p>
                 </div>
-                <div class="col col-md col-xl col-sm col-lg graph-container">
+                <div class="col col-md col-xl col-sm col-lg" style="width: 90%; height: auto;">
                     <div class="caption text-center">Rendimiento en {{#if title}}Temas{{else}}actividades{{/if}}</div>
                     <input type="hidden" id="actividadesReprobacionData" value="{{dataReprobacionAct}}">
-                    <div id="actividadesAprobacion" style="width: 90%; height: 250px;"></div>
-
+                    <div id="actividadesAprobacion" style="font-size: 0.9rem; width: 90%; height: 250px; margin-bottom: 10px"></div>
                 </div>
             </div>
             <div class="row-cols-1 m-2 p-2">
                 <p>Segunda Oportunidad</p>
             </div>
-            <div class="row d-flex m-2 p-2">
-                <div class="col-4 col-md-5 col-xl-3 col-sm-4 col-lg-3 graph-container">
+            <div class="row m-2 p-2">
+                <div class="col-4 col-md-5 col-xl-3 col-sm-4 col-lg-3" style="width: 100%; height: 385px;">
                     <div class="caption text-center">Indice de Reprobación</div>
                     <input type="hidden" id="indiceReprobacionDataS2" value="{{dataReprobacionS2}}">
                     <div id="indiceReprobacionS2" style="width: 100%; height: 250px;">
@@ -133,11 +132,10 @@
                         {{#if title}}Temas no aprobados{{else}}Actividades no aprobadas{{/if}}: {{actReprobadasS2}}
                     </p>
                 </div>
-                <div class="col col-md col-xl col-sm col-lg graph-container">
+                <div class="col col-md col-xl col-sm col-lg" style="width: 100%; height: 250px;">
                     <div class="caption text-center">Rendimiento en {{#if title}}Temas{{else}}actividades{{/if}}</div>
                     <input type="hidden" id="actividadesReprobacionDataS2" value="{{dataReprobacionActS2}}">
-                    <div id="actividadesAprobacionS2" style="width: 90%; height: 250px;"></div>
-
+                    <div id="actividadesAprobacionS2" style="font-size: 0.9rem; width: 90%; height: 250px;"></div>
                 </div>
             </div>
             <script type="text/javascript">
