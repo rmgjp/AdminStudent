@@ -1,0 +1,15 @@
+IMPORTANTE
+
+Para el funcionamiento del programa se instalaran los siguientes programas de terceros:
+
+MariaDB:
+Es un sistema de gestión de bases de datos derivado de MySQL con licencia GPL.
+
+NodeJS:
+Es un entorno en tiempo de ejecución multiplataforma, de código abierto, para la capa del servidor basado en el lenguaje de programación JavaScript, asíncrono, con E/S de datos en una arquitectura orientada a eventos y basado en el motor V8 de Google.
+
+De igual forma, al instalar y utilizar el programa usted acepta los terminos y condiciones de uso de estos programas y APIs utilizadas para el desarrollo de este software.
+
+Cualquier duda o aclaración favor de mandar un correo electrónico a:
+Vera Salazar Violeta Saraí - lis17110640@irapuato.tecnm.mx
+Munguía Garrido Rodrigo - lis17110457@irapuato.tecnm.mx
