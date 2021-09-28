@@ -189,6 +189,8 @@ const disassociateFromGroup = async (req, res) => {
     //Eliminación de la asociación
     await alumnogrupo.destroy();
 
+
+
 }
 
 const callDisassociateFromGroup = async (req, res) =>{
@@ -221,11 +223,11 @@ const getAllStudents = async (req, res) => {
             model : Models.alumnogrupo,
             where:{
                 idgrupo: req.params.idgrupo
-            }
-        }]
-    })
-    alumnos.sort(function (a, b) {
-        return a.dataValues.nombre.localeCompare(b.dataValues.nombre);
+            },
+        }],
+        order:[
+            ['nombre', 'ASC']
+        ]
     });
     return alumnos;
 }
