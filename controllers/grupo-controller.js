@@ -58,11 +58,25 @@ const deleteGroup = async (req, res) => {
     let temas = await Models.tema.findAll({
         where: {idgrupo: req.params.idgrupo}
     });
+    let equipos = await Models.equipo.findAll({
+        where: {
+            idgrupo: req.params.idgrupo
+        }
+    })
     for (let tema in temas) {
         //Busqueda de las actividades que corresponden a ese tema/unidad.
         let actividades = await Models.tarea.findAll({
             where: {idtema: temas[tema].id}
         });
+
+        let equipotema = await Models.equipotema.findAll({
+            where: {idtema: temas[tema].id}
+        })
+
+        for(let puntero in equipotema){
+            await equipotema[puntero].destroy();
+        }
+
         for (let actividad in actividades) {
             //Busqueda de calificaciones correspondientes a esas actividades
             let calificaciones = await Models.calificacion.findAll({
@@ -83,6 +97,10 @@ const deleteGroup = async (req, res) => {
     //Eliminamos los alumnos del grupo mediante la relacion alumnogrupo
     for (let alumno in alumnos) {
         await alumnos[alumno].destroy();
+    }
+    //Eliminamos los equipos del grupo
+    for(let equipo in equipos){
+        await equipos[equipo].destroy();
     }
     await grupo.destroy();
     req.flash('info_msg', 'El grupo se ha eliminado permanentemente.')
