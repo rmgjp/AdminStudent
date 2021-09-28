@@ -143,14 +143,45 @@ const addToGroup = async (idgrupo, alumnos) => {
 }
 //Desasociar alumno del grupo y borrar calificaciones correspondientes
 const disassociateFromGroup = async (req, res) => {
-    //Buscar las calificaciones relacionadas al alumno
-    let calificaciones = await Models.calificacion.findAll({
-        where: {idalumno: req.params.idalumno}
+    //Busqueda de las actividades
+    let actividades = await Models.tarea.findAll({
+        include:[{
+            model: Models.tema,
+            where: {
+                idgrupo: req.params.idgrupo
+            }
+        }]
     })
-    //Eliminar calificaciones
-    for (let calificacion in calificaciones) {
-        await calificaciones[calificacion].destroy();
+
+    for(let actividad in actividades){
+        //Busqueda de las calificaciones por actividad
+        let calificacion = await Models.calificacion.findOne({
+            where: {
+                idalumno: req.params.idalumno,
+                idtarea: actividades[actividad].dataValues.id
+            }
+        })
+        //Eliminar calificaciones
+        await calificacion.destroy();
     }
+
+    let alumnoequipo = await Models.alumnoequipo.findAll({
+        where: {
+            idalumno: req.params.idalumno
+        },
+        include: [{
+            model: Models.equipo,
+            where: {
+                idgrupo: req.params.idgrupo
+            }
+        }]
+    });
+
+    for(let alumno in alumnoequipo){
+        await alumnoequipo[alumno].destroy();
+    }
+
+
     //Busqueda de la asociación de alumno con grupo por medio de la tabla alumnogrupo
     let alumnogrupo = await Models.alumnogrupo.findOne({
         where: {idalumno: req.params.idalumno}
