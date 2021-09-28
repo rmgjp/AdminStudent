@@ -39,9 +39,9 @@
             </div>
             <div class="col">
                 <label for="estado" class="form-label">Estado</label>
-                <select class="form-select custom-select" id="estado" name="estado" value="{{grupo.dataValues.estado}}" required>
-                    <option value=0>Inactivo</option>
-                    <option value=1>Activo</option>
+                <select class="form-select custom-select" id="estado" name="estado" required>
+                    <option value=1 {{#iflogico grupo.dataValues.estado '==' "1"}}selected{{/iflogico}}>Activo</option>
+                    <option value=0 {{#iflogico grupo.dataValues.estado '==' "0"}}selected{{/iflogico}}>Completado</option>
                 </select>
             </div>
             <div class="col">
