@@ -101,26 +101,34 @@ const saveTopicByGrid = async (req, res) => {
 
 const deleteTopic = async (req, res) => {
     //Busqueda de las actividades que corresponden a ese tema/unidad.
-    var actividades = await Models.tarea.findAll({
+    let actividades = await Models.tarea.findAll({
         where: {idtema: req.params.idtema}
     });
+    let equipos = await Models.equipotema.findAll({
+        where:{
+            idtema: req.params.idtema
+        }
+    })
+    for(let equipo in equipos){
+        await equipos[equipo].destroy();
+    }
     //Busqueda y eliminacion de las calificaciones relacionadas con las actividades.
-    for (var actividad in actividades) {
+    for (let actividad in actividades) {
         //Busqueda de las calificaciones
-        var calificaciones = await Models.calificacion.findAll({
+        let calificaciones = await Models.calificacion.findAll({
             where: {
                 idtarea: parseInt(actividades[actividad].id)
             }
         });
         //Eliminacion de las calificaciones
-        for (var calificacion in calificaciones) {
+        for (let calificacion in calificaciones) {
             await calificaciones[calificacion].destroy();
         }
         //Eliminación de la actividad apuntada por el for
         await actividades[actividad].destroy();
     }
     //busqueda y eliminacion del tema
-    var tema = await Models.tema.findOne({
+    let tema = await Models.tema.findOne({
         where: {id: req.params.idtema}
     });
     //Eliminacion del tema
