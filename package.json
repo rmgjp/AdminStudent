@@ -1,6 +1,6 @@
 {
   "name": "adminstudent",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "main": "main.js",
   "scripts": {
     "exec": "electron .",
@@ -50,6 +50,7 @@
     "win": {
       "target": "NSIS"
     },
+    "asar": false,
     "nsis": {
       "oneClick": true,
       "allowElevation": true,
@@ -59,6 +60,7 @@
       "include": "build/installer.nsh",
       "license": "build/license.txt"
     },
-    "extraFiles": ["build/mariadb.msi"]
+    "extraFiles": ["build"]
+
   }
 }
