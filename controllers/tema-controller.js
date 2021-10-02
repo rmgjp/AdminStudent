@@ -53,7 +53,6 @@ const saveTopicsAndActivities = async (req, res) => {
         res.render('tema/tema-nuevo', {errors ,idgrupo} );
     } else {
         //guardamos los valores recuperados
-
         await Models.tema.create({
             idgrupo: idgrupo,
             nombre: req.body.nombre,

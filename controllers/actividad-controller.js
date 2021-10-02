@@ -71,19 +71,39 @@ const saveFromGrid = async (req, res, idtema) => {
 const editActivity = async (req, res) => {
     //Se extraen los datos desde la vista
     let {nombre, descripcion, valor, tipoBox} = req.body;
+    //Se busca la actividad seleccionada a editar
     const idtarea = req.params.idactividad;
     const idgrupo = req.params.idgrupo;
     const idtema = req.params.idtema;
-    //Se busca la actividad seleccionada a editar
+
+    let sumatoria = valor;
     let actividad = await Models.tarea.findOne({where: {id: idtarea}});
-    //Se actualizan los valores
-    await actividad.update({
-        nombre: nombre,
-        descripcion: descripcion,
-        valor: parseInt(valor),
-        tipo: tipoBox
+
+
+
+    let actividades = await Models.tarea.findAll({
+        where:{
+            idtema: idtema,
+            id: {[Op.not]: actividad.dataValues.id}
+        }
     });
-    req.flash('success_msg', 'La actividad se editó correctamente.')
+    actividades.forEach(valor => {
+        sumatoria += valor.dataValues.valor;
+    })
+    if(sumatoria <= 100){
+        //Se actualizan los valores
+        await actividad.update({
+            nombre: nombre,
+            descripcion: descripcion,
+            valor: parseInt(valor),
+            tipo: tipoBox
+        });
+        req.flash('success_msg', 'La actividad se editó correctamente.')
+    }
+    else{
+        req.flash('error_msg', "El nuevo valor ingresado de la actividad genera que la sumatoria total sea mayor a 100.")
+    }
+
     res.redirect('/grupo/actividades/' + idgrupo + '/' + idtema + '/' + idtarea);
 };
 //Eliminar la actividad seleccionada
