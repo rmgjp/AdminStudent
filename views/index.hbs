@@ -264,6 +264,26 @@
                                 </div>
                             </div>
 
+                            <h5>Extras</h5>
+                            <div class="input-group" name="extra1" value="{{config.califi}}">
+                                <div class="row m-1">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" value=0 id="extraval1"
+                                               name="extra1" {{#iflogico config.extra1 "===" "0"}} checked {{/iflogico}}>
+                                        <label class="form-check-label" for="extraval1">No agrupar y promediar actividades que pertenezcan
+                                            a la misma categoría.</label>
+                                    </div>
+                                </div>
+                                <div class="row m-1">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" value=1 id="extraval22"
+                                               name="extra1" {{#iflogico config.extra1 '===' "1"}} checked {{/iflogico}}>
+                                        <label class="form-check-label" for="extraval22">Agrupar y promediar actividades que pertenezcan
+                                            a la misma categoría.</label>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                     <div class="modal-footer">
