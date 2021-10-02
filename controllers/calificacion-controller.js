@@ -8,9 +8,54 @@ const {calcCalifStudentTopic} = require("./alumno-controller");
 /**
  * Visualizacion de la vista de calificaciones*/
 
+const categorias = ['Investigación', 'Presentación', 'Proyecto',
+    'Reporte / Práctica', 'Resumen', 'Mapa Conceptual', 'Cuadro Sinoptico', 'Mapa Mental', 'Ejercicios', 'Examen', 'Otros']
+
 const calcCalif = async (req, res) => {
     //Busqueda de las actividades por grupo
-    const actividades = await Models.tarea.findAll({where: {idtema: req.params.idtema}})
+
+    //recorrer las categorias (for)
+    //consulta de todas las actividades de la [categoria]
+    //guardarmos en un sub arreglo
+    //fin
+    let actividades;
+    let indices = [];
+
+    if (configuracion.extra1 === "1") {
+        actividades = [];
+        for (let categoria in categorias) {
+            //
+            let indiceTemp = actividades.length;
+            const actividadesArray = await Models.tarea.findAll({
+                where: {
+                    idtema: req.params.idtema,
+                    tipo: categorias[categoria]
+                }
+            });
+            if (actividadesArray.length >= 2) {
+                actividadesArray.forEach((value) => {
+                    actividades.push(value);
+                })
+                const dataValues = {dataValues: {id: 'n', 'nombre': `Promedio ${categorias[categoria]}`}}
+                actividades.push(dataValues);
+                indices.push({i: indiceTemp, f: (indiceTemp + actividadesArray.length)-1});
+                //1 investigación
+                //5 practicas       //
+                //1 examen
+                //3 presentaciones
+            } else if (actividadesArray.length === 1) {
+                actividades.push(actividadesArray[0])
+            }
+        }
+    } else {
+        actividades = await Models.tarea.findAll({
+            where: {
+                idtema:
+                req.params.idtema
+            }
+        })
+    }
+
 
     const alumnos = await alumnoController.getAllStudents(req, res);
 
@@ -21,7 +66,7 @@ const calcCalif = async (req, res) => {
         let acumulador = 0;
         let calcCalificacion;
         let valorCalificacion;
-
+        let indiceIndicador = 0;
         //ciclo para recuperar las calificaciones relacionadas a cada alumno del grupo
         for (let actividad in actividades) {
             if (actividades[actividad].dataValues.id !== 'n') {
@@ -69,6 +114,18 @@ const calcCalif = async (req, res) => {
                     }
                     calificaciones.push(valorCalificacion);
                 }
+            }
+            else{
+                let indicesArray = indices[indiceIndicador];
+
+                let acumuladorPromedio = 0;
+                for(let i = indicesArray.i; i <= indicesArray.f; i++){
+                    acumuladorPromedio += calificaciones[i];
+                }
+                let divisor = (indicesArray.f - indicesArray.i) + 1;
+                acumuladorPromedio = acumuladorPromedio / divisor
+                calificaciones.push(Math.round(acumuladorPromedio));
+                indiceIndicador++;
             }
         }
         if (acumulador !== "NA") {
@@ -129,7 +186,33 @@ const viewCalf = async (req, res) => {
     } else {
         const tema = await Models.tema.findOne({where: {id: req.params.idtema}});
         //Busqueda de las actividades por grupo
-        const actividades = await Models.tarea.findAll({where: {idtema: req.params.idtema}})
+        if (configuracion.extra1 === "1") {
+            actividades = [];
+            for (let categoria in categorias) {
+                const actividadesArray = await Models.tarea.findAll({
+                    where: {
+                        idtema: req.params.idtema,
+                        tipo: categorias[categoria]
+                    }
+                });
+                if (actividadesArray.length >= 2) {
+                    actividadesArray.forEach((value) => {
+                        actividades.push(value);
+                    })
+                    const dataValues = {dataValues: {id: 'n', 'nombre': `Promedio ${categorias[categoria]}`}}
+                    actividades.push(dataValues);
+                } else if (actividadesArray.length === 1) {
+                    actividades.push(actividadesArray[0]);
+                }
+            }
+        } else {
+            actividades = await Models.tarea.findAll({
+                where: {
+                    idtema:
+                    req.params.idtema
+                }
+            })
+        }
 
         listaFormateada = await calcCalif(req, res);
 
@@ -163,7 +246,7 @@ const renderViewCalif = async (req, res) => {
             listaFormateada.push({
                 clave: alumnos[alumno].dataValues.clave,
                 nombre: alumnos[alumno].dataValues.nombre,
-                calificacion: (!valor)? 0 : valor.dataValues.valor
+                calificacion: (!valor) ? 0 : valor.dataValues.valor
             })
         }
 
@@ -188,20 +271,19 @@ const renderViewCalif = async (req, res) => {
                 }
             });
 
-            if(configuracion.califi === "1"){
-                if(await calcCalifStudentTopic(req.params.idtema, alumnos[alumno]) === "NA") {
+            if (configuracion.califi === "1") {
+                if (await calcCalifStudentTopic(req.params.idtema, alumnos[alumno]) === "NA") {
                     listaFormateada.push({
                         clave: alumnos[alumno].dataValues.clave,
                         nombre: alumnos[alumno].dataValues.nombre,
                         calificacion: (!valor.dataValues.valor_s2) ? valor.dataValues.valor : valor.dataValues.valor_s2,
                     })
                 }
-            }
-            else{
+            } else {
                 listaFormateada.push({
                     clave: alumnos[alumno].dataValues.clave,
                     nombre: alumnos[alumno].dataValues.nombre,
-                    calificacion: (!valor.dataValues.valor_s2) ? valor.dataValues.valor: valor.dataValues.valor_s2,
+                    calificacion: (!valor.dataValues.valor_s2) ? valor.dataValues.valor : valor.dataValues.valor_s2,
                 })
             }
         }
@@ -267,7 +349,7 @@ const scoreSingle = async (req, res) => {
 /*Opción 1: hace referencia al caso en el que todos los integrantes obtendrán la misma calificación*/
 const renderScoreTeam = async (req, res) => {
     let alumnos;
-    let second = (req.params.second)? 1:0;
+    let second = (req.params.second) ? 1 : 0;
     let calificacion = [];
     let valorTablaEquipo = [];
     let valorTablaAlumnos = [];
@@ -340,7 +422,7 @@ const renderScoreTeam = async (req, res) => {
         } else {
             //configuracion modo
 
-            if(configuracion.califi === '1'){
+            if (configuracion.califi === '1') {
                 if (calificacion[alumno] < 70 && await calcCalifStudentTopic(req.params.idtema, alumnos[alumno])) {
                     valorTablaAlumnos.push({
                         id: alumnos[alumno].dataValues.id,
@@ -349,8 +431,7 @@ const renderScoreTeam = async (req, res) => {
                         calificacion: calificacion[alumno]
                     })
                 }
-            }
-            else{
+            } else {
                 if (calificacion[alumno] < 70) {
                     valorTablaAlumnos.push({
                         id: alumnos[alumno].dataValues.id,
@@ -379,7 +460,7 @@ const scoreTeam = async (req, res) => {
     const datosEquipo = JSON.parse(req.body.valorTablaEquipo);
     const datosAlumnos = JSON.parse(req.body.valorTablaAlumnos);
     const valorSwitch = (req.body.estado === 'true');
-    const second = (req.params.second)? true:false;
+    const second = (req.params.second) ? true : false;
     if (valorSwitch) {
         for (let alumno in datosAlumnos) {
 
@@ -396,12 +477,11 @@ const scoreTeam = async (req, res) => {
                     valor: datosEquipo[0].calificacion
                 });
             } else {
-                if(second){
+                if (second) {
                     await calificacion.update({
                         valor_s2: datosEquipo[0].calificacion
                     });
-                }
-                else{
+                } else {
                     await calificacion.update({
                         valor: datosEquipo[0].calificacion
                     });
@@ -423,12 +503,11 @@ const scoreTeam = async (req, res) => {
                     valor: datosAlumnos[alumno].calificacion
                 });
             } else {
-                if(second){
+                if (second) {
                     await calificacion.update({
                         valor_s2: datosAlumnos[alumno].calificacion
                     });
-                }
-                else{
+                } else {
                     await calificacion.update({
                         valor: datosAlumnos[alumno].calificacion
                     });
@@ -437,10 +516,9 @@ const scoreTeam = async (req, res) => {
         }
     }
     req.flash('success_msg', 'La actividad se calificó correctamente.');
-    if(second){
+    if (second) {
         res.redirect(`/equipo/seleccion/${req.params.idgrupo}/${req.params.idtema}/${req.params.idactividad}/1`);
-    }
-    else{
+    } else {
         res.redirect(`/equipo/seleccion/${req.params.idgrupo}/${req.params.idtema}/${req.params.idactividad}`);
     }
     //res.redirect(`/grupo/actividades/${req.params.idgrupo}/${req.params.idtema}/${req.params.idactividad}`);
