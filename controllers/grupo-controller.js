@@ -543,10 +543,20 @@ const abortGroup = async (req, res) => {
 //Crear un grupo mediante el ingreso manual de los datos.
 const createGroup = async (req, res) => {
     const file = req.params.archivo;
-    const {clave, asignatura, estado, imagen} = req.body;
+    const {clave, asignatura, estado, imagen, periodo} = req.body;
     const errors = [];
+
+    const resultadoGrupo = await Models.grupo.findOne({
+        where:{
+            asignatura: asignatura,
+            clave: clave,
+            periodo: periodo,
+            estado: {[Op.in]:[0,1]}
+        }
+    })
+
     //Validación de datos de la vista
-    if (!clave || !asignatura) {
+    if (!clave || !asignatura || !periodo) {
         errors.push({text: 'Uno o más campos están vacíos.'});
         res.render('grupo/datosgrupo', {errors});
     }
