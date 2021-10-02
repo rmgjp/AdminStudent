@@ -23,9 +23,7 @@ router.post('/actividad/nueva-actividad/:idgrupo/:idtema', async(req,res)=>{
         res.redirect('/grupo/actividades/'+req.params.idgrupo);
     }
     else{
-        let errors = []
-        errors.push({text: 'No ha registrado ninguna actividad, registre al menos una'})
-        res.render('actividad/actividad-nuevo', {idtema:req.params.idtema, idgrupo:req.params.idgrupo, errors})
+        res.redirect(`/actividad/nueva-actividad/${req.params.idgrupo}/${req.params.idtema}`);
     }
 });
 

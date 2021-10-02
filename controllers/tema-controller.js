@@ -62,10 +62,17 @@ const saveTopicsAndActivities = async (req, res) => {
         if (tryParseJSON(req.body.valorTabla) != false) {
             let tema = await getTopicData(req.params.idgrupo, req.body.nombre);
             const {id} = tema;
-            await actividadControler.saveFromGrid(req, res, id);
+            const resActividades = await actividadControler.saveFromGrid(req, res, id);
+            if(resActividades){
+                req.flash('success_msg', 'El tema se ha creado correctamente.');
+                res.redirect('/grupo/temas/' + req.params.idgrupo);
+            }
+            else {
+                await tema.destroy();
+                res.render('tema/tema-nuevo', {errors ,idgrupo, numerotema, nombre} );
+            }
         }
-        req.flash('success_msg', 'El tema se ha creado correctamente.');
-        res.redirect('/grupo/temas/' + req.params.idgrupo);
+
     }
 }
 //Actualizar tema

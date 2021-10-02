@@ -1,4 +1,5 @@
 const Models = require('../models');
+const {Op} = require('sequelize');
 //Este controlador contiene unicamente métodos para realizar las busquedas y consultas de actividades
 /*
  * retornar la actividad encontrada dado un ID*/
@@ -16,25 +17,53 @@ const saveFromGrid = async (req, res, idtema) => {
 
     //Ciclo para iterar entre los datos del arreglo Tabla
     if(tryParseJSON(req.body.valorTabla)===false){
+        req.flash('error_msg','No ha registrado ninguna actividad, registre al menos una');
         return false;
     }
     else{
-        tareas = JSON.parse(req.body.valorTabla);
-        for (let tarea in tareas) {
-            //Llamado del modelo para buscar el registro
-            //si existe el registro no se guarda
-            //si no existe el registro se guarda
-            //evita duplicados.
-            await Models.tarea.create(
-                {
-                    idtema: idtema,
-                    nombre: tareas[tarea].nombreCol,
-                    valor: tareas[tarea].valorCol,
-                    tipo: tareas[tarea].tipoCol,
-                    descripcion: tareas[tarea].descripcionCol,
-                });
+        //
+        let sumatoriaActividadesEx = 0;
+
+        const actividades = await Models.tarea.findAll({
+            where:{
+                idtema: idtema
+            }
+        })
+
+        let tareas = JSON.parse(req.body.valorTabla);
+        let sumatoria = 0;
+        for(let tarea in tareas){
+            sumatoria += parseInt(tareas[tarea].valorCol);
         }
-        return true;
+
+        if(actividades.length > 0){
+            for(let actividad in actividades){
+                sumatoriaActividadesEx += actividades[actividad].dataValues.valor;
+            }
+            sumatoria += sumatoriaActividadesEx;
+        }
+
+        if(sumatoria <= 100){
+            for (let tarea in tareas) {
+                //Llamado del modelo para buscar el registro
+                //si existe el registro no se guarda
+                //si no existe el registro se guarda
+                //evita duplicados.
+                await Models.tarea.create(
+                    {
+                        idtema: idtema,
+                        nombre: tareas[tarea].nombreCol,
+                        valor: tareas[tarea].valorCol,
+                        tipo: tareas[tarea].tipoCol,
+                        descripcion: tareas[tarea].descripcionCol,
+                    });
+            }
+            return true;
+        }
+        else{
+            req.flash('error_msg', "La suma del valor de las actividades sobrepasa la cantidad de 100.")
+            return  false;
+        }
     }
 };
 /*
