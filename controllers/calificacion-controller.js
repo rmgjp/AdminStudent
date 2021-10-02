@@ -24,53 +24,51 @@ const calcCalif = async (req, res) => {
 
         //ciclo para recuperar las calificaciones relacionadas a cada alumno del grupo
         for (let actividad in actividades) {
-            let calificacion = await Models.calificacion.findOne({
-                where: {
-                    idalumno: alumnos[alumno].dataValues.id,
-                    idtarea: actividades[actividad].dataValues.id,
-                }
-            });
-            //Si no hay calificacion se asigna como no asignado
-            if (!calificacion) {
-                calificaciones.push("No capturado.");
-            } else {
-                //Si hay calificacion se calcula el valor correspondiente con relación al valor de la actividad
-                if(!req.params.modo){
-                    valorCalificacion = calificacion.dataValues.valor;
-                    calificacionesSegundaOp.push(calificacion.dataValues.valor_s2);
-                }
-                else{
-                    //Segunda oportunidad
-                    if(calificacion.dataValues.valor_s2 !== null){
-                        valorCalificacion = calificacion.dataValues.valor_s2;
-
+            if (actividades[actividad].dataValues.id !== 'n') {
+                let calificacion = await Models.calificacion.findOne({
+                    where: {
+                        idalumno: alumnos[alumno].dataValues.id,
+                        idtarea: actividades[actividad].dataValues.id,
                     }
-                    else {
+                });
+                //Si no hay calificacion se asigna como no asignado
+                if (!calificacion) {
+                    calificaciones.push("No capturado.");
+                } else {
+                    //Si hay calificacion se calcula el valor correspondiente con relación al valor de la actividad
+                    if (!req.params.modo) {
                         valorCalificacion = calificacion.dataValues.valor;
-
-                    }
-                }
-                calcCalificacion = (valorCalificacion * actividades[actividad].valor) / 100;
-
-                //Se asigna la calificacion dependiendo de los parametros de configuracion establecidos por el usuario
-                switch (parseInt(configuracion.califi)) {
-                    case 0:
-                        //Si es 0 se promedia unicamente si todas las actividades estan aprovadas
-                        if (valorCalificacion < 70) {
-                            acumulador = "NA"
-                        } else if (valorCalificacion >= 70) {
-                            if (acumulador !== "NA") {
-                                //Calculo de las calificaciones cuando se promedia.
-                                acumulador += calcCalificacion;
-                            }
+                        calificacionesSegundaOp.push(calificacion.dataValues.valor_s2);
+                    } else {
+                        //Segunda oportunidad
+                        if (calificacion.dataValues.valor_s2 !== null) {
+                            valorCalificacion = calificacion.dataValues.valor_s2;
+                        } else {
+                            valorCalificacion = calificacion.dataValues.valor;
                         }
-                        break;
-                    case 1:
-                        //Si es 1, se promedia independientemente de si están todas las actividades aprobado o no
-                        acumulador += calcCalificacion;
-                        break;
+                    }
+                    calcCalificacion = (valorCalificacion * actividades[actividad].valor) / 100;
+
+                    //Se asigna la calificacion dependiendo de los parametros de configuracion establecidos por el usuario
+                    switch (parseInt(configuracion.califi)) {
+                        case 0:
+                            //Si es 0 se promedia unicamente si todas las actividades estan aprovadas
+                            if (valorCalificacion < 70) {
+                                acumulador = "NA"
+                            } else if (valorCalificacion >= 70) {
+                                if (acumulador !== "NA") {
+                                    //Calculo de las calificaciones cuando se promedia.
+                                    acumulador += calcCalificacion;
+                                }
+                            }
+                            break;
+                        case 1:
+                            //Si es 1, se promedia independientemente de si están todas las actividades aprobado o no
+                            acumulador += calcCalificacion;
+                            break;
+                    }
+                    calificaciones.push(valorCalificacion);
                 }
-                calificaciones.push(valorCalificacion);
             }
         }
         if (acumulador !== "NA") {
