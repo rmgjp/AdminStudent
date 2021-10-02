@@ -189,7 +189,7 @@ const getTopicsByFile = async (req, res) => {
                     }
                 });
                 const menu = 1;
-                res.render('tema/vista-grupo-temas', {tema,menu , idgrupo, asignatura, clave, error});
+                res.render('tema/vista-grupo-temas', {tema, menu , idgrupo, asignatura, clave, error});
 
             }
         }
