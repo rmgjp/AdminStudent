@@ -6,6 +6,7 @@ const calificacionController = require('./calificacion-controller');
 const configuracion = require("../config/userconfig.json");
 const alumnoController = require("./alumno-controller");
 //const {JSON} = require("sequelize");
+const {Op} = require('sequelize');
 let menu;
 const visualizacion = 0;
 
@@ -559,6 +560,11 @@ const createGroup = async (req, res) => {
     if (!clave || !asignatura || !periodo) {
         errors.push({text: 'Uno o más campos están vacíos.'});
         res.render('grupo/datosgrupo', {errors});
+    }
+    else if(resultadoGrupo){
+        const datos = {materia: asignatura, grupo: clave, periodo: periodo}
+        errors.push({text: 'Grupo ya existente.'});
+        res.render('grupo/datosgrupo', {errors, datos});
     }
     //Si los datos son valido
     else {
