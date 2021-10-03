@@ -6,7 +6,7 @@
  */
 const config = require('../config/config.json');
 const mariadb = require('mariadb/promise');
-const { Sequelize } = require('sequelize');
+const {Sequelize} = require('sequelize');
 
 module.exports = db = {};
 
@@ -40,7 +40,9 @@ module.exports = {
         db.asistencia = require('../models/asistencia')(sequelize, Sequelize);
 
         //Creación de las tablas basado en los modelos anteriores.
-        await sequelize.sync();
+        await sequelize.sync({alter:true}).catch(reason => {
+            console.log(reason)
+        }).then(() => console.log('Sync complete'))
 
     }
 }
