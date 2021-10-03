@@ -33,7 +33,7 @@ const saveFromGrid = async (req, res, idtema) => {
         let tareas = JSON.parse(req.body.valorTabla);
         let sumatoria = 0;
         for(let tarea in tareas){
-            sumatoria += parseInt(tareas[tarea].valorCol);
+            sumatoria += parseFloat(tareas[tarea].valorCol);
         }
 
         if(actividades.length > 0){
