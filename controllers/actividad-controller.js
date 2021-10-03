@@ -76,7 +76,7 @@ const editActivity = async (req, res) => {
     const idgrupo = req.params.idgrupo;
     const idtema = req.params.idtema;
 
-    let sumatoria = valor;
+    let sumatoria = parseFloat(valor);
     let actividad = await Models.tarea.findOne({where: {id: idtarea}});
 
 
@@ -88,14 +88,14 @@ const editActivity = async (req, res) => {
         }
     });
     actividades.forEach(valor => {
-        sumatoria += valor.dataValues.valor;
+        sumatoria = sumatoria + parseFloat(valor.dataValues.valor);
     })
     if(sumatoria <= 100){
         //Se actualizan los valores
         await actividad.update({
             nombre: nombre,
             descripcion: descripcion,
-            valor: parseInt(valor),
+            valor: valor,
             tipo: tipoBox
         });
         req.flash('success_msg', 'La actividad se editó correctamente.')
