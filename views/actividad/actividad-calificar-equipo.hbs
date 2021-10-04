@@ -6,7 +6,7 @@
     <form {{#iflogico second '===' 0}}action="/actividad/calificar-equipo/{{idgrupo}}/{{idtema}}/{{actividad.dataValues.id}}/{{idequipo}}?_method=PUT"{{else}}
           action="/actividad/calificar-equipo/{{idgrupo}}/{{idtema}}/{{actividad.dataValues.id}}/{{idequipo}}/1?_method=PUT"{{/iflogico}} method="POST">
         <input type="hidden" name="_method" value="PUT">
-        <input type="hidden" name="estado" id='estado' value="false">
+        <input type="hidden" name="estado" id='estado' value="true">
         <div class="row-cols-1  d-flex flex-row-reverse">
 
             <div class="col-auto d-flex flex-row-reverse p-3">
