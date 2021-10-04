@@ -45,7 +45,7 @@ const saveFromGrid = async (req, res) => {
         switch (parseInt(add)) {
             case 0:
                 req.flash('success_msg', 'El grupo se creó correctamente.')
-                res.redirect('/');
+                res.redirect('/filtro/1');
                 break;
             case 1:
                 req.flash('success_msg', 'El/los alumnos se agregaron al grupo correctamente.')
@@ -323,7 +323,7 @@ const calcCalifStudentTopic = async (idtema, alumno) =>{
     return califinal;
 }
 /** Devuelve la calificacion final de todos los temas, del alumno dado**/
-const calCalifStudent = async (temas, alumno)=>{
+    const calCalifStudent = async (temas, alumno)=>{
     let listaFormateada = [];
     for (let tema in temas) {
         const actividades = await Models.tarea.findAll({where: {idtema: temas[tema].dataValues.id}});

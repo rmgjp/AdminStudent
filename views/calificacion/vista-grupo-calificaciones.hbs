@@ -14,6 +14,9 @@
                                             href="/grupo/calificaciones/{{../idgrupo}}/{{dataValues.id}}{{#if title}}/1{{/if}}"><i
                             class="bi-book-half"></i><strong> {{dataValues.nombre}}</strong></a></li>
                 {{/each}}
+                <li class="nav-item"><a class="nav-link"
+                                        href="/grupo/calificaciones-todo/{{idgrupo}}{{#if title}}/1{{/if}}"><i
+                        class="bi-book-half"></i><strong> Todos </strong></a></li>
             </ul>
         </div>
     </nav>
@@ -21,7 +24,7 @@
     <!--col-md-9 ml-sm-auto col-lg-10 px-md-4-->
     <main class="col col-md col-xl col-sm col-lg" role="main">
         <div class="fixed-table-toolbar" id="toolbar">
-            <h3>Tema: {{tema.dataValues.nombre}} {{#iflogico title '===' 1}} - Segunda Oportunidad {{/iflogico}}</h3>
+            <h3>Tema: {{#if tema}}{{tema.dataValues.nombre}}{{else}}Todos{{/if}} {{#iflogico title '===' 1}} - Segunda Oportunidad {{/iflogico}}</h3>
         </div>
         <div class="row" >
             <div class="col bootstrap4 bootstrap-table fixed-table-container fixed-height ">

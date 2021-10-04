@@ -17,6 +17,9 @@ router.get('/grupo/calificaciones/:idgrupo/:idtema/', calificacionController.vie
 //Esta ruta ahora pertenece a la vista para vista de calificaciones de segunda oportunidad
 router.get('/grupo/calificaciones/:idgrupo/:idtema/:modo', calificacionController.viewCalf);
 
+router.get('/grupo/calificaciones-todo/:idgrupo/:modo', calificacionController.renderViewCalfTopics);
+router.get('/grupo/calificaciones-todo/:idgrupo', calificacionController.renderViewCalfTopics);
+
 router.get('/actividad/calificar-equipo/:idgrupo/:idtema/:idactividad/:idequipo', calificacionController.renderScoreTeam);
 
 router.get('/actividad/calificar-equipo/:idgrupo/:idtema/:idactividad/:idequipo/:second', calificacionController.renderScoreTeam);
