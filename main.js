@@ -64,7 +64,7 @@ async function createWindow () {
         autoHideMenuBar: true,
     })
 
-    mainWindow.loadURL('http://localhost:5000')
+    mainWindow.loadURL('http://localhost:5000/filtro/1')
     mainWindow.on('closed', function () {
         mainWindow = null
     })

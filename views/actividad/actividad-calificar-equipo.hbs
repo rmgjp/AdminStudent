@@ -16,7 +16,7 @@
                     <p>{{actividad.dataValues.descripcion}}</p><br>
                     <div class="row-cols-1">
                         <div class="custom-control custom-switch" title="">
-                            <input type="checkbox" class="custom-control-input" id="switchCalificacion" name="switchCalificacion">
+                            <input type="checkbox" class="custom-control-input" id="switchCalificacion" name="switchCalificacion" checked>
 
                             <label class="custom-control-label" for="switchCalificacion">Aplicar la misma calificación a todo el
                                 equipo.</label>
@@ -95,8 +95,8 @@
             }
             tableAlumno.bootstrapTable('load', rowsAlumnos);
 
-            tableAlumno.bootstrapTable('showColumn', 'calificacion');
-            tableEquipo.bootstrapTable('hideColumn', 'calificacion');
+            tableAlumno.bootstrapTable('hideColumn', 'calificacion');
+            tableEquipo.bootstrapTable('showColumn', 'calificacion');
 
             $('#calificacionEquipo').editable({
                 validate: function(value) {
