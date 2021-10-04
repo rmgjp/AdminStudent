@@ -32,7 +32,7 @@ router.put('/set-config', async (req, res) =>{
     });
 
     console.log("Datos Guardados: " + configFile);
-    res.redirect('/');
+    res.redirect('/filtro/1');
 });
 
 router.get('/filtro/:estado', controladorGrupo.getAllGroupsByState);

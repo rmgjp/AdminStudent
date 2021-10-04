@@ -149,7 +149,7 @@ const getTopicsByFile = async (req, res) => {
     let txtFile = path.join(__dirname, '../public/doc/' + archivo);
     await fs.readFile(txtFile, "binary", async (err, data) => {
         if (err) {
-            res.redirect('/');
+            res.redirect('/filtro/1');
             throw err;
         } else {
             if (data.includes("MATERIA") && data.includes("MAESTRO") && data.includes("GRUPO") && data.includes("PERIODO") && data.includes("PRE") && data.includes("BR") && data.includes("I")) {

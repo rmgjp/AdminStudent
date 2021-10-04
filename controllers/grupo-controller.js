@@ -38,7 +38,7 @@ const removeGroup = async (req, res) => {
     const grupo = await getGroupData(req, res);
     await grupo.update({estado: 2});
     req.flash('info_msg', 'El grupo se ha movido a la papelera.')
-    res.redirect('/');
+    res.redirect('/filtro/1');
 }
 
 //Restaurar grupo, pasa de estado 1
@@ -46,7 +46,7 @@ const restoreGroup = async (req, res) => {
     let grupo = await getGroupData(req, res);
     await grupo.update({estado: 1});
     req.flash('info_msg', 'El grupo se ha restaurado y su estado cambió a activo.')
-    res.redirect('/');
+    res.redirect('/filtro/1');
 };
 
 //Eliminar completamente el grupo.
@@ -538,7 +538,7 @@ const abortGroup = async (req, res) => {
             id: req.params.idgrupo
         }
     })
-    res.redirect('/')
+    res.redirect('/filtro/1')
 }
 
 //Crear un grupo mediante el ingreso manual de los datos.
@@ -599,7 +599,7 @@ const getGroupDataFromFile = async (req, res) => {
     var txtFile = path.join(__dirname, '../public/doc/' + archivo);
     await fs.readFile(txtFile, "binary", (err, data) => {
         if (err) {
-            res.redirect('/');
+            res.redirect('/filtro/1');
             throw err;
         } else {
             if(data.includes("MATERIA") && data.includes("MAESTRO") && data.includes("GRUPO")&&data.includes("PERIODO") && data.includes("PRE")){
@@ -665,7 +665,7 @@ const editGroup = async (req, res) => {
     await alumnoController.addToGroup(grupo.dataValues.id,alumnos);
 
     req.flash('success_msg', "El grupo se editó correctamente.");
-    res.redirect('/');
+    res.redirect('/filtro/1');
 }
 
 //Renderizar los datos
