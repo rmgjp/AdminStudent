@@ -11,7 +11,7 @@
             <ul class="nav flex-column">
                 {{#each temas}}
                     <li class="nav-item"><a class="nav-link"
-                                            href="/grupo/calificaciones/{{../idgrupo}}/{{dataValues.id}}"><i
+                                            href="/grupo/calificaciones/{{../idgrupo}}/{{dataValues.id}}{{#if title}}/1{{/if}}"><i
                             class="bi-book-half"></i><strong> {{dataValues.nombre}}</strong></a></li>
                 {{/each}}
             </ul>

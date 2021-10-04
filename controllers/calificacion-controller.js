@@ -523,6 +523,53 @@ const scoreTeam = async (req, res) => {
     }
     //res.redirect(`/grupo/actividades/${req.params.idgrupo}/${req.params.idtema}/${req.params.idactividad}`);
 }
+
+const renderViewCalfTopics = async (req, res)=>{
+    let listaFormateada = [];
+    const {clave, asignatura, id} = await Models.tema.findOne({
+        where:{
+            id: req.params.idgrupo
+        }
+    });
+
+    const temas = await Models.tema.findAll({
+        where:{
+            idgrupo: req.params.idgrupo
+        }
+    });
+    const alumnos = await Models.alumno.findAll({
+        include:[{
+            model: Models.alumnogrupo,
+            where:{
+                idgrupo: req.params.idgrupo
+            }
+        }]
+    })
+
+    for(let alumno in alumnos){
+        let calificacion = await alumnoController.calCalifStudent(temas, alumnos[alumno])
+
+        if(req.params.modo){
+            listaFormateada.push({
+                clave: alumnos[alumno].dataValues.clave,
+                nombre: alumnos[alumno].dataValues.nombre,
+                calificacion: calificacion.califinal
+            })
+        }
+        else{
+            listaFormateada.push({
+                clave: alumnos[alumno].dataValues.clave,
+                nombre: alumnos[alumno].dataValues.nombre,
+                calificacion: calificacion.califinalPreS2
+            })
+        }
+    }
+
+    listaFormateada = JSON.stringify(listaFormateada);
+
+    res.render('calificacion/vista-grupo-calificaciones', {clave, asignatura, idgrupo: id, temas, actividades: temas,listaFormateada,
+        title: (req.params.modo)? 1:0})
+}
 module.exports = {
     renderScoreTeam,
     scoreTeam,
@@ -530,5 +577,6 @@ module.exports = {
     retriveCalf,
     scoreSingle,
     viewCalf,
-    calcCalif
+    calcCalif,
+    renderViewCalfTopics
 }
