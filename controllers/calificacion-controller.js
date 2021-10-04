@@ -526,7 +526,7 @@ const scoreTeam = async (req, res) => {
 
 const renderViewCalfTopics = async (req, res)=>{
     let listaFormateada = [];
-    const {clave, asignatura, id} = await Models.tema.findOne({
+    const {clave, asignatura, id} = await Models.grupo.findOne({
         where:{
             id: req.params.idgrupo
         }
