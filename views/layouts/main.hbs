@@ -168,8 +168,10 @@
 
             </li>
             <li class="nav-item" role="presentation">
-                <a class="nav-link" href="/grupo/calificaciones/{{idgrupo}}/{{tema.dataValues.id}}/1"
-                   title="Genera la visualización de los datos de un alumno.">2da Oportunidad</a>
+                <a class="nav-link" {{#if tema}} href="/grupo/calificaciones/{{idgrupo}}/{{tema.dataValues.id}}/1"
+                {{else}} href="/grupo/calificaciones-todo/{{idgrupo}}/1"
+                {{/if}}
+                   title="Genera la visualización de los datos del grupo.">2da Oportunidad</a>
 
             </li>
 
