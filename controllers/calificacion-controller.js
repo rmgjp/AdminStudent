@@ -217,7 +217,9 @@ const viewCalf = async (req, res) => {
         listaFormateada = await calcCalif(req, res);
 
         title = (!req.params.modo) ? null : 1;
-
+        actividades.forEach(value=>{
+            value.dataValues.nombre = value.dataValues.nombre.toString().trunc(18);
+        });
         const menu = 1;
         res.render('calificacion/vista-grupo-calificaciones', {
             temas, idgrupo: req.params.idgrupo, actividades, listaFormateada,
