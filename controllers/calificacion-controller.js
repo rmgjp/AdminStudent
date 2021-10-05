@@ -554,8 +554,6 @@ const renderViewCalfTopics = async (req, res)=>{
             calificacion: []
         })
 
-
-
     }
 
     listaFormateada = JSON.stringify(listaFormateada);
