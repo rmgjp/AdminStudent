@@ -387,7 +387,7 @@ const calcCalifStudentTopic = async (idtema, alumno) =>{
                 }
             }
         }
-        if(califinal < 70 || !Number.isInteger(califinal)){
+        if(califinal < 70 || (califinal === "NA")){
             califinal = 'NA';
         }else{
             califinal = Math.round(califinal);
