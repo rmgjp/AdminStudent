@@ -10,7 +10,6 @@ const session = require('express-session');
 const flash = require('connect-flash');
 const exphbs = require('express-handlebars');
 const dbcreator = require('./controllers/db');
-const firstRun = require('electron-first-run');
 const sessionStore = new session.MemoryStore;
 const cookieParser = require('cookie-parser');
 
@@ -110,8 +109,7 @@ app.use(function(req, res, next) {
 });
 
 
-const isFirstRun = firstRun()
-console.log(isFirstRun);
+
 
 // Manejadores de erores
 
