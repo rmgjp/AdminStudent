@@ -581,7 +581,7 @@ const renderViewCalfTopics = async (req, res)=>{
             clave: alumnos[alumno].dataValues.clave,
             nombre: alumnos[alumno].dataValues.nombre,
             calificaciones,
-            califinal: (final !== "NA")? final/calificaciones.length : "NA"
+            califinal: (final !== "NA")? Math.round(final/calificaciones.length) : "NA"
         })
 
     }
