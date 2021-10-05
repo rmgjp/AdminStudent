@@ -163,7 +163,7 @@
                 <a class="navbar-text">Vista:</a>
             </li>
             <li class="nav-item" role="presentation">
-                <a class="nav-link" href="/grupo/calificaciones/{{idgrupo}}/{{tema.dataValues.id}}" title="Genera la visualización de datos del grupo."
+                    <a class="nav-link" {{#if tema}}href="/grupo/calificaciones/{{idgrupo}}/{{tema.dataValues.id}}"{{else}}href="/grupo/calificaciones-todo/{{idgrupo}}"{{/if}} title="Genera la visualización de datos del grupo."
                    aria-current="page">1ra Oportunidad</a>
 
             </li>
