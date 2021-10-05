@@ -679,6 +679,9 @@ const renderGeneralView = async (req,res) => {
     const temas = await Models.tema.findAll({
         where:{idgrupo: req.params.idgrupo}
     })
+    temas.forEach(value=>{
+        value.dataValues.nombre = value.dataValues.nombre.toString().trunc(25);
+    });
 
     const alumnos = await Models.alumno.findAll({
         include:[{
@@ -843,6 +846,10 @@ const renderGeneralViewStudent = async (req, res)=>{
             {idgrupo: req.params.idgrupo}
     });
 
+    temas.forEach(value=>{
+        value.dataValues.nombre = value.dataValues.nombre.toString().trunc(25);
+    });
+
     const listaFormateada = await alumnoController.calCalifStudent(temas, alumno);
 
     //Barra
@@ -887,6 +894,10 @@ const renderGeneralViewStudent = async (req, res)=>{
         actReprobadasS2: unidadReprobadaS2})
 }
 //Exportación de los métodos para su uso interno en aplicación.
+
+String.prototype.trunc = function(n){
+    return this.substr(0,n-1)+(this.length>n?'...':'');
+};
 module.exports = {
     renderStudentData,
     renderGroupDataListTeams,

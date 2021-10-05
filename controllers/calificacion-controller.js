@@ -539,6 +539,10 @@ const renderViewCalfTopics = async (req, res)=>{
             idgrupo: req.params.idgrupo
         }
     });
+
+    temas.forEach(value=>{
+        value.dataValues.nombre = value.dataValues.nombre.toString().trunc(20);
+    });
     const alumnos = await Models.alumno.findAll({
         include:[{
             model: Models.alumnogrupo,
@@ -587,6 +591,10 @@ const renderViewCalfTopics = async (req, res)=>{
     res.render('calificacion/vista-grupo-calificaciones', {clave, asignatura, idgrupo: id, temas, actividades: temas,listaFormateada,
         title: (req.params.modo)? 1:0, menu:1, visualizacion: 1})
 }
+
+String.prototype.trunc = function(n){
+        return this.substr(0,n-1)+(this.length>n?'...':'');
+    };
 module.exports = {
     renderScoreTeam,
     scoreTeam,
