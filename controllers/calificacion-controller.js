@@ -547,11 +547,35 @@ const renderViewCalfTopics = async (req, res)=>{
     })
 
     for(let alumno in alumnos){
-        let calificacion = await alumnoController.calCalifStudent(temas, alumnos[alumno]);
+        let calificacionesArray = await alumnoController.calCalifStudent(temas, alumnos[alumno]);
+        let calificaciones = [];
+
+        for(let calificacion in calificacionesArray){
+            if(req.params.modo){
+                calificaciones.push(calificacionesArray[calificacion].califinal)
+            }
+            else{
+                calificaciones.push(calificacionesArray[calificacion].califinalPreS2)
+            }
+        }
+        let final = calificaciones.reduce((a,b)=>{
+            if(a !== "NA"){
+                if(b !== "NA"){
+                    return a + b;
+                }
+                else{
+                    return "NA";
+                }
+            }
+            else{
+                return "NA"
+            }
+        });
         listaFormateada.push({
             clave: alumnos[alumno].dataValues.clave,
             nombre: alumnos[alumno].dataValues.nombre,
-            calificacion: []
+            calificaciones,
+            califinal: (final !== "NA")? final/calificaciones.length : "NA"
         })
 
     }
@@ -559,7 +583,7 @@ const renderViewCalfTopics = async (req, res)=>{
     listaFormateada = JSON.stringify(listaFormateada);
 
     res.render('calificacion/vista-grupo-calificaciones', {clave, asignatura, idgrupo: id, temas, actividades: temas,listaFormateada,
-        title: (req.params.modo)? 1:0})
+        title: (req.params.modo)? 1:0, menu:1, visualizacion: 1})
 }
 module.exports = {
     renderScoreTeam,

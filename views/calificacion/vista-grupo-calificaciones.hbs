@@ -15,7 +15,7 @@
                             class="bi-book-half"></i><strong> {{dataValues.nombre}}</strong></a></li>
                 {{/each}}
                 <li class="nav-item"><a class="nav-link"
-                                        href="/grupo/calificaciones-todo/{{idgrupo}}{{#if title}}/1{{/if}}"><i
+                                        href="/grupo/calificaciones-todo/{{idgrupo}}{{#iflogico title '===' 1}}/1{{/iflogico}}"><i
                         class="bi-book-half"></i><strong> Todos </strong></a></li>
             </ul>
         </div>
