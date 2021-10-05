@@ -328,7 +328,7 @@ const calcCalifStudentTopic = async (idtema, alumno) =>{
         const actividades = await Models.tarea.findAll({where: {idtema: temas[tema].dataValues.id}});
         let califinal = 0;
         let califinalPreS2 = 0;
-        let calcCalificacion;
+        let calcCalificacion = 0;
         let calcCalificacionPreS2 = 0;
 
         for (let actividad in actividades) {
@@ -392,7 +392,7 @@ const calcCalifStudentTopic = async (idtema, alumno) =>{
         }else{
             califinal = Math.round(califinal);
         }
-        if(califinalPreS2 < 70 || !Number.isInteger(califinal)){
+        if(califinalPreS2 < 70 || califinalPreS2 === 'NA'){
             califinalPreS2 = 'NA';
         }
         else{
