@@ -547,22 +547,15 @@ const renderViewCalfTopics = async (req, res)=>{
     })
 
     for(let alumno in alumnos){
-        let calificacion = await alumnoController.calCalifStudent(temas, alumnos[alumno])
+        let calificacion = await alumnoController.calCalifStudent(temas, alumnos[alumno]);
+        listaFormateada.push({
+            clave: alumnos[alumno].dataValues.clave,
+            nombre: alumnos[alumno].dataValues.nombre,
+            calificacion: []
+        })
 
-        if(req.params.modo){
-            listaFormateada.push({
-                clave: alumnos[alumno].dataValues.clave,
-                nombre: alumnos[alumno].dataValues.nombre,
-                calificacion: calificacion.califinal
-            })
-        }
-        else{
-            listaFormateada.push({
-                clave: alumnos[alumno].dataValues.clave,
-                nombre: alumnos[alumno].dataValues.nombre,
-                calificacion: calificacion.califinalPreS2
-            })
-        }
+
+
     }
 
     listaFormateada = JSON.stringify(listaFormateada);

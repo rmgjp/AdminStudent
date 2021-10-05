@@ -319,7 +319,6 @@ const calcCalifStudentTopic = async (idtema, alumno) =>{
     if(califinal < 70){
         califinal = 'NA';
     }
-
     return califinal;
 }
 /** Devuelve la calificacion final de todos los temas, del alumno dado**/
@@ -388,12 +387,12 @@ const calcCalifStudentTopic = async (idtema, alumno) =>{
                 }
             }
         }
-        if(califinal < 70){
+        if(califinal < 70 || !Number.isInteger(califinal)){
             califinal = 'NA';
         }else{
             califinal = Math.round(califinal);
         }
-        if(califinalPreS2 < 70){
+        if(califinalPreS2 < 70 || !Number.isInteger(califinal)){
             califinalPreS2 = 'NA';
         }
         else{
