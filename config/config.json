@@ -1,7 +1,7 @@
 {
   "development": {
     "user": "root",
-    "password": "vsvsrmg",
+    "password": "uxrlrpaqga9lfe9l",
     "port": "3306",
     "database": "registro",
     "host": "127.0.0.1",
@@ -9,7 +9,7 @@
   },
   "registrobd": {
     "user": "root",
-    "password": "vsvsrmg",
+    "password": "uxrlrpaqga9lfe9l",
     "port": "3306",
     "database": "registro",
     "host": "127.0.0.1",
@@ -17,7 +17,7 @@
   },
   "production": {
     "user": "root",
-    "password": "vsvsrmg",
+    "password": "uxrlrpaqga9lfe9l",
     "port": "3306",
     "database": "registro",
     "host": "127.0.0.1",
