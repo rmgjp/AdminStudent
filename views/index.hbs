@@ -172,10 +172,10 @@
                 <div class="card-body justify-content-center align-center">
 
                     <div class="row text-center align-items-center">
-                        <h5 class="card-title">Agregar nuevo grupo</h5>
+                        <h5 class="ml-auto mr-auto card-title">Agregar nuevo grupo</h5>
                     </div>
-                    <div class="row justify-content-md-center align-items-center">
-                        <a class="btn btn-success rounded-circle " href="/grupo/wizard-crear-grupo"
+                    <div class="row text-center align-items-center ">
+                        <a class="btn btn-success rounded-circle ml-auto mr-auto" href="/grupo/wizard-crear-grupo"
                            title="Agregar un nuevo grupo.">+</a>
                     </div>
                 </div>
@@ -203,6 +203,11 @@
                             </div>
                             <div class="row">
                                 <div class="dropdown-divider"></div>
+                            </div>
+                            <div class="row m-1">
+                                <label class="form-label" id="etiquetaGrado" for="grado">Grado</label>
+                                <input type="text" class="form-control" aria-describedby="etiquetaGrado" id="grado" name="grado"
+                                       value="{{config.grado}}">
                             </div>
                             <div class="row m-1">
                                 <label class="form-label" id="etiquetaNombre" for="nombre">Nombre</label>
