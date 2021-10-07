@@ -17,8 +17,9 @@ router.get('/about', (req, res) => {
 });
 
 router.put('/set-config', async (req, res) =>{
-    const {nombre, clave, correo, calfi, valequipo, extra1} = req.body;
+    const {nombre, clave, correo, calfi, valequipo, extra1, grado} = req.body;
     configFile.nombre = nombre;
+    configFile.grado = grado;
     configFile.clave = clave;
     configFile.correo = correo;
     configFile.califi = calfi;
