@@ -11,7 +11,7 @@
   "keywords": [],
   "author": "Violeta Vera - Rodrigo Munguía",
   "license": "ISC",
-  "description": "Seguimiento de estudiantes",
+  "description": "Seguimiento del estudiante",
   "devDependencies": {
     "electron": "^12.0.11",
     "electron-builder": "^22.11.7"
