@@ -161,8 +161,10 @@ const disassociateFromGroup = async (req, res) => {
                 idtarea: actividades[actividad].dataValues.id
             }
         })
-        //Eliminar calificaciones
-        await calificacion.destroy();
+        if(calificacion){
+            //Eliminar calificaciones
+            await calificacion.destroy();
+        }
     }
 
     let alumnoequipo = await Models.alumnoequipo.findAll({
@@ -177,8 +179,10 @@ const disassociateFromGroup = async (req, res) => {
         }]
     });
 
-    for(let alumno in alumnoequipo){
-        await alumnoequipo[alumno].destroy();
+    if(alumnoequipo.length >=1){
+        for(let alumno in alumnoequipo){
+            await alumnoequipo[alumno].destroy();
+        }
     }
 
 
