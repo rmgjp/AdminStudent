@@ -168,8 +168,9 @@
                 contentType: 'application/json',
                 url: `/equipo-busqueda/${idgrupo}/${idequipo}/${data.datos}`,
                 success: function (data){
-                    tableAlumnos.bootstrapTable('append',JSON.parse(data))
+                    tableAlumnos.bootstrapTable('append',JSON.parse(data));
                     document.getElementById('inputBusqueda').value = '';
+                    window.location.replace(`/grupo/equipos/${idgrupo}/${idequipo}`);
                 },
                 error: function () {
                     console.log("Error");
@@ -203,6 +204,7 @@
                         field: 'clave',
                         values: claves
                     })
+                    window.location.replace(`/grupo/equipos/${idgrupo}/${idequipo}`);
 
                 },
                 error: function (){

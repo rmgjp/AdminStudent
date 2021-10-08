@@ -164,7 +164,7 @@ const validateStudents = async (req, res) => {
 
     for (let tema in listaTemas) {
         const equipos = await Models.equipotema.findAll({
-            where: {idtema: listaTemas[tema].id,}
+            where: {idtema: listaTemas[tema].id}
         });
 
         for (let equipo in equipos) {
@@ -281,6 +281,7 @@ const findStudent = async (req, res) => {
     } else {
         req.flash('error_msg', 'No se encontró el alumno.');
     }
+    res.redirect(`/grupo/equipos/${req.params.idgrupo}/${req.params.idequipo}`)
 }
 const addStudentToTeam = async (idequipo, idalumno) =>{
     await Models.alumnoequipo.create({
@@ -330,6 +331,7 @@ const deleteStudentToTeam = async (req,res) => {
         await alumnoequipo.destroy();
 
     }
+    req.flash('success_msg', 'El alumno se a elimino correctamente del equipo.');
     res.send(true);
 }
 module.exports = {
