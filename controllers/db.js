@@ -40,7 +40,7 @@ module.exports = {
         db.asistencia = require('../models/asistencia')(sequelize, Sequelize);
 
         //Creación de las tablas basado en los modelos anteriores.
-        await sequelize.sync({alter:true}).catch(reason => {
+        await sequelize.sync().catch(reason => {
             console.log(reason)
         }).then(() => console.log('Sync complete'))
 
