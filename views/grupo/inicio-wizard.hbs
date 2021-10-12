@@ -16,24 +16,25 @@
         <div class="jumbotron ">
 
             <h1 class="display-4">Crear nuevo grupo</h1>
-            <p class="lead">Para iniciar la creación de un grupo de click en botón:</p>
+            <p class="lead">Para iniciar la creación de un grupo seleccione una opción dando click en el botón correspondiente</p>
             <hr class="my-4">
-            <p>
-                Importar Excel: Permite crear el grupo basado en la información contenida en el archivo de Excel.
+            <section>
+                <strong>Importar desde archivo:</strong> Permite crear un grupo basado en la información contenida en el archivo de lista de alumnos o "reporte
+                de calificaciones detallado" descargado desde el sistema búho.
             <ul>
-                <li>Forma mas rápida pero propenso a tener errores, se recomienda que verifique los datos importados.
-                </li>
+                <li>Forma mas rápida pero propenso a tener errores, se recomienda que verifique los datos importados.</li>
+                <li>Se buscará automáticamente los datos de la materia y la lista de alumnos para su posterior verificación.</li>
             </ul>
 
-            </p>
+            </section>
 
-            <p>
-                Crear Manualmente: El asistente lo guiará en el proceso donde tendrá que ingresar los datos manualmente,
+            <section>
+                <strong>Crear Manualmente:</strong> El asistente lo guiará en el proceso donde tendrá que ingresar los datos manualmente,
                 para la creación exitosa del grupo.
             <ul>
                 <li>Forma mas lenta pero en todo momento usted verificará que los datos ingresados sean correctos.</li>
             </ul>
-            </p>
+            </section>
             <p class="lead">
                 <button class="btn badge-primary btn-lg" id="guardar" name="guardar" data-toggle="modal"
                         data-target="#cargarExcel">Importar desde Archivo
