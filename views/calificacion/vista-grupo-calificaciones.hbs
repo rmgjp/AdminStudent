@@ -14,9 +14,14 @@
                                             href="/grupo/calificaciones/{{../idgrupo}}/{{dataValues.id}}{{#iflogico title '===' 1}}/1{{/iflogico}}"><i
                             class="bi-book-half"></i><strong> {{dataValues.nombre}}</strong></a></li>
                 {{/each}}
-                <li class="nav-item"><a class="nav-link"
-                                        href="/grupo/calificaciones-todo/{{idgrupo}}{{#iflogico title '===' 1}}/1{{/iflogico}}"><i
-                        class="bi-book-half"></i><strong> Todos </strong></a></li>
+                {{#if temas}}
+                    <li class="nav-item"><a class="nav-link"
+                                            href="/grupo/calificaciones-todo/{{idgrupo}}{{#iflogico title '===' 1}}/1{{/iflogico}}"><i
+                            class="bi-book-half"></i><strong> Todos </strong></a></li>
+                {{else}}
+                    <li class="nav-item"><strong>No existen temas </strong></li>
+                {{/if}}
+
             </ul>
         </div>
     </nav>

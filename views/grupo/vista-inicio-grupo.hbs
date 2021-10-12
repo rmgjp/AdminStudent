@@ -13,7 +13,9 @@
                                             href="/grupo-inicio/{{../idgrupo}}/{{dataValues.id}}"><i
                             class="bi-book-half"></i><strong> {{dataValues.nombre}}</strong></a></li>
                 {{/each}}
-                <li class="nav-item"><a class="nav-link" href="/grupo/vista-general/{{idgrupo}}"><i class="bi-book-half"></i><strong> Todos</strong></a></li>
+                {{#if temas}}
+                    <li class="nav-item"><a class="nav-link" href="/grupo/vista-general/{{idgrupo}}"><i class="bi-book-half"></i><strong> Todos</strong></a></li>
+                {{/if}}
             </ul>
         </div>
     </nav>
@@ -25,7 +27,7 @@
             </div>
         </div>
         <div class="row-cols-1">
-            <p>Primera oportunidad</p>
+
         </div>
         <div class="row">
             <div class="col-4 col-md-5 col-xl-3 col-sm-4 col-lg-3">
@@ -76,7 +78,7 @@
             </div>
         </div>
         <div class="row m-2">
-            <p>Las graficas de segunda oportunidad cambiaran una vez que se registren calificaciones de esta misma.
+            <p>*Las graficas de segunda oportunidad cambiaran una vez que se registren calificaciones de esta misma.
             Por lo tanto pueden ser iguales a las de primera oportunidad en el periodo de primera oportunidad.</p>
         </div>
     </main>

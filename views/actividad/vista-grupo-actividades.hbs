@@ -163,9 +163,11 @@
             {{else}}
                 <div class="jumbotron jumbotron-fluid">
                     <div class="container text-center">
-                        <p class="lead">
-                        <h2>Seleccione una actividad para mostrar más información.</h2>
-                        </p>
+                {{#if datos}}
+                    <h2>Seleccione una actividad para mostrar más información.</h2>
+                {{else}}
+                    <h2>No existen temas para crear o visualizar actividades</h2>
+                {{/if}}
                     </div>
                 </div>
 
