@@ -6,11 +6,12 @@ const {Op} = require('sequelize');
 
 
 const retriveTeamsData = async (req, res) => {
+    const {asignatura, clave} = await Models.grupo.findOne({where: {id: req.params.idgrupo}});
     const equipos = await Models.equipo.findAll({where: {idgrupo: req.params.idgrupo}});
 
     if (!equipos || equipos.length === 0) {
         const menu = 1;
-        res.render('equipo/vista-grupo-equipo', {idgrupo: req.params.idgrupo, menu})
+        res.render('equipo/vista-grupo-equipo', {idgrupo: req.params.idgrupo, menu, asignatura, clave})
     } else {
         res.redirect('/grupo/equipos/' + req.params.idgrupo + '/' + equipos[0].dataValues.id);
     }
