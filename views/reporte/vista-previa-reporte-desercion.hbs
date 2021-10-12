@@ -27,12 +27,13 @@
     }
 
     #content-wrap {
-        padding-bottom: 2.5rem; /* Footer height */
+        padding-bottom: 30px; /* Footer height */
     }
     .footer {
         position: absolute;
         bottom: 0;
         width: 100%;
+    }
 
     @media print {
 
@@ -44,6 +45,7 @@
         }
     }
 </style>
+<title>Generación de Reportes (Vista Previa) - Seguimiento de Estudiantes</title>
 <main class="container" id="page-container">
     <div id="content-wrap">
         <header class="container d-print-" style="height: 5.7cm">
@@ -65,7 +67,6 @@
                     Dirección General
                 </p>
             </div>
-            </figure>
         </header>
         <div class="container d-print-">
             <div class="row  flex-row-reverse regular">
@@ -108,7 +109,7 @@
                 </div>
             </div>
 
-            <div class="row-cols-1 montserrat" style="padding-top: 100px">
+            <div class="row-cols-1 montserrat -paragraph mt-auto">
                 <section class="extra-bold">
                     <br><br>
                     <p>_______________________________________</p>
@@ -131,11 +132,14 @@
             </div>
 
             <div class="row-cols-1">
+                Esto se trata de una vista previa, el reporte se distribuirá correctamente una vez que se de click en
+                imprimir.
+                <br>
                 <button id='current' class="btn btn-primary no-print" onclick="print_current_page()">Imprimir</button>
                 <a class="btn btn-secondary no-print" href="/filtro/1">Salir</a>
             </div>
         </div>
-        <footer class="d-print- footer" style="height: 1.2cm; padding-top: 30px">
+        <footer class="d-print- footer" style="height: 1.5cm; padding-top: 30px">
             <div class="row">
                 <figure class="col-2">
                     <img src="/img/footer-left.png">
