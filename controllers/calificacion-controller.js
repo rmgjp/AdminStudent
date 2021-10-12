@@ -153,7 +153,8 @@ const retriveCalf = async (req, res) => {
     const temas = await Models.tema.findAll({where: {idgrupo: req.params.idgrupo}})
     const menu = 1;
     if (!temas || temas.length === 0) {
-        res.render('calificacion/vista-grupo-calificaciones', {idgrupo: req.params.idgrupo, menu, visualizacion: 1});
+        const {asignatura, clave} =  await Models.grupo.findOne({where: {id: req.params.idgrupo}});
+        res.render('calificacion/vista-grupo-calificaciones', {idgrupo: req.params.idgrupo, menu, asignatura, clave});
     } else {
 
         res.redirect("/grupo/calificaciones/" + req.params.idgrupo + "/" + temas[0].dataValues.id);
@@ -175,6 +176,7 @@ const viewCalf = async (req, res) => {
     //verificar si se selecciono un tema
     if (!req.params.idtema) {
         const menu = 1;
+
         res.render('calificacion/vista-grupo-calificaciones', {
             temas,
             idgrupo: req.params.idgrupo,
