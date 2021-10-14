@@ -20,7 +20,7 @@
         </div>
         <div class="col">
             <label for="valorBox" class="form-label">Valor</label>
-            <input type="number" min="1" max="100" step="any" class="form-control" value="1" name="valorBox" id="valorBox"
+            <input type="number" min="0" max="100" step="any" class="form-control" value="0" name="valorBox" id="valorBox"
                    required>
         </div>
         <div class="col">
@@ -68,8 +68,8 @@
                     <thead>
                     <tr>
                         <th data-field="estado" data-sorteable="false" data-checkbox="true"></th>
-                        <th data-field="nombreCol" data-sorteable="false" data-editable="true">Nombre</th>
-                        <th data-field="valorCol" data-sorteable="false" data-editable="true">Valor</th>
+                        <th data-field="nombreCol" data-sorteable="false" data-editable="true" data-maxlength="20">Nombre</th>
+                        <th data-field="valorCol" data-sorteable="false"  data-editable="true">Valor</th>
                         <!--data-editable="true"  data-editable-type="select" id="categoria"-->
                         <th data-field="tipoCol" data-sorteable="false" >Categoría</th>
                         <th data-field="descripcionCol" data-sorteable="false" data-editable="true">Descripción</th>
