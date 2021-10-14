@@ -15,7 +15,8 @@
     <div class="row m-0 p-0">
         <div class="col-6">
             <label for="nombreBox" class="form-label">Nombre</label>
-            <input type="text" class="form-control" name="nombreBox" id="nombreBox" required>
+            <a class="bi bi-info-circle-fill" data-toggle="popover" title="Longitud de nombre" data-content="Se recomienda nombres cortos para una correcta visualización en el programa (maximo 20 caracteres)."></a>
+            <input type="text" class="form-control" name="nombreBox" id="nombreBox" maxlength="20" required>
         </div>
         <div class="col">
             <label for="valorBox" class="form-label">Valor</label>
