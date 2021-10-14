@@ -79,14 +79,31 @@ const calcularReprobacion = async (idgrupo) => {
 
     for (let tema in temas) {
         let contReprobados = 0;
-        for (let alumno in alumnos) {
-            const calificacionFinal = await calcularCalfAlumno(alumnos[alumno].id, temas[tema])
-            if (calificacionFinal === 'NA') {
-                contReprobados++;
+        //verificación si el tema cuenta con actividades calificadas.
+        const verificacionTema = await Models.calificacion.findAll({
+            include:[
+                {
+                    model: Models.tarea,
+                    where: {
+                        idtema: temas[tema].dataValues.id
+                    }
+                }
+            ]
+        });
+        if(verificacionTema.length > 0){
+            for (let alumno in alumnos) {
+                const calificacionFinal = await calcularCalfAlumno(alumnos[alumno].id, temas[tema])
+                if (calificacionFinal === 'NA') {
+                    contReprobados++;
+                }
             }
+            const indiceReprobacion = Math.round((100*contReprobados)/alumnos.length);
+            reprobacionGrupo.temas.push(indiceReprobacion + '%');
         }
-        const indiceReprobacion = Math.round((100*contReprobados)/alumnos.length);
-        reprobacionGrupo.temas.push(indiceReprobacion + '%');
+        else {
+            reprobacionGrupo.temas.push('NC');
+        }
+
     }
     return reprobacionGrupo;
 }
