@@ -125,7 +125,15 @@ const calcularCalfAlumno = async (idalumno, tema) => {
         });
 
         if (calificacion != null) {
-            calcCalificacion = (calificacion.dataValues.valor * actividades[actividad].valor) / 100;
+            let calificacionAct;
+            if(calificacion.dataValues.valor_s2 != null){
+                calificacionAct = calificacion.dataValues.valor_s2;
+                calcCalificacion = (calificacionAct * actividades[actividad].valor) / 100;
+            }
+            else{
+                calificacionAct = calificacion.dataValues.valor;
+                calcCalificacion = (calificacionAct * actividades[actividad].valor) / 100;
+            }
 
             switch (parseInt(configuracion.califi)) {
                 case 0:
