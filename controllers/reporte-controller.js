@@ -137,9 +137,9 @@ const calcularCalfAlumno = async (idalumno, tema) => {
 
             switch (parseInt(configuracion.califi)) {
                 case 0:
-                    if (calificacion.dataValues.valor < 70) {
+                    if (calificacionAct < 70) {
                         califinal = "NA";
-                    } else if (calificacion.dataValues.valor >= 70) {
+                    } else if (calificacionAct >= 70) {
                         if (califinal !== "NA") {
                             //Calculo de las calificaciones cuando se promedia.
                             califinal += calcCalificacion;
