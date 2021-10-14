@@ -40,13 +40,14 @@
         <div class="row m-2 p-2">
             <div class="card w-100" style="height: max-content">
                 <div class="card-header">
-                    <h5>Actividades del nuevo tema <a  class="bi bi-info-circle-fill" data-toggle="popover" title="Opcional" data-content="Puede añadir o no actividades al crear un nuevo tema. Las actividades también pueden ser añadidas en la vista de actividades, correspondiente al tema."></a></h5>
+                    <h5>Actividades del nuevo tema <a class="bi bi-info-circle-fill" data-toggle="popover" title="Opcional" data-content="Puede añadir o no actividades al crear un nuevo tema. Las actividades también pueden ser añadidas en la vista de actividades, correspondiente al tema."></a></h5>
                 </div>
                 <div class="card-body">
                     <div class="row m-0 p-0">
                         <div class="col-6">
                             <label for="nombreBox" class="form-label">Nombre</label>
-                            <input type="text" class="form-control" name="nombreBox" id="nombreBox" required>
+                            <a class="bi bi-info-circle-fill" data-toggle="popover" title="Longitud de nombre" data-content="Se recomienda nombres cortos para una correcta visualización en el programa (maximo 20 caracteres)."></a>
+                            <input type="text" class="form-control" name="nombreBox"  id="nombreBox" maxlength="20" required>
                         </div>
                         <div class="col">
                             <label for="valorBox" class="form-label">Valor</label>
@@ -89,7 +90,7 @@
                                 <thead>
                                 <tr>
                                     <th data-field="estado" data-sorteable="false" data-checkbox="true"></th>
-                                    <th data-field="nombreCol" data-sorteable="false" data-editable="true">Nombre </th>
+                                    <th data-field="nombreCol" data-sorteable="false" data-editable="true" data-maxlength="20">Nombre </th>
                                     <th data-field="valorCol" data-sorteable="false" data-editable="true">Valor </th>
                                     <th data-field="tipoCol" data-sorteable="false" >Categoría</th>
                                     <th data-field="descripcionCol" data-sorteable="true" data-editable="true">Descripción</th>
