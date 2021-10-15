@@ -5,7 +5,7 @@ const {app, BrowserWindow} = require('electron');
 //Declaración del Servidor mediante Express mediante la llamada del archivo app.js
 //archivo cuyo codigo tiene la información necesaria para ejecutar ExpressJS
 const dbcreator = require("./controllers/db");
-
+const server = require('./app');
 
 let mainWindow;
 

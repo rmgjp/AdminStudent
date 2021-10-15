@@ -109,3 +109,4 @@ dist
 /mariadb/
 !/out/
 !/dist/
+!/config/
