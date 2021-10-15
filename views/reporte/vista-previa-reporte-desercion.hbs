@@ -1,5 +1,4 @@
 <style>
-
     .montserrat .extra-bold .regular .medium {
         font-family: 'Montserrat'
     }
@@ -10,16 +9,16 @@
     }
 
     .regular p th{
-        font-weight: 400;
-        font-size: 10pt; /*9 pt*/
+        font-weight: 400 !important;
+        font-size: 12pt !important; /*9 pt*/
     }
     .medium p{
-        font-weight: 500;
-        font-size: 9pt; /*8 pt*/
+        font-weight: 500 !important;
+        font-size: 11pt !important; /*8 pt*/
     }
     .extra-light p{
-        font-weight: 200;
-        font-size: 8pt; /*8 pt*/
+        font-weight: 200 !important;
+        font-size: 11pt !important; /*8 pt*/
     }
     #page-container {
         position: relative;
@@ -35,7 +34,7 @@
         width: 100%;
     }
     section p {
-        margin-bottom: 0;
+        margin-bottom: 0 !important;
     }
 
     @media print {
@@ -107,8 +106,8 @@
             <div class="row flex-row-reverse extra-bold">
                 <p>Asunto: Reporte parcial</p>
             </div>
-            <div class="row-cols-1 -align-justify regular">
-                <p class="montserrat">{{mensaje}}</p>
+            <div class="row-cols-1 regular">
+                <p class="montserrat text-justify">{{mensaje}}</p>
             </div>
             <div class="row-cols-1 regular">
                 <p class="montserrat">Índice de reprobación</p>
