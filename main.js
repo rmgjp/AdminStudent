@@ -1,19 +1,10 @@
 /**
  * Archivo encargado de guardar las configuraciones para la creación de la ventana por Electron
  */
-const path = require('path');
 const {app, BrowserWindow} = require('electron');
 //Declaración del Servidor mediante Express mediante la llamada del archivo app.js
 //archivo cuyo codigo tiene la información necesaria para ejecutar ExpressJS
-const server = require('./app');
-const {exec} = require('child_process');
-const datadb = require('./config/config.json')
-var executablePath = path.join(__dirname , `mariadb\\bin\\mariadbd.exe --console`);
-var parameters = ["--console"];
 const dbcreator = require("./controllers/db");
-
-var installPath = path.join(__dirname, `mariadb\\bin\\mysql_install_db.exe --password=${datadb.registrobd.password} --port=${datadb.registrobd.port} `);
-
 
 
 let mainWindow;
@@ -32,7 +23,7 @@ async function createWindow () {
             nodeIntegration: true
         },
         autoHideMenuBar: true,
-    })
+    });
 
     mainWindow.loadURL('http://localhost:5000/filtro/1')
     mainWindow.on('closed', function () {

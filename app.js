@@ -10,14 +10,6 @@ const session = require('express-session');
 const flash = require('connect-flash');
 const exphbs = require('express-handlebars');
 const dbcreator = require('./controllers/db');
-const sessionStore = new session.MemoryStore;
-const cookieParser = require('cookie-parser');
-
-const options = {
-    mode: 'whitelist',
-    allow: ['127.0.0.1'],
-    deny: [],
-};
 
 //Inicialización de Express
 let app = express();
