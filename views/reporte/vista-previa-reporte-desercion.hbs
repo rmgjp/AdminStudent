@@ -6,20 +6,20 @@
 
     .extra-bold {
         font-weight: 800;
-        font-size: 0.83em;
+        font-size: 11pt; /*10 pt*/
     }
 
     .regular p th{
         font-weight: 400;
-        font-size: 0.75em;
+        font-size: 10pt; /*9 pt*/
     }
     .medium p{
         font-weight: 500;
-        font-size: 0.66em;
+        font-size: 9pt; /*8 pt*/
     }
     .extra-light p{
         font-weight: 200;
-        font-size: 0.83em;
+        font-size: 8pt; /*8 pt*/
     }
     #page-container {
         position: relative;
@@ -34,6 +34,9 @@
         bottom: 0;
         width: 100%;
     }
+    section p {
+        margin-bottom: 0;
+    }
 
     @media print {
 
@@ -41,7 +44,7 @@
         body{
             width: 21.59cm;
             height: 27.94cm;
-            margin: 0.42cm 2cm 2cm 1.5cm;
+            margin: 1cm 2.5cm 2cm 0.5cm;
         }
     }
 </style>
@@ -74,15 +77,15 @@
                 <p> Irapuato, Gto. </p>
             </div>
 
-            <div class="row  extra-bold" style="text-transform: uppercase">
+            <div class="row-cols-1  extra-bold" style="text-transform: uppercase">
                 {{coordinadorNombre}}<br>
                 {{pronombre}} {{carrera}}<br>
                 PRESENTE<br>
             </div>
-            <div class="row  flex-row-reverse extra-bold">
+            <div class="row flex-row-reverse extra-bold">
                 <p>Asunto: Reporte parcial</p>
             </div>
-            <div class="row -align-justify regular">
+            <div class="row-cols-1 -align-justify regular">
                 <p class="montserrat">{{mensaje}}</p>
             </div>
             <div class="row-cols-1 regular">
