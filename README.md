@@ -15,7 +15,7 @@ desarrollado por:
 <p>
 La Herramienta para la administración y gestión del rendimiento del estudiante es un software de escritorio que permite a los docentes del Instituto Tecnológico Superior de Irapuato generar calificaciones y reportes parciales, además del alojamiento de la información del grupo, tales como actividades, temas, lista de alumnos, equipos para la administración del mismo.
 </p>
-#### Lista de funciones  
+<h4> Lista de funciones  </h4>
  <li>Permite alojar la información de múltiples grupos.</li>
  <li>Adición de alumnos de forma manual o automatizada.</li>
  <li>Generación de reportes parciales.</li>
@@ -40,3 +40,6 @@ La Herramienta para la administración y gestión del rendimiento del estudiante
 <li>Framework para el desarrollo de la aplicación de escritorio: Electron</li>
 
 </p>
+![Screenshot_20211015_183915 (2)](https://user-images.githubusercontent.com/38513145/137564925-6aa7aebe-fe63-43d8-a52f-c6ae2fd836c6.png)
+
+
