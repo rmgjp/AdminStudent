@@ -40,6 +40,6 @@ La Herramienta para la administración y gestión del rendimiento del estudiante
 <li>Framework para el desarrollo de la aplicación de escritorio: Electron</li>
 
 </p>
-![Screenshot_20211015_183915 (2)](https://user-images.githubusercontent.com/38513145/137564925-6aa7aebe-fe63-43d8-a52f-c6ae2fd836c6.png)
+<img src="https://user-images.githubusercontent.com/38513145/137564982-4c86f8ec-8780-421f-9023-7db3d7ec2484.png"> </img>
 
 
