@@ -45,3 +45,10 @@ La Herramienta para la administración y gestión del rendimiento del estudiante
 <p>
 Puede utilizar la guía visual para conocer el uso de la aplicación o si tiene alguna duda, este video puede serle util.</p>
 - [Guía visual](https://1drv.ms/v/s!AtM2uga3NsTEunTgDLEtZbEt0CrO?e=aeANUq)
+
+<h4> Realease </h4>
+<p>
+ Puede descargar la aplicación mediente el enlace que se encuentra debajo.
+ </p>
+- [Descarga de la aplicación y manual de uso.](https://github.com/rmgjp/AdminStudent/releases/tag/release)
+
